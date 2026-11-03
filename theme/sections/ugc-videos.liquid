@@ -28,7 +28,9 @@
             {%- elsif block.settings.poster_asset != blank -%}
               <img src="{{ block.settings.poster_asset | asset_url }}" alt="{{ block.settings.name | escape }}" loading="lazy" width="600" height="1067">
             {%- endif -%}
-            <span class="reel__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+            {%- if block.settings.video != blank or block.settings.video_url != blank -%}
+              <span class="reel__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+            {%- endif -%}
             {%- if block.settings.is_example -%}<span class="reel__example">Exemple</span>{%- endif -%}
             <div class="reel__overlay">
               {%- if block.settings.quote != blank -%}<p class="reel__quote">« {{ block.settings.quote }} »</p>{%- endif -%}
