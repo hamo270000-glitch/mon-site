@@ -79,6 +79,13 @@ Le thème affiche automatiquement les **étoiles et le nombre d'avis** (cartes p
 - **Vidéos de la page d'accueil** : par défaut, le thème lit `hero-video.mp4` dans ses assets. Si Shopify refuse ce fichier, téléversez-le dans Contenu → Fichiers, puis choisissez-le dans le champ « Vidéo (Shopify) » de la section.
 - Mentions légales, CGV, politique de confidentialité (Paramètres → Politiques), puis bannière cookies (application gratuite « Customer Privacy »).
 
+## 7. Vidéos clientes et avis avec photos (ce qui fait vendre)
+
+- **Vidéos clientes** (accueil + fiche produit) : Personnaliser → section « Vidéos clientes ». Pour chaque bloc, choisissez une **vraie vidéo verticale** (format 9:16, MP4) d'une cliente ou d'une créatrice qui utilise la brosse, avec son accord. Décochez ensuite « Afficher Exemple ».
+  Pour en obtenir : envoyez la brosse à 5–10 micro-créatrices (TikTok/Instagram) ou passez par une plateforme d'UGC, et demandez à vos premières clientes une vidéo contre un code promo.
+- **Avis avec photos** (bas de la fiche produit) : section « Avis produit ». Installez Judge.me et ajoutez son bloc dans cette section : les avis, photos et vidéos clients s'afficheront automatiquement, ainsi que la vraie note.
+- Les visuels actuels de ces deux sections sont des **exemples marqués « Exemple »** : remplacez-les par du contenu réel. N'inventez jamais d'avis ou de témoignages : c'est interdit, et les clientes le sentent.
+
 ## Fonctionnalités incluses
 
 - Barre d'annonce défilante, en-tête collant, menu mobile, recherche, compte client.

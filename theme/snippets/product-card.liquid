@@ -17,9 +17,6 @@
     <span class="card__badges">
       {%- if product.available == false -%}
         <span class="badge">{{ 'product.sold_out' | t }}</span>
-      {%- elsif v.compare_at_price > v.price -%}
-        {%- assign save = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price | round -%}
-        <span class="badge badge--sale">-{{ save }} %</span>
       {%- endif -%}
       {%- if product.tags contains 'best-seller' -%}<span class="badge badge--best">Best-seller</span>{%- endif -%}
       {%- if product.tags contains 'nouveau' -%}<span class="badge badge--new">{{ 'product.new' | t }}</span>{%- endif -%}

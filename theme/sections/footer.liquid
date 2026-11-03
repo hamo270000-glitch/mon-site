@@ -2,7 +2,7 @@
   <div class="page-width">
     <div class="footer__grid">
       <div class="footer__brand">
-        <span class="logo-text">{{ section.settings.logo_line1 }}<span>{{ section.settings.logo_line2 }}</span></span>
+        {% render 'logo', id: 'f', light: true %}
         <div class="rte" style="max-width:340px">{{ section.settings.about }}</div>
         <div class="socials">
           {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" aria-label="Instagram">{% render 'icon', icon: 'instagram' %}</a>{%- endif -%}

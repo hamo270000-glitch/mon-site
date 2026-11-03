@@ -25,7 +25,7 @@
       <div class="hb__ctas">
         <a class="hb__btn hb__btn--main" href="{{ url }}">
           <span>{{ section.settings.btn1_label }}</span>
-          {%- if p != blank -%}
+          {%- if p != blank and section.settings.show_price -%}
             <span class="hb__btn-price">{% if p.compare_at_price > p.price %}<s>{{ p.compare_at_price | money }}</s> {% endif %}{{ p.price | money }}</span>
           {%- endif -%}
         </a>
@@ -62,7 +62,7 @@
         </figure>
       {%- endif -%}
 
-      {%- if p != blank and p.compare_at_price > p.price -%}
+      {%- if section.settings.show_offer and p != blank and p.compare_at_price > p.price -%}
         {%- assign save = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price | round -%}
         <div class="hb__tag" data-depth="0.9"><strong>-{{ save }} %</strong><span>{{ section.settings.tag_text }}</span></div>
       {%- endif -%}
@@ -116,18 +116,20 @@
     { "type": "image_picker", "id": "lifestyle", "label": "Photo du geste (bulle)" },
     { "type": "text", "id": "lifestyle_asset", "label": "Ou photo du thème (fichier assets)", "default": "brosse-geste-rond.jpg" },
     { "type": "text", "id": "lifestyle_label", "label": "Légende de la bulle", "default": "Le geste drainant" },
-    { "type": "text", "id": "eyebrow", "label": "Pastille", "default": "Nouveau · Brosse lymphatique visage" },
+    { "type": "text", "id": "eyebrow", "label": "Pastille", "default": "La brosse lymphatique visage" },
     { "type": "text", "id": "heading_1", "label": "Titre – début", "default": "Réveillez" },
     { "type": "text", "id": "heading_highlight", "label": "Titre – mot en couleur", "default": "l’éclat" },
     { "type": "text", "id": "heading_2", "label": "Titre – fin", "default": "de votre visage" },
-    { "type": "richtext", "id": "text", "label": "Texte", "default": "<p>La brosse lymphatique en bois naturel et fibres ultra-douces : 3 minutes de massage drainant pour un teint frais et des traits visiblement reposés.</p>" },
-    { "type": "text", "id": "btn1_label", "label": "Bouton principal", "default": "Je la veux" },
+    { "type": "richtext", "id": "text", "label": "Texte", "default": "<p>Trois minutes de massage. Un teint frais, des traits reposés.</p>" },
+    { "type": "text", "id": "btn1_label", "label": "Bouton principal", "default": "Découvrir la brosse" },
     { "type": "url", "id": "btn1_link", "label": "Lien (vide = produit)" },
     { "type": "text", "id": "btn2_label", "label": "Bouton secondaire", "default": "Voir le rituel" },
     { "type": "url", "id": "btn2_link", "label": "Lien secondaire" },
     { "type": "text", "id": "proof", "label": "Preuve sociale (uniquement chiffres réels)" },
     { "type": "text", "id": "ring_text", "label": "Texte circulaire", "default": "BROSSE LYMPHATIQUE ✦ BOIS NATUREL ✦ BIOVELA PARIS ✦ " },
     { "type": "text", "id": "badge", "label": "Badge flottant", "default": "Best-seller" },
+    { "type": "checkbox", "id": "show_price", "label": "Afficher le prix dans le bouton", "default": false },
+    { "type": "checkbox", "id": "show_offer", "label": "Afficher l'étiquette de remise", "default": false },
     { "type": "text", "id": "tag_text", "label": "Texte sous la remise", "default": "offre de lancement" }
   ],
   "blocks": [

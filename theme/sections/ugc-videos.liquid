@@ -1,0 +1,88 @@
+{%- comment -%}
+  Vidéos clientes / créatrices (format vertical 9:16).
+  N'utilisez que de vraies vidéos de personnes ayant testé le produit, avec leur accord.
+{%- endcomment -%}
+<section class="section reels-section{% if section.settings.soft %} bg-soft{% endif %}">
+  <div class="page-width">
+    <div class="reels-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      <div class="reels-nav">
+        <button class="reels-arrow" type="button" data-reels-prev aria-label="Précédent">←</button>
+        <button class="reels-arrow" type="button" data-reels-next aria-label="Suivant">→</button>
+      </div>
+    </div>
+    <div class="reels" data-reels>
+      {%- for block in section.blocks -%}
+        {%- assign poster = block.settings.poster -%}
+        <article class="reel" {{ block.shopify_attributes }}>
+          <div class="reel__media" data-reel>
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: muted: true, loop: true, playsinline: true, preload: 'metadata', image_size: '600x' }}
+            {%- elsif block.settings.video_url != blank -%}
+              {{ block.settings.video_url | external_video_url: autoplay: false, loop: true, mute: true, controls: true | external_video_tag }}
+            {%- elsif poster != blank -%}
+              {{ poster | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {%- elsif block.settings.poster_asset != blank -%}
+              <img src="{{ block.settings.poster_asset | asset_url }}" alt="{{ block.settings.name | escape }}" loading="lazy" width="600" height="1067">
+            {%- endif -%}
+            <span class="reel__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+            {%- if block.settings.is_example -%}<span class="reel__example">Exemple</span>{%- endif -%}
+            <div class="reel__overlay">
+              {%- if block.settings.quote != blank -%}<p class="reel__quote">« {{ block.settings.quote }} »</p>{%- endif -%}
+              {%- if block.settings.name != blank -%}<span class="reel__name">{{ block.settings.name }}{% if block.settings.verified %} <span class="reel__ok">✓</span>{% endif %}</span>{%- endif -%}
+            </div>
+          </div>
+          {%- assign p = block.settings.product -%}
+          {%- if p != blank -%}
+            <a class="reel__product" href="{{ p.url }}">
+              {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
+              <span>{{ p.title }}</span>
+            </a>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+<script>
+  (function () {
+    document.querySelectorAll('[data-reels]').forEach(function (track) {
+      var sec = track.closest('section');
+      var step = function () { var c = track.querySelector('.reel'); return c ? c.getBoundingClientRect().width + 16 : 300; };
+      var p = sec.querySelector('[data-reels-prev]'), n = sec.querySelector('[data-reels-next]');
+      p && p.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+      n && n.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+      track.querySelectorAll('[data-reel]').forEach(function (m) {
+        var v = m.querySelector('video'); if (!v) return;
+        m.classList.add('has-video');
+        if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } }); }, { threshold: .6 }).observe(m);
+        m.addEventListener('click', function () { v.muted = !v.muted; m.classList.toggle('is-sound', !v.muted); if (v.paused) v.play(); });
+      });
+    });
+  })();
+</script>
+{% schema %}
+{
+  "name": "Vidéos clientes",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Testée par vous" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Elles l'ont adoptée" },
+    { "type": "checkbox", "id": "soft", "label": "Fond lavande", "default": false }
+  ],
+  "blocks": [{ "type": "reel", "name": "Vidéo", "settings": [
+    { "type": "video", "id": "video", "label": "Vidéo verticale (MP4)" },
+    { "type": "video_url", "id": "video_url", "label": "Ou lien YouTube / Vimeo", "accept": ["youtube", "vimeo"] },
+    { "type": "image_picker", "id": "poster", "label": "Image (si pas de vidéo)" },
+    { "type": "text", "id": "poster_asset", "label": "Ou image du thème (fichier assets)" },
+    { "type": "text", "id": "name", "label": "Prénom" },
+    { "type": "text", "id": "quote", "label": "Phrase courte (réelle)" },
+    { "type": "product", "id": "product", "label": "Produit" },
+    { "type": "checkbox", "id": "verified", "label": "Cliente vérifiée", "default": false },
+    { "type": "checkbox", "id": "is_example", "label": "Afficher « Exemple »", "default": true }
+  ] }],
+  "presets": [{ "name": "Vidéos clientes", "blocks": [{ "type": "reel" }, { "type": "reel" }, { "type": "reel" }, { "type": "reel" }] }]
+}
+{% endschema %}

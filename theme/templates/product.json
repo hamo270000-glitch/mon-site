@@ -21,10 +21,6 @@
             "installments_provider": "avec Klarna"
           }
         },
-        "text_4": {
-          "type": "text",
-          "settings": {}
-        },
         "skin_5": {
           "type": "skin",
           "settings": {}
@@ -91,17 +87,12 @@
             "source": "custom",
             "content": "<p>Expédition sous 24 h ouvrées. Livraison en 48–72 h en France métropolitaine, offerte dès 49 €. Retours sous 30 jours.</p>"
           }
-        },
-        "trust_16": {
-          "type": "trust",
-          "settings": {}
         }
       },
       "block_order": [
         "title_1",
         "rating_2",
         "price_3",
-        "text_4",
         "skin_5",
         "benefits_6",
         "variant_picker_7",
@@ -112,18 +103,8 @@
         "collapsible_12",
         "collapsible_13",
         "collapsible_14",
-        "collapsible_15",
-        "trust_16"
+        "collapsible_15"
       ]
-    },
-    "video": {
-      "type": "video-feature",
-      "settings": {
-        "poster_asset": "hero-collection.jpg",
-        "eyebrow": "Le geste",
-        "heading": "Le rituel Biovela en vidéo",
-        "btn_label": ""
-      }
     },
     "faq": {
       "type": "faq",
@@ -171,11 +152,178 @@
     "reco": {
       "type": "product-recommendations",
       "settings": {}
+    },
+    "reels": {
+      "type": "ugc-videos",
+      "settings": {
+        "eyebrow": "En vidéo",
+        "heading": "Testée et adoptée",
+        "soft": true
+      },
+      "blocks": {
+        "reel_1": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "brosse-geste-rond.jpg",
+            "name": "",
+            "quote": "Le geste drainant",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_2": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "brosse-lymphatique-2.jpg",
+            "name": "",
+            "quote": "Fibres ultra-douces",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_3": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "huile-visage-2.jpg",
+            "name": "",
+            "quote": "Avec l'huile précieuse",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_4": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "brosse-lymphatique-3.jpg",
+            "name": "",
+            "quote": "Le coffret",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_5": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "serum-vitamine-c-2.jpg",
+            "name": "",
+            "quote": "La routine éclat",
+            "verified": false,
+            "is_example": true
+          }
+        }
+      },
+      "block_order": [
+        "reel_1",
+        "reel_2",
+        "reel_3",
+        "reel_4",
+        "reel_5"
+      ]
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {
+        "eyebrow": "Avis clients",
+        "heading": "Ce qu'elles en disent",
+        "score": ""
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "photo_asset": "brosse-geste-rond.jpg",
+            "rating": 5,
+            "text": "Collez ici un avis client réel, idéalement avec la photo envoyée par la cliente.",
+            "name": "Prénom N.",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "photo_asset": "",
+            "rating": 5,
+            "text": "Les avis courts et sincères rassurent le plus : texture, ressenti, résultat.",
+            "name": "Prénom N.",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "photo_asset": "brosse-lymphatique-2.jpg",
+            "rating": 5,
+            "text": "Ajoutez aussi les photos clients reçues via votre application d'avis.",
+            "name": "Prénom N.",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "photo_asset": "",
+            "rating": 5,
+            "text": "Exemple de mise en page — remplacez par un avis réel.",
+            "name": "Prénom N.",
+            "verified": false,
+            "is_example": true
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ]
+    },
+    "howto": {
+      "type": "how-it-works",
+      "settings": {
+        "eyebrow": "Le geste",
+        "heading": "3 minutes, 3 mouvements",
+        "image_asset": "brosse-geste-rond.jpg",
+        "cream": true,
+        "required_tag": "drainage"
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Préparez",
+            "text": "Deux gouttes d'huile sur peau propre."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Lissez",
+            "text": "Du centre du visage vers les oreilles."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Drainez",
+            "text": "Descendez le long du cou."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ]
     }
   },
   "order": [
     "main",
-    "video",
+    "howto",
+    "reels",
+    "reviews",
     "faq",
     "reco"
   ]

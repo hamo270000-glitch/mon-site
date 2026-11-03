@@ -9,33 +9,26 @@
         "announcement_1": {
           "type": "announcement",
           "settings": {
-            "text": "✦ Livraison offerte dès 49 € d'achat"
+            "text": "Livraison offerte dès 49 €"
           }
         },
         "announcement_2": {
           "type": "announcement",
           "settings": {
-            "text": "Paiement en 3x sans frais"
+            "text": "Retours offerts sous 30 jours"
           }
         },
         "announcement_3": {
           "type": "announcement",
           "settings": {
-            "text": "-10 % sur votre 1re commande avec le Club Biovela"
-          }
-        },
-        "announcement_4": {
-          "type": "announcement",
-          "settings": {
-            "text": "Retours gratuits sous 30 jours"
+            "text": "Conçue à Paris"
           }
         }
       },
       "block_order": [
         "announcement_1",
         "announcement_2",
-        "announcement_3",
-        "announcement_4"
+        "announcement_3"
       ]
     },
     "header": {

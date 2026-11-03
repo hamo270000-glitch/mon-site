@@ -1,0 +1,19 @@
+{%- comment -%} Logo Biovela : emblème (brosse en demi-lune) + nom {%- endcomment -%}
+<span class="logo{% if light %} logo--light{% endif %}">
+  <svg class="logo__mark" viewBox="0 0 48 48" aria-hidden="true">
+    <defs>
+      <linearGradient id="lgB{{ id }}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7A3FF2"/><stop offset=".55" stop-color="#B23ACB"/><stop offset="1" stop-color="#FF8F78"/>
+      </linearGradient>
+    </defs>
+    <circle cx="24" cy="24" r="23" fill="none" stroke="url(#lgB{{ id }})" stroke-width="1.4"/>
+    <path d="M10 25h28a14 14 0 0 1-28 0Z" fill="url(#lgB{{ id }})"/>
+    <g stroke="url(#lgB{{ id }})" stroke-width="1.6" stroke-linecap="round">
+      <path d="M13 22v-6M17 22v-8.5M21 22v-10M24 22v-11M27 22v-10M31 22v-8.5M35 22v-6"/>
+    </g>
+  </svg>
+  <span class="logo__words">
+    <span class="logo__name">Biovela</span>
+    <span class="logo__city">Paris</span>
+  </span>
+</span>

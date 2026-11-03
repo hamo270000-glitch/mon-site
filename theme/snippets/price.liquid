@@ -7,10 +7,7 @@
   {%- if cmp > p -%}
     <span class="price__sale" data-price>{{ p | money }}</span>
     <s class="price__compare" data-compare>{{ cmp | money }}</s>
-    {%- if large -%}
-      {%- assign save = cmp | minus: p | times: 100 | divided_by: cmp | round -%}
-      <span class="price__save">-{{ save }} %</span>
-    {%- endif -%}
+
   {%- else -%}
     {%- if product.price_varies and large == false -%}{{ 'product.from' | t }}&nbsp;{%- endif -%}
     <span data-price>{{ p | money }}</span>

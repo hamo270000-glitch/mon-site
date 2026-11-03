@@ -58,7 +58,7 @@
       {%- if section.settings.logo != blank -%}
         {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name, width: section.settings.logo_width }}
       {%- else -%}
-        <span class="logo-text">{{ section.settings.logo_line1 }}<span>{{ section.settings.logo_line2 }}</span></span>
+        {% render 'logo', id: 'h' %}
       {%- endif -%}
     </a>
     <div class="header__icons">
@@ -77,7 +77,7 @@
 
 <div class="mobile-nav" id="MobileNav" aria-label="Menu">
   <div class="mobile-nav__top">
-    <span class="logo-text">{{ section.settings.logo_line1 }}<span>{{ section.settings.logo_line2 }}</span></span>
+    {% render 'logo', id: 'm' %}
     <button class="icon-btn" type="button" data-menu-close aria-label="{{ 'general.close' | t }}">{% render 'icon', icon: 'close' %}</button>
   </div>
   <ul class="m-menu">

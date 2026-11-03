@@ -25,7 +25,8 @@
     "in_stock": "In stock — ships within 24h",
     "low_stock": "Only {{ count }} left",
     "preorder": "Available for pre-order",
-    "delivery_estimate": "Estimated delivery between"
+    "delivery_estimate": "Estimated delivery between",
+    "write_review": "Write a review"
   },
   "cart": {
     "title": "Your cart",

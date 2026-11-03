@@ -7,9 +7,14 @@
         "image_asset": "brosse-detouree.png",
         "lifestyle_asset": "brosse-geste-rond.jpg",
         "btn1_link": "/products/brosse-lymphatique-visage",
-        "btn2_label": "Voir le rituel",
-        "btn2_link": "/products/coffret-routine-lymphatique",
-        "proof": ""
+        "btn2_label": "Voir le geste",
+        "btn2_link": "#le-geste",
+        "proof": "",
+        "eyebrow": "La brosse lymphatique visage",
+        "text": "<p>Trois minutes de massage. Un teint frais, des traits reposés.</p>",
+        "btn1_label": "Découvrir la brosse",
+        "show_price": false,
+        "show_offer": false
       },
       "blocks": {
         "chip_1": {
@@ -87,9 +92,9 @@
     "bestsellers": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow": "Nos best-sellers",
-        "heading": "Les essentiels de votre rituel",
-        "text": "Soins visage, huiles précieuses et outils de massage : tout pour une peau éclatante.",
+        "eyebrow": "La collection",
+        "heading": "Nos essentiels",
+        "text": "",
         "collection": "all",
         "limit": 8,
         "columns": 4
@@ -102,63 +107,45 @@
         "bg": "cream",
         "eyebrow": "Le produit phare",
         "heading": "La Brosse Lymphatique Visage",
-        "text": "<p>Inspirée des gestes de drainage manuel, notre brosse en bois naturel et fibres ultra-douces accompagne un massage qui défroisse les traits et réveille l'éclat du teint.</p>",
-        "btn_label": "Je la veux — 34,90 €",
+        "text": "<p>Bois naturel, fibres ultra-douces, une forme pensée pour épouser le visage.</p>",
+        "btn_label": "Découvrir",
         "btn_link": "/products/brosse-lymphatique-visage"
       },
       "blocks": {
         "bullet_1": {
           "type": "bullet",
           "settings": {
-            "title": "Teint frais",
-            "text": "un massage qui ravive visiblement l'éclat"
+            "title": "Effet drainant",
+            "text": ""
           }
         },
         "bullet_2": {
           "type": "bullet",
           "settings": {
-            "title": "Traits reposés",
-            "text": "le geste drainant idéal au réveil"
+            "title": "Teint lumineux",
+            "text": ""
           }
         },
         "bullet_3": {
           "type": "bullet",
           "settings": {
-            "title": "Bois naturel",
-            "text": "une prise en main ergonomique et durable"
-          }
-        },
-        "bullet_4": {
-          "type": "bullet",
-          "settings": {
             "title": "3 minutes par jour",
-            "text": "un rituel simple, matin ou soir"
+            "text": ""
           }
         }
       },
       "block_order": [
         "bullet_1",
         "bullet_2",
-        "bullet_3",
-        "bullet_4"
+        "bullet_3"
       ]
-    },
-    "video": {
-      "type": "video-feature",
-      "settings": {
-        "poster_asset": "hero-collection.jpg",
-        "eyebrow": "Le rituel en mouvement",
-        "heading": "Trois minutes chaque matin pour un teint visiblement reposé",
-        "btn_label": "Voir le coffret rituel",
-        "btn_link": "/products/coffret-routine-lymphatique"
-      }
     },
     "routine": {
       "type": "routine-steps",
       "settings": {
         "eyebrow": "Votre rituel",
         "heading": "La routine éclat en 4 gestes",
-        "text": "Une routine courte, efficace et sensorielle.",
+        "text": "",
         "btn_label": "Composer ma routine",
         "btn_link": "/collections/all",
         "cream": true
@@ -213,7 +200,7 @@
       "settings": {
         "eyebrow": "Formules",
         "heading": "Des actifs choisis avec exigence",
-        "text": "Des formules courtes, des actifs reconnus et des textures sensorielles.",
+        "text": "",
         "dark": true
       },
       "blocks": {
@@ -255,7 +242,9 @@
     },
     "quiz": {
       "type": "skin-quiz",
-      "settings": {},
+      "settings": {
+        "text": ""
+      },
       "blocks": {
         "result_1": {
           "type": "result",
@@ -363,98 +352,6 @@
         "review_3"
       ]
     },
-    "labels": {
-      "type": "press",
-      "settings": {
-        "heading": "Nos engagements"
-      },
-      "blocks": {
-        "logo_1": {
-          "type": "logo",
-          "settings": {
-            "name": "Vegan"
-          }
-        },
-        "logo_2": {
-          "type": "logo",
-          "settings": {
-            "name": "Cruelty-free"
-          }
-        },
-        "logo_3": {
-          "type": "logo",
-          "settings": {
-            "name": "Conçu à Paris"
-          }
-        },
-        "logo_4": {
-          "type": "logo",
-          "settings": {
-            "name": "Formules courtes"
-          }
-        }
-      },
-      "block_order": [
-        "logo_1",
-        "logo_2",
-        "logo_3",
-        "logo_4"
-      ]
-    },
-    "ugc": {
-      "type": "ugc-gallery",
-      "settings": {
-        "eyebrow": "@biovelaparis",
-        "heading": "Rejoignez la communauté",
-        "text": "Partagez votre rituel avec #biovelaparis"
-      },
-      "blocks": {
-        "image_1": {
-          "type": "image",
-          "settings": {
-            "image_asset": "brosse-lymphatique-geste.jpg"
-          }
-        },
-        "image_2": {
-          "type": "image",
-          "settings": {
-            "image_asset": "serum-vitamine-c.jpg"
-          }
-        },
-        "image_3": {
-          "type": "image",
-          "settings": {
-            "image_asset": "huile-visage.jpg"
-          }
-        },
-        "image_4": {
-          "type": "image",
-          "settings": {
-            "image_asset": "creme-hydratante.jpg"
-          }
-        },
-        "image_5": {
-          "type": "image",
-          "settings": {
-            "image_asset": "gua-sha.jpg"
-          }
-        },
-        "image_6": {
-          "type": "image",
-          "settings": {
-            "image_asset": "coffret-routine.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "image_1",
-        "image_2",
-        "image_3",
-        "image_4",
-        "image_5",
-        "image_6"
-      ]
-    },
     "faq": {
       "type": "faq",
       "settings": {
@@ -518,20 +415,129 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {}
+    },
+    "howto": {
+      "type": "how-it-works",
+      "settings": {
+        "eyebrow": "Le geste",
+        "heading": "3 minutes, 3 mouvements",
+        "image_asset": "brosse-geste-rond.jpg",
+        "btn_label": "Découvrir la brosse",
+        "btn_link": "/products/brosse-lymphatique-visage",
+        "cream": false
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Préparez",
+            "text": "Deux gouttes d'huile sur peau propre."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Lissez",
+            "text": "Du centre du visage vers les oreilles."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Drainez",
+            "text": "Descendez le long du cou."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ]
+    },
+    "reels": {
+      "type": "ugc-videos",
+      "settings": {
+        "eyebrow": "Testée par vous",
+        "heading": "Elles l'ont adoptée"
+      },
+      "blocks": {
+        "reel_1": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "brosse-geste-rond.jpg",
+            "name": "",
+            "quote": "Le geste drainant",
+            "product": "brosse-lymphatique-visage",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_2": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "serum-vitamine-c-2.jpg",
+            "name": "",
+            "quote": "Le shot d'éclat",
+            "product": "serum-eclat-vitamine-c-15",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_3": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "huile-visage-2.jpg",
+            "name": "",
+            "quote": "Rituel du soir",
+            "product": "huile-visage-precieuse",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_4": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "coffret-routine.jpg",
+            "name": "",
+            "quote": "Le coffret rituel",
+            "product": "coffret-routine-lymphatique",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "reel_5": {
+          "type": "reel",
+          "settings": {
+            "poster_asset": "gua-sha-2.jpg",
+            "name": "",
+            "quote": "Effet bonne mine",
+            "product": "gua-sha-quartz-rose",
+            "verified": false,
+            "is_example": true
+          }
+        }
+      },
+      "block_order": [
+        "reel_1",
+        "reel_2",
+        "reel_3",
+        "reel_4",
+        "reel_5"
+      ]
     }
   },
   "order": [
     "hero",
     "trust",
     "bestsellers",
+    "howto",
+    "reels",
     "hero_product",
-    "video",
-    "routine",
     "ingredients",
+    "routine",
     "quiz",
     "reviews",
-    "labels",
-    "ugc",
     "faq",
     "newsletter"
   ]
