@@ -344,3 +344,26 @@
     });
   });
 })();
+
+/* Bouton express : Apple Pay si disponible, sinon « Acheter maintenant » → paiement direct */
+(function () {
+  var canApple = false;
+  try { canApple = !!(window.ApplePaySession && window.ApplePaySession.canMakePayments()); } catch (e) {}
+  document.querySelectorAll('[data-buy-now]').forEach(function (b) {
+    if (canApple) {
+      var a = b.querySelector('[data-applepay]'), g = b.querySelector('[data-buynow-label]');
+      if (a) a.hidden = false; if (g) g.hidden = true;
+      b.setAttribute('aria-label', 'Payer avec Apple Pay');
+    }
+    b.addEventListener('click', function () {
+      var form = document.querySelector('form[data-product-form]'); if (!form) return;
+      var fd = new FormData(form); b.disabled = true;
+      var root = (window.theme && window.theme.routes && window.theme.routes.root) || '/';
+      fetch(((window.theme && window.theme.routes.cart_add_url) || '/cart/add') + '.js', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: +fd.get('id'), quantity: +(fd.get('quantity') || 1) }] })
+      }).then(function (r) { if (!r.ok) throw r; window.location.href = root.replace(/\/$/, '') + '/checkout'; })
+        .catch(function () { b.disabled = false; });
+    });
+  });
+})();

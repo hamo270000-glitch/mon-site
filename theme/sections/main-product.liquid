@@ -127,6 +127,15 @@
                     <span>{%- if current_variant.available -%}{{ 'product.add_to_cart' | t }}{%- else -%}{{ 'product.sold_out' | t }}{%- endif -%}</span>
                   </button>
                 </div>
+                {%- if block.settings.express_button -%}
+                  <button class="btn-express" type="button" data-buy-now{% unless current_variant.available %} disabled{% endunless %}>
+                    <span class="btn-express__apple" data-applepay hidden aria-label="Payer avec Apple Pay">
+                      <svg viewBox="0 0 17 20" aria-hidden="true"><path fill="#fff" d="M14.06 10.62c-.02-2.1 1.72-3.12 1.8-3.17-.98-1.43-2.5-1.63-3.04-1.65-1.29-.13-2.53.76-3.18.76-.66 0-1.67-.74-2.75-.72-1.41.02-2.72.82-3.45 2.09-1.47 2.55-.38 6.33 1.06 8.4.7 1.01 1.53 2.15 2.62 2.11 1.05-.04 1.45-.68 2.72-.68 1.27 0 1.63.68 2.74.66 1.13-.02 1.85-1.03 2.54-2.05.8-1.17 1.13-2.31 1.15-2.37-.03-.01-2.2-.84-2.21-3.38ZM11.98 4.44c.58-.7.97-1.68.86-2.65-.83.03-1.84.55-2.44 1.25-.54.62-1.01 1.61-.88 2.56.93.07 1.88-.47 2.46-1.16Z"/></svg>
+                      <span>Pay</span>
+                    </span>
+                    <span class="btn-express__generic" data-buynow-label>{{ 'product.buy_now' | t }}</span>
+                  </button>
+                {%- endif -%}
                 {%- if block.settings.dynamic_checkout -%}<div style="margin-top:12px">{{ form | payment_button }}</div>{%- endif -%}
               {%- endform -%}
               {%- if block.settings.show_stock and current_variant.inventory_management == 'shopify' -%}
@@ -310,7 +319,8 @@
     { "type": "benefits", "name": "Bénéfices", "limit": 1 },
     { "type": "variant_picker", "name": "Variantes", "limit": 1 },
     { "type": "buy_buttons", "name": "Boutons d'achat", "limit": 1, "settings": [
-      { "type": "checkbox", "id": "dynamic_checkout", "label": "Paiement express (Shop Pay, Apple Pay…)", "default": true },
+      { "type": "checkbox", "id": "express_button", "label": "Bouton noir « Apple Pay / Acheter maintenant »", "default": true, "info": "Affiche « Apple Pay » sur iPhone/Mac (si activé dans Shopify Payments), sinon « Acheter maintenant ». Mène directement au paiement." },
+      { "type": "checkbox", "id": "dynamic_checkout", "label": "Boutons de paiement Shopify (Shop Pay…)", "default": false },
       { "type": "checkbox", "id": "show_stock", "label": "Indicateur de stock (réel)", "default": true },
       { "type": "range", "id": "low_stock", "label": "Seuil de stock faible", "min": 1, "max": 30, "step": 1, "default": 10 }
     ] },

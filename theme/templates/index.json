@@ -485,63 +485,63 @@
     "reels": {
       "type": "ugc-videos",
       "settings": {
-        "eyebrow": "Testée par vous",
-        "heading": "Elles l'ont adoptée"
+        "eyebrow": "En vidéo",
+        "heading": "Le rituel en mouvement"
       },
       "blocks": {
         "reel_1": {
           "type": "reel",
           "settings": {
-            "poster_asset": "brosse-geste-rond.jpg",
+            "poster_asset": "reel-geste.webp",
             "name": "",
             "quote": "Le geste drainant",
-            "product": "brosse-lymphatique-visage",
             "verified": false,
-            "is_example": true
+            "is_example": false,
+            "product": "brosse-lymphatique-visage"
           }
         },
         "reel_2": {
           "type": "reel",
           "settings": {
-            "poster_asset": "serum-vitamine-c-2.jpg",
+            "poster_asset": "reel-brosse.webp",
             "name": "",
-            "quote": "Le shot d'éclat",
-            "product": "serum-eclat-vitamine-c-15",
+            "quote": "Bois naturel & fibres douces",
             "verified": false,
-            "is_example": true
+            "is_example": false,
+            "product": "brosse-lymphatique-visage"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
-            "poster_asset": "huile-visage-2.jpg",
+            "poster_asset": "reel-serum.webp",
             "name": "",
-            "quote": "Rituel du soir",
-            "product": "huile-visage-precieuse",
+            "quote": "Le shot d'éclat",
             "verified": false,
-            "is_example": true
+            "is_example": false,
+            "product": "serum-eclat-vitamine-c-15"
           }
         },
         "reel_4": {
           "type": "reel",
           "settings": {
-            "poster_asset": "coffret-routine.jpg",
+            "poster_asset": "reel-creme.webp",
             "name": "",
-            "quote": "Le coffret rituel",
-            "product": "coffret-routine-lymphatique",
+            "quote": "Hydratation repulpante",
             "verified": false,
-            "is_example": true
+            "is_example": false,
+            "product": "creme-hydratante-acide-hyaluronique"
           }
         },
         "reel_5": {
           "type": "reel",
           "settings": {
-            "poster_asset": "gua-sha-2.jpg",
+            "poster_asset": "reel-gamme.webp",
             "name": "",
-            "quote": "Effet bonne mine",
-            "product": "gua-sha-quartz-rose",
+            "quote": "Le rituel complet",
             "verified": false,
-            "is_example": true
+            "is_example": false,
+            "product": "coffret-routine-lymphatique"
           }
         }
       },

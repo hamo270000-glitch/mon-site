@@ -28,9 +28,10 @@
         "buy": {
           "type": "buy_buttons",
           "settings": {
-            "dynamic_checkout": true,
+            "dynamic_checkout": false,
             "show_stock": true,
-            "low_stock": 10
+            "low_stock": 10,
+            "express_button": true
           }
         },
         "specs": {
@@ -102,58 +103,58 @@
       "type": "ugc-videos",
       "settings": {
         "eyebrow": "En vidéo",
-        "heading": "Testée et adoptée",
+        "heading": "Le rituel en mouvement",
         "soft": true
       },
       "blocks": {
         "reel_1": {
           "type": "reel",
           "settings": {
-            "poster_asset": "brosse-geste-rond.jpg",
+            "poster_asset": "reel-geste.webp",
             "name": "",
             "quote": "Le geste drainant",
             "verified": false,
-            "is_example": true
+            "is_example": false
           }
         },
         "reel_2": {
           "type": "reel",
           "settings": {
-            "poster_asset": "brosse-lymphatique-2.jpg",
+            "poster_asset": "reel-brosse.webp",
             "name": "",
-            "quote": "Fibres ultra-douces",
+            "quote": "Bois naturel & fibres douces",
             "verified": false,
-            "is_example": true
+            "is_example": false
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
-            "poster_asset": "huile-visage-2.jpg",
+            "poster_asset": "reel-serum.webp",
             "name": "",
-            "quote": "Avec l'huile précieuse",
+            "quote": "Le shot d'éclat",
             "verified": false,
-            "is_example": true
+            "is_example": false
           }
         },
         "reel_4": {
           "type": "reel",
           "settings": {
-            "poster_asset": "brosse-lymphatique-3.jpg",
+            "poster_asset": "reel-creme.webp",
             "name": "",
-            "quote": "Le coffret",
+            "quote": "Hydratation repulpante",
             "verified": false,
-            "is_example": true
+            "is_example": false
           }
         },
         "reel_5": {
           "type": "reel",
           "settings": {
-            "poster_asset": "serum-vitamine-c-2.jpg",
+            "poster_asset": "reel-gamme.webp",
             "name": "",
-            "quote": "La routine éclat",
+            "quote": "Le rituel complet",
             "verified": false,
-            "is_example": true
+            "is_example": false
           }
         }
       },

@@ -26,7 +26,8 @@
     "low_stock": "Plus que {{ count }} en stock",
     "preorder": "Disponible en précommande",
     "delivery_estimate": "Livraison estimée entre le",
-    "write_review": "Laisser un avis"
+    "write_review": "Laisser un avis",
+    "buy_now": "Acheter maintenant"
   },
   "cart": {
     "title": "Votre panier",
