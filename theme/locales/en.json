@@ -1,89 +1,89 @@
 {
   "general": {
-    "skip": "Skip to content",
+    "skip": "Aller au contenu",
     "menu": "Menu",
-    "close": "Close",
-    "search": "Search",
-    "account": "Account",
-    "home": "Home",
-    "view_all": "View all",
-    "not_found": "Page not found",
-    "not_found_text": "The page you are looking for does not exist."
+    "close": "Fermer",
+    "search": "Rechercher",
+    "account": "Mon compte",
+    "home": "Accueil",
+    "view_all": "Voir tout",
+    "not_found": "Page introuvable",
+    "not_found_text": "La page que vous cherchez n'existe pas ou a été déplacée."
   },
   "product": {
-    "add_to_cart": "Add to cart",
-    "add": "Add",
-    "quick_add": "Quick add",
-    "choose": "Choose",
-    "sold_out": "Sold out",
-    "new": "New",
-    "from": "From",
-    "reviews": "reviews",
-    "quantity": "Quantity",
-    "taxes": "Tax included. Shipping calculated at checkout.",
-    "installments": "Or",
-    "in_stock": "In stock — ships within 24h",
-    "low_stock": "Only {{ count }} left",
-    "preorder": "Available for pre-order",
-    "delivery_estimate": "Estimated delivery between",
-    "write_review": "Write a review"
+    "add_to_cart": "Ajouter au panier",
+    "add": "Ajouter",
+    "quick_add": "Ajout rapide",
+    "choose": "Choisir",
+    "sold_out": "Épuisé",
+    "new": "Nouveau",
+    "from": "À partir de",
+    "reviews": "avis",
+    "quantity": "Quantité",
+    "taxes": "TVA incluse. Frais de livraison calculés à la commande.",
+    "installments": "Ou",
+    "in_stock": "En stock — expédié sous 24 h",
+    "low_stock": "Plus que {{ count }} en stock",
+    "preorder": "Disponible en précommande",
+    "delivery_estimate": "Livraison estimée entre le",
+    "write_review": "Laisser un avis"
   },
   "cart": {
-    "title": "Your cart",
-    "empty": "Your cart is empty.",
-    "continue": "Continue shopping",
-    "subtotal": "Subtotal",
-    "taxes": "Tax included. Shipping and discounts calculated at checkout.",
-    "checkout": "Checkout",
-    "view": "View cart",
-    "remove": "Remove",
-    "note": "Order note",
-    "added": "Added to cart",
-    "free_shipping_remaining": "Only [amount] away from free shipping",
-    "free_shipping_reached": "You've unlocked free shipping ✦"
+    "title": "Votre panier",
+    "empty": "Votre panier est vide.",
+    "continue": "Continuer mes achats",
+    "subtotal": "Sous-total",
+    "taxes": "TVA incluse. Livraison et codes promo calculés au paiement.",
+    "checkout": "Commander",
+    "view": "Voir le panier",
+    "remove": "Retirer",
+    "note": "Une note pour votre commande ?",
+    "added": "Ajouté au panier",
+    "free_shipping_remaining": "Plus que [amount] pour profiter de la livraison offerte",
+    "free_shipping_reached": "Bravo ! La livraison vous est offerte ✦"
   },
   "collection": {
     "eyebrow": "Collection",
-    "all": "Collections",
+    "all": "Nos collections",
     "count": {
-      "one": "{{ count }} product",
-      "other": "{{ count }} products"
+      "one": "{{ count }} produit",
+      "other": "{{ count }} produits"
     },
-    "filters": "Filter",
-    "sort": "Sort",
-    "clear": "Clear filters",
-    "empty": "No products match."
+    "filters": "Filtrer",
+    "sort": "Trier",
+    "clear": "Effacer les filtres",
+    "empty": "Aucun produit ne correspond à votre sélection."
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Serum, brush, oil…",
+    "title": "Recherche",
+    "placeholder": "Sérum, brosse, huile…",
     "results": {
-      "one": "{{ count }} result for “{{ terms }}”",
-      "other": "{{ count }} results for “{{ terms }}”"
+      "one": "{{ count }} résultat pour « {{ terms }} »",
+      "other": "{{ count }} résultats pour « {{ terms }} »"
     }
   },
   "newsletter": {
-    "placeholder": "Your email",
-    "button": "Subscribe",
-    "success": "Thank you! Your welcome code is on its way."
+    "placeholder": "Votre adresse email",
+    "button": "Je m'inscris",
+    "success": "Merci ! Votre code de bienvenue arrive par email."
   },
   "contact": {
-    "name": "Name",
-    "phone": "Phone",
-    "message": "Message",
-    "send": "Send",
-    "success": "Thanks, we'll reply within 24 business hours."
+    "name": "Nom",
+    "phone": "Téléphone",
+    "message": "Votre message",
+    "send": "Envoyer",
+    "success": "Merci, nous vous répondons sous 24 h ouvrées."
   },
   "customer": {
-    "login": "Log in",
-    "register": "Create account",
-    "account": "My account",
-    "logout": "Log out",
-    "password": "Password",
-    "first_name": "First name",
-    "last_name": "Last name",
-    "marketing": "Subscribe to offers",
-    "orders": "My orders",
-    "no_orders": "No orders yet."
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "account": "Mon compte",
+    "logout": "Se déconnecter",
+    "password": "Mot de passe",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "marketing": "Je souhaite recevoir les offres du Club Biovela",
+    "orders": "Mes commandes",
+    "no_orders": "Vous n'avez pas encore passé de commande."
   }
 }

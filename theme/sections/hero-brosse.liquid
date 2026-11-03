@@ -2,8 +2,14 @@
 {%- liquid
   assign p = section.settings.product
   assign url = section.settings.btn1_link
-  if url == blank and p != blank
+  if p != blank
     assign url = p.url
+  endif
+  if section.settings.btn1_link != blank
+    assign url = section.settings.btn1_link
+  endif
+  if url == blank
+    assign url = routes.all_products_collection_url
   endif
 -%}
 <section class="hb" data-hb>
