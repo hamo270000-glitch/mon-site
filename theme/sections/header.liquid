@@ -81,47 +81,48 @@
   <div class="mega-backdrop" data-mega-backdrop></div>
 </header>
 
-<div class="mobile-nav" id="MobileNav" aria-label="Menu">
-  <div class="mobile-nav__top">
+<div class="mobile-nav mnav" id="MobileNav" aria-label="Menu">
+  <div class="mnav__top">
+    <button class="mnav__back" type="button" data-menu-close aria-label="{{ 'general.close' | t }}">‹</button>
     {% render 'logo', id: 'm' %}
-    <button class="icon-btn" type="button" data-menu-close aria-label="{{ 'general.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+    <span style="width:44px"></span>
   </div>
-  <ul class="m-menu">
-    {%- for link in section.settings.menu.links -%}
-      <li>
-        {%- if link.links.size > 0 -%}
-          <details class="m-menu__group">
-            <summary>{{ link.title }}</summary>
-            <div class="m-menu__panel">
-              {%- for child in link.links -%}
-                <div class="m-menu__col">
-                  <a class="m-menu__heading" href="{{ child.url }}">{{ child.title }}</a>
-                  {%- for g in child.links -%}<a class="m-menu__link" href="{{ g.url }}">{{ g.title }}</a>{%- endfor -%}
-                </div>
-              {%- endfor -%}
-              <div class="m-menu__features">
-                {%- for block in section.blocks -%}
-                  {%- assign target = block.settings.menu_item | downcase | strip -%}
-                  {%- assign current = link.title | downcase | strip -%}
-                  {%- if target == current -%}
-                    <a class="mega-card" href="{{ block.settings.link | default: link.url }}">
-                      <span class="mega-card__media">
-                        {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}{%- elsif block.settings.image_asset != blank -%}<img src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="500" height="500">{%- endif -%}
-                      </span>
-                      <span class="mega-card__title">{{ block.settings.title }}</span>
-                    </a>
-                  {%- endif -%}
+  <div class="mnav__body">
+    {%- if section.settings.m_highlight != blank -%}
+      <a class="mnav__highlight" href="{{ section.settings.m_highlight_link | default: routes.all_products_collection_url }}">✦ {{ section.settings.m_highlight }} ✦</a>
+    {%- endif -%}
+    <ul class="mnav__list">
+      {%- for link in section.settings.menu.links -%}
+        <li>
+          {%- if link.links.size > 0 -%}
+            <details class="mnav__group">
+              <summary>{{ link.title }}</summary>
+              <ul class="mnav__sub">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}">{{ child.title }}</a>
+                    {%- if child.links.size > 0 -%}
+                      <ul class="mnav__sub2">{%- for g in child.links -%}<li><a href="{{ g.url }}">{{ g.title }}</a></li>{%- endfor -%}</ul>
+                    {%- endif -%}
+                  </li>
                 {%- endfor -%}
-              </div>
-              <a class="mega__all" href="{{ link.url }}">{{ 'general.view_all' | t }} →</a>
-            </div>
-          </details>
-        {%- else -%}
-          <a class="m-menu__top" href="{{ link.url }}">{{ link.title }}</a>
-        {%- endif -%}
-      </li>
-    {%- endfor -%}
-  </ul>
+                <li><a class="mnav__all" href="{{ link.url }}">{{ 'general.view_all' | t }}</a></li>
+              </ul>
+            </details>
+          {%- else -%}
+            <a class="mnav__link" href="{{ link.url }}">{{ link.title }}</a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if section.settings.m_chip != blank -%}
+      <a class="mnav__chip" href="{{ section.settings.m_chip_link | default: '#diagnostic' }}">{{ section.settings.m_chip }}</a>
+    {%- endif -%}
+  </div>
+  <div class="mnav__band">
+    <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">{% render 'icon', icon: 'account' %}<span>Mon compte</span></a>
+    <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">{% render 'icon', icon: 'truck' %}<span>Suivre ma commande</span></a>
+    <a href="{{ section.settings.m_contact_link | default: '/pages/contact' }}">{% render 'icon', icon: 'return' %}<span>Nous contacter</span></a>
+  </div>
 </div>
 
 <script>
@@ -155,7 +156,13 @@
     { "type": "range", "id": "logo_width", "label": "Largeur du logo", "min": 80, "max": 300, "step": 10, "unit": "px", "default": 160 },
     { "type": "text", "id": "logo_line1", "label": "Logo texte – ligne 1", "default": "biovela" },
     { "type": "text", "id": "logo_line2", "label": "Logo texte – ligne 2", "default": "paris" },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Méga-menu : 3 niveaux. Niveau 1 = onglet, niveau 2 = titre de colonne, niveau 3 = liens." }
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Méga-menu : 3 niveaux. Niveau 1 = onglet, niveau 2 = titre de colonne, niveau 3 = liens." },
+    { "type": "header", "content": "Menu mobile" },
+    { "type": "text", "id": "m_highlight", "label": "Lien mis en avant (en haut)", "default": "Coffrets & idées cadeaux" },
+    { "type": "url", "id": "m_highlight_link", "label": "Lien" },
+    { "type": "text", "id": "m_chip", "label": "Bouton encadré (en bas)", "default": "Diagnostic de peau" },
+    { "type": "url", "id": "m_chip_link", "label": "Lien du bouton" },
+    { "type": "url", "id": "m_contact_link", "label": "Lien « Nous contacter »" }
   ],
   "blocks": [
     { "type": "feature", "name": "Visuel du méga-menu", "settings": [

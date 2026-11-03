@@ -1,59 +1,75 @@
 {%- comment -%}
-  Avis du produit. Les étoiles et la note viennent automatiquement de votre application d'avis
-  (Judge.me, Avis Vérifiés, Okendo…) via les métachamps reviews.*. Ajoutez le bloc de l'application
-  pour afficher la liste complète des avis avec photos et vidéos.
+  Avis du produit (mise en page grandes marques).
+  La note et le nombre d'avis viennent de votre application d'avis (Judge.me, Avis Vérifiés…)
+  via les métachamps reviews.*. Ajoutez le bloc de l'application pour la liste complète.
+  Les blocs « Avis » servent à mettre en avant de VRAIS avis (avec l'accord des clientes).
 {%- endcomment -%}
+{{ 'product.css' | asset_url | stylesheet_tag }}
 {%- liquid
   assign r = product.metafields.reviews.rating.value
   assign c = product.metafields.reviews.rating_count.value | default: 0
   assign score = section.settings.score
-  assign count_label = section.settings.count_label
+  assign count = section.settings.count
   if r != blank and c > 0
     assign score = r.rating | round: 1
-    assign count_label = c | append: ' avis'
+    assign count = c
   endif
+  assign cards = section.blocks | where: 'type', 'review'
 -%}
-<section class="section reviews-x" id="avis">
+<section class="rv" id="avis" data-rv>
   <div class="page-width">
-    <div class="reviews-x__head">
-      <div>
-        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-        <h2>{{ section.settings.heading }}</h2>
+    <h2 class="rv__title">{{ section.settings.heading }}</h2>
+    {%- if score != blank -%}
+      {%- assign pct = score | replace: ',', '.' | times: 20 -%}
+      <div class="rv__score">
+        <strong>{{ score }}</strong>
+        <span class="stars__icons" style="--pct: {{ pct }}%"></span>
+        {%- if count != blank -%}<small>({{ count }})</small>{%- endif -%}
       </div>
-      {%- if score != blank -%}
-        {%- assign pct = score | replace: ',', '.' | times: 20 -%}
-        <div class="reviews-x__score">
-          <strong>{{ score }}</strong>
-          <div><span class="stars__icons" style="--pct: {{ pct }}%"></span><small>{{ count_label }}</small></div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}<div class="rv__app">{% render block %}</div>{%- endif -%}
+    {%- endfor -%}
+
+    {%- if cards.size > 0 -%}
+      <div class="rv__filters">
+        <button class="rv__filter" type="button" data-rv-filter="recent">Plus récents ↓</button>
+        <button class="rv__filter" type="button" data-rv-filter="5">5 étoiles</button>
+        <button class="rv__filter" type="button" data-rv-filter="photo">Avec photos</button>
+      </div>
+
+      {%- assign has_photo = false -%}
+      {%- for b in cards -%}{%- if b.settings.photo != blank or b.settings.photo_asset != blank -%}{%- assign has_photo = true -%}{%- endif -%}{%- endfor -%}
+      {%- if has_photo -%}
+        <div class="rv__photos">
+          {%- for b in cards -%}
+            {%- if b.settings.photo != blank or b.settings.photo_asset != blank -%}
+              <div class="rv__photo">
+                {%- if b.settings.photo != blank -%}{{ b.settings.photo | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}<img src="{{ b.settings.photo_asset | asset_url }}" alt="" loading="lazy" width="400" height="400">{%- endif -%}
+                <span>{{ b.settings.name | slice: 0 | upcase }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
       {%- endif -%}
-    </div>
 
-    <div class="reviews-x__grid">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when '@app' -%}
-            <div class="reviews-x__app">{% render block %}</div>
-          {%- when 'review' -%}
-            {%- assign pct = block.settings.rating | times: 20 -%}
-            <article class="rx" {{ block.shopify_attributes }}>
-              {%- if block.settings.photo != blank -%}
-                <div class="rx__photo">{{ block.settings.photo | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.name }}</div>
-              {%- elsif block.settings.photo_asset != blank -%}
-                <div class="rx__photo"><img src="{{ block.settings.photo_asset | asset_url }}" alt="" loading="lazy" width="600" height="600"></div>
-              {%- endif -%}
-              <div class="rx__body">
-                {%- if block.settings.is_example -%}<span class="review__example">Exemple — à remplacer</span>{%- endif -%}
-                <span class="stars__icons" style="--pct: {{ pct }}%"></span>
-                <p class="rx__text">{{ block.settings.text }}</p>
-                <span class="rx__name">{{ block.settings.name }}{% if block.settings.verified %} · <span class="review__verified">Achat vérifié</span>{% endif %}</span>
-              </div>
-            </article>
-        {%- endcase -%}
-      {%- endfor -%}
-    </div>
-    {%- if section.settings.write_link != blank -%}
-      <p style="text-align:center;margin-top:36px"><a class="btn btn--outline" href="{{ section.settings.write_link }}">{{ 'product.write_review' | t }}</a></p>
+      <div class="rv__list">
+        {%- for b in cards -%}
+          {%- assign pct = b.settings.rating | times: 20 -%}
+          <article class="rv__card" data-rating="{{ b.settings.rating }}"{% if b.settings.photo != blank or b.settings.photo_asset != blank %} data-photo{% endif %}{% if forloop.index > section.settings.visible %} hidden{% endif %} {{ b.shopify_attributes }}>
+            {%- if b.settings.is_example -%}<span class="rv__example">Exemple — à remplacer</span>{%- endif -%}
+            <div class="rv__who"><span class="rv__initial">{{ b.settings.name | slice: 0 | upcase }}</span><span class="rv__name">{{ b.settings.name }}</span></div>
+            <div class="rv__meta"><span class="stars__icons" style="--pct: {{ pct }}%"></span><span>{{ b.settings.date }}</span>{%- if b.settings.verified -%}<span>· Achat vérifié</span>{%- endif -%}</div>
+            <p class="rv__about">À propos du produit : <a href="{{ product.url }}">{{ product.title }}</a></p>
+            {%- if b.settings.title != blank -%}<h3>{{ b.settings.title }}</h3>{%- endif -%}
+            <p>{{ b.settings.text }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+      {%- if cards.size > section.settings.visible -%}
+        <button class="btn btn--outline rv__more" type="button" data-rv-more>Voir plus d'avis</button>
+      {%- endif -%}
     {%- endif -%}
   </div>
 </section>
@@ -61,20 +77,21 @@
 {
   "name": "Avis produit",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Avis clients" },
-    { "type": "text", "id": "heading", "label": "Titre", "default": "Ce qu'elles en disent" },
-    { "type": "text", "id": "score", "label": "Note affichée sans application (ex : 4,8)", "info": "Ignoré dès qu'une application d'avis est installée. N'indiquez qu'une note réelle." },
-    { "type": "text", "id": "count_label", "label": "Libellé nombre d'avis", "default": "avis vérifiés" },
-    { "type": "url", "id": "write_link", "label": "Lien « Laisser un avis »" }
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Les avis de nos clients" },
+    { "type": "text", "id": "score", "label": "Note affichée sans application (ex : 4,8)", "info": "Remplacée automatiquement par la vraie note dès qu'une application d'avis est installée. N'indiquez qu'une note réelle." },
+    { "type": "text", "id": "count", "label": "Nombre d'avis (sans application)" },
+    { "type": "range", "id": "visible", "label": "Avis visibles avant « Voir plus »", "min": 2, "max": 12, "step": 1, "default": 3 }
   ],
   "blocks": [
     { "type": "@app" },
-    { "type": "review", "name": "Avis avec photo", "settings": [
+    { "type": "review", "name": "Avis", "settings": [
+      { "type": "text", "id": "name", "label": "Prénom", "default": "Prénom" },
+      { "type": "range", "id": "rating", "label": "Note", "min": 1, "max": 5, "step": 1, "default": 5 },
+      { "type": "text", "id": "date", "label": "Date", "default": "Hier" },
+      { "type": "text", "id": "title", "label": "Titre", "default": "Titre de l'avis" },
+      { "type": "textarea", "id": "text", "label": "Avis", "default": "Collez ici un avis client réel." },
       { "type": "image_picker", "id": "photo", "label": "Photo cliente (avec son accord)" },
       { "type": "text", "id": "photo_asset", "label": "Ou image du thème (fichier assets)" },
-      { "type": "range", "id": "rating", "label": "Note", "min": 1, "max": 5, "step": 1, "default": 5 },
-      { "type": "textarea", "id": "text", "label": "Avis (court)", "default": "Collez ici un avis client réel." },
-      { "type": "text", "id": "name", "label": "Prénom + initiale", "default": "Prénom N." },
       { "type": "checkbox", "id": "verified", "label": "Achat vérifié", "default": false },
       { "type": "checkbox", "id": "is_example", "label": "Afficher « Exemple »", "default": true }
     ] }

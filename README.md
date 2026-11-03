@@ -31,6 +31,9 @@ Shopify Admin → **Paramètres → Données personnalisées → Produits → Aj
 | Actifs clés | `custom.key_ingredients` | Texte multiligne |
 | INCI | `custom.inci` | Texte multiligne |
 | Mode d'emploi | `custom.how_to_use` | Texte multiligne |
+| Besoins | `custom.concerns` | Texte multiligne (1 par ligne) |
+| Utilisation | `custom.usage` | Texte sur une ligne (ex : Matin et soir) |
+| Gamme (petit titre au-dessus du nom) | `custom.range` | Texte sur une ligne |
 | Produits complémentaires | `custom.complementary` | Référence produit (liste) |
 
 ## 3. Importer les produits

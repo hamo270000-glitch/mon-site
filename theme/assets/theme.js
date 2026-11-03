@@ -289,3 +289,58 @@
   window.addEventListener('mousemove', function (e) { mx = e.clientX / window.innerWidth - 0.5; my = e.clientY / window.innerHeight - 0.5; queue(); }, { passive: true });
   queue();
 })();
+
+/* Fiche produit : « Voir plus », photo suivante (mobile), avis */
+(function () {
+  document.querySelectorAll('[data-clamp-toggle]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var box = b.closest('[data-clamp]'); var open = box.classList.toggle('is-open');
+      b.textContent = open ? 'Voir moins' : 'Voir plus';
+    });
+  });
+  document.querySelectorAll('[data-gallery-next]').forEach(function (b) {
+    var track = b.parentElement.querySelector('[data-gallery-track]');
+    b.addEventListener('click', function () {
+      var slide = track.querySelector('.gallery__slide'); if (!slide) return;
+      var w = slide.getBoundingClientRect().width + 10;
+      var end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      track.scrollTo({ left: end ? 0 : track.scrollLeft + w, behavior: 'smooth' });
+    });
+  });
+  document.querySelectorAll('[data-rv]').forEach(function (rv) {
+    var more = rv.querySelector('[data-rv-more]');
+    more && more.addEventListener('click', function () {
+      var hidden = rv.querySelectorAll('.rv__card[hidden]');
+      for (var i = 0; i < hidden.length && i < 6; i++) hidden[i].hidden = false;
+      if (!rv.querySelector('.rv__card[hidden]')) more.remove();
+    });
+    rv.querySelectorAll('[data-rv-filter]').forEach(function (f) {
+      f.addEventListener('click', function () {
+        var on = !f.classList.contains('is-active');
+        rv.querySelectorAll('[data-rv-filter]').forEach(function (x) { x.classList.remove('is-active'); });
+        if (on) f.classList.add('is-active');
+        var key = on ? f.getAttribute('data-rv-filter') : '';
+        rv.querySelectorAll('.rv__card').forEach(function (c) {
+          var ok = !key || (key === 'photo' ? c.hasAttribute('data-photo') : key === '5' ? c.getAttribute('data-rating') === '5' : true);
+          c.style.display = ok ? '' : 'none';
+        });
+      });
+    });
+  });
+})();
+
+/* Favoris (mémorisés sur l'appareil) */
+(function () {
+  var KEY = 'biovela-favs', favs = [];
+  try { favs = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) {}
+  document.querySelectorAll('[data-fav]').forEach(function (b) {
+    var h = b.getAttribute('data-fav');
+    if (favs.indexOf(h) > -1) b.classList.add('is-on');
+    b.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var i = favs.indexOf(h); if (i > -1) favs.splice(i, 1); else favs.push(h);
+      b.classList.toggle('is-on', i === -1);
+      try { localStorage.setItem(KEY, JSON.stringify(favs)); } catch (e) {}
+    });
+  });
+})();

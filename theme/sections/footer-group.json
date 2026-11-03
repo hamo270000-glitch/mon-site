@@ -4,34 +4,44 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "settings": {},
+      "settings": {
+        "legal_menu": "legal"
+      },
       "blocks": {
         "menu_1": {
           "type": "menu",
           "settings": {
-            "heading": "Boutique",
+            "heading": "Commander en ligne",
             "menu": "footer"
           }
         },
         "menu_2": {
           "type": "menu",
           "settings": {
-            "heading": "Aide",
+            "heading": "Services",
             "menu": "aide"
           }
         },
         "menu_3": {
           "type": "menu",
           "settings": {
-            "heading": "Informations légales",
-            "menu": "legal"
+            "heading": "À propos de Biovela",
+            "menu": "footer"
+          }
+        },
+        "menu_4": {
+          "type": "menu",
+          "settings": {
+            "heading": "Besoin d'aide ?",
+            "menu": "aide"
           }
         }
       },
       "block_order": [
         "menu_1",
         "menu_2",
-        "menu_3"
+        "menu_3",
+        "menu_4"
       ]
     }
   },

@@ -1,39 +1,63 @@
-<footer class="footer">
+<footer class="footer ft">
   <div class="page-width">
-    <div class="footer__grid">
-      <div class="footer__brand">
-        {% render 'logo', id: 'f', light: true %}
-        <div class="rte" style="max-width:340px">{{ section.settings.about }}</div>
+    <div class="ft__top">
+      <div class="ft__news">
+        <h4 class="ft__h">{{ section.settings.news_title }}</h4>
+        {%- form 'customer', class: 'ft__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p>{{ 'newsletter.success' | t }}</p>
+          {%- else -%}
+            <label class="visually-hidden" for="FtEmail">Email</label>
+            <input id="FtEmail" type="email" name="contact[email]" required placeholder="{{ 'newsletter.placeholder' | t }}" autocomplete="email">
+            <button type="submit">OK</button>
+          {%- endif -%}
+        {%- endform -%}
         <div class="socials">
           {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" aria-label="Instagram">{% render 'icon', icon: 'instagram' %}</a>{%- endif -%}
-          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" aria-label="TikTok">{% render 'icon', icon: 'tiktok' %}</a>{%- endif -%}
           {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" aria-label="Facebook">{% render 'icon', icon: 'facebook' %}</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" aria-label="TikTok">{% render 'icon', icon: 'tiktok' %}</a>{%- endif -%}
           {%- if settings.social_pinterest != blank -%}<a href="{{ settings.social_pinterest }}" aria-label="Pinterest">{% render 'icon', icon: 'pinterest' %}</a>{%- endif -%}
         </div>
+        <p class="ft__consent">{{ section.settings.consent }}</p>
       </div>
+      <div class="ft__brand">{% render 'logo', id: 'f', light: true %}<div class="rte">{{ section.settings.about }}</div></div>
+    </div>
+    <div class="ft__menus">
       {%- for block in section.blocks -%}
-        <div {{ block.shopify_attributes }}>
-          <h4>{{ block.settings.heading | default: block.settings.menu.title }}</h4>
+        <details class="ft__group" data-ft-group {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.heading | default: block.settings.menu.title }}</summary>
           <ul>{%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
-        </div>
+        </details>
       {%- endfor -%}
     </div>
-    <div class="footer__bottom">
-      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ section.settings.copyright }}</span>
+    <div class="ft__bottom">
+      <span>🇫🇷 Français</span>
+      {%- for link in section.settings.legal_menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
       {% render 'payment-icons' %}
     </div>
   </div>
 </footer>
+<script>
+  (function () {
+    var mq = window.matchMedia('(min-width: 990px)');
+    function sync() { document.querySelectorAll('[data-ft-group]').forEach(function (d) { if (mq.matches) d.setAttribute('open', ''); else d.removeAttribute('open'); }); }
+    sync(); mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
+  })();
+</script>
 {% schema %}
 {
   "name": "Pied de page",
   "settings": [
-    { "type": "text", "id": "logo_line1", "label": "Logo ligne 1", "default": "biovela" },
-    { "type": "text", "id": "logo_line2", "label": "Logo ligne 2", "default": "paris" },
-    { "type": "richtext", "id": "about", "label": "À propos", "default": "<p>Marque française de soins et d'outils de beauté. Des rituels simples pour une peau éclatante.</p>" },
-    { "type": "text", "id": "copyright", "label": "Mention", "default": "Conçu à Paris" }
+    { "type": "text", "id": "news_title", "label": "Titre newsletter", "default": "Restons en contact" },
+    { "type": "textarea", "id": "consent", "label": "Mention d'inscription", "default": "Je souhaite être informé(e) des nouveautés et offres Biovela par e-mail. Désinscription possible à tout moment." },
+    { "type": "richtext", "id": "about", "label": "À propos", "default": "<p>Soins et outils de massage visage, conçus à Paris.</p>" },
+    { "type": "link_list", "id": "legal_menu", "label": "Menu légal (bas de page)", "default": "footer" },
+    { "type": "text", "id": "logo_line1", "label": "(ancien) Logo ligne 1", "default": "biovela" },
+    { "type": "text", "id": "logo_line2", "label": "(ancien) Logo ligne 2", "default": "paris" }
   ],
-  "max_blocks": 3,
+  "max_blocks": 5,
   "blocks": [{ "type": "menu", "name": "Menu", "settings": [
     { "type": "text", "id": "heading", "label": "Titre" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }

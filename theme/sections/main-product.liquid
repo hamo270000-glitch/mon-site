@@ -1,11 +1,13 @@
+{{ 'product.css' | asset_url | stylesheet_tag }}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign mf = product.metafields.custom
 -%}
 <div class="page-width" data-product-section>
   <nav class="breadcrumbs" aria-label="Fil d'Ariane">
-    <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a> &nbsp;/&nbsp;
-    {% if collection %}<a href="{{ collection.url }}">{{ collection.title }}</a> &nbsp;/&nbsp; {% endif %}
+    <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a><span class="bc-sep">›</span>
+    <a href="{{ routes.all_products_collection_url }}">Produits</a><span class="bc-sep">›</span>
+    {% if collection and collection.handle != 'all' %}<a href="{{ collection.url }}">{{ collection.title }}</a><span class="bc-sep">›</span>{% elsif product.type != blank %}<span>{{ product.type }}</span><span class="bc-sep">›</span>{% endif %}
     <span>{{ product.title }}</span>
   </nav>
 
@@ -20,7 +22,8 @@
           </button>
         {%- endfor -%}
       </div>
-      <div class="gallery__main">
+      <div class="gallery__main" data-gallery-track>
+        {%- if product.tags contains 'edition-limitee' -%}<span class="gallery__badge">Édition limitée</span>{%- elsif product.tags contains 'nouveau' -%}<span class="gallery__badge">Nouveau</span>{%- elsif product.tags contains 'best-seller' -%}<span class="gallery__badge">Best-seller</span>{%- endif -%}
         {%- for media in product.media -%}
           <div class="gallery__slide{% if forloop.first %} is-active{% endif %}">
             {%- case media.media_type -%}
@@ -39,6 +42,7 @@
           <div class="gallery__slide is-active">{{ 'product-1' | placeholder_svg_tag }}</div>
         {%- endfor -%}
       </div>
+      {%- if product.media.size > 1 -%}<button class="gallery__next" type="button" data-gallery-next aria-label="Photo suivante">→</button>{%- endif -%}
     </div>
 
     <div class="product__info">
@@ -48,13 +52,23 @@
             {% render block %}
           {%- when 'title' -%}
             <div {{ block.shopify_attributes }}>
-              {%- if product.tags contains 'best-seller' -%}<span class="badge badge--best" style="margin-bottom:12px">Best-seller</span>{%- endif -%}
+              {%- assign range = mf.range | default: product.type -%}
+              {%- if range != blank -%}<p class="product__range">{{ range }}</p>{%- endif -%}
               <h1 class="product__title">{{ product.title }}</h1>
             </div>
             {%- if mf.subtitle != blank -%}<p class="product__subtitle">{{ mf.subtitle }}</p>{%- endif -%}
           {%- when 'rating' -%}
             <div class="product__meta-row" {{ block.shopify_attributes }}>
-              {% render 'stars', product: product %}
+              <div class="product__rating">
+                {%- assign rv = product.metafields.reviews.rating.value -%}
+                {%- assign rc = product.metafields.reviews.rating_count.value | default: 0 -%}
+                {%- if rv != blank and rc > 0 -%}
+                  {%- assign pct = rv.rating | divided_by: rv.scale_max | times: 100 -%}
+                  <a href="#avis" class="product__stars"><span class="stars__icons" style="--pct: {{ pct }}%"></span><span>{{ rc }}</span></a>
+                  <span class="product__sep">|</span>
+                {%- endif -%}
+                <a href="#avis" class="product__review-link">{{ 'product.write_review' | t }}</a>
+              </div>
               {%- if mf.volume != blank -%}<span class="chip">{{ mf.volume }}</span>{%- endif -%}
             </div>
           {%- when 'price' -%}
@@ -147,6 +161,45 @@
                 {%- endfor -%}
               </div>
             {%- endif -%}
+          {%- when 'specs' -%}
+            <dl class="specs" {{ block.shopify_attributes }}>
+              {%- if mf.skin_types != blank -%}
+                {%- assign items = mf.skin_types.value | newline_to_br | split: '<br />' -%}
+                <div><dt>Type de peau :</dt> <dd>{% for t in items %}{{ t | strip }}{% unless forloop.last %}, {% endunless %}{% endfor %}</dd></div>
+              {%- endif -%}
+              {%- if mf.concerns != blank -%}
+                {%- assign items = mf.concerns.value | newline_to_br | split: '<br />' -%}
+                <div><dt>Besoin :</dt> <dd>{% for t in items %}{{ t | strip }}{% unless forloop.last %}, {% endunless %}{% endfor %}</dd></div>
+              {%- endif -%}
+              {%- if mf.key_ingredients != blank -%}
+                {%- assign items = mf.key_ingredients.value | newline_to_br | split: '<br />' -%}
+                <div><dt>Ingrédients clés :</dt> <dd>{% for t in items %}{{ t | split: ' — ' | first | strip_html | strip }}{% unless forloop.last %}, {% endunless %}{% endfor %}</dd></div>
+              {%- endif -%}
+              {%- if mf.usage != blank -%}<div><dt>Utilisation :</dt> <dd>{{ mf.usage }}</dd></div>{%- endif -%}
+              {%- if product.description != blank -%}
+                <div class="specs__desc" data-clamp>
+                  <dt>Description</dt>
+                  <dd class="specs__clamp">{{ product.description | strip_html | truncatewords: 80 }}</dd>
+                  <button class="specs__more" type="button" data-clamp-toggle>Voir plus</button>
+                </div>
+              {%- endif -%}
+            </dl>
+          {%- when 'labels' -%}
+            <div class="stamps" {{ block.shopify_attributes }}>
+              {%- for i in (1..3) -%}
+                {%- assign key = 'label_' | append: i -%}
+                {%- assign txt = block.settings[key] -%}
+                {%- if txt != blank -%}
+                  {%- assign parts = txt | split: '|' -%}
+                  <span class="stamp">
+                    {%- if parts.size > 1 -%}
+                      <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="st{{ i }}{{ block.id }}" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"/></defs><text><textPath href="#st{{ i }}{{ block.id }}" startOffset="0">{{ parts[1] | strip | upcase }}</textPath></text></svg>
+                    {%- endif -%}
+                    <strong>{{ parts[0] | strip }}</strong>
+                  </span>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
           {%- when 'collapsible' -%}
             {%- liquid
               assign content = blank
@@ -154,7 +207,24 @@
                 when 'description'
                   assign content = product.description
                 when 'ingredients'
-                  assign content = mf.key_ingredients.value | newline_to_br
+                  capture content
+                    if mf.key_ingredients != blank
+                      assign items = mf.key_ingredients.value | newline_to_br | split: '<br />'
+                      echo '<ul>'
+                      for t in items
+                        assign kv = t | split: ' — '
+                        echo '<li><strong>' | append: kv[0] | append: '</strong>'
+                        if kv[1]
+                          echo ' : ' | append: kv[1]
+                        endif
+                        echo '</li>'
+                      endfor
+                      echo '</ul>'
+                    endif
+                    if mf.inci != blank
+                      echo '<p class="inci-title"><strong>Liste complète d’ingrédients :</strong></p><p class="inci">' | append: mf.inci.value | append: '</p>'
+                    endif
+                  endcapture
                 when 'inci'
                   assign content = mf.inci.value | newline_to_br
                 when 'how_to_use'
@@ -166,7 +236,7 @@
               endcase
             -%}
             {%- if content != blank -%}
-              <div class="accordion" style="border-top:0" {{ block.shopify_attributes }}>
+              <div class="accordion accordion--box" {{ block.shopify_attributes }}>
                 <details{% if block.settings.open %} open{% endif %}>
                   <summary>{{ block.settings.heading }}</summary>
                   <div class="rte">{{ content }}</div>
@@ -252,7 +322,7 @@
       { "type": "text", "id": "heading", "label": "Titre", "default": "Description" },
       { "type": "select", "id": "source", "label": "Contenu", "default": "description", "options": [
         { "value": "description", "label": "Description du produit" },
-        { "value": "ingredients", "label": "Métachamp : actifs clés" },
+        { "value": "ingredients", "label": "Nos ingrédients (actifs + INCI)" },
         { "value": "inci", "label": "Métachamp : liste INCI" },
         { "value": "how_to_use", "label": "Métachamp : mode d'emploi" },
         { "value": "page", "label": "Page" },
@@ -261,7 +331,13 @@
       { "type": "richtext", "id": "content", "label": "Texte personnalisé" },
       { "type": "checkbox", "id": "open", "label": "Ouvert par défaut", "default": false }
     ] },
-    { "type": "trust", "name": "Réassurance", "limit": 1 }
+    { "type": "trust", "name": "Réassurance", "limit": 1 },
+    { "type": "specs", "name": "Caractéristiques", "limit": 1 },
+    { "type": "labels", "name": "Pastilles rondes", "limit": 1, "settings": [
+      { "type": "text", "id": "label_1", "label": "Pastille 1 (texte | texte circulaire)", "default": "Paris | Conçue à Paris ·" },
+      { "type": "text", "id": "label_2", "label": "Pastille 2", "default": "30 j | Retours offerts ·" },
+      { "type": "text", "id": "label_3", "label": "Pastille 3", "info": "N'affichez que des mentions vraies (ex : vegan si certifié)." }
+    ] }
   ]
 }
 {% endschema %}

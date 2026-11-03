@@ -6,34 +6,26 @@
         "sticky_atc": true
       },
       "blocks": {
-        "title_1": {
+        "title": {
           "type": "title",
           "settings": {}
         },
-        "rating_2": {
+        "rating": {
           "type": "rating",
           "settings": {}
         },
-        "price_3": {
+        "price": {
           "type": "price",
           "settings": {
             "installments": true,
             "installments_provider": "avec Klarna"
           }
         },
-        "skin_5": {
-          "type": "skin",
-          "settings": {}
-        },
-        "benefits_6": {
-          "type": "benefits",
-          "settings": {}
-        },
-        "variant_picker_7": {
+        "variant_picker": {
           "type": "variant_picker",
           "settings": {}
         },
-        "buy_buttons_8": {
+        "buy": {
           "type": "buy_buttons",
           "settings": {
             "dynamic_checkout": true,
@@ -41,117 +33,70 @@
             "low_stock": 10
           }
         },
-        "delivery_9": {
-          "type": "delivery",
+        "specs": {
+          "type": "specs",
           "settings": {}
         },
-        "complementary_10": {
-          "type": "complementary",
+        "labels": {
+          "type": "labels",
           "settings": {
-            "heading": "Complétez votre rituel"
+            "label_1": "Paris | Conçue à Paris ·",
+            "label_2": "30 j | Retours offerts ·",
+            "label_3": ""
           }
         },
-        "collapsible_11": {
+        "ing": {
           "type": "collapsible",
           "settings": {
-            "heading": "Description",
-            "source": "description",
+            "heading": "Nos ingrédients",
+            "source": "ingredients",
             "open": true
           }
         },
-        "collapsible_12": {
+        "howto": {
           "type": "collapsible",
           "settings": {
-            "heading": "Actifs clés",
-            "source": "ingredients"
+            "heading": "Conseils d'application",
+            "source": "how_to_use",
+            "open": true
           }
         },
-        "collapsible_13": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "Mode d'emploi",
-            "source": "how_to_use"
-          }
-        },
-        "collapsible_14": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "Composition (INCI)",
-            "source": "inci"
-          }
-        },
-        "collapsible_15": {
+        "ship": {
           "type": "collapsible",
           "settings": {
             "heading": "Livraison & retours",
             "source": "custom",
-            "content": "<p>Expédition sous 24 h ouvrées. Livraison en 48–72 h en France métropolitaine, offerte dès 49 €. Retours sous 30 jours.</p>"
+            "content": "<p>Expédition sous 24 h ouvrées. Livraison offerte dès 49 €. Retours gratuits sous 30 jours.</p>",
+            "open": false
+          }
+        },
+        "complementary": {
+          "type": "complementary",
+          "settings": {
+            "heading": "Complétez votre rituel"
           }
         }
       },
       "block_order": [
-        "title_1",
-        "rating_2",
-        "price_3",
-        "skin_5",
-        "benefits_6",
-        "variant_picker_7",
-        "buy_buttons_8",
-        "delivery_9",
-        "complementary_10",
-        "collapsible_11",
-        "collapsible_12",
-        "collapsible_13",
-        "collapsible_14",
-        "collapsible_15"
-      ]
-    },
-    "faq": {
-      "type": "faq",
-      "settings": {
-        "heading": "Vos questions",
-        "cream": true
-      },
-      "blocks": {
-        "qa_1": {
-          "type": "qa",
-          "settings": {
-            "question": "Comment utiliser la brosse lymphatique ?",
-            "answer": "<p>Sur peau propre, avec quelques gouttes d'Huile Visage Précieuse : effectuez des mouvements doux du centre du visage vers l'extérieur, puis du haut du cou vers les clavicules. 3 à 5 minutes suffisent, matin ou soir.</p>"
-          }
-        },
-        "qa_2": {
-          "type": "qa",
-          "settings": {
-            "question": "Convient-elle aux peaux sensibles ?",
-            "answer": "<p>Oui, ses fibres souples sont pensées pour un massage doux. Évitez simplement les zones irritées ou lésées et consultez un professionnel de santé en cas de doute.</p>"
-          }
-        },
-        "qa_3": {
-          "type": "qa",
-          "settings": {
-            "question": "Comment nettoyer ma brosse ?",
-            "answer": "<p>Rincez les fibres à l'eau tiède avec un savon doux une fois par semaine, sans immerger le manche en bois. Laissez sécher à plat, fibres vers le bas.</p>"
-          }
-        },
-        "qa_4": {
-          "type": "qa",
-          "settings": {
-            "question": "Quels sont les délais de livraison ?",
-            "answer": "<p>Les commandes passées avant 13 h sont expédiées le jour même (jours ouvrés). Livraison en 48–72 h en France métropolitaine, offerte dès 49 €.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "qa_1",
-        "qa_2",
-        "qa_3",
-        "qa_4"
+        "title",
+        "rating",
+        "price",
+        "variant_picker",
+        "buy",
+        "specs",
+        "labels",
+        "ing",
+        "howto",
+        "ship",
+        "complementary"
       ]
     },
     "reco": {
       "type": "product-recommendations",
-      "settings": {}
+      "settings": {
+        "eyebrow": "",
+        "heading": "Vous aimerez aussi"
+      }
     },
     "reels": {
       "type": "ugc-videos",
@@ -223,18 +168,21 @@
     "reviews": {
       "type": "product-reviews",
       "settings": {
-        "eyebrow": "Avis clients",
-        "heading": "Ce qu'elles en disent",
-        "score": ""
+        "heading": "Les avis de nos clients",
+        "score": "",
+        "count": "",
+        "visible": 3
       },
       "blocks": {
         "review_1": {
           "type": "review",
           "settings": {
-            "photo_asset": "brosse-geste-rond.jpg",
+            "name": "Camille",
             "rating": 5,
-            "text": "Collez ici un avis client réel, idéalement avec la photo envoyée par la cliente.",
-            "name": "Prénom N.",
+            "date": "Hier",
+            "title": "Titre de l'avis",
+            "text": "Exemple de mise en page : collez ici un avis client réel.",
+            "photo_asset": "brosse-geste-rond.jpg",
             "verified": false,
             "is_example": true
           }
@@ -242,10 +190,12 @@
         "review_2": {
           "type": "review",
           "settings": {
-            "photo_asset": "",
+            "name": "Sarah",
             "rating": 5,
-            "text": "Les avis courts et sincères rassurent le plus : texture, ressenti, résultat.",
-            "name": "Prénom N.",
+            "date": "Avant-hier",
+            "title": "Titre de l'avis",
+            "text": "Exemple de mise en page : remplacez par un avis réel.",
+            "photo_asset": "brosse-lymphatique-2.jpg",
             "verified": false,
             "is_example": true
           }
@@ -253,10 +203,12 @@
         "review_3": {
           "type": "review",
           "settings": {
-            "photo_asset": "brosse-lymphatique-2.jpg",
+            "name": "Léa",
             "rating": 5,
-            "text": "Ajoutez aussi les photos clients reçues via votre application d'avis.",
-            "name": "Prénom N.",
+            "date": "Il y a 3 jours",
+            "title": "Titre de l'avis",
+            "text": "Exemple de mise en page : remplacez par un avis réel.",
+            "photo_asset": "",
             "verified": false,
             "is_example": true
           }
@@ -264,10 +216,25 @@
         "review_4": {
           "type": "review",
           "settings": {
-            "photo_asset": "",
+            "name": "Inès",
             "rating": 5,
-            "text": "Exemple de mise en page — remplacez par un avis réel.",
-            "name": "Prénom N.",
+            "date": "Il y a 5 jours",
+            "title": "Titre de l'avis",
+            "text": "Exemple de mise en page : remplacez par un avis réel.",
+            "photo_asset": "huile-visage-2.jpg",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "name": "Nora",
+            "rating": 5,
+            "date": "Il y a 1 semaine",
+            "title": "Titre de l'avis",
+            "text": "Exemple de mise en page : remplacez par un avis réel.",
+            "photo_asset": "",
             "verified": false,
             "is_example": true
           }
@@ -277,7 +244,8 @@
         "review_1",
         "review_2",
         "review_3",
-        "review_4"
+        "review_4",
+        "review_5"
       ]
     },
     "howto": {
@@ -324,7 +292,6 @@
     "howto",
     "reels",
     "reviews",
-    "faq",
     "reco"
   ]
 }
