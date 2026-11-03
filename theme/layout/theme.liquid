@@ -52,7 +52,18 @@
     </main>
 
     {% sections 'footer-group' %}
-    {% render 'cart-drawer' %}
+    {%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
+      <div class="drawer" id="CartDrawer" role="dialog" aria-modal="true" aria-label="{{ 'cart.title' | t }}">
+        <div class="drawer__overlay" data-cart-close></div>
+        <div class="drawer__panel">
+          <div class="drawer__head">
+            <h3>{{ 'cart.title' | t }}</h3>
+            <button class="icon-btn" type="button" data-cart-close aria-label="{{ 'general.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+          </div>
+          {% section 'cart-drawer-content' %}
+        </div>
+      </div>
+    {%- endif -%}
 
     <script>
       window.theme = {

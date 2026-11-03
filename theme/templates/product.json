@@ -119,7 +119,6 @@
     "video": {
       "type": "video-feature",
       "settings": {
-        "video_asset": "hero-video.mp4",
         "poster_asset": "hero-collection.jpg",
         "eyebrow": "Le geste",
         "heading": "Le rituel Biovela en vidéo",

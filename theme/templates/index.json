@@ -120,7 +120,6 @@
     "video": {
       "type": "video-feature",
       "settings": {
-        "video_asset": "hero-video.mp4",
         "poster_asset": "hero-collection.jpg",
         "eyebrow": "Le rituel en mouvement",
         "heading": "Trois minutes chaque matin pour un teint visiblement reposé",

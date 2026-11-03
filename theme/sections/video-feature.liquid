@@ -7,10 +7,12 @@
         {{ section.settings.video_url | external_video_url: autoplay: true, loop: true, mute: true, controls: false | external_video_tag }}
       {%- elsif section.settings.video_asset != blank -%}
         <video autoplay muted loop playsinline {% if section.settings.poster_asset != blank %}poster="{{ section.settings.poster_asset | asset_url }}"{% endif %}><source src="{{ section.settings.video_asset | asset_url }}" type="video/mp4"></video>
+      {%- elsif section.settings.poster_asset != blank -%}
+        <img src="{{ section.settings.poster_asset | asset_url }}" alt="" loading="lazy" width="1920" height="1080">
       {%- else -%}
         {{ 'lifestyle-2' | placeholder_svg_tag }}
       {%- endif -%}
-      <button class="video-toggle" type="button" data-video-toggle aria-label="Lecture / pause">{% render 'icon', icon: 'pause' %}</button>
+      {%- if section.settings.video != blank or section.settings.video_asset != blank -%}<button class="video-toggle" type="button" data-video-toggle aria-label="Lecture / pause">{% render 'icon', icon: 'pause' %}</button>{%- endif -%}
       <div class="video-feature__overlay">
         {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color:#fff">{{ section.settings.eyebrow }}</span>{%- endif -%}
         <h2>{{ section.settings.heading }}</h2>
@@ -25,7 +27,7 @@
   "settings": [
     { "type": "video", "id": "video", "label": "Vidéo (Shopify)" },
     { "type": "video_url", "id": "video_url", "label": "Ou vidéo YouTube / Vimeo", "accept": ["youtube", "vimeo"] },
-    { "type": "text", "id": "video_asset", "label": "Ou vidéo du thème (fichier assets)", "default": "hero-video.mp4" },
+    { "type": "text", "id": "video_asset", "label": "Ou vidéo du thème (fichier assets)" },
     { "type": "text", "id": "poster_asset", "label": "Image d'attente (fichier assets)", "default": "hero-collection.jpg" },
     { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Le rituel en mouvement" },
     { "type": "text", "id": "heading", "label": "Titre", "default": "Trois minutes chaque matin pour un teint visiblement reposé" },
