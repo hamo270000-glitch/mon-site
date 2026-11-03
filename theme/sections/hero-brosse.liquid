@@ -22,12 +22,14 @@
 
   <div class="page-width hb__grid">
     <div class="hb__content">
-      {%- if section.settings.eyebrow != blank -%}<span class="hb__pill"><span class="hb__dot"></span>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.eyebrow != blank -%}<span class="hb__pill">{{ section.settings.eyebrow }}</span>{%- endif -%}
       <h1 class="hb__title">{{ section.settings.heading_1 }} <span class="hb__shine">{{ section.settings.heading_highlight }}</span> {{ section.settings.heading_2 }}</h1>
       <div class="hb__text rte">{{ section.settings.text }}</div>
+      {%- if section.blocks.size > 0 -%}
       <ul class="hb__chips">
-        {%- for block in section.blocks -%}<li {{ block.shopify_attributes }}><span>{{ block.settings.icon }}</span>{{ block.settings.label }}</li>{%- endfor -%}
+        {%- for block in section.blocks -%}<li {{ block.shopify_attributes }}>{{ block.settings.label }}</li>{%- endfor -%}
       </ul>
+      {%- endif -%}
       <div class="hb__ctas">
         <a class="hb__btn hb__btn--main" href="{{ url }}">
           <span>{{ section.settings.btn1_label }}</span>
@@ -37,6 +39,12 @@
         </a>
         {%- if section.settings.btn2_label != blank -%}<a class="hb__btn hb__btn--ghost" href="{{ section.settings.btn2_link }}">{{ section.settings.btn2_label }}</a>{%- endif -%}
       </div>
+      {%- if section.settings.facts != blank -%}
+        <ul class="hb__facts">
+          {%- assign facts = section.settings.facts | split: '|' -%}
+          {%- for f in facts -%}<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>{{ f | strip }}</li>{%- endfor -%}
+        </ul>
+      {%- endif -%}
       {%- if section.settings.proof != blank -%}
         <p class="hb__proof"><span class="stars__icons" style="--pct:100%"></span> {{ section.settings.proof }}</p>
       {%- endif -%}
@@ -44,9 +52,8 @@
 
     <div class="hb__stage" data-hb-stage>
       <div class="hb__halo" data-depth="0.15"></div>
-      <svg class="hb__ring" viewBox="0 0 200 200" aria-hidden="true" data-depth="0.08">
-        <defs><path id="hbCircle-{{ section.id }}" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/></defs>
-        <text><textPath href="#hbCircle-{{ section.id }}">{{ section.settings.ring_text }}</textPath></text>
+      <svg class="hb__rings" viewBox="0 0 200 200" aria-hidden="true" data-depth="0.08">
+        <circle cx="100" cy="100" r="96"/><circle cx="100" cy="100" r="80"/><circle class="hb__rings-dash" cx="100" cy="100" r="88"/>
       </svg>
       <div class="hb__product" data-depth="0.45">
         {%- if section.settings.image != blank -%}
@@ -131,9 +138,10 @@
     { "type": "url", "id": "btn1_link", "label": "Lien (vide = produit)" },
     { "type": "text", "id": "btn2_label", "label": "Bouton secondaire", "default": "Voir le rituel" },
     { "type": "url", "id": "btn2_link", "label": "Lien secondaire" },
+    { "type": "text", "id": "facts", "label": "Points de confiance (séparés par |)", "default": "Bois naturel | Fibres ultra-douces | Conçue à Paris" },
     { "type": "text", "id": "proof", "label": "Preuve sociale (uniquement chiffres réels)" },
     { "type": "text", "id": "ring_text", "label": "Texte circulaire", "default": "BROSSE LYMPHATIQUE ✦ BOIS NATUREL ✦ BIOVELA PARIS ✦ " },
-    { "type": "text", "id": "badge", "label": "Badge flottant", "default": "Best-seller" },
+    { "type": "text", "id": "badge", "label": "Badge flottant", "default": "Usage quotidien" },
     { "type": "checkbox", "id": "show_price", "label": "Afficher le prix dans le bouton", "default": false },
     { "type": "checkbox", "id": "show_offer", "label": "Afficher l'étiquette de remise", "default": false },
     { "type": "text", "id": "tag_text", "label": "Texte sous la remise", "default": "offre de lancement" }

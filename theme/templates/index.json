@@ -10,40 +10,19 @@
         "btn2_label": "Voir le geste",
         "btn2_link": "#le-geste",
         "proof": "",
-        "eyebrow": "La brosse lymphatique visage",
-        "text": "<p>Trois minutes de massage. Un teint frais, des traits reposés.</p>",
+        "eyebrow": "Soin du visage · Drainage",
+        "text": "<p>Une brosse de massage drainant en bois naturel, pour un teint frais et des traits reposés en trois minutes.</p>",
         "btn1_label": "Découvrir la brosse",
         "show_price": false,
-        "show_offer": false
+        "show_offer": false,
+        "heading_1": "Le geste qui",
+        "heading_highlight": "réveille",
+        "heading_2": "votre visage",
+        "facts": "Bois naturel | Fibres ultra-douces | Conçue à Paris",
+        "badge": "Usage quotidien"
       },
-      "blocks": {
-        "chip_1": {
-          "type": "chip",
-          "settings": {
-            "icon": "✦",
-            "label": "Effet drainant"
-          }
-        },
-        "chip_2": {
-          "type": "chip",
-          "settings": {
-            "icon": "✦",
-            "label": "Teint lumineux"
-          }
-        },
-        "chip_3": {
-          "type": "chip",
-          "settings": {
-            "icon": "✦",
-            "label": "Bois naturel"
-          }
-        }
-      },
-      "block_order": [
-        "chip_1",
-        "chip_2",
-        "chip_3"
-      ]
+      "blocks": {},
+      "block_order": []
     },
     "trust": {
       "type": "trust-bar",
@@ -357,7 +336,7 @@
       "settings": {
         "eyebrow": "Questions fréquentes",
         "heading": "Tout savoir",
-        "cream": true
+        "cream": false
       },
       "blocks": {
         "qa_1": {

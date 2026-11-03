@@ -10,38 +10,132 @@
   {
     "name": "Couleurs",
     "settings": [
-      { "type": "color", "id": "color_primary", "label": "Violet lilas (principale)", "default": "#7A3FF2" },
-      { "type": "color", "id": "color_primary_soft", "label": "Lavande poudrée", "default": "#F1E8FF" },
-      { "type": "color", "id": "color_ink", "label": "Texte / aubergine", "default": "#2A0F3A" },
-      { "type": "color", "id": "color_bg", "label": "Fond", "default": "#FFFBF8" },
-      { "type": "color", "id": "color_cream", "label": "Crème pêche", "default": "#FFF1E8" },
-      { "type": "color", "id": "color_accent", "label": "Abricot doré (étoiles, reflets)", "default": "#F2A03D" },
-      { "type": "color", "id": "color_sale", "label": "Promotion (framboise)", "default": "#C93A63" }
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Violet lilas (principale)",
+        "default": "#0E7C7B"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_soft",
+        "label": "Lavande poudrée",
+        "default": "#E7F4F2"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Texte / aubergine",
+        "default": "#0F2B3A"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Fond",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Crème pêche",
+        "default": "#F4F8F7"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Abricot doré (étoiles, reflets)",
+        "default": "#D9A35B"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Promotion (framboise)",
+        "default": "#B4473C"
+      }
     ]
   },
   {
     "name": "Style",
     "settings": [
-      { "type": "range", "id": "radius", "label": "Arrondi des angles", "min": 0, "max": 28, "step": 2, "unit": "px", "default": 14 },
-      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+      {
+        "type": "range",
+        "id": "radius",
+        "label": "Arrondi des angles",
+        "min": 0,
+        "max": 28,
+        "step": 2,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
     ]
   },
   {
     "name": "Panier & réassurance",
     "settings": [
-      { "type": "select", "id": "cart_type", "label": "Type de panier", "default": "drawer", "options": [{ "value": "drawer", "label": "Tiroir latéral" }, { "value": "page", "label": "Page panier" }] },
-      { "type": "number", "id": "free_shipping_threshold", "label": "Seuil livraison offerte (€, 0 = désactivé)", "default": 49 },
-      { "type": "text", "id": "trust_shipping", "label": "Texte livraison", "default": "Livraison offerte dès 49 €" },
-      { "type": "text", "id": "trust_returns", "label": "Texte retours", "default": "Retours gratuits sous 30 jours" }
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Type de panier",
+        "default": "drawer",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "Tiroir latéral"
+          },
+          {
+            "value": "page",
+            "label": "Page panier"
+          }
+        ]
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Seuil livraison offerte (€, 0 = désactivé)",
+        "default": 49
+      },
+      {
+        "type": "text",
+        "id": "trust_shipping",
+        "label": "Texte livraison",
+        "default": "Livraison offerte dès 49 €"
+      },
+      {
+        "type": "text",
+        "id": "trust_returns",
+        "label": "Texte retours",
+        "default": "Retours gratuits sous 30 jours"
+      }
     ]
   },
   {
     "name": "Réseaux sociaux",
     "settings": [
-      { "type": "url", "id": "social_instagram", "label": "Instagram" },
-      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
-      { "type": "url", "id": "social_facebook", "label": "Facebook" },
-      { "type": "url", "id": "social_pinterest", "label": "Pinterest" }
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest"
+      }
     ]
   }
 ]
