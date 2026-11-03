@@ -62,7 +62,7 @@
       {%- endif -%}
     </a>
     <div class="header__icons">
-      <a class="icon-btn" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', icon: 'search' %}</a>
+      <a class="icon-btn header__search-icon" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', icon: 'search' %}</a>
       {%- if shop.customer_accounts_enabled -%}
         <a class="icon-btn" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{{ 'general.account' | t }}">{% render 'icon', icon: 'account' %}</a>
       {%- endif -%}
@@ -72,6 +72,12 @@
       </a>
     </div>
   </div>
+  <form class="header__msearch" action="{{ routes.search_url }}" method="get" role="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.6"/></svg>
+    <label class="visually-hidden" for="HeaderMSearch">{{ 'general.search' | t }}</label>
+    <input id="HeaderMSearch" type="search" name="q" placeholder="{{ 'search.header_placeholder' | t }}" autocomplete="off">
+    <input type="hidden" name="type" value="product">
+  </form>
   <div class="mega-backdrop" data-mega-backdrop></div>
 </header>
 

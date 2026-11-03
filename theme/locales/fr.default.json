@@ -60,7 +60,8 @@
     "results": {
       "one": "{{ count }} résultat pour « {{ terms }} »",
       "other": "{{ count }} résultats pour « {{ terms }} »"
-    }
+    },
+    "header_placeholder": "Rechercher un produit, un soin…"
   },
   "newsletter": {
     "placeholder": "Votre adresse email",

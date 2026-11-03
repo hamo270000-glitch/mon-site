@@ -1,28 +1,76 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-brosse",
+      "type": "hero-slider",
       "settings": {
-        "product": "brosse-lymphatique-visage",
-        "image_asset": "brosse-detouree.png",
-        "lifestyle_asset": "brosse-geste-rond.jpg",
-        "btn1_link": "",
-        "btn2_label": "Voir le geste",
-        "btn2_link": "#le-geste",
-        "proof": "",
-        "eyebrow": "Soin du visage · Drainage",
-        "text": "<p>Une brosse de massage drainant en bois naturel, pour un teint frais et des traits reposés en trois minutes.</p>",
-        "btn1_label": "Découvrir la brosse",
-        "show_price": false,
-        "show_offer": false,
-        "heading_1": "Le geste qui",
-        "heading_highlight": "réveille",
-        "heading_2": "votre visage",
-        "facts": "Bois naturel | Fibres ultra-douces | Conçue à Paris",
-        "badge": "Usage quotidien"
+        "label": "Nos produits",
+        "autoplay": true,
+        "speed": 6
       },
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "slide-brosse.jpg",
+            "product": "brosse-lymphatique-visage",
+            "eyebrow": "Brosse lymphatique visage",
+            "highlight": "3 minutes",
+            "title": "pour un visage reposé",
+            "button": "Découvrir",
+            "link": "",
+            "band": "#E3F1EE",
+            "accent": "#0E7C7B"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "slide-serum.jpg",
+            "product": "serum-eclat-vitamine-c-15",
+            "eyebrow": "Sérum Éclat Vitamine C",
+            "highlight": "L'éclat",
+            "title": "dès le matin",
+            "button": "Découvrir",
+            "link": "",
+            "band": "#F8EADC",
+            "accent": "#B4642A"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "slide-creme.jpg",
+            "product": "creme-hydratante-acide-hyaluronique",
+            "eyebrow": "Crème à l'acide hyaluronique",
+            "highlight": "Hydratation",
+            "title": "et peau repulpée",
+            "button": "Découvrir",
+            "link": "",
+            "band": "#E3ECF7",
+            "accent": "#2E5E8E"
+          }
+        },
+        "slide_4": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "slide-coffret.jpg",
+            "product": "coffret-routine-lymphatique",
+            "eyebrow": "Coffret Routine Lymphatique",
+            "highlight": "Le rituel",
+            "title": "complet en un coffret",
+            "button": "Découvrir",
+            "link": "",
+            "band": "#ECE6F5",
+            "accent": "#6B4FA0"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "slide_4"
+      ]
     },
     "trust": {
       "type": "trust-bar",
