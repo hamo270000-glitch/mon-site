@@ -1,18 +1,44 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "hero-brosse",
       "settings": {
-        "fallback_asset": "hero-collection.jpg",
-        "eyebrow": "Marque française · Rituel visage",
-        "heading": "Révélez l'éclat naturel de votre peau",
-        "text": "<p>Des soins ciblés et des outils de massage pensés à Paris pour un teint frais, lumineux et visiblement reposé.</p>",
-        "btn1_label": "Découvrir la brosse",
+        "product": "brosse-lymphatique-visage",
+        "image_asset": "brosse-detouree.png",
+        "lifestyle_asset": "brosse-geste-rond.jpg",
         "btn1_link": "/products/brosse-lymphatique-visage",
-        "btn2_label": "Toute la gamme",
-        "btn2_link": "/collections/all",
+        "btn2_label": "Voir le rituel",
+        "btn2_link": "/products/coffret-routine-lymphatique",
         "proof": ""
-      }
+      },
+      "blocks": {
+        "chip_1": {
+          "type": "chip",
+          "settings": {
+            "icon": "✦",
+            "label": "Effet drainant"
+          }
+        },
+        "chip_2": {
+          "type": "chip",
+          "settings": {
+            "icon": "✦",
+            "label": "Teint lumineux"
+          }
+        },
+        "chip_3": {
+          "type": "chip",
+          "settings": {
+            "icon": "✦",
+            "label": "Bois naturel"
+          }
+        }
+      },
+      "block_order": [
+        "chip_1",
+        "chip_2",
+        "chip_3"
+      ]
     },
     "trust": {
       "type": "trust-bar",
@@ -187,7 +213,8 @@
       "settings": {
         "eyebrow": "Formules",
         "heading": "Des actifs choisis avec exigence",
-        "text": "Des formules courtes, des actifs reconnus et des textures sensorielles."
+        "text": "Des formules courtes, des actifs reconnus et des textures sensorielles.",
+        "dark": true
       },
       "blocks": {
         "ingredient_1": {
