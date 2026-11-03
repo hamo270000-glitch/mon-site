@@ -8,7 +8,7 @@
     <div class="steps" style="--cols: {{ section.blocks.size | at_most: 4 }}">
       {%- for block in section.blocks -%}
         {%- assign p = block.settings.product -%}
-        <div class="step reveal" {{ block.shopify_attributes }}>
+        <div class="step reveal" data-tilt="6" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
             {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy' }}
           {%- elsif p != blank and p.featured_image -%}

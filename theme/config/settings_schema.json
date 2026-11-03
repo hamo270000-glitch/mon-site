@@ -10,13 +10,13 @@
   {
     "name": "Couleurs",
     "settings": [
-      { "type": "color", "id": "color_primary", "label": "Lavande (principale)", "default": "#8E7CC3" },
-      { "type": "color", "id": "color_primary_soft", "label": "Lavande claire", "default": "#EDE8F6" },
-      { "type": "color", "id": "color_ink", "label": "Texte / prune", "default": "#2E2238" },
-      { "type": "color", "id": "color_bg", "label": "Fond", "default": "#FFFFFF" },
-      { "type": "color", "id": "color_cream", "label": "Crème", "default": "#FAF6F0" },
-      { "type": "color", "id": "color_accent", "label": "Accent ambré (étoiles)", "default": "#C8892E" },
-      { "type": "color", "id": "color_sale", "label": "Promotion", "default": "#B0413E" }
+      { "type": "color", "id": "color_primary", "label": "Violet lilas (principale)", "default": "#7A3FF2" },
+      { "type": "color", "id": "color_primary_soft", "label": "Lavande poudrée", "default": "#F1E8FF" },
+      { "type": "color", "id": "color_ink", "label": "Texte / aubergine", "default": "#2A0F3A" },
+      { "type": "color", "id": "color_bg", "label": "Fond", "default": "#FFFBF8" },
+      { "type": "color", "id": "color_cream", "label": "Crème pêche", "default": "#FFF1E8" },
+      { "type": "color", "id": "color_accent", "label": "Abricot doré (étoiles, reflets)", "default": "#F2A03D" },
+      { "type": "color", "id": "color_sale", "label": "Promotion (framboise)", "default": "#C93A63" }
     ]
   },
   {

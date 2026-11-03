@@ -1,6 +1,6 @@
 <section class="section{% if section.settings.bg == 'cream' %} bg-cream{% elsif section.settings.bg == 'soft' %} bg-soft{% endif %}">
   <div class="page-width iwt{% if section.settings.reverse %} iwt--reverse{% endif %}">
-    <div class="iwt__media reveal">
+    <div class="iwt__media reveal" data-tilt="4">
       {%- if section.settings.video != blank -%}
         {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true }}
       {%- elsif section.settings.video_asset != blank -%}

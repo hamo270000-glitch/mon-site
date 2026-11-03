@@ -208,3 +208,84 @@
   $$('[data-filter-form]').forEach((f) => f.addEventListener('change', () => f.submit()));
   $$('[data-sort]').forEach((s) => s.addEventListener('change', () => { const u = new URL(location.href); u.searchParams.set('sort_by', s.value); location.href = u; }));
 })();
+
+/* Effets 3D — apparitions en cascade, inclinaison des cartes, parallaxe douce */
+(function () {
+  var mq = function (q) { return window.matchMedia ? window.matchMedia(q).matches : false; };
+  var reduce = mq('(prefers-reduced-motion: reduce)');
+  var finePointer = mq('(hover: hover) and (pointer: fine)');
+
+  /* Apparitions en cascade : léger décalage entre éléments frères */
+  if (!reduce) {
+    var parents = [];
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function (el) {
+      var p = el.parentElement;
+      if (p && parents.indexOf(p) === -1) parents.push(p);
+    });
+    parents.forEach(function (p) {
+      var kids = Array.prototype.filter.call(p.children, function (c) { return c.classList.contains('reveal'); });
+      if (kids.length < 2) return;
+      kids.forEach(function (el, i) {
+        el.style.transitionDelay = Math.min(i, 5) * 90 + 'ms';
+        el.addEventListener('transitionend', function clear() { el.style.transitionDelay = ''; el.removeEventListener('transitionend', clear); });
+      });
+    });
+  }
+
+  if (reduce || !finePointer) return;
+
+  /* Inclinaison 3D au survol (souris uniquement) + reflet qui suit le curseur */
+  var current = null, rect = null, px = 0.5, py = 0.5, frame = 0;
+  var render = function () {
+    frame = 0;
+    if (!current) return;
+    var max = parseFloat(current.getAttribute('data-tilt')) || 6;
+    current.style.transform = 'perspective(1000px) rotateX(' + ((0.5 - py) * max).toFixed(2) + 'deg) rotateY(' + ((px - 0.5) * max).toFixed(2) + 'deg) translate3d(0,-4px,0)';
+    current.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+    current.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+  };
+  var release = function () {
+    if (!current) return;
+    current.classList.remove('is-tilting');
+    current.style.transform = '';
+    current = null; rect = null;
+  };
+  document.addEventListener('mousemove', function (e) {
+    var el = e.target.closest ? e.target.closest('[data-tilt]') : null;
+    if (el !== current) { release(); if (!el) return; current = el; rect = el.getBoundingClientRect(); el.classList.add('is-tilting'); }
+    if (!rect) return;
+    px = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+    py = Math.min(1, Math.max(0, (e.clientY - rect.top) / rect.height));
+    if (!frame) frame = requestAnimationFrame(render);
+  }, { passive: true });
+  document.addEventListener('mouseleave', release);
+  window.addEventListener('scroll', function () { if (current) rect = current.getBoundingClientRect(); }, { passive: true });
+
+  /* Parallaxe douce des visuels marqués [data-parallax] (scroll + souris) */
+  var layers = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  if (!layers.length) return;
+  var mx = 0, my = 0, pframe = 0;
+  var visible = layers.map(function () { return !('IntersectionObserver' in window); });
+  if ('IntersectionObserver' in window) {
+    var pio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { visible[layers.indexOf(en.target)] = en.isIntersecting; });
+      queue();
+    });
+    layers.forEach(function (l) { pio.observe(l); });
+  }
+  var paint = function () {
+    pframe = 0;
+    var vh = window.innerHeight;
+    layers.forEach(function (l, i) {
+      if (!visible[i]) return;
+      var depth = parseFloat(l.getAttribute('data-parallax')) || 0.08;
+      var r = l.getBoundingClientRect();
+      var offset = Math.max(-48, Math.min(48, (r.top + r.height / 2 - vh / 2) * -depth));
+      l.style.transform = 'translate3d(' + (mx * 14).toFixed(1) + 'px,' + (offset + my * 10).toFixed(1) + 'px,0) rotateY(' + (mx * 4).toFixed(2) + 'deg) rotateX(' + (-my * 3).toFixed(2) + 'deg)';
+    });
+  };
+  var queue = function () { if (!pframe) pframe = requestAnimationFrame(paint); };
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('mousemove', function (e) { mx = e.clientX / window.innerWidth - 0.5; my = e.clientY / window.innerHeight - 0.5; queue(); }, { passive: true });
+  queue();
+})();
