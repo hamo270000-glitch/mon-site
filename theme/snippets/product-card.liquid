@@ -1,0 +1,42 @@
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign img1 = product.featured_media
+  assign img2 = product.media[1]
+-%}
+<div class="card reveal">
+  <a class="card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if img1 -%}
+      {{ img1 | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 25vw, 50vw', alt: product.title }}
+      {%- if img2 and img2.media_type == 'image' -%}
+        {{ img2 | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 25vw, 50vw', alt: '' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    <span class="card__badges">
+      {%- if product.available == false -%}
+        <span class="badge">{{ 'product.sold_out' | t }}</span>
+      {%- elsif v.compare_at_price > v.price -%}
+        {%- assign save = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price | round -%}
+        <span class="badge badge--sale">-{{ save }} %</span>
+      {%- endif -%}
+      {%- if product.tags contains 'best-seller' -%}<span class="badge badge--best">Best-seller</span>{%- endif -%}
+      {%- if product.tags contains 'nouveau' -%}<span class="badge badge--new">{{ 'product.new' | t }}</span>{%- endif -%}
+    </span>
+  </a>
+  {%- if product.available and product.has_only_default_variant -%}
+    <div class="card__quick">
+      <button class="btn" type="button" data-quick-add="{{ v.id }}">{{ 'product.quick_add' | t }}</button>
+    </div>
+  {%- elsif product.available -%}
+    <div class="card__quick"><a class="btn" href="{{ product.url }}">{{ 'product.choose' | t }}</a></div>
+  {%- endif -%}
+  <div class="card__info">
+    {% render 'stars', product: product, compact: true, link: true %}
+    <a class="card__title" href="{{ product.url }}">{{ product.title }}</a>
+    {%- if product.metafields.custom.subtitle != blank -%}
+      <span class="card__subtitle">{{ product.metafields.custom.subtitle }}</span>
+    {%- endif -%}
+    {% render 'price', product: product, large: false %}
+  </div>
+</div>

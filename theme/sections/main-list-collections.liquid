@@ -1,0 +1,16 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-head"><h1>{{ 'collection.all' | t }}</h1></div>
+    <div class="grid" style="--cols:3">
+      {%- for collection in collections -%}
+        <a class="card reveal" href="{{ collection.url }}">
+          <div class="card__media">{%- if collection.featured_image -%}{{ collection.featured_image | image_url: width: 800 | image_tag: loading: 'lazy' }}{%- else -%}{{ 'collection-1' | placeholder_svg_tag }}{%- endif -%}</div>
+          <div class="card__info"><span class="card__title">{{ collection.title }}</span><span class="card__subtitle">{{ 'collection.count' | t: count: collection.products_count }}</span></div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Liste des collections" }
+{% endschema %}

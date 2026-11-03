@@ -1,0 +1,31 @@
+<section class="section {% if section.settings.dark %}bg-ink{% else %}bg-cream{% endif %}">
+  <div class="page-width newsletter reveal">
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+    <div class="rte" style="opacity:.8">{{ section.settings.text }}</div>
+    {%- form 'customer', id: 'newsletter-form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      {%- if form.posted_successfully? -%}
+        <p class="notice" style="flex:1;color:var(--c-ink)">{{ 'newsletter.success' | t }}</p>
+      {%- else -%}
+        <label class="visually-hidden" for="nl-email">Email</label>
+        <input class="field" id="nl-email" type="email" name="contact[email]" required placeholder="{{ 'newsletter.placeholder' | t }}" autocomplete="email">
+        <button class="btn btn--primary" type="submit">{{ 'newsletter.button' | t }}</button>
+      {%- endif -%}
+    {%- endform -%}
+    <small>{{ section.settings.legal }}</small>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Le Club Biovela" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "-10 % sur votre première commande" },
+    { "type": "richtext", "id": "text", "label": "Texte", "default": "<p>Conseils de rituel, avant-premières et offres réservées aux membres.</p>" },
+    { "type": "text", "id": "legal", "label": "Mention légale", "default": "En vous inscrivant, vous acceptez de recevoir nos emails. Désinscription en un clic." },
+    { "type": "checkbox", "id": "dark", "label": "Fond foncé", "default": true }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

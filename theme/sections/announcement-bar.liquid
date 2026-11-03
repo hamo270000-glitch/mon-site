@@ -1,0 +1,26 @@
+{%- if section.blocks.size > 0 -%}
+<div class="announcement" role="region" aria-label="Annonces">
+  <div class="announcement__track">
+    {%- for i in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <div class="announcement__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{{ block.settings.text }}</a>{%- else -%}{{ block.settings.text }}{%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Barre d'annonce",
+  "max_blocks": 6,
+  "blocks": [
+    { "type": "announcement", "name": "Annonce", "settings": [
+      { "type": "text", "id": "text", "label": "Texte", "default": "Livraison offerte dès 49 €" },
+      { "type": "url", "id": "link", "label": "Lien" }
+    ] }
+  ],
+  "presets": [{ "name": "Barre d'annonce" }]
+}
+{% endschema %}

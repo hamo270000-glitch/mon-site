@@ -1,0 +1,70 @@
+{%- comment -%}
+  Avis clients. Saisissez UNIQUEMENT de vrais avis (droit de la consommation : les faux avis sont interdits).
+  Les blocs marqués « exemple » affichent un libellé « Exemple » visible tant que vous ne les remplacez pas.
+  Pour des avis vérifiés automatiques, ajoutez le bloc d'application de Judge.me / Avis Vérifiés / Okendo.
+{%- endcomment -%}
+<section class="section{% if section.settings.cream %} bg-cream{% else %} bg-soft{% endif %}" id="avis">
+  <div class="page-width">
+    <div class="section-head reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    {%- if section.settings.score != blank -%}
+      {%- assign pct = section.settings.score | replace: ',', '.' | times: 20 -%}
+      <div class="reviews-summary reveal">
+        <span class="reviews-summary__score">{{ section.settings.score }}</span>
+        <div><span class="stars__icons" style="--pct: {{ pct }}%"></span><br><small>{{ section.settings.count_label }}</small></div>
+      </div>
+    {%- endif -%}
+    <div class="reviews">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            <div style="grid-column:1/-1">{% render block %}</div>
+          {%- when 'review' -%}
+            {%- assign pct = block.settings.rating | times: 20 -%}
+            <article class="review reveal" {{ block.shopify_attributes }}>
+              {%- if block.settings.is_example -%}<span class="review__example">Exemple — à remplacer par un avis réel</span>{%- endif -%}
+              <span class="stars__icons" style="--pct: {{ pct }}%"></span>
+              <h3 class="review__title">{{ block.settings.title }}</h3>
+              <p class="review__body">{{ block.settings.text }}</p>
+              <div class="review__meta">
+                <span class="review__avatar">{%- if block.settings.photo != blank -%}{{ block.settings.photo | image_url: width: 120 | image_tag: loading: 'lazy' }}{%- else -%}{{ block.settings.author | slice: 0 }}{%- endif -%}</span>
+                <div>
+                  <strong>{{ block.settings.author }}</strong>
+                  {%- if block.settings.verified -%}<br><span class="review__verified">{% render 'icon', icon: 'check' %} Achat vérifié</span>{%- endif -%}
+                  {%- if block.settings.product != blank -%}<br><a href="{{ block.settings.product.url }}" style="color:var(--c-muted)">{{ block.settings.product.title }}</a>{%- endif -%}
+                </div>
+              </div>
+            </article>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Avis clients",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Elles en parlent" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Vos avis" },
+    { "type": "text", "id": "score", "label": "Note moyenne (ex : 4,8)", "info": "Laisser vide tant que vous n'avez pas de vrais avis." },
+    { "type": "text", "id": "count_label", "label": "Libellé du nombre d'avis", "default": "sur X avis vérifiés" },
+    { "type": "checkbox", "id": "cream", "label": "Fond crème (sinon lavande)", "default": false }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    { "type": "review", "name": "Avis", "settings": [
+      { "type": "range", "id": "rating", "label": "Note", "min": 1, "max": 5, "step": 1, "default": 5 },
+      { "type": "text", "id": "title", "label": "Titre", "default": "Titre de l'avis" },
+      { "type": "textarea", "id": "text", "label": "Avis", "default": "Collez ici le texte d'un avis client réel." },
+      { "type": "text", "id": "author", "label": "Prénom + initiale", "default": "Prénom N." },
+      { "type": "image_picker", "id": "photo", "label": "Photo (avec accord du client)" },
+      { "type": "product", "id": "product", "label": "Produit" },
+      { "type": "checkbox", "id": "verified", "label": "Achat vérifié", "default": false },
+      { "type": "checkbox", "id": "is_example", "label": "Afficher le libellé « Exemple »", "default": true }
+    ] }
+  ],
+  "presets": [{ "name": "Avis clients", "blocks": [{ "type": "review" }, { "type": "review" }, { "type": "review" }] }]
+}
+{% endschema %}

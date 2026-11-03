@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "fallback_asset": "hero-collection.jpg",
+        "eyebrow": "Notre histoire",
+        "heading": "Née à Paris, pensée pour votre peau",
+        "text": "<p>Biovela Paris réunit des outils de massage inspirés de rituels ancestraux et des soins aux formules courtes.</p>",
+        "btn1_label": "Découvrir la gamme",
+        "btn1_link": "/collections/all",
+        "btn2_label": ""
+      }
+    },
+    "story": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Manifeste",
+        "heading": "Moins mais mieux",
+        "text": "<p>Nous croyons à des rituels simples, à des gestes qui font du bien et à des formules transparentes. Chaque produit est sélectionné pour sa sensorialité, son efficacité et son respect de la peau.</p>"
+      }
+    },
+    "iwt": {
+      "type": "image-with-text",
+      "settings": {
+        "image_asset": "brosse-lymphatique-3.jpg",
+        "reverse": true,
+        "bg": "soft",
+        "eyebrow": "Nos engagements",
+        "heading": "Une beauté responsable",
+        "text": "<p>Bois naturel, emballages recyclables, formules sans tests sur les animaux.</p>",
+        "btn_label": ""
+      },
+      "blocks": {
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "title": "Marque française",
+            "text": "conçue à Paris"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "title": "Cruelty-free",
+            "text": ""
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "title": "Emballages recyclables",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "bullet_1",
+        "bullet_2",
+        "bullet_3"
+      ]
+    },
+    "labels": {
+      "type": "press",
+      "settings": {
+        "heading": "Nos engagements"
+      },
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "name": "Vegan"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "name": "Cruelty-free"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "name": "Conçu à Paris"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3"
+      ]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "story",
+    "iwt",
+    "labels",
+    "newsletter"
+  ]
+}

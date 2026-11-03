@@ -1,0 +1,5 @@
+<div class="payment-icons" aria-label="Moyens de paiement">
+  {%- for type in shop.enabled_payment_types -%}
+    {{ type | payment_type_svg_tag }}
+  {%- endfor -%}
+</div>

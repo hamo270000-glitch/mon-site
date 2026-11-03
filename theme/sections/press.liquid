@@ -1,0 +1,21 @@
+<section class="section--tight">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}<p class="eyebrow" style="display:block;text-align:center;color:var(--c-muted)">{{ section.settings.heading }}</p>{%- endif -%}
+    <div class="press">
+      {%- for block in section.blocks -%}
+        <span {{ block.shopify_attributes }}>{%- if block.settings.logo != blank -%}{{ block.settings.logo | image_url: width: 300 | image_tag: loading: 'lazy' }}{%- else -%}{{ block.settings.name }}{%- endif -%}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Labels / presse",
+  "settings": [{ "type": "text", "id": "heading", "label": "Titre", "default": "Nos engagements" }],
+  "blocks": [{ "type": "logo", "name": "Logo", "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "N'affichez un logo de média que si vous avez réellement été cité." },
+    { "type": "text", "id": "name", "label": "Texte (si pas de logo)", "default": "Vegan" }
+  ] }],
+  "presets": [{ "name": "Labels / presse" }]
+}
+{% endschema %}

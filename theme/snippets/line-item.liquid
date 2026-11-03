@@ -1,0 +1,20 @@
+<div class="line-item" data-line-key="{{ item.key }}" data-qty="{{ item.quantity }}">
+  <a href="{{ item.url }}">
+    {%- if item.image -%}{{ item.image | image_url: width: 200 | image_tag: alt: item.title, loading: 'lazy' }}{%- endif -%}
+  </a>
+  <div>
+    <a class="line-item__title" href="{{ item.url }}">{{ item.product.title }}</a><br>
+    {%- unless item.product.has_only_default_variant -%}<small>{{ item.variant.title }}</small><br>{%- endunless -%}
+    {%- for d in item.line_level_discount_allocations -%}<small>{{ d.discount_application.title }} (-{{ d.amount | money }})</small><br>{%- endfor -%}
+    <div class="qty">
+      <button type="button" data-line-minus aria-label="-">−</button>
+      <input type="number" value="{{ item.quantity }}" readonly aria-label="{{ 'product.quantity' | t }}">
+      <button type="button" data-line-plus aria-label="+">+</button>
+    </div>
+    <button class="remove" type="button" data-line-remove>{{ 'cart.remove' | t }}</button>
+  </div>
+  <div class="price">
+    {%- if item.original_line_price > item.final_line_price -%}<s class="price__compare">{{ item.original_line_price | money }}</s>{%- endif -%}
+    <span>{{ item.final_line_price | money }}</span>
+  </div>
+</div>

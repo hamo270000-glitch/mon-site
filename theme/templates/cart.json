@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Dernière touche",
+        "heading": "Vous aimerez aussi",
+        "collection": "all",
+        "limit": 4,
+        "columns": 4,
+        "cream": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "bestsellers"
+  ]
+}

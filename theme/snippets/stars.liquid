@@ -1,0 +1,14 @@
+{%- comment -%}
+  Note : lit les métafields standard reviews.rating / reviews.rating_count
+  (remplis automatiquement par Judge.me, Shopify Product Reviews, Okendo, Avis Vérifiés…).
+  Rien n'est affiché tant qu'il n'y a pas de vrais avis.
+{%- endcomment -%}
+{%- assign r = product.metafields.reviews.rating.value -%}
+{%- assign c = product.metafields.reviews.rating_count.value | default: 0 -%}
+{%- if r != blank and c > 0 -%}
+  {%- assign pct = r.rating | divided_by: r.scale_max | times: 100 -%}
+  <a class="stars" href="{% if link %}{{ product.url }}{% endif %}#avis" aria-label="{{ r.rating | round: 1 }} / {{ r.scale_max }}">
+    <span class="stars__icons" style="--pct: {{ pct }}%"></span>
+    <span>{{ r.rating | round: 1 }}{% unless compact %} · {{ c }} {{ 'product.reviews' | t }}{% else %} ({{ c }}){% endunless %}</span>
+  </a>
+{%- endif -%}

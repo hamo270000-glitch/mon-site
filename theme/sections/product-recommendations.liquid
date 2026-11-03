@@ -1,0 +1,31 @@
+<section class="section bg-cream">
+  <div class="page-width" data-reco data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}">
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+      <div class="section-head"><span class="eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading }}</h2></div>
+      <div class="grid" style="--cols: 4">
+        {%- for product in recommendations.products -%}{% render 'product-card', product: product %}{%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+<script>
+  (function () {
+    var el = document.querySelector('[data-reco]');
+    if (!el || el.children.length) return;
+    fetch(el.dataset.url).then(function (r) { return r.text(); }).then(function (html) {
+      var d = new DOMParser().parseFromString(html, 'text/html').querySelector('[data-reco]');
+      if (d && d.innerHTML.trim()) { el.innerHTML = d.innerHTML; el.querySelectorAll('.reveal').forEach(function (x) { x.classList.add('is-in'); }); }
+      else el.closest('section').remove();
+    });
+  })();
+</script>
+{% schema %}
+{
+  "name": "Recommandations",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Vous aimerez aussi" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Complétez votre routine" },
+    { "type": "range", "id": "limit", "label": "Produits", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,63 @@
+{%- capture results -%}{
+  {%- for block in section.blocks -%}{%- if block.type == 'result' -%}
+    {{ block.settings.key | json }}: { "title": {{ block.settings.title | json }}, "text": {{ block.settings.text | json }}, "url": {{ block.settings.link | default: '/collections/all' | json }} }{% unless forloop.last %},{% endunless %}
+  {%- endif -%}{%- endfor -%}
+}{%- endcapture -%}
+<section class="section bg-soft" id="diagnostic">
+  <div class="page-width">
+    <div class="section-head reveal">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+    </div>
+    <div class="quiz reveal" data-quiz data-results='{{ results | strip_newlines | escape }}'>
+      <div class="quiz__progress"><span></span></div>
+      <div class="quiz__step">
+        <h3>Comment décririez-vous votre peau ?</h3>
+        <div class="quiz__options">
+          <button class="quiz__opt" type="button" data-value="seche">Sèche, qui tiraille</button>
+          <button class="quiz__opt" type="button" data-value="grasse">Grasse, qui brille</button>
+          <button class="quiz__opt" type="button" data-value="mixte">Mixte</button>
+          <button class="quiz__opt" type="button" data-value="sensible">Sensible, réactive</button>
+        </div>
+      </div>
+      <div class="quiz__step">
+        <h3>Quelle est votre priorité ?</h3>
+        <div class="quiz__options">
+          <button class="quiz__opt" type="button" data-value="eclat">Éclat & teint terne</button>
+          <button class="quiz__opt" type="button" data-value="hydratation">Hydratation</button>
+          <button class="quiz__opt" type="button" data-value="poches">Poches & cernes</button>
+          <button class="quiz__opt" type="button" data-value="fermete">Fermeté & ovale</button>
+        </div>
+      </div>
+      <div class="quiz__step" data-quiz-result>
+        <span class="eyebrow">Votre routine idéale</span>
+        <h3></h3>
+        <p style="color:var(--c-muted)"></p>
+        <div class="hero__ctas" style="justify-content:center">
+          <a class="btn btn--primary" href="{{ routes.all_products_collection_url }}">Voir ma routine</a>
+          <button class="btn btn--outline" type="button" data-quiz-restart>Recommencer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Diagnostic de peau",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Diagnostic offert" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Trouvez votre rituel en 30 secondes" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "Deux questions pour une routine adaptée à votre peau." }
+  ],
+  "blocks": [{ "type": "result", "name": "Résultat", "settings": [
+    { "type": "select", "id": "key", "label": "Priorité", "default": "eclat", "options": [
+      { "value": "eclat", "label": "Éclat" }, { "value": "hydratation", "label": "Hydratation" },
+      { "value": "poches", "label": "Poches & cernes" }, { "value": "fermete", "label": "Fermeté" }, { "value": "default", "label": "Par défaut" } ] },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Rituel Éclat" },
+    { "type": "textarea", "id": "text", "label": "Texte" },
+    { "type": "url", "id": "link", "label": "Lien" }
+  ] }],
+  "presets": [{ "name": "Diagnostic de peau" }]
+}
+{% endschema %}

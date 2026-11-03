@@ -1,0 +1,38 @@
+<section class="section{% if section.settings.cream %} bg-cream{% endif %}">
+  <div class="page-width">
+    <div class="section-head reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="ingredients" style="--cols: {{ section.blocks.size | at_most: 4 }}">
+      {%- for block in section.blocks -%}
+        <div class="ingredient reveal" {{ block.shopify_attributes }}>
+          <div class="ingredient__img">
+            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}{%- else -%}<span class="glyph">{{ block.settings.title | slice: 0, 2 }}</span>{%- endif -%}
+          </div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Actifs clés",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Formules" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Des actifs choisis avec exigence" },
+    { "type": "text", "id": "text", "label": "Texte" },
+    { "type": "checkbox", "id": "cream", "label": "Fond crème", "default": false }
+  ],
+  "max_blocks": 8,
+  "blocks": [{ "type": "ingredient", "name": "Actif", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "title", "label": "Nom", "default": "Vitamine C" },
+    { "type": "textarea", "id": "text", "label": "Rôle", "default": "Aide à raviver l'éclat du teint." }
+  ] }],
+  "presets": [{ "name": "Actifs clés" }]
+}
+{% endschema %}

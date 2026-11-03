@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {}
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all",
+        "limit": 4
+      }
+    }
+  },
+  "order": [
+    "main",
+    "bestsellers"
+  ]
+}

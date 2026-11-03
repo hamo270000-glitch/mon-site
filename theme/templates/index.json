@@ -1,0 +1,512 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "fallback_asset": "hero-collection.jpg",
+        "eyebrow": "Marque française · Rituel visage",
+        "heading": "Révélez l'éclat naturel de votre peau",
+        "text": "<p>Des soins ciblés et des outils de massage pensés à Paris pour un teint frais, lumineux et visiblement reposé.</p>",
+        "btn1_label": "Découvrir la brosse",
+        "btn1_link": "/products/brosse-lymphatique-visage",
+        "btn2_label": "Toute la gamme",
+        "btn2_link": "/collections/all",
+        "proof": ""
+      }
+    },
+    "trust": {
+      "type": "trust-bar",
+      "settings": {},
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Livraison offerte",
+            "text": "dès 49 € d'achat"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "flag",
+            "title": "Marque française",
+            "text": "conçue à Paris"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "rabbit",
+            "title": "Cruelty-free",
+            "text": "jamais testé sur les animaux"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "icon": "lock",
+            "title": "Paiement sécurisé",
+            "text": "CB, PayPal, Apple Pay, 3x"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ]
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Nos best-sellers",
+        "heading": "Les essentiels de votre rituel",
+        "text": "Soins visage, huiles précieuses et outils de massage : tout pour une peau éclatante.",
+        "collection": "all",
+        "limit": 8,
+        "columns": 4
+      }
+    },
+    "hero_product": {
+      "type": "image-with-text",
+      "settings": {
+        "image_asset": "brosse-lymphatique-2.jpg",
+        "bg": "cream",
+        "eyebrow": "Le produit phare",
+        "heading": "La Brosse Lymphatique Visage",
+        "text": "<p>Inspirée des gestes de drainage manuel, notre brosse en bois naturel et fibres ultra-douces accompagne un massage qui défroisse les traits et réveille l'éclat du teint.</p>",
+        "btn_label": "Je la veux — 34,90 €",
+        "btn_link": "/products/brosse-lymphatique-visage"
+      },
+      "blocks": {
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "title": "Teint frais",
+            "text": "un massage qui ravive visiblement l'éclat"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "title": "Traits reposés",
+            "text": "le geste drainant idéal au réveil"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "title": "Bois naturel",
+            "text": "une prise en main ergonomique et durable"
+          }
+        },
+        "bullet_4": {
+          "type": "bullet",
+          "settings": {
+            "title": "3 minutes par jour",
+            "text": "un rituel simple, matin ou soir"
+          }
+        }
+      },
+      "block_order": [
+        "bullet_1",
+        "bullet_2",
+        "bullet_3",
+        "bullet_4"
+      ]
+    },
+    "video": {
+      "type": "video-feature",
+      "settings": {
+        "video_asset": "hero-video.mp4",
+        "poster_asset": "hero-collection.jpg",
+        "eyebrow": "Le rituel en mouvement",
+        "heading": "Trois minutes chaque matin pour un teint visiblement reposé",
+        "btn_label": "Voir le coffret rituel",
+        "btn_link": "/products/coffret-routine-lymphatique"
+      }
+    },
+    "routine": {
+      "type": "routine-steps",
+      "settings": {
+        "eyebrow": "Votre rituel",
+        "heading": "La routine éclat en 4 gestes",
+        "text": "Une routine courte, efficace et sensorielle.",
+        "btn_label": "Composer ma routine",
+        "btn_link": "/collections/all",
+        "cream": true
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "product": "gel-nettoyant-doux",
+            "image_asset": "gel-nettoyant.jpg",
+            "title": "Nettoyer",
+            "text": "Le Gel Nettoyant Doux élimine impuretés et excès de sébum sans tirailler."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "product": "serum-eclat-vitamine-c-15",
+            "image_asset": "serum-vitamine-c.jpg",
+            "title": "Traiter",
+            "text": "Quelques gouttes de Sérum Vitamine C pour raviver l'éclat."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "product": "brosse-lymphatique-visage",
+            "image_asset": "brosse-lymphatique-2.jpg",
+            "title": "Masser",
+            "text": "La brosse lymphatique et l'huile précieuse pour défroisser les traits."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "product": "creme-hydratante-acide-hyaluronique",
+            "image_asset": "creme-hydratante.jpg",
+            "title": "Hydrater",
+            "text": "La Crème à l'acide hyaluronique pour une peau repulpée."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    },
+    "ingredients": {
+      "type": "ingredients",
+      "settings": {
+        "eyebrow": "Formules",
+        "heading": "Des actifs choisis avec exigence",
+        "text": "Des formules courtes, des actifs reconnus et des textures sensorielles."
+      },
+      "blocks": {
+        "ingredient_1": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Vitamine C",
+            "text": "Antioxydant star, elle aide à raviver l'éclat et unifier le teint."
+          }
+        },
+        "ingredient_2": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Acide hyaluronique",
+            "text": "Capte l'eau pour une peau visiblement repulpée et confortable."
+          }
+        },
+        "ingredient_3": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Rose musquée",
+            "text": "Huile riche en acides gras qui nourrit et assouplit la peau."
+          }
+        },
+        "ingredient_4": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Caféine",
+            "text": "Aide à défatiguer le regard et lisser l'apparence des poches."
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_1",
+        "ingredient_2",
+        "ingredient_3",
+        "ingredient_4"
+      ]
+    },
+    "quiz": {
+      "type": "skin-quiz",
+      "settings": {},
+      "blocks": {
+        "result_1": {
+          "type": "result",
+          "settings": {
+            "key": "eclat",
+            "title": "Rituel Éclat",
+            "text": "Sérum Vitamine C + Brosse lymphatique : le duo pour un teint lumineux dès le matin.",
+            "link": "/products/coffret-routine-lymphatique"
+          }
+        },
+        "result_2": {
+          "type": "result",
+          "settings": {
+            "key": "hydratation",
+            "title": "Rituel Hydratation",
+            "text": "Crème à l'acide hyaluronique + Huile Visage Précieuse pour une peau confortable toute la journée.",
+            "link": "/products/creme-hydratante-acide-hyaluronique"
+          }
+        },
+        "result_3": {
+          "type": "result",
+          "settings": {
+            "key": "poches",
+            "title": "Rituel Regard Frais",
+            "text": "Contour des Yeux Caféine + Gua Sha Quartz Rose, conservé au frais pour un effet défatigant.",
+            "link": "/products/contour-des-yeux-cafeine"
+          }
+        },
+        "result_4": {
+          "type": "result",
+          "settings": {
+            "key": "fermete",
+            "title": "Rituel Sculptant",
+            "text": "Brosse lymphatique + Gua Sha + Huile précieuse pour masser et dessiner l'ovale.",
+            "link": "/products/brosse-lymphatique-visage"
+          }
+        },
+        "result_5": {
+          "type": "result",
+          "settings": {
+            "key": "default",
+            "title": "Rituel Essentiel",
+            "text": "Le Coffret Routine Lymphatique, idéal pour commencer.",
+            "link": "/products/coffret-routine-lymphatique"
+          }
+        }
+      },
+      "block_order": [
+        "result_1",
+        "result_2",
+        "result_3",
+        "result_4",
+        "result_5"
+      ]
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "Elles en parlent",
+        "heading": "Vos avis",
+        "score": "",
+        "count_label": "sur X avis vérifiés"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Mon nouveau geste du matin",
+            "text": "Exemple de mise en page : remplacez ce texte par un avis réel de cliente, collé depuis votre application d'avis.",
+            "author": "Prénom N.",
+            "product": "brosse-lymphatique-visage",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Texture très agréable",
+            "text": "Exemple de mise en page : remplacez ce texte par un avis réel de cliente.",
+            "author": "Prénom N.",
+            "product": "huile-visage-precieuse",
+            "verified": false,
+            "is_example": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Joli coffret",
+            "text": "Exemple de mise en page : remplacez ce texte par un avis réel de cliente.",
+            "author": "Prénom N.",
+            "product": "coffret-routine-lymphatique",
+            "verified": false,
+            "is_example": true
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ]
+    },
+    "labels": {
+      "type": "press",
+      "settings": {
+        "heading": "Nos engagements"
+      },
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "name": "Vegan"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "name": "Cruelty-free"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "name": "Conçu à Paris"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "name": "Formules courtes"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4"
+      ]
+    },
+    "ugc": {
+      "type": "ugc-gallery",
+      "settings": {
+        "eyebrow": "@biovelaparis",
+        "heading": "Rejoignez la communauté",
+        "text": "Partagez votre rituel avec #biovelaparis"
+      },
+      "blocks": {
+        "image_1": {
+          "type": "image",
+          "settings": {
+            "image_asset": "brosse-lymphatique-geste.jpg"
+          }
+        },
+        "image_2": {
+          "type": "image",
+          "settings": {
+            "image_asset": "serum-vitamine-c.jpg"
+          }
+        },
+        "image_3": {
+          "type": "image",
+          "settings": {
+            "image_asset": "huile-visage.jpg"
+          }
+        },
+        "image_4": {
+          "type": "image",
+          "settings": {
+            "image_asset": "creme-hydratante.jpg"
+          }
+        },
+        "image_5": {
+          "type": "image",
+          "settings": {
+            "image_asset": "gua-sha.jpg"
+          }
+        },
+        "image_6": {
+          "type": "image",
+          "settings": {
+            "image_asset": "coffret-routine.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_1",
+        "image_2",
+        "image_3",
+        "image_4",
+        "image_5",
+        "image_6"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "eyebrow": "Questions fréquentes",
+        "heading": "Tout savoir",
+        "cream": true
+      },
+      "blocks": {
+        "qa_1": {
+          "type": "qa",
+          "settings": {
+            "question": "Comment utiliser la brosse lymphatique ?",
+            "answer": "<p>Sur peau propre, avec quelques gouttes d'Huile Visage Précieuse : effectuez des mouvements doux du centre du visage vers l'extérieur, puis du haut du cou vers les clavicules. 3 à 5 minutes suffisent, matin ou soir.</p>"
+          }
+        },
+        "qa_2": {
+          "type": "qa",
+          "settings": {
+            "question": "Convient-elle aux peaux sensibles ?",
+            "answer": "<p>Oui, ses fibres souples sont pensées pour un massage doux. Évitez simplement les zones irritées ou lésées et consultez un professionnel de santé en cas de doute.</p>"
+          }
+        },
+        "qa_3": {
+          "type": "qa",
+          "settings": {
+            "question": "Comment nettoyer ma brosse ?",
+            "answer": "<p>Rincez les fibres à l'eau tiède avec un savon doux une fois par semaine, sans immerger le manche en bois. Laissez sécher à plat, fibres vers le bas.</p>"
+          }
+        },
+        "qa_4": {
+          "type": "qa",
+          "settings": {
+            "question": "Quels sont les délais de livraison ?",
+            "answer": "<p>Les commandes passées avant 13 h sont expédiées le jour même (jours ouvrés). Livraison en 48–72 h en France métropolitaine, offerte dès 49 €.</p>"
+          }
+        },
+        "qa_5": {
+          "type": "qa",
+          "settings": {
+            "question": "Puis-je retourner un produit ?",
+            "answer": "<p>Vous disposez de 30 jours pour nous retourner un produit non ouvert. Les outils de massage doivent être retournés dans leur emballage d'origine pour des raisons d'hygiène.</p>"
+          }
+        },
+        "qa_6": {
+          "type": "qa",
+          "settings": {
+            "question": "Vos produits sont-ils testés sur les animaux ?",
+            "answer": "<p>Non. Conformément à la réglementation européenne, aucun de nos produits ni de nos ingrédients n'est testé sur les animaux.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "qa_1",
+        "qa_2",
+        "qa_3",
+        "qa_4",
+        "qa_5",
+        "qa_6"
+      ]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "bestsellers",
+    "hero_product",
+    "video",
+    "routine",
+    "ingredients",
+    "quiz",
+    "reviews",
+    "labels",
+    "ugc",
+    "faq",
+    "newsletter"
+  ]
+}

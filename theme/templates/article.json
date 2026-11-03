@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {}
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Le rituel",
+        "heading": "Les produits de l'article",
+        "collection": "all",
+        "limit": 4,
+        "cream": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "bestsellers"
+  ]
+}

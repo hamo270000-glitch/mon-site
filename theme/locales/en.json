@@ -1,0 +1,88 @@
+{
+  "general": {
+    "skip": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "account": "Account",
+    "home": "Home",
+    "view_all": "View all",
+    "not_found": "Page not found",
+    "not_found_text": "The page you are looking for does not exist."
+  },
+  "product": {
+    "add_to_cart": "Add to cart",
+    "add": "Add",
+    "quick_add": "Quick add",
+    "choose": "Choose",
+    "sold_out": "Sold out",
+    "new": "New",
+    "from": "From",
+    "reviews": "reviews",
+    "quantity": "Quantity",
+    "taxes": "Tax included. Shipping calculated at checkout.",
+    "installments": "Or",
+    "in_stock": "In stock — ships within 24h",
+    "low_stock": "Only {{ count }} left",
+    "preorder": "Available for pre-order",
+    "delivery_estimate": "Estimated delivery between"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty.",
+    "continue": "Continue shopping",
+    "subtotal": "Subtotal",
+    "taxes": "Tax included. Shipping and discounts calculated at checkout.",
+    "checkout": "Checkout",
+    "view": "View cart",
+    "remove": "Remove",
+    "note": "Order note",
+    "added": "Added to cart",
+    "free_shipping_remaining": "Only [amount] away from free shipping",
+    "free_shipping_reached": "You've unlocked free shipping ✦"
+  },
+  "collection": {
+    "eyebrow": "Collection",
+    "all": "Collections",
+    "count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "filters": "Filter",
+    "sort": "Sort",
+    "clear": "Clear filters",
+    "empty": "No products match."
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Serum, brush, oil…",
+    "results": {
+      "one": "{{ count }} result for “{{ terms }}”",
+      "other": "{{ count }} results for “{{ terms }}”"
+    }
+  },
+  "newsletter": {
+    "placeholder": "Your email",
+    "button": "Subscribe",
+    "success": "Thank you! Your welcome code is on its way."
+  },
+  "contact": {
+    "name": "Name",
+    "phone": "Phone",
+    "message": "Message",
+    "send": "Send",
+    "success": "Thanks, we'll reply within 24 business hours."
+  },
+  "customer": {
+    "login": "Log in",
+    "register": "Create account",
+    "account": "My account",
+    "logout": "Log out",
+    "password": "Password",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "marketing": "Subscribe to offers",
+    "orders": "My orders",
+    "no_orders": "No orders yet."
+  }
+}

@@ -1,0 +1,15 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Carte cadeau – {{ shop.name }}</title>{{ 'base.css' | asset_url | stylesheet_tag }}</head>
+<body class="bg-cream" style="min-height:100vh;display:grid;place-items:center">
+  <div class="quiz" style="text-align:center">
+    <span class="eyebrow">{{ shop.name }}</span>
+    <h1>Votre carte cadeau</h1>
+    <p class="price--large" style="font-family:var(--f-serif);font-size:3rem">{{ gift_card.balance | money }}</p>
+    <p>Code : <strong>{{ gift_card.code | format_code }}</strong></p>
+    {%- if gift_card.expired -%}<p>Expirée le {{ gift_card.expires_on | date: '%d/%m/%Y' }}</p>{%- endif -%}
+    <a class="btn btn--primary" href="{{ shop.url }}">Utiliser ma carte</a>
+  </div>
+</body>
+</html>

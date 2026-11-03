@@ -1,0 +1,11 @@
+<article class="section">
+  <div class="page-width page-content">
+    <div class="section-head"><small style="color:var(--c-muted)">{{ article.published_at | date: '%d/%m/%Y' }}</small><h1>{{ article.title }}</h1></div>
+    {%- if article.image -%}<div class="article-card__img" style="aspect-ratio:16/9;margin-bottom:40px">{{ article.image | image_url: width: 1600 | image_tag }}</div>{%- endif -%}
+    <div class="rte">{{ article.content }}</div>
+    <p style="margin-top:40px"><a class="link-underline" href="{{ blog.url }}">← {{ blog.title }}</a></p>
+  </div>
+</article>
+{% schema %}
+{ "name": "Article" }
+{% endschema %}

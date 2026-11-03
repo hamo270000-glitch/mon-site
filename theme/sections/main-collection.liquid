@@ -1,0 +1,68 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="collection-hero">
+  <div class="page-width">
+    <span class="eyebrow">{{ 'collection.eyebrow' | t }}</span>
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+  </div>
+</div>
+<div class="page-width" style="padding-bottom:80px">
+  <div class="collection-bar">
+    <span>{{ 'collection.count' | t: count: collection.products_count }}</span>
+    <div style="display:flex;gap:10px;align-items:center">
+      {%- if collection.filters.size > 0 -%}<button class="btn btn--outline" style="min-height:44px" type="button" data-filters-toggle>{{ 'collection.filters' | t }}</button>{%- endif -%}
+      <label class="visually-hidden" for="SortBy">{{ 'collection.sort' | t }}</label>
+      <select class="select" id="SortBy" data-sort>
+        {%- for option in collection.sort_options -%}<option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>{%- endfor -%}
+      </select>
+    </div>
+  </div>
+  <div class="collection-layout"{% if collection.filters.size == 0 %} style="grid-template-columns:1fr"{% endif %}>
+    {%- if collection.filters.size > 0 -%}
+      <form class="filters" data-filter-form>
+        <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+        {%- for filter in collection.filters -%}
+          <details open>
+            <summary>{{ filter.label }}</summary>
+            {%- case filter.type -%}
+              {%- when 'price_range' -%}
+                <div style="display:flex;gap:8px;padding-top:12px">
+                  <input class="field" style="min-height:40px;padding:0 12px" type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | replace: ',', '.' }}" placeholder="0">
+                  <input class="field" style="min-height:40px;padding:0 12px" type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '.' }}" placeholder="{{ filter.range_max | money_without_currency }}">
+                </div>
+              {%- else -%}
+                <ul>
+                  {%- for value in filter.values -%}
+                    <li><label><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %}> {{ value.label }} <span style="color:var(--c-muted)">({{ value.count }})</span></label></li>
+                  {%- endfor -%}
+                </ul>
+            {%- endcase -%}
+          </details>
+        {%- endfor -%}
+        <p style="margin-top:16px"><a class="link-underline" href="{{ collection.url }}?sort_by={{ collection.sort_by }}">{{ 'collection.clear' | t }}</a></p>
+      </form>
+    {%- endif -%}
+    <div>
+      <div class="grid" style="--cols: {{ section.settings.columns }}">
+        {%- for product in collection.products -%}{% render 'product-card', product: product %}{%- else -%}<p>{{ 'collection.empty' | t }}</p>{%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- elsif part.title == paginate.current_page -%}<span class="current">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{%- endpaginate -%}
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Produits par page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Colonnes", "min": 2, "max": 4, "step": 1, "default": 3 }
+  ]
+}
+{% endschema %}

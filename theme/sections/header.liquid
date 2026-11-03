@@ -1,0 +1,53 @@
+<header class="header">
+  <div class="page-width header__inner">
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="icon-btn menu-toggle" type="button" data-menu-open aria-label="{{ 'general.menu' | t }}">{% render 'icon', icon: 'menu' %}</button>
+      <nav class="header__nav" aria-label="Principal">
+        <ul>
+          {%- for link in section.settings.menu.links -%}
+            <li><a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+    <a class="header__logo" href="{{ routes.root_url }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name, width: section.settings.logo_width }}
+      {%- else -%}
+        <span class="logo-text">{{ section.settings.logo_line1 }}<span>{{ section.settings.logo_line2 }}</span></span>
+      {%- endif -%}
+    </a>
+    <div class="header__icons">
+      <a class="icon-btn" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', icon: 'search' %}</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{{ 'general.account' | t }}">{% render 'icon', icon: 'account' %}</a>
+      {%- endif -%}
+      <a class="icon-btn" href="{{ routes.cart_url }}" data-cart-open aria-label="{{ 'cart.title' | t }}">
+        {% render 'icon', icon: 'cart' %}
+        <span class="cart-count" data-cart-count data-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="MobileNav" aria-label="Menu">
+  <button class="icon-btn mobile-nav__close" type="button" data-menu-close aria-label="{{ 'general.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+  <ul>
+    {%- for link in section.settings.menu.links -%}
+      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- for child in link.links -%}<li><a href="{{ child.url }}" style="font-size:1.3rem;padding-left:16px">{{ child.title }}</a></li>{%- endfor -%}
+    {%- endfor -%}
+  </ul>
+</div>
+{% schema %}
+{
+  "name": "En-tête",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (optionnel)" },
+    { "type": "range", "id": "logo_width", "label": "Largeur du logo", "min": 80, "max": 300, "step": 10, "unit": "px", "default": 160 },
+    { "type": "text", "id": "logo_line1", "label": "Logo texte – ligne 1", "default": "biovela" },
+    { "type": "text", "id": "logo_line2", "label": "Logo texte – ligne 2", "default": "paris" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

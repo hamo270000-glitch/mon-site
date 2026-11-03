@@ -1,0 +1,26 @@
+<div class="trust{% if section.settings.cream %} bg-cream{% endif %}">
+  <div class="page-width trust__grid">
+    {%- for block in section.blocks -%}
+      <div class="trust__item" {{ block.shopify_attributes }}>
+        {% render 'icon', icon: block.settings.icon %}
+        <div><strong>{{ block.settings.title }}</strong><span>{{ block.settings.text }}</span></div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Réassurance",
+  "settings": [{ "type": "checkbox", "id": "cream", "label": "Fond crème", "default": false }],
+  "max_blocks": 4,
+  "blocks": [{ "type": "item", "name": "Élément", "settings": [
+    { "type": "select", "id": "icon", "label": "Icône", "default": "truck", "options": [
+      { "value": "truck", "label": "Livraison" }, { "value": "return", "label": "Retours" }, { "value": "lock", "label": "Paiement" },
+      { "value": "leaf", "label": "Naturel" }, { "value": "flag", "label": "France" }, { "value": "rabbit", "label": "Cruelty-free" },
+      { "value": "gift", "label": "Cadeau" }, { "value": "calendar", "label": "Calendrier" } ] },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Livraison offerte" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "dès 49 € d'achat" }
+  ] }],
+  "presets": [{ "name": "Réassurance" }]
+}
+{% endschema %}

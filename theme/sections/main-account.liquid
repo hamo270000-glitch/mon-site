@@ -1,0 +1,37 @@
+<section class="section">
+  <div class="page-width page-content">
+    {%- case template.name -%}
+      {%- when 'customers/login' -%}
+        <div class="section-head"><h1>{{ 'customer.login' | t }}</h1></div>
+        {%- form 'customer_login', class: 'contact-form' -%}
+          {{ form.errors | default_errors }}
+          <input class="field" type="email" name="customer[email]" placeholder="Email" required autocomplete="email">
+          <input class="field" type="password" name="customer[password]" placeholder="{{ 'customer.password' | t }}" required autocomplete="current-password">
+          <button class="btn btn--primary" type="submit">{{ 'customer.login' | t }}</button>
+          <a class="link-underline" style="text-align:center" href="{{ routes.account_register_url }}">{{ 'customer.register' | t }}</a>
+        {%- endform -%}
+      {%- when 'customers/register' -%}
+        <div class="section-head"><h1>{{ 'customer.register' | t }}</h1></div>
+        {%- form 'create_customer', class: 'contact-form' -%}
+          {{ form.errors | default_errors }}
+          <div class="form-row">
+            <input class="field" type="text" name="customer[first_name]" placeholder="{{ 'customer.first_name' | t }}" autocomplete="given-name">
+            <input class="field" type="text" name="customer[last_name]" placeholder="{{ 'customer.last_name' | t }}" autocomplete="family-name">
+          </div>
+          <input class="field" type="email" name="customer[email]" placeholder="Email" required autocomplete="email">
+          <input class="field" type="password" name="customer[password]" placeholder="{{ 'customer.password' | t }}" required autocomplete="new-password">
+          <label style="font-size:.85rem"><input type="checkbox" name="customer[accepts_marketing]"> {{ 'customer.marketing' | t }}</label>
+          <button class="btn btn--primary" type="submit">{{ 'customer.register' | t }}</button>
+        {%- endform -%}
+      {%- else -%}
+        <div class="section-head"><h1>{{ 'customer.account' | t }}</h1><p>{{ customer.first_name }} {{ customer.last_name }} · {{ customer.email }}</p><a class="link-underline" href="{{ routes.account_logout_url }}">{{ 'customer.logout' | t }}</a></div>
+        <h3>{{ 'customer.orders' | t }}</h3>
+        {%- for order in customer.orders -%}
+          <div class="line-item" style="grid-template-columns:1fr auto auto"><span>{{ order.name }} · {{ order.created_at | date: '%d/%m/%Y' }}</span><span>{{ order.fulfillment_status_label }}</span><strong>{{ order.total_price | money }}</strong></div>
+        {%- else -%}<p>{{ 'customer.no_orders' | t }}</p>{%- endfor -%}
+    {%- endcase -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Compte client" }
+{% endschema %}

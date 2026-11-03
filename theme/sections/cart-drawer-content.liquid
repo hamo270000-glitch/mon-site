@@ -1,0 +1,22 @@
+<div data-cart-content style="display:flex;flex-direction:column;flex:1;min-height:0">
+  <div class="drawer__body">
+    {% render 'ship-progress' %}
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty"><p>{{ 'cart.empty' | t }}</p><a class="btn" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a></div>
+    {%- else -%}
+      {%- for item in cart.items -%}{% render 'line-item', item: item %}{%- endfor -%}
+    {%- endif -%}
+  </div>
+  {%- if cart.item_count > 0 -%}
+    <div class="drawer__foot">
+      <div class="totals"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+      <small style="color:var(--c-muted)">{{ 'cart.taxes' | t }}</small>
+      <form action="{{ routes.cart_url }}" method="post"><button class="btn btn--primary btn--full" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button></form>
+      <a class="link-underline" style="text-align:center" href="{{ routes.cart_url }}">{{ 'cart.view' | t }}</a>
+      {% render 'payment-icons' %}
+    </div>
+  {%- endif -%}
+</div>
+{% schema %}
+{ "name": "Contenu panier" }
+{% endschema %}

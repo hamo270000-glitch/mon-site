@@ -1,0 +1,56 @@
+{%- liquid
+  assign img = section.settings.image
+  assign fallback = section.settings.fallback_asset
+-%}
+<section class="hero{% if section.settings.dark %} hero--dark{% endif %}">
+  <div class="hero__media">
+    {%- if section.settings.video != blank -%}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1920x' }}
+    {%- elsif section.settings.video_asset != blank -%}
+      <video autoplay muted loop playsinline {% if img %}poster="{{ img | image_url: width: 1920 }}"{% elsif fallback != blank %}poster="{{ fallback | asset_url }}"{% endif %}>
+        <source src="{{ section.settings.video_asset | asset_url }}" type="video/mp4">
+      </video>
+    {%- elsif img -%}
+      {{ img | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: img.alt }}
+    {%- elsif fallback != blank -%}
+      <img src="{{ fallback | asset_url }}" alt="" width="2400" height="1200" fetchpriority="high">
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+  <div class="page-width" style="width:100%">
+    <div class="hero__content reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h1>{{ section.settings.heading }}</h1>
+      <div class="rte">{{ section.settings.text }}</div>
+      <div class="hero__ctas">
+        {%- if section.settings.btn1_label != blank -%}<a class="btn btn--primary" href="{{ section.settings.btn1_link }}">{{ section.settings.btn1_label }}</a>{%- endif -%}
+        {%- if section.settings.btn2_label != blank -%}<a class="btn btn--outline" href="{{ section.settings.btn2_link }}">{{ section.settings.btn2_label }}</a>{%- endif -%}
+      </div>
+      {%- if section.settings.proof != blank -%}
+        <div class="hero__proof"><span class="stars__icons" style="--pct:100%"></span><span>{{ section.settings.proof }}</span></div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Bannière principale",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "video", "id": "video", "label": "Vidéo (Shopify)", "info": "Prioritaire sur l'image. Téléversez une vidéo MP4." },
+    { "type": "text", "id": "video_asset", "label": "Vidéo du thème (nom du fichier dans assets)", "info": "Ex : hero-video.mp4" },
+    { "type": "text", "id": "fallback_asset", "label": "Image du thème (nom du fichier dans assets)", "default": "hero-collection.jpg" },
+    { "type": "checkbox", "id": "dark", "label": "Texte clair sur fond sombre", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Marque française · Rituel visage" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Révélez l'éclat naturel de votre peau" },
+    { "type": "richtext", "id": "text", "label": "Texte", "default": "<p>Des soins ciblés et des outils de massage pensés à Paris pour un teint frais, lumineux et visiblement reposé.</p>" },
+    { "type": "text", "id": "btn1_label", "label": "Bouton 1", "default": "Découvrir la brosse" },
+    { "type": "url", "id": "btn1_link", "label": "Lien bouton 1" },
+    { "type": "text", "id": "btn2_label", "label": "Bouton 2", "default": "Toute la gamme" },
+    { "type": "url", "id": "btn2_link", "label": "Lien bouton 2" },
+    { "type": "text", "id": "proof", "label": "Preuve sociale (laisser vide si pas encore d'avis)", "info": "Ex : « 4,8/5 sur 1 200 avis vérifiés » — uniquement des chiffres réels." }
+  ],
+  "presets": [{ "name": "Bannière principale" }]
+}
+{% endschema %}

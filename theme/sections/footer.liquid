@@ -1,0 +1,42 @@
+<footer class="footer">
+  <div class="page-width">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <span class="logo-text">{{ section.settings.logo_line1 }}<span>{{ section.settings.logo_line2 }}</span></span>
+        <div class="rte" style="max-width:340px">{{ section.settings.about }}</div>
+        <div class="socials">
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" aria-label="Instagram">{% render 'icon', icon: 'instagram' %}</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" aria-label="TikTok">{% render 'icon', icon: 'tiktok' %}</a>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" aria-label="Facebook">{% render 'icon', icon: 'facebook' %}</a>{%- endif -%}
+          {%- if settings.social_pinterest != blank -%}<a href="{{ settings.social_pinterest }}" aria-label="Pinterest">{% render 'icon', icon: 'pinterest' %}</a>{%- endif -%}
+        </div>
+      </div>
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.heading | default: block.settings.menu.title }}</h4>
+          <ul>{%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ section.settings.copyright }}</span>
+      {% render 'payment-icons' %}
+    </div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    { "type": "text", "id": "logo_line1", "label": "Logo ligne 1", "default": "biovela" },
+    { "type": "text", "id": "logo_line2", "label": "Logo ligne 2", "default": "paris" },
+    { "type": "richtext", "id": "about", "label": "À propos", "default": "<p>Marque française de soins et d'outils de beauté. Des rituels simples pour une peau éclatante.</p>" },
+    { "type": "text", "id": "copyright", "label": "Mention", "default": "Conçu à Paris" }
+  ],
+  "max_blocks": 3,
+  "blocks": [{ "type": "menu", "name": "Menu", "settings": [
+    { "type": "text", "id": "heading", "label": "Titre" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+  ] }]
+}
+{% endschema %}

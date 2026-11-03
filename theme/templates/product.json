@@ -1,0 +1,183 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "sticky_atc": true
+      },
+      "blocks": {
+        "title_1": {
+          "type": "title",
+          "settings": {}
+        },
+        "rating_2": {
+          "type": "rating",
+          "settings": {}
+        },
+        "price_3": {
+          "type": "price",
+          "settings": {
+            "installments": true,
+            "installments_provider": "avec Klarna"
+          }
+        },
+        "text_4": {
+          "type": "text",
+          "settings": {}
+        },
+        "skin_5": {
+          "type": "skin",
+          "settings": {}
+        },
+        "benefits_6": {
+          "type": "benefits",
+          "settings": {}
+        },
+        "variant_picker_7": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "buy_buttons_8": {
+          "type": "buy_buttons",
+          "settings": {
+            "dynamic_checkout": true,
+            "show_stock": true,
+            "low_stock": 10
+          }
+        },
+        "delivery_9": {
+          "type": "delivery",
+          "settings": {}
+        },
+        "complementary_10": {
+          "type": "complementary",
+          "settings": {
+            "heading": "Complétez votre rituel"
+          }
+        },
+        "collapsible_11": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Description",
+            "source": "description",
+            "open": true
+          }
+        },
+        "collapsible_12": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Actifs clés",
+            "source": "ingredients"
+          }
+        },
+        "collapsible_13": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Mode d'emploi",
+            "source": "how_to_use"
+          }
+        },
+        "collapsible_14": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Composition (INCI)",
+            "source": "inci"
+          }
+        },
+        "collapsible_15": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Livraison & retours",
+            "source": "custom",
+            "content": "<p>Expédition sous 24 h ouvrées. Livraison en 48–72 h en France métropolitaine, offerte dès 49 €. Retours sous 30 jours.</p>"
+          }
+        },
+        "trust_16": {
+          "type": "trust",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title_1",
+        "rating_2",
+        "price_3",
+        "text_4",
+        "skin_5",
+        "benefits_6",
+        "variant_picker_7",
+        "buy_buttons_8",
+        "delivery_9",
+        "complementary_10",
+        "collapsible_11",
+        "collapsible_12",
+        "collapsible_13",
+        "collapsible_14",
+        "collapsible_15",
+        "trust_16"
+      ]
+    },
+    "video": {
+      "type": "video-feature",
+      "settings": {
+        "video_asset": "hero-video.mp4",
+        "poster_asset": "hero-collection.jpg",
+        "eyebrow": "Le geste",
+        "heading": "Le rituel Biovela en vidéo",
+        "btn_label": ""
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "heading": "Vos questions",
+        "cream": true
+      },
+      "blocks": {
+        "qa_1": {
+          "type": "qa",
+          "settings": {
+            "question": "Comment utiliser la brosse lymphatique ?",
+            "answer": "<p>Sur peau propre, avec quelques gouttes d'Huile Visage Précieuse : effectuez des mouvements doux du centre du visage vers l'extérieur, puis du haut du cou vers les clavicules. 3 à 5 minutes suffisent, matin ou soir.</p>"
+          }
+        },
+        "qa_2": {
+          "type": "qa",
+          "settings": {
+            "question": "Convient-elle aux peaux sensibles ?",
+            "answer": "<p>Oui, ses fibres souples sont pensées pour un massage doux. Évitez simplement les zones irritées ou lésées et consultez un professionnel de santé en cas de doute.</p>"
+          }
+        },
+        "qa_3": {
+          "type": "qa",
+          "settings": {
+            "question": "Comment nettoyer ma brosse ?",
+            "answer": "<p>Rincez les fibres à l'eau tiède avec un savon doux une fois par semaine, sans immerger le manche en bois. Laissez sécher à plat, fibres vers le bas.</p>"
+          }
+        },
+        "qa_4": {
+          "type": "qa",
+          "settings": {
+            "question": "Quels sont les délais de livraison ?",
+            "answer": "<p>Les commandes passées avant 13 h sont expédiées le jour même (jours ouvrés). Livraison en 48–72 h en France métropolitaine, offerte dès 49 €.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "qa_1",
+        "qa_2",
+        "qa_3",
+        "qa_4"
+      ]
+    },
+    "reco": {
+      "type": "product-recommendations",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "video",
+    "faq",
+    "reco"
+  ]
+}

@@ -1,0 +1,38 @@
+<section class="section{% if section.settings.cream %} bg-cream{% endif %}">
+  <div class="page-width faq">
+    <div class="section-head reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="accordion reveal">
+      {%- for block in section.blocks -%}
+        <details {{ block.shopify_attributes }}{% if forloop.first and section.settings.open_first %} open{% endif %}>
+          <summary>{{ block.settings.question }}</summary>
+          <div class="rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org", "@type": "FAQPage",
+  "mainEntity": [{%- for block in section.blocks -%}{ "@type": "Question", "name": {{ block.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} } }{% unless forloop.last %},{% endunless %}{%- endfor -%}]
+}
+</script>
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Questions fréquentes" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Tout savoir" },
+    { "type": "checkbox", "id": "open_first", "label": "Ouvrir la 1re question", "default": true },
+    { "type": "checkbox", "id": "cream", "label": "Fond crème", "default": false }
+  ],
+  "blocks": [{ "type": "qa", "name": "Question", "settings": [
+    { "type": "text", "id": "question", "label": "Question", "default": "Question ?" },
+    { "type": "richtext", "id": "answer", "label": "Réponse", "default": "<p>Réponse.</p>" }
+  ] }],
+  "presets": [{ "name": "FAQ" }]
+}
+{% endschema %}

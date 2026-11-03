@@ -1,0 +1,22 @@
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  assign p = target.price
+  assign cmp = target.compare_at_price
+-%}
+<div class="price{% if large %} price--large{% endif %}">
+  {%- if cmp > p -%}
+    <span class="price__sale" data-price>{{ p | money }}</span>
+    <s class="price__compare" data-compare>{{ cmp | money }}</s>
+    {%- if large -%}
+      {%- assign save = cmp | minus: p | times: 100 | divided_by: cmp | round -%}
+      <span class="price__save">-{{ save }} %</span>
+    {%- endif -%}
+  {%- else -%}
+    {%- if product.price_varies and large == false -%}{{ 'product.from' | t }}&nbsp;{%- endif -%}
+    <span data-price>{{ p | money }}</span>
+    <s class="price__compare" data-compare></s>
+  {%- endif -%}
+  {%- if target.unit_price_measurement -%}
+    <span class="price__unit">{{ target.unit_price | money }} / {{ target.unit_price_measurement.reference_value }}{{ target.unit_price_measurement.reference_unit }}</span>
+  {%- endif -%}
+</div>

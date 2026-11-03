@@ -1,0 +1,33 @@
+<section class="section">
+  <div class="page-width">
+    <h1 style="text-align:center">{{ 'cart.title' | t }}</h1>
+    {%- if cart.item_count == 0 -%}
+      <div class="cart-empty"><p>{{ 'cart.empty' | t }}</p><a class="btn" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a></div>
+    {%- else -%}
+      <div class="cart-page">
+        <div>
+          {% render 'ship-progress' %}
+          {%- for item in cart.items -%}{% render 'line-item', item: item %}{%- endfor -%}
+        </div>
+        <form class="cart-summary" action="{{ routes.cart_url }}" method="post">
+          <div class="totals"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+          {%- for d in cart.cart_level_discount_applications -%}<div class="totals" style="font-size:.9rem"><span>{{ d.title }}</span><span>-{{ d.total_allocated_amount | money }}</span></div>{%- endfor -%}
+          <small style="color:var(--c-muted)">{{ 'cart.taxes' | t }}</small>
+          {%- if section.settings.show_note -%}
+            <label for="CartNote" style="font-size:.85rem">{{ 'cart.note' | t }}</label>
+            <textarea id="CartNote" name="note" class="field" style="border-radius:12px;padding:12px;min-height:80px">{{ cart.note }}</textarea>
+          {%- endif -%}
+          <button class="btn btn--primary btn--full" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+          {%- if additional_checkout_buttons -%}<div>{{ content_for_additional_checkout_buttons }}</div>{%- endif -%}
+          <div style="display:grid;gap:8px;font-size:.84rem;color:var(--c-muted)">
+            <span>✦ {{ settings.trust_shipping }}</span><span>✦ {{ settings.trust_returns }}</span><span>✦ Paiement 100 % sécurisé</span>
+          </div>
+          {% render 'payment-icons' %}
+        </form>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Panier", "settings": [{ "type": "checkbox", "id": "show_note", "label": "Note de commande", "default": true }] }
+{% endschema %}
