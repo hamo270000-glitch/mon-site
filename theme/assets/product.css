@@ -36,7 +36,7 @@
 .specs dd { display: inline; margin: 0; color: var(--c-ink); }
 .specs__desc dt { display: block; margin-bottom: 4px; }
 .specs__desc dd { display: block; }
-.specs__clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--c-muted) !important; }
+.specs__desc .specs__clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--c-muted) !important; }
 .specs__desc.is-open .specs__clamp { -webkit-line-clamp: unset; display: block; }
 .specs__more { justify-self: center; margin: 10px auto 0; display: block; background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; font-size: .88rem; color: var(--c-ink); cursor: pointer; }
 
