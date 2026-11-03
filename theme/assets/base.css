@@ -754,3 +754,4 @@ p.eyebrow::before { display: inline-block; vertical-align: middle; margin: -2px 
   .step h3 { margin: 4px 0 4px; }
   .step::before { right: 14px; }
 }
+@media (max-width: 560px) { .buy-row .btn { padding: 0 16px; letter-spacing: .1em; } }
