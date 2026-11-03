@@ -1,11 +1,55 @@
-<header class="header">
+{{ 'mega-menu.css' | asset_url | stylesheet_tag }}
+<header class="header" data-header>
   <div class="page-width header__inner">
     <div style="display:flex;align-items:center;gap:8px">
       <button class="icon-btn menu-toggle" type="button" data-menu-open aria-label="{{ 'general.menu' | t }}">{% render 'icon', icon: 'menu' %}</button>
-      <nav class="header__nav" aria-label="Principal">
-        <ul>
+      <nav class="header__nav mega-nav" aria-label="Principal">
+        <ul class="mega-nav__list">
           {%- for link in section.settings.menu.links -%}
-            <li><a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+            {%- assign has_panel = false -%}
+            {%- if link.links.size > 0 -%}{%- assign has_panel = true -%}{%- endif -%}
+            <li class="mega-nav__item{% if has_panel %} has-mega{% endif %}" data-mega-item>
+              <a href="{{ link.url }}" class="mega-nav__link"{% if link.active %} aria-current="page"{% endif %}{% if has_panel %} aria-haspopup="true" aria-expanded="false"{% endif %}>{{ link.title }}</a>
+              {%- if has_panel -%}
+                <div class="mega" role="region" aria-label="{{ link.title | escape }}">
+                  <div class="page-width mega__inner">
+                    <div class="mega__cols">
+                      {%- for child in link.links -%}
+                        <div class="mega__col">
+                          <a class="mega__heading" href="{{ child.url }}">{{ child.title }}</a>
+                          {%- if child.links.size > 0 -%}
+                            <ul>{%- for g in child.links -%}<li><a href="{{ g.url }}">{{ g.title }}</a></li>{%- endfor -%}</ul>
+                          {%- endif -%}
+                        </div>
+                      {%- endfor -%}
+                      <a class="mega__all" href="{{ link.url }}">{{ 'general.view_all' | t }} — {{ link.title }} →</a>
+                    </div>
+                    <div class="mega__features">
+                      {%- assign shown = 0 -%}
+                      {%- for block in section.blocks -%}
+                        {%- assign target = block.settings.menu_item | downcase | strip -%}
+                        {%- assign current = link.title | downcase | strip -%}
+                        {%- if target == current and shown < 2 -%}
+                          {%- assign shown = shown | plus: 1 -%}
+                          <a class="mega-card" href="{{ block.settings.link | default: link.url }}" {{ block.shopify_attributes }}>
+                            <span class="mega-card__media">
+                              {%- if block.settings.image != blank -%}
+                                {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: block.settings.title }}
+                              {%- elsif block.settings.image_asset != blank -%}
+                                <img src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="700" height="700">
+                              {%- endif -%}
+                              {%- if block.settings.badge != blank -%}<span class="mega-card__badge">{{ block.settings.badge }}</span>{%- endif -%}
+                            </span>
+                            <span class="mega-card__title">{{ block.settings.title }}</span>
+                            {%- if block.settings.text != blank -%}<span class="mega-card__text">{{ block.settings.text }}</span>{%- endif -%}
+                          </a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            </li>
           {%- endfor -%}
         </ul>
       </nav>
@@ -28,17 +72,75 @@
       </a>
     </div>
   </div>
+  <div class="mega-backdrop" data-mega-backdrop></div>
 </header>
 
 <div class="mobile-nav" id="MobileNav" aria-label="Menu">
-  <button class="icon-btn mobile-nav__close" type="button" data-menu-close aria-label="{{ 'general.close' | t }}">{% render 'icon', icon: 'close' %}</button>
-  <ul>
+  <div class="mobile-nav__top">
+    <span class="logo-text">{{ section.settings.logo_line1 }}<span>{{ section.settings.logo_line2 }}</span></span>
+    <button class="icon-btn" type="button" data-menu-close aria-label="{{ 'general.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+  </div>
+  <ul class="m-menu">
     {%- for link in section.settings.menu.links -%}
-      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-      {%- for child in link.links -%}<li><a href="{{ child.url }}" style="font-size:1.3rem;padding-left:16px">{{ child.title }}</a></li>{%- endfor -%}
+      <li>
+        {%- if link.links.size > 0 -%}
+          <details class="m-menu__group">
+            <summary>{{ link.title }}</summary>
+            <div class="m-menu__panel">
+              {%- for child in link.links -%}
+                <div class="m-menu__col">
+                  <a class="m-menu__heading" href="{{ child.url }}">{{ child.title }}</a>
+                  {%- for g in child.links -%}<a class="m-menu__link" href="{{ g.url }}">{{ g.title }}</a>{%- endfor -%}
+                </div>
+              {%- endfor -%}
+              <div class="m-menu__features">
+                {%- for block in section.blocks -%}
+                  {%- assign target = block.settings.menu_item | downcase | strip -%}
+                  {%- assign current = link.title | downcase | strip -%}
+                  {%- if target == current -%}
+                    <a class="mega-card" href="{{ block.settings.link | default: link.url }}">
+                      <span class="mega-card__media">
+                        {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}{%- elsif block.settings.image_asset != blank -%}<img src="{{ block.settings.image_asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="500" height="500">{%- endif -%}
+                      </span>
+                      <span class="mega-card__title">{{ block.settings.title }}</span>
+                    </a>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+              <a class="mega__all" href="{{ link.url }}">{{ 'general.view_all' | t }} →</a>
+            </div>
+          </details>
+        {%- else -%}
+          <a class="m-menu__top" href="{{ link.url }}">{{ link.title }}</a>
+        {%- endif -%}
+      </li>
     {%- endfor -%}
   </ul>
 </div>
+
+<script>
+  (function () {
+    var header = document.querySelector('[data-header]');
+    if (!header) return;
+    var items = header.querySelectorAll('[data-mega-item].has-mega');
+    var backdrop = header.querySelector('[data-mega-backdrop]');
+    var timer;
+    function close() { items.forEach(function (i) { i.classList.remove('is-open'); var a = i.querySelector('.mega-nav__link'); a && a.setAttribute('aria-expanded', 'false'); }); header.classList.remove('mega-open'); }
+    function open(item) { clearTimeout(timer); close(); item.classList.add('is-open'); item.querySelector('.mega-nav__link').setAttribute('aria-expanded', 'true'); header.classList.add('mega-open'); }
+    items.forEach(function (item) {
+      item.addEventListener('mouseenter', function () { open(item); });
+      item.addEventListener('mouseleave', function () { timer = setTimeout(close, 180); });
+      item.addEventListener('focusin', function () { open(item); });
+      var link = item.querySelector('.mega-nav__link');
+      link.addEventListener('click', function (e) { if (!window.matchMedia('(hover: hover)').matches && !item.classList.contains('is-open')) { e.preventDefault(); open(item); } });
+    });
+    header.addEventListener('focusout', function (e) { if (!header.contains(e.relatedTarget)) close(); });
+    backdrop && backdrop.addEventListener('mouseenter', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    var last = 0;
+    window.addEventListener('scroll', function () { header.classList.toggle('is-scrolled', window.scrollY > 10); last = window.scrollY; }, { passive: true });
+  })();
+</script>
 {% schema %}
 {
   "name": "En-tête",
@@ -47,7 +149,18 @@
     { "type": "range", "id": "logo_width", "label": "Largeur du logo", "min": 80, "max": 300, "step": 10, "unit": "px", "default": 160 },
     { "type": "text", "id": "logo_line1", "label": "Logo texte – ligne 1", "default": "biovela" },
     { "type": "text", "id": "logo_line2", "label": "Logo texte – ligne 2", "default": "paris" },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Méga-menu : 3 niveaux. Niveau 1 = onglet, niveau 2 = titre de colonne, niveau 3 = liens." }
+  ],
+  "blocks": [
+    { "type": "feature", "name": "Visuel du méga-menu", "settings": [
+      { "type": "text", "id": "menu_item", "label": "Onglet du menu (titre exact)", "default": "Soins visage" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "image_asset", "label": "Image du thème (fichier assets)" },
+      { "type": "text", "id": "badge", "label": "Badge", "default": "Nouveau" },
+      { "type": "text", "id": "title", "label": "Titre", "default": "Découvrir" },
+      { "type": "text", "id": "text", "label": "Texte" },
+      { "type": "url", "id": "link", "label": "Lien" }
+    ] }
   ]
 }
 {% endschema %}

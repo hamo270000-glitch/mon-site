@@ -42,7 +42,83 @@
       "type": "header",
       "settings": {
         "menu": "main-menu"
-      }
+      },
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "menu_item": "Soins visage",
+            "image_asset": "serum-vitamine-c.jpg",
+            "badge": "Best-seller",
+            "title": "Sérum Éclat Vitamine C 15 %",
+            "text": "Le shot d'éclat quotidien",
+            "link": "/products/serum-eclat-vitamine-c-15"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "menu_item": "Soins visage",
+            "image_asset": "creme-hydratante.jpg",
+            "badge": "",
+            "title": "Crème Hydratante",
+            "text": "Hydratation repulpante 24 h",
+            "link": "/products/creme-hydratante-acide-hyaluronique"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "menu_item": "Outils",
+            "image_asset": "brosse-lymphatique-2.jpg",
+            "badge": "-30 %",
+            "title": "Brosse Lymphatique",
+            "text": "Le rituel drainant",
+            "link": "/products/brosse-lymphatique-visage"
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "menu_item": "Outils",
+            "image_asset": "gua-sha.jpg",
+            "badge": "",
+            "title": "Gua Sha Quartz Rose",
+            "text": "Le geste sculptant",
+            "link": "/products/gua-sha-quartz-rose"
+          }
+        },
+        "feature_5": {
+          "type": "feature",
+          "settings": {
+            "menu_item": "Rituels",
+            "image_asset": "coffret-routine.jpg",
+            "badge": "Coffret",
+            "title": "Coffret Routine Lymphatique",
+            "text": "Brosse + Huile + Sérum",
+            "link": "/products/coffret-routine-lymphatique"
+          }
+        },
+        "feature_6": {
+          "type": "feature",
+          "settings": {
+            "menu_item": "Rituels",
+            "image_asset": "hero-collection.jpg",
+            "badge": "",
+            "title": "Composer ma routine",
+            "text": "Faites le diagnostic de peau",
+            "link": "/#diagnostic"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4",
+        "feature_5",
+        "feature_6"
+      ]
     }
   },
   "order": [

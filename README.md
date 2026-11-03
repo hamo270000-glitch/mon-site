@@ -55,7 +55,12 @@ Remplissez enfin le métachamp **Produits complémentaires** pour afficher le bl
 ## 4. Collections et menus
 
 - Créez une collection automatique **Tous nos soins**, puis sélectionnez-la dans la section « Collection en vedette » de la page d'accueil.
-- Menus (Boutique en ligne → Navigation) : `main-menu` (Soins visage, Outils, Rituels, Diagnostic), `footer`, `aide` et `legal`.
+- **Méga-menu** (Boutique en ligne → Navigation → `main-menu`) : il utilise 3 niveaux, glissés les uns sous les autres.
+  - Niveau 1 = onglet (ex. **Soins visage**).
+  - Niveau 2 = titre de colonne (ex. *Par besoin*, *Par type de soin*, *Par type de peau*).
+  - Niveau 3 = liens (ex. *Éclat*, *Sérums*, *Peau sèche*).
+  - Les visuels produits à droite du menu se règlent dans Personnaliser → En-tête → « Visuel du méga-menu » : indiquez le titre exact de l'onglet, une image, un titre et un lien. Six visuels sont déjà prêts (Soins visage, Outils, Rituels).
+- Autres menus : `footer`, `aide` et `legal`.
 - Filtres de collection : installez l'application gratuite **Shopify Search & Discovery**, puis ajoutez les filtres Prix, Type de produit et Tags (les tags `peau-…` et `besoin-…` sont déjà dans le CSV).
 - Pages : créez « À propos » avec le modèle `page.a-propos` et « Contact » avec le modèle `page.contact`.
 
