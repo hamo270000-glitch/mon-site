@@ -1,10 +1,48 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bE" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#1fd18b"/><stop offset="1" stop-color="#0a6e63"/></linearGradient>
-    <radialGradient id="hE" cx="0.3" cy="0.12" r="0.9"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="bg" cx="0.5" cy="0.35" r="0.8"><stop offset="0" stop-color="#2a2a2e"/><stop offset="1" stop-color="#050506"/></radialGradient>
+    <linearGradient id="peau" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" stop-color="#ffe866"/><stop offset=".55" stop-color="#ffd21f"/><stop offset="1" stop-color="#f2b200"/></linearGradient>
+    <linearGradient id="bras" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe55a"/><stop offset="1" stop-color="#f5bb00"/></linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffd21f" stop-opacity=".28"/><stop offset="1" stop-color="#ffd21f" stop-opacity="0"/></radialGradient>
+    <filter id="ombre" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity=".6"/></filter>
   </defs>
-  <rect width="512" height="512" rx="114" fill="url(#bE)"/>
-  <rect width="512" height="512" rx="114" fill="url(#hE)"/>
-  <path fill="#fff" fill-rule="evenodd" d="M256 84 L418 426 H342 L314 358 H198 L170 426 H94 Z M256 186 C 284 222 294 262 284 306 H228 C 218 262 228 222 256 186 Z"/>
-  <path fill="#0b5f52" fill-opacity=".16" d="M256 84 L418 426 H342 L314 358 H284 C 294 306 284 262 256 186 Z"/>
+  <rect width="512" height="512" rx="114" fill="url(#bg)"/>
+  <circle cx="256" cy="270" r="210" fill="url(#halo)"/>
+
+  <g filter="url(#ombre)" transform="translate(256 262) scale(1.07) translate(-256 -262)">
+    <!-- Bras : contour foncé puis remplissage, pour une silhouette d'un seul bloc -->
+    <g fill="#a87400" stroke="#a87400" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M236 306 L150 306 Q122 306 120 278 L118 206" fill="none" stroke-width="54"/>
+      <path d="M276 306 L362 306 Q390 306 392 278 L394 206" fill="none" stroke-width="54"/>
+      <ellipse cx="172" cy="280" rx="36" ry="32"/><ellipse cx="340" cy="280" rx="36" ry="32"/>
+      <circle cx="118" cy="188" r="34"/><circle cx="394" cy="188" r="34"/>
+    </g>
+    <g fill="url(#bras)" stroke="url(#bras)" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M236 306 L150 306 Q122 306 120 278 L118 206" fill="none" stroke-width="44"/>
+      <path d="M276 306 L362 306 Q390 306 392 278 L394 206" fill="none" stroke-width="44"/>
+      <ellipse cx="172" cy="280" rx="31" ry="27" stroke="none"/><ellipse cx="340" cy="280" rx="31" ry="27" stroke="none"/>
+      <circle cx="118" cy="188" r="29" stroke="none"/><circle cx="394" cy="188" r="29" stroke="none"/>
+    </g>
+    <path d="M152 266 C 162 254 182 254 192 264" stroke="#fff6b8" stroke-width="8" fill="none" stroke-linecap="round" opacity=".85"/>
+    <path d="M360 266 C 350 254 330 254 320 264" stroke="#fff6b8" stroke-width="8" fill="none" stroke-linecap="round" opacity=".85"/>
+    <path d="M104 182 h26 M104 196 h24" stroke="#a87400" stroke-width="5" stroke-linecap="round"/>
+    <path d="M408 182 h-26 M408 196 h-24" stroke="#a87400" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- Banane -->
+    <g transform="translate(-40 0)">
+      <path d="M226 96 C 340 140 356 330 254 446 C 236 452 214 440 216 426 C 268 330 252 200 200 130 C 192 112 210 92 226 96 Z" fill="url(#peau)" stroke="#a87400" stroke-width="6" stroke-linejoin="round"/>
+      <path d="M240 122 C 302 180 314 304 262 412" stroke="#fff3a6" stroke-width="12" fill="none" stroke-linecap="round" opacity=".7"/>
+      <path d="M212 136 C 252 210 258 320 232 420" stroke="#e0a000" stroke-width="6" fill="none" stroke-linecap="round" opacity=".55"/>
+      <path d="M210 104 C 204 86 208 70 222 60" stroke="#5a3b12" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <path d="M236 444 C 238 454 248 458 256 450" stroke="#3b2a12" stroke-width="10" fill="none" stroke-linecap="round"/>
+    </g>
+    <!-- Visage déterminé -->
+    <g transform="translate(-8 0)">
+    <ellipse cx="236" cy="226" rx="10" ry="13" fill="#1c1c1e"/>
+    <ellipse cx="274" cy="224" rx="10" ry="13" fill="#1c1c1e"/>
+    <circle cx="239" cy="220" r="3.5" fill="#fff"/><circle cx="277" cy="218" r="3.5" fill="#fff"/>
+    <path d="M222 202 L248 211 M290 199 L262 208" stroke="#1c1c1e" stroke-width="7" stroke-linecap="round"/>
+    <path d="M238 258 C 250 274 274 274 286 256" stroke="#1c1c1e" stroke-width="7" fill="none" stroke-linecap="round"/>
+    </g>
+  </g>
 </svg>
