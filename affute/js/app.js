@@ -6,6 +6,7 @@ import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
 import { viewScan, viewScanProduct, stopScan, ALLERGENS } from './scan.js';
 import { viewSport, viewSportDay, viewSeance, viewExercise, viewBiblio, viewHistory } from './sport.js';
+import { enterPage } from './fx.js';
 import { entries, addEntry, removeEntry, findByRef, dayKey, dayCard, bindDayCard, updateChip } from './journal.js';
 
 // ---------- Stockage local (tout reste sur le téléphone) ----------
@@ -65,10 +66,11 @@ async function route() {
       else viewSport($app, who());
     },
   };
-  if (!profile && NEEDS_PROFILE[page]) viewNeedProfile(page);
-  else (views[page] || viewPlan)();
   $app.classList.remove('fade-in'); void $app.offsetWidth; $app.classList.add('fade-in');
+  if (!profile && NEEDS_PROFILE[page]) viewNeedProfile(page);
+  else await (views[page] || viewPlan)();
   refreshChip();
+  enterPage($app);
 }
 window.addEventListener('hashchange', route);
 function refreshChip() {
