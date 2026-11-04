@@ -296,17 +296,6 @@ ol.steps li { margin-bottom: 8px; }
   .nutri { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ---------- Onglet Scan (au centre, mis en avant) ---------- */
-.tabbar a.tab-scan { position: relative; color: var(--text); }
-.tabbar a.tab-scan span {
-  width: 50px; height: 50px; margin-top: -24px; border-radius: 18px; display: grid; place-items: center;
-  background: var(--mint); color: #fff;
-  box-shadow: 0 8px 20px -6px rgba(0, 122, 255, 0.6), inset 0 0.5px 0 rgba(255, 255, 255, 0.6);
-  transform: perspective(200px) rotateX(10deg);
-}
-.tabbar a.tab-scan span svg { width: 26px; height: 26px; }
-.tabbar a.tab-scan[aria-current='page'] { background: none; box-shadow: none; color: var(--lime); }
-
 /* ---------- Scanner ---------- */
 .scan-box { position: relative; border-radius: 26px; overflow: hidden; background: #000; aspect-ratio: 4 / 3; border: 1px solid var(--border); box-shadow: var(--shadow); }
 .scan-box #reader { position: absolute; inset: 0; }
@@ -522,3 +511,80 @@ body.in-seance main { padding-bottom: calc(200px + var(--safe-b)); }
 .portion-modes { margin-bottom: 0; }
 .plan-hint { display: flex; gap: 10px; align-items: flex-start; text-decoration: none; }
 .need-profile .wiz-emoji { margin: 6px auto 4px; }
+
+/* ---------- Menu du bas : pilule + bouton rond (style Cal AI) ---------- */
+.tabbar {
+  display: flex; align-items: center; gap: 12px;
+  width: min(560px, calc(100% - 28px)); padding: 0;
+  background: none; border: 0; box-shadow: none;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.tab-pill {
+  flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; padding: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 999px; border: 0.5px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.25);
+}
+.tabbar .tab-pill a { padding: 7px 2px; border-radius: 999px; color: #8e8e93; font-size: 0.66rem; }
+.tabbar .tab-pill a[aria-current='page'] { color: #1c1c1e; background: #ececf0; }
+.tabbar .tab-fab {
+  flex: none; width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; padding: 0;
+  background: #1c1c1e; color: #fff; box-shadow: 0 12px 26px -8px rgba(0, 0, 0, 0.5);
+}
+.tabbar .tab-fab svg { width: 26px; height: 26px; }
+.tabbar .tab-fab[aria-current='page'] { background: #000; color: #fff; }
+
+/* ---------- Fiche d'un plat (style Cal AI) ---------- */
+body.detail .topbar, body.detail .tabbar { display: none; }
+body.detail main { padding-top: 0; padding-bottom: calc(100px + var(--safe-b)); }
+.cal-hero { position: relative; margin: 0 -16px; aspect-ratio: 8 / 7; max-height: 460px; background: #fff; overflow: hidden; }
+.cal-hero img { width: 100%; height: 100%; object-fit: cover; display: block; animation: dish-in 0.6s cubic-bezier(.2, .8, .2, 1) both; }
+.cal-hero img.art { object-fit: contain; padding: 40px; }
+.cal-nav { position: absolute; left: 0; right: 0; top: 0; padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 0; display: flex; align-items: center; justify-content: space-between; }
+.cal-nav span { font-weight: 600; color: #1c1c1e; }
+.cal-round {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 0; cursor: pointer;
+  background: rgba(60, 60, 67, 0.55); color: #fff; text-decoration: none;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+.cal-round svg { width: 22px; height: 22px; }
+.cal-sheet { position: relative; margin: -30px -16px 14px; padding: 20px 18px 18px; background: #fff; border-radius: 30px; box-shadow: 0 -8px 24px -14px rgba(0, 0, 0, 0.25); }
+.cal-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.cal-tag { font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #f2f2f5; color: #3a3a3c; }
+.cal-tag.warn { background: #fff3e0; color: #b25d00; }
+.cal-title { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.cal-title h1 { flex: 1; margin: 0; font-size: 1.45rem; line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; }
+.cal-stepper { flex: none; display: flex; align-items: center; gap: 4px; border: 1px solid #d8d8dd; border-radius: 999px; padding: 4px; }
+.cal-stepper button { width: 34px; height: 34px; border: 0; background: none; font-size: 1.3rem; cursor: pointer; color: #1c1c1e; border-radius: 50%; }
+.cal-stepper span { min-width: 20px; text-align: center; font-weight: 700; }
+.cal-h { display: flex; align-items: baseline; justify-content: space-between; margin: 18px 0 8px; }
+.cal-h h2 { margin: 0; font-size: 1.2rem; letter-spacing: -0.02em; }
+.cal-ing { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cal-ing li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px; background: #f6f6f8; }
+.cal-ing b { font-weight: 600; }
+.cal-ing em { font-style: normal; color: #8e8e93; font-size: 0.86rem; white-space: nowrap; }
+.cal-ing .q { text-align: right; font-weight: 600; white-space: nowrap; }
+.cal-ing .q small { display: block; color: #8e8e93; font-weight: 500; font-size: 0.75rem; }
+.cal-kcal { display: flex; align-items: center; gap: 14px; margin: 18px -4px 10px; padding: 14px 16px; background: #fff; border-radius: 22px; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.22), 0 0 0 0.5px rgba(0, 0, 0, 0.05); }
+.cal-kcal span { display: block; color: #3a3a3c; font-size: 0.92rem; }
+.cal-kcal b { display: block; font-size: 2.3rem; line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
+.ic { display: grid; place-items: center; flex: none; }
+.ic svg { width: 100%; height: 100%; }
+.cal-kcal .ic { width: 58px; height: 58px; border-radius: 16px; background: #f2f2f5; color: #1c1c1e; padding: 15px; }
+.cal-macros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.cal-macro { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 8px; align-items: center; padding: 10px 12px; border-radius: 16px; border: 1px solid #ececf0; }
+.cal-macro .ic { grid-row: span 2; width: 28px; height: 28px; border-radius: 50%; padding: 6px; }
+.cal-macro span { font-size: 0.8rem; color: #3a3a3c; }
+.cal-macro b { font-size: 1.05rem; }
+.ic.prot { background: #ffe9ea; color: #e5484d; }
+.ic.gluc { background: #fff2e2; color: #e8912d; }
+.ic.lip { background: #e8f0ff; color: #3b7cf6; }
+.cal-actions {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(12px + var(--safe-b)); z-index: 30;
+  width: min(560px, calc(100% - 28px)); display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.cal-btn { display: flex; align-items: center; justify-content: center; gap: 8px; height: 54px; border-radius: 999px; border: 0; cursor: pointer; font-weight: 600; font-size: 1rem; background: #1c1c1e; color: #fff; box-shadow: 0 12px 26px -10px rgba(0, 0, 0, 0.5); }
+.cal-btn.ghost { background: rgba(255, 255, 255, 0.95); color: #1c1c1e; border: 1px solid #d8d8dd; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.3); }
+.cal-btn svg { width: 20px; height: 20px; }
+#buy { scroll-margin-top: 16px; }
