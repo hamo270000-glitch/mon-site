@@ -5,7 +5,7 @@
 const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ---------- Apparition des blocs en 3D quand ils arrivent à l'écran ----------
-const REVEAL = '.card, .meal, .cal-ing li, .cal-kcal, .cal-macro, .stat, .day, .notice, .wiz-card, .ex-card';
+const REVEAL = '.card, .meal, .rcard, .goal-card, .cal-ing li, .cal-kcal, .cal-macro, .stat, .day, .notice, .wiz-card, .ex-card';
 let io = null;
 function observer() {
   if (io) return io;
@@ -105,7 +105,7 @@ export function enterPage(root) {
     if (r.top < window.innerHeight * 0.94) requestAnimationFrame(() => obs.observe(el));
     else obs.observe(el);
   });
-  root.querySelectorAll('.cal-kcal .ck-txt b, .cal-macro b, .ring .val b').forEach(countUp);
+  root.querySelectorAll('.cal-kcal .ck-txt b, .cal-macro b, .ring .val b, .gc-num, .gc-ring b').forEach(countUp);
   root.classList.add('fx-fill');
   setTimeout(() => root.classList.remove('fx-fill'), 1400);
 }
