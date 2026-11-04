@@ -43,7 +43,7 @@ Ce que les applis connues (MyFitnessPal, Yazio, Foodvisor, Cal AI, Lifesum…) n
 - **Nutrition** : Anses. 2025. Table de composition nutritionnelle des aliments Ciqual ([DOI 10.5281/zenodo.17550132](https://doi.org/10.5281/zenodo.17550132)), licence CC-BY 4.0.
 - **Prix** : [Open Prices](https://prices.openfoodfacts.org) (Open Food Facts), licence ODbL. C'est la médiane des relevés faits en France sur les 18 derniers mois. Un prix de magasin n'est retenu qu'avec au moins 2 relevés ; sinon, l'appli affiche le prix moyen en France, marqué d'un `*`.
 - **Produits de marque** : [Open Food Facts](https://world.openfoodfacts.org).
-- **Photos des plats** : vraies photos libres de droits (Wikimedia Commons, Openverse), détourées et posées sur fond blanc avec une ombre douce, pour un style « studio » identique. Auteur et licence affichés sous chaque photo (`data/photos.json`). S'il manque une photo, l'appli affiche un dessin SVG (`tools/plats.mjs`).
+- **Photos des plats** : 49 vraies photos libres de droits (Wikimedia Commons, Openverse), détourées et posées sur fond blanc avec une ombre douce, pour un style « studio » identique. Auteur et licence affichés sous chaque photo (`data/photos.json`). S'il manque une photo, l'appli affiche un dessin SVG (`tools/plats.mjs`).
 
 ## Calculs
 - **Calories réglables** : sur l'écran Plan, on peut augmenter ou baisser ses calories. Affûté recalcule tout de suite la date d'arrivée, le poids par semaine et (en prise de masse) la part de muscle dans le poids pris.
