@@ -1,5 +1,5 @@
 // Fonctionne hors ligne : on garde une copie de l'appli et des données.
-const CACHE = 'affute-v8';
+const CACHE = 'affute-v9';
 const ASSETS = [
   './', 'index.html', 'css/app.css', 'js/app.js', 'js/calc.js', 'js/data.js', 'js/body.js', 'js/photo.js', 'js/scan.js', 'js/journal.js',
   '../js/api.js', '../js/score.js', '../js/data.js', '../vendor/html5-qrcode.min.js',

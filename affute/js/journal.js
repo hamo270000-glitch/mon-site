@@ -73,7 +73,7 @@ export function dayCard(plan, { masse = false } = {}) {
   const bar = (label, v, max, unit, color) => {
     const p = pct(v, max);
     return `<div class="macro"><div class="row between"><span>${label}</span><span class="nw"><b>${fmt(v)}</b><span class="muted">/${fmt(max)}${unit}</span></span></div>
-      <div class="bar fill"><i style="width:${Math.min(100, p)}%;background:${p > 115 ? 'var(--orange)' : color}"></i></div></div>`;
+      <div class="bar fill"><i style="width:${Math.min(100, p)}%;background:${p > 115 ? '#ff3b30' : color}"></i></div></div>`;
   };
   let msg;
   if (!list.length) msg = `<p class="small muted" style="margin:0">Touche <b>✓ Mangé</b> dans « Semaine », ou « J'ai mangé ce repas » sur une recette, ou ajoute un produit scanné : ta jauge se remplit.</p>`;
@@ -88,14 +88,14 @@ export function dayCard(plan, { masse = false } = {}) {
     <div class="row between"><h2 style="margin:0">Aujourd'hui</h2>${s ? `<span class="pill warn">🔥 ${s} jour${s > 1 ? 's' : ''} d'affilée</span>` : ''}</div>
     <div class="ring-wrap" style="margin-top:12px">
       <div class="ring"><svg viewBox="0 0 136 136">
-        <circle cx="68" cy="68" r="${r}" fill="none" stroke="rgba(16,60,38,.08)" stroke-width="16"/>
+        <circle cx="68" cy="68" r="${r}" fill="none" stroke="rgba(250,17,79,.14)" stroke-width="16"/>
         <circle class="ring-fill" cx="68" cy="68" r="${r}" fill="none" stroke="url(#dg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${(c * Math.min(1, kp / 100)).toFixed(1)} ${c.toFixed(1)}"/>
-        <defs><linearGradient id="dg"><stop offset="0" stop-color="#c8f53a"/><stop offset="1" stop-color="#0c9f70"/></linearGradient></defs></svg>
+        <defs><linearGradient id="dg"><stop offset="0" stop-color="#fa114f"/><stop offset="1" stop-color="#ff6482"/></linearGradient></defs></svg>
         <div class="val"><b>${kp} %</b><span>${fmt(t.kcal)} / ${fmt(plan.kcal)}<br>kcal</span></div></div>
       <div>
-        ${bar('🥩 Protéines', t.prot, plan.prot, 'g', 'var(--lime)')}
-        ${bar('🍚 Glucides', t.gluc, plan.gluc, 'g', 'var(--cyan)')}
-        ${bar('🥑 Lipides', t.lip, plan.lip, 'g', 'var(--orange)')}
+        ${bar('🥩 Protéines', t.prot, plan.prot, 'g', 'var(--prot)')}
+        ${bar('🍚 Glucides', t.gluc, plan.gluc, 'g', 'var(--gluc)')}
+        ${bar('🥑 Lipides', t.lip, plan.lip, 'g', 'var(--lip)')}
       </div>
     </div>
     <div style="margin-top:12px">${msg}</div>
@@ -132,8 +132,8 @@ export function updateChip(plan) {
   const p = Math.round((t.kcal / plan.kcal) * 100);
   const r = 9; const c = 2 * Math.PI * r;
   el.hidden = false;
-  el.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="${r}" fill="none" stroke="rgba(16,60,38,.12)" stroke-width="4"/>
-    <circle cx="12" cy="12" r="${r}" fill="none" stroke="#0c9f70" stroke-width="4" stroke-linecap="round" stroke-dasharray="${(c * Math.min(1, p / 100)).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 12 12)"/></svg>
+  el.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="${r}" fill="none" stroke="rgba(250,17,79,.18)" stroke-width="4"/>
+    <circle cx="12" cy="12" r="${r}" fill="none" stroke="#fa114f" stroke-width="4" stroke-linecap="round" stroke-dasharray="${(c * Math.min(1, p / 100)).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 12 12)"/></svg>
     <span><b>${fmt(t.kcal)}</b>/${fmt(plan.kcal)}</span>`;
   el.setAttribute('aria-label', `Aujourd'hui : ${fmt(t.kcal)} sur ${fmt(plan.kcal)} kcal`);
 }
