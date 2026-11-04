@@ -1,6 +1,6 @@
 import { ALLERGENS, DIETS, CONDITIONS, GOALS, MEDS, STORES, SUGAR_CUBE_G } from './data.js';
 import { analyze } from './score.js';
-import { fetchProduct, productName, searchAlternatives, fetchLatestPrice, pricePerKg } from './api.js';
+import { fetchProduct, productName, searchAlternatives, fetchLatestPrice, pricePerKg, priceUnit } from './api.js';
 
 // ---------- Stockage local (reste sur le téléphone) ----------
 const store = {
@@ -298,7 +298,7 @@ function renderSupplement(a) {
 
 async function loadPrice(p) {
   const card = document.getElementById('price-card');
-  const price = await fetchLatestPrice(p.code);
+  const price = await fetchLatestPrice(p.code, profile.store);
   if (!card.isConnected) return;
   if (!price) {
     card.innerHTML = `
@@ -309,8 +309,8 @@ async function loadPrice(p) {
   const kg = pricePerKg(price, p);
   card.innerHTML = `
     <h2>Prix</h2>
-    <p style="margin:0"><strong style="font-size:1.25rem">${euro(price.price)}</strong>${kg ? ` <span class="muted">· ${euro(kg)} / kg</span>` : ''}</p>
-    <p class="small muted" style="margin:0">Relevé le ${esc(dateFr(price.date))}${price.store ? ` chez ${esc(price.store)}` : ''}${price.city ? ` (${esc(price.city)})` : ''}.</p>`;
+    <p style="margin:0"><strong style="font-size:1.25rem">${euro(price.price)}</strong>${kg ? ` <span class="muted">· ${euro(kg)} / ${priceUnit(p)}</span>` : ''}</p>
+    <p class="small muted" style="margin:0">Relevé le ${esc(dateFr(price.date))}${price.store ? ` chez ${esc(price.store)}` : ''}${price.city || price.country ? ` (${esc([price.city, price.country].filter(Boolean).join(', '))})` : ''}.</p>`;
   p._price = price;
 }
 
@@ -336,8 +336,8 @@ async function loadAlternatives(p, a) {
   }
 
   // Prix des alternatives (en parallèle).
-  const prices = await Promise.all(better.map((x) => fetchLatestPrice(x.p.code)));
-  const myPrice = p._price || await fetchLatestPrice(p.code);
+  const prices = await Promise.all(better.map((x) => fetchLatestPrice(x.p.code, profile.store)));
+  const myPrice = p._price || await fetchLatestPrice(p.code, profile.store);
   const myKg = myPrice ? pricePerKg(myPrice, p) : null;
   better = better.map((x, i) => {
     const pr = prices[i];
@@ -345,8 +345,11 @@ async function loadAlternatives(p, a) {
     const cheaper = myKg && kg ? kg < myKg : (myPrice && pr ? pr.price < myPrice.price : false);
     return { ...x, price: pr, kg, cheaper };
   });
-  // Les moins chères d'abord à note proche (moins de 10 points d'écart).
-  better.sort((x, y) => (Math.abs(x.a.score - y.a.score) < 10 ? (y.cheaper - x.cheaper) : 0) || (y.a.score - x.a.score));
+  // D'abord celles du magasin habituel, puis par note (arrondie à 10 points près), puis les moins chères.
+  better.sort((x, y) => (y.p._inStore - x.p._inStore)
+    || (Math.round(y.a.score / 10) - Math.round(x.a.score / 10))
+    || (y.cheaper - x.cheaper)
+    || (y.a.score - x.a.score));
 
   better.forEach((x) => productCache.set(x.p.code, x.p));
   btn.hidden = true;
@@ -358,7 +361,7 @@ async function loadAlternatives(p, a) {
           <span class="title">${esc(productName(x.p))}</span>
           <span class="small muted">${esc(x.p.brands || '')}</span>
           <span class="tags">
-            ${x.price ? `<span class="badge brand">${euro(x.price.price)}${x.kg ? ` · ${euro(x.kg)}/kg` : ''}</span>` : ''}
+            ${x.price ? `<span class="badge brand">${euro(x.price.price)}${x.kg ? ` · ${euro(x.kg)}/${priceUnit(x.p)}` : ''}</span>` : ''}
             ${x.cheaper ? '<span class="badge ok">Moins cher</span>' : ''}
             ${x.p._inStore ? `<span class="badge ok">Chez ${esc(STORES.find((s) => s.id === profile.store)?.label || '')}</span>` : ''}
             <span class="badge ok">+${x.a.score - base} pts</span>

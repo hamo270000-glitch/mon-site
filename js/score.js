@@ -58,6 +58,11 @@ export function checkDiets(p) {
   const alcohol = ALCOHOL_WORDS.filter((w) => text.includes(w)).map((w) => w.replace(/[ ,]+$/, ''));
   const hasGelatin = text.includes('gelatine') || has(additives, 'en:e441');
   const noText = !text;
+  // Les allergènes déclarés sont souvent plus fiables que l'analyse automatique des ingrédients.
+  const allergens = p.allergens_tags || [];
+  const animalAllergens = ['en:milk', 'en:eggs', 'en:fish', 'en:crustaceans', 'en:molluscs'].filter((t) => has(allergens, t));
+  const meatFishAllergens = animalAllergens.filter((t) => ['en:fish', 'en:crustaceans', 'en:molluscs'].includes(t));
+  const ALLERGEN_FR = { 'en:milk': 'lait', 'en:eggs': 'œufs', 'en:fish': 'poisson', 'en:crustaceans': 'crustacés', 'en:molluscs': 'mollusques' };
 
   const res = {};
 
@@ -82,7 +87,7 @@ export function checkDiets(p) {
   }
 
   // Végétarien
-  if (has(analysis, 'en:non-vegetarian') || pork.length || hasGelatin) {
+  if (has(analysis, 'en:non-vegetarian') || pork.length || hasGelatin || meatFishAllergens.length) {
     res.vegetarian = { status: 'no', reasons: ['Contient des ingrédients d\'origine animale (viande, poisson, gélatine…).'] };
   } else if (has(analysis, 'en:vegetarian')) {
     res.vegetarian = { status: 'ok', reasons: ['Végétarien.'] };
@@ -93,8 +98,10 @@ export function checkDiets(p) {
   }
 
   // Végan
-  if (has(analysis, 'en:non-vegan') || animalSure.length || res.vegetarian.status === 'no') {
-    const r = ['Contient des ingrédients d\'origine animale.'];
+  if (has(analysis, 'en:non-vegan') || animalSure.length || animalAllergens.length || res.vegetarian.status === 'no') {
+    const r = [animalAllergens.length
+      ? `Contient des ingrédients d'origine animale : ${animalAllergens.map((t) => ALLERGEN_FR[t]).join(', ')}.`
+      : 'Contient des ingrédients d\'origine animale.'];
     animalSure.forEach((a) => r.push(`Additif : ${a}.`));
     res.vegan = { status: 'no', reasons: r };
   } else if (has(analysis, 'en:vegan') && !animalMaybe.length) {
@@ -135,7 +142,7 @@ export function childSugar(p) {
     cubes100: per100 / SUGAR_CUBE_G,
     cubesServing: perServing != null ? perServing / SUGAR_CUBE_G : null,
     pctDailyChild: Math.round((ref / CHILD_SUGAR_MAX_G) * 100),
-    basis: perServing != null ? `par portion (${fmt(servingG, 0)} g)` : 'pour 100 g',
+    basis: perServing != null ? `par portion (${fmt(servingG, 0)} ${isBeverage(p) ? 'ml' : 'g'})` : `pour 100 ${isBeverage(p) ? 'ml' : 'g'}`,
   };
 }
 
@@ -175,7 +182,8 @@ export function checkSupplement(p, profile) {
 // ---------- Score personnalisé ----------
 const THRESHOLDS = {
   solid: { sugar: [5, 22.5], salt: [0.3, 1.5], satfat: [1.5, 5], kcal: 400 },
-  drink: { sugar: [2.5, 11.25], salt: [0.3, 0.75], satfat: [0.75, 2.5], kcal: 80 },
+  // Boissons : plus sévère sur le sucre (comme le Nutri-Score 2023). Au-delà de 5 g/100 ml, une canette dépasse 4 morceaux.
+  drink: { sugar: [1, 5], salt: [0.3, 0.75], satfat: [0.75, 2.5], kcal: 80 },
 };
 
 export function analyze(p, profile) {
