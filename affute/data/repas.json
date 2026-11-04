@@ -29,7 +29,8 @@
     "Fais chauffer les flocons d'avoine dans le lait 3 minutes en remuant.",
     "Hors du feu, ajoute le skyr.",
     "Coupe la banane en rondelles par-dessus."
-   ]
+   ],
+   "astuce": "Une banane bien mûre suffit à sucrer le porridge."
   },
   {
    "id": "omelette-epinards",
@@ -208,7 +209,8 @@
     "Cuis le riz 10 à 12 minutes dans l'eau bouillante.",
     "Fais cuire le brocoli à la vapeur 8 minutes.",
     "Coupe le poulet en morceaux et fais-le dorer 6 à 8 minutes dans l'huile. Assaisonne (paprika, ail, sel, poivre)."
-   ]
+   ],
+   "astuce": "Cuisine 3 portions d'un coup et garde-les 3 jours au frigo dans des boîtes."
   },
   {
    "id": "dinde-patate-douce",
@@ -306,7 +308,8 @@
     "Cuis les pâtes.",
     "Fais revenir la courgette en dés et les tomates 8 minutes dans l'huile.",
     "Ajoute le thon émietté et les pâtes, mélange 1 minute."
-   ]
+   ],
+   "astuce": "Garde un peu d'eau de cuisson des pâtes : elle rend la sauce plus onctueuse sans matière grasse."
   },
   {
    "id": "wrap-poulet",
@@ -450,7 +453,8 @@
     "Fais revenir l'oignon et le poivron émincés.",
     "Ajoute le bœuf haché, fais-le dorer, puis les tomates, les lentilles et 25 cl d'eau, avec du cumin et du paprika.",
     "Laisse mijoter 25 minutes. Sers avec le riz."
-   ]
+   ],
+   "astuce": "Encore meilleur réchauffé le lendemain."
   },
   {
    "id": "poke-crevettes",
@@ -997,7 +1001,8 @@
    "etapes": [
     "Mets tout dans un mixeur (les flocons d'avoine se mixent très bien).",
     "Mixe 40 secondes. À boire entre deux repas ou après la séance."
-   ]
+   ],
+   "astuce": "Ajoute 2 cuillères de flocons d'avoine en plus pour passer à 900 kcal si tu as du mal à manger assez."
   },
   {
    "id": "bowl-avoine-cacahuete",
@@ -1206,6 +1211,469 @@
     "Mélange le yaourt et le miel.",
     "Ajoute les amandes et les flocons d'avoine."
    ]
+  },
+  {
+   "id": "overnight-oats",
+   "nom": "Overnight oats skyr et fruits rouges",
+   "type": "matin",
+   "min": 5,
+   "emoji": "🫙",
+   "ing": [
+    [
+     "avoine",
+     60
+    ],
+    [
+     "lait",
+     120
+    ],
+    [
+     "skyr",
+     150
+    ],
+    [
+     "fruitsrouges",
+     80
+    ],
+    [
+     "miel",
+     8
+    ]
+   ],
+   "etapes": [
+    "La veille au soir, mélange les flocons d'avoine, le lait et le skyr dans un bocal.",
+    "Ajoute les fruits rouges surgelés par-dessus (ils décongèlent pendant la nuit).",
+    "Ferme et mets au frigo. Le matin, ajoute le miel : c'est prêt."
+   ],
+   "astuce": "Prépare 3 bocaux le dimanche : petit-déjeuner réglé pour 3 jours."
+  },
+  {
+   "id": "crepes-proteinees",
+   "nom": "Crêpes protéinées à la banane",
+   "type": "matin",
+   "min": 15,
+   "emoji": "🥞",
+   "ing": [
+    [
+     "avoine",
+     50
+    ],
+    [
+     "oeuf",
+     100
+    ],
+    [
+     "lait",
+     100
+    ],
+    [
+     "banane",
+     120
+    ],
+    [
+     "skyr",
+     100
+    ]
+   ],
+   "etapes": [
+    "Mixe les flocons d'avoine en poudre fine.",
+    "Ajoute les 2 œufs et le lait, mixe pour obtenir une pâte lisse.",
+    "Cuis de fines crêpes dans une poêle antiadhésive chaude, 1 minute par face.",
+    "Garnis avec le skyr et la banane en rondelles."
+   ],
+   "astuce": "Pas de mixeur ? Écrase la banane à la fourchette et utilise une pâte plus épaisse (pancakes)."
+  },
+  {
+   "id": "curry-pois-chiches",
+   "nom": "Curry de pois chiches et épinards",
+   "type": "midi",
+   "min": 20,
+   "emoji": "🍛",
+   "ing": [
+    [
+     "poischiche",
+     200
+    ],
+    [
+     "epinard",
+     150
+    ],
+    [
+     "tomate",
+     150
+    ],
+    [
+     "oignon",
+     60
+    ],
+    [
+     "riz",
+     60
+    ],
+    [
+     "grec",
+     60
+    ]
+   ],
+   "etapes": [
+    "Fais revenir l'oignon émincé 3 minutes avec 1 cuillère de curry et 1 de cumin.",
+    "Ajoute les tomates coupées et les pois chiches rincés. Laisse mijoter 10 minutes.",
+    "Ajoute les épinards et laisse cuire 3 minutes.",
+    "Hors du feu, mélange le yaourt grec pour une sauce crémeuse. Sers avec le riz."
+   ],
+   "astuce": "Végétarien et très peu cher : parfait en fin de mois."
+  },
+  {
+   "id": "tacos-poulet",
+   "nom": "Tacos de poulet, salsa tomate-avocat",
+   "type": "midi",
+   "min": 20,
+   "emoji": "🌮",
+   "ing": [
+    [
+     "wrap",
+     80
+    ],
+    [
+     "poulet",
+     140
+    ],
+    [
+     "tomate",
+     100
+    ],
+    [
+     "avocat",
+     50
+    ],
+    [
+     "oignon",
+     30
+    ],
+    [
+     "citron",
+     20
+    ],
+    [
+     "salade",
+     30
+    ]
+   ],
+   "etapes": [
+    "Coupe le poulet en lamelles, assaisonne avec paprika, cumin, sel, poivre. Fais-le dorer 6 minutes.",
+    "Prépare la salsa : tomate, oignon et avocat en petits dés, jus de citron, sel.",
+    "Réchauffe les tortillas 20 secondes à la poêle.",
+    "Garnis : salade, poulet, salsa."
+   ],
+   "astuce": "Coupe les tortillas en 2 et garnis-les comme des petits tacos : plus facile à manger."
+  },
+  {
+   "id": "burger-maison",
+   "nom": "Burger maison au steak 5 %",
+   "type": "midi",
+   "min": 15,
+   "emoji": "🍔",
+   "ing": [
+    [
+     "paincomplet",
+     90
+    ],
+    [
+     "steak5",
+     125
+    ],
+    [
+     "tomate",
+     60
+    ],
+    [
+     "salade",
+     20
+    ],
+    [
+     "oignon",
+     20
+    ],
+    [
+     "pdt",
+     200
+    ],
+    [
+     "huile",
+     5
+    ]
+   ],
+   "etapes": [
+    "Coupe les pommes de terre en frites, mélange avec l'huile et du paprika. Four 25 minutes à 220 °C.",
+    "Cuis le steak haché 3 minutes par face.",
+    "Toaste 2 tranches de pain complet (ou un pain burger complet).",
+    "Monte le burger : pain, salade, steak, tomate, oignon, pain."
+   ],
+   "astuce": "Les frites au four : 4 fois moins de gras que des frites à la friteuse."
+  },
+  {
+   "id": "salade-quinoa-poulet",
+   "nom": "Salade de quinoa, poulet et légumes croquants",
+   "type": "midi",
+   "min": 20,
+   "emoji": "🥗",
+   "ing": [
+    [
+     "quinoa",
+     60
+    ],
+    [
+     "poulet",
+     130
+    ],
+    [
+     "concombre",
+     100
+    ],
+    [
+     "tomate",
+     100
+    ],
+    [
+     "poivron",
+     80
+    ],
+    [
+     "citron",
+     20
+    ],
+    [
+     "huile",
+     8
+    ]
+   ],
+   "etapes": [
+    "Cuis le quinoa 12 minutes, rince-le à l'eau froide.",
+    "Grille le poulet en dés 6 minutes.",
+    "Coupe concombre, tomate et poivron en petits dés.",
+    "Mélange tout avec l'huile d'olive, le jus de citron, sel et poivre."
+   ],
+   "astuce": "Se garde 2 jours au frigo : idéal à emporter au travail."
+  },
+  {
+   "id": "riz-cantonais",
+   "nom": "Riz sauté façon cantonais aux crevettes",
+   "type": "soir",
+   "min": 20,
+   "emoji": "🍚",
+   "ing": [
+    [
+     "riz",
+     70
+    ],
+    [
+     "crevette",
+     100
+    ],
+    [
+     "oeuf",
+     100
+    ],
+    [
+     "haricotvert",
+     80
+    ],
+    [
+     "carotte",
+     60
+    ],
+    [
+     "oignon",
+     30
+    ],
+    [
+     "huile",
+     5
+    ]
+   ],
+   "etapes": [
+    "Cuis le riz (idéalement la veille : il sera plus facile à faire sauter).",
+    "Fais une omelette avec les 2 œufs, puis coupe-la en lanières.",
+    "Fais sauter l'oignon, la carotte en dés et les haricots 5 minutes dans l'huile.",
+    "Ajoute le riz, les crevettes et l'omelette. Assaisonne de sauce soja salée réduite."
+   ],
+   "astuce": "Une façon parfaite d'utiliser le riz qui reste de la veille."
+  },
+  {
+   "id": "gratin-patate-douce",
+   "nom": "Gratin de patate douce et dinde",
+   "type": "soir",
+   "min": 35,
+   "emoji": "🍠",
+   "ing": [
+    [
+     "patatedouce",
+     250
+    ],
+    [
+     "dinde",
+     130
+    ],
+    [
+     "lait",
+     100
+    ],
+    [
+     "epinard",
+     100
+    ],
+    [
+     "oignon",
+     40
+    ]
+   ],
+   "etapes": [
+    "Coupe la patate douce en fines rondelles.",
+    "Fais revenir l'oignon et la dinde en dés 5 minutes.",
+    "Dans un plat : couches de patate douce, épinards et dinde. Verse le lait, sale, poivre, muscade.",
+    "Four 30 minutes à 200 °C."
+   ],
+   "astuce": "Prépare-le en double : la 2e part se réchauffe très bien le lendemain."
+  },
+  {
+   "id": "dahl-lentilles",
+   "nom": "Dahl de lentilles corail aux épinards",
+   "type": "soir",
+   "min": 25,
+   "emoji": "🥘",
+   "ing": [
+    [
+     "lentilles",
+     80
+    ],
+    [
+     "tomate",
+     150
+    ],
+    [
+     "oignon",
+     50
+    ],
+    [
+     "epinard",
+     100
+    ],
+    [
+     "riz",
+     40
+    ],
+    [
+     "grec",
+     50
+    ]
+   ],
+   "etapes": [
+    "Fais revenir l'oignon avec 1 cuillère de curry, de curcuma et de gingembre.",
+    "Ajoute les lentilles rincées, les tomates et 40 cl d'eau. Cuis 15 minutes.",
+    "Ajoute les épinards 3 minutes avant la fin.",
+    "Sers avec le riz et une cuillère de yaourt grec par-dessus."
+   ],
+   "astuce": "Les lentilles : la protéine la moins chère du magasin (moins de 3 €/kg)."
+  },
+  {
+   "id": "poisson-pane-maison",
+   "nom": "Cabillaud pané maison et purée de brocoli",
+   "type": "soir",
+   "min": 25,
+   "emoji": "🐟",
+   "ing": [
+    [
+     "cabillaud",
+     160
+    ],
+    [
+     "oeuf",
+     50
+    ],
+    [
+     "avoine",
+     25
+    ],
+    [
+     "brocoli",
+     200
+    ],
+    [
+     "pdt",
+     150
+    ],
+    [
+     "citron",
+     15
+    ]
+   ],
+   "etapes": [
+    "Mixe les flocons d'avoine en chapelure, ajoute sel et paprika.",
+    "Trempe le cabillaud dans l'œuf battu puis dans la chapelure. Four 15 minutes à 200 °C.",
+    "Cuis brocoli et pomme de terre à l'eau 15 minutes, écrase-les en purée avec un peu de lait.",
+    "Sers avec un filet de citron."
+   ],
+   "astuce": "La panure aux flocons d'avoine : croustillante, sans friture."
+  },
+  {
+   "id": "tartines-thon",
+   "nom": "Tartines thon, skyr et concombre",
+   "type": "collation",
+   "min": 5,
+   "emoji": "🥪",
+   "ing": [
+    [
+     "paincomplet",
+     60
+    ],
+    [
+     "thon",
+     80
+    ],
+    [
+     "skyr",
+     40
+    ],
+    [
+     "concombre",
+     60
+    ],
+    [
+     "citron",
+     10
+    ]
+   ],
+   "etapes": [
+    "Mélange le thon émietté, le skyr, le citron, sel et poivre.",
+    "Étale sur le pain complet grillé et ajoute des rondelles de concombre."
+   ],
+   "astuce": "Une collation à 25 g de protéines pour environ 1,50 €."
+  },
+  {
+   "id": "pomme-skyr-cannelle",
+   "nom": "Pomme au four, skyr à la cannelle",
+   "type": "collation",
+   "min": 15,
+   "emoji": "🍏",
+   "ing": [
+    [
+     "pomme",
+     150
+    ],
+    [
+     "skyr",
+     150
+    ],
+    [
+     "amande",
+     10
+    ]
+   ],
+   "etapes": [
+    "Coupe la pomme en quartiers, saupoudre de cannelle, 12 minutes au four à 200 °C (ou 3 minutes au micro-ondes).",
+    "Sers chaude sur le skyr froid, avec les amandes concassées."
+   ],
+   "astuce": "Le goût d'un dessert, sans sucre ajouté."
   }
  ]
 }

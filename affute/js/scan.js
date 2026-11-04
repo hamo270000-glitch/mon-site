@@ -4,6 +4,7 @@
 import { fetchProduct, productName, searchAlternatives, fetchLatestPrice } from '../../js/api.js';
 import { analyze } from '../../js/score.js';
 import { ALLERGENS } from '../../js/data.js';
+import { addEntry } from './journal.js';
 
 export { ALLERGENS };
 
@@ -215,6 +216,14 @@ export async function viewScanProduct(app, code, profile, plan) {
       <p class="small muted" style="margin:10px 0 0">Pour 100 ${a.drink ? 'ml' : 'g'}.${s.portionKcal != null ? ` ${s.serving ? `Une portion (${fmt(s.portion)} ${a.drink ? 'ml' : 'g'})` : '100 g'} = <b style="color:var(--text)">${fmt(s.portionKcal)} kcal</b>${s.portionProt != null ? ` et ${fmt(s.portionProt, 1)} g de protéines` : ''}${s.pctDay != null ? `, soit <b style="color:var(--text)">${s.pctDay} %</b> de tes ${fmt(plan.kcal)} kcal du jour` : ''}.` : ''}</p>
     </section>
 
+    ${s.kcal != null ? `<section class="card add-day">
+      <h2>🍽️ Je l'ai mangé</h2>
+      <form id="add-f" class="row">
+        <div class="unit-input" style="flex:1"><input class="input" id="add-g" inputmode="decimal" value="${fmt(s.portion)}" aria-label="Quantité mangée"><em>${a.drink ? 'ml' : 'g'}</em></div>
+        <button class="btn" type="submit">Ajouter</button>
+      </form>
+      <p class="small muted" id="add-prev" style="margin:8px 0 0"></p>
+    </section>` : ''}
     ${a.negatives.length || a.positives.length ? `<section class="card"><h2>Pourquoi cette note</h2><ul class="reasons">
       ${a.negatives.map((x) => `<li class="neg">${esc(x.text)}</li>`).join('')}
       ${a.positives.map((x) => `<li class="pos">${esc(x.text)}</li>`).join('')}</ul></section>` : ''}
@@ -230,6 +239,26 @@ export async function viewScanProduct(app, code, profile, plan) {
       <p class="small muted" style="margin-top:-6px">Produits de la même catégorie, mieux notés pour toi.</p>
       <button class="btn ghost block" id="alt-btn">Chercher des alternatives</button><div id="alt-list"></div></section>
     <p class="footer-note">Analyse : Clair · Données : Open Food Facts et Open Prices. <a href="../#/product/${esc(code)}">Ouvrir dans Clair</a></p>`;
+
+  // Ajout au journal du jour
+  const addF = document.getElementById('add-f');
+  if (addF) {
+    const inp = document.getElementById('add-g');
+    const prev = document.getElementById('add-prev');
+    const calc = () => {
+      const g = parseFloat(String(inp.value).replace(',', '.')) || 0;
+      const k = g / 100;
+      return { g, kcal: s.kcal * k, prot: (s.prot || 0) * k, gluc: (s.gluc || 0) * k, lip: (s.lip || 0) * k };
+    };
+    const show = () => { const c = calc(); prev.textContent = `= ${fmt(c.kcal)} kcal · ${fmt(c.prot, 1)} g de protéines`; };
+    show(); inp.addEventListener('input', show);
+    addF.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const c = calc(); if (!c.g) return;
+      addEntry({ nom: `${productName(p)} (${fmt(c.g)} ${a.drink ? 'ml' : 'g'})`, emoji: '📷', ref: `scan:${p.code}`, src: 'scan', ...c });
+      prev.innerHTML = `✓ Ajouté à ta journée. <a href="#/plan">Voir ma jauge</a>`;
+    });
+  }
 
   // Prix
   fetchLatestPrice(p.code, cp.store).then((pr) => {

@@ -45,28 +45,28 @@ INGREDIENTS = [
     ('wrap', 'Wrap / tortilla de blé', 7815, 'prod', 'en:wraps', {}),
     ('galetteriz', 'Galettes de riz soufflé', 7352, 'prod', 'en:puffed-rice-cakes', {}),
     ('pdt', 'Pomme de terre', 4008, 'cat', 'en:potatoes', {}),
-    ('patatedouce', 'Patate douce', 4101, 'cat', 'en:sweet-potatoes', {}),
+    ('patatedouce', 'Patate douce', 4101, 'cat', 'en:sweet-potatoes', {'piece_g': 300, 'piece': 'patate douce'}),
     # Légumes
-    ('brocoli', 'Brocoli', 20057, 'cat', 'en:broccoli', {}),
+    ('brocoli', 'Brocoli', 20057, 'cat', 'en:broccoli', {'piece_g': 400, 'piece': 'tête'}),
     ('haricotvert', 'Haricots verts (surgelés)', 20070, 'prod', 'en:frozen-green-beans', {}),
     ('epinard', 'Épinards (surgelés)', 20083, 'prod', 'en:frozen-spinachs', {}),
-    ('courgette', 'Courgette', 20020, 'cat', 'en:zucchini', {}),
-    ('tomate', 'Tomate', 20276, 'cat', 'en:tomatoes', {}),
-    ('concombre', 'Concombre', 20019, 'cat', 'en:cucumbers', {}),
-    ('carotte', 'Carotte', 20009, 'cat', 'en:carrots', {}),
-    ('poivron', 'Poivron rouge', 20087, 'cat', 'en:red-bell-peppers', {}),
+    ('courgette', 'Courgette', 20020, 'cat', 'en:zucchini', {'piece_g': 250, 'piece': 'courgette'}),
+    ('tomate', 'Tomate', 20276, 'cat', 'en:tomatoes', {'piece_g': 120, 'piece': 'tomate'}),
+    ('concombre', 'Concombre', 20019, 'cat', 'en:cucumbers', {'piece_g': 400, 'piece': 'concombre'}),
+    ('carotte', 'Carotte', 20009, 'cat', 'en:carrots', {'piece_g': 100, 'piece': 'carotte'}),
+    ('poivron', 'Poivron rouge', 20087, 'cat', 'en:red-bell-peppers', {'piece_g': 180, 'piece': 'poivron'}),
     ('champignon', 'Champignons de Paris', 20056, 'cat', 'en:mushrooms', {}),
-    ('oignon', 'Oignon', 20034, 'cat', 'en:yellow-onions', {}),
-    ('salade', 'Salade verte', 20031, 'cat', 'en:lettuces', {}),
+    ('oignon', 'Oignon', 20034, 'cat', 'en:yellow-onions', {'piece_g': 120, 'piece': 'oignon'}),
+    ('salade', 'Salade verte', 20031, 'cat', 'en:lettuces', {'piece_g': 300, 'piece': 'salade'}),
     # Fruits
-    ('banane', 'Banane', 13005, 'cat', 'en:bananas', {}),
-    ('pomme', 'Pomme', 13039, 'cat', 'en:apples', {}),
-    ('kiwi', 'Kiwi', 13021, 'cat', 'en:kiwis', {}),
-    ('orange', 'Orange', 13034, 'cat', 'en:oranges', {}),
+    ('banane', 'Banane', 13005, 'cat', 'en:bananas', {'piece_g': 120, 'piece': 'banane'}),
+    ('pomme', 'Pomme', 13039, 'cat', 'en:apples', {'piece_g': 150, 'piece': 'pomme'}),
+    ('kiwi', 'Kiwi', 13021, 'cat', 'en:kiwis', {'piece_g': 80, 'piece': 'kiwi'}),
+    ('orange', 'Orange', 13034, 'cat', 'en:oranges', {'piece_g': 180, 'piece': 'orange'}),
     ('fruitsrouges', 'Fruits rouges (surgelés)', 13015, 'prod', 'en:frozen-berries', {}),
-    ('citron', 'Citron', 13009, 'cat', 'en:lemons', {}),
+    ('citron', 'Citron', 13009, 'cat', 'en:lemons', {'piece_g': 100, 'piece': 'citron'}),
     # Bonnes graisses et extras
-    ('avocat', 'Avocat', 13004, 'cat', 'en:avocados', {}),
+    ('avocat', 'Avocat', 13004, 'cat', 'en:avocados', {'piece_g': 140, 'piece': 'avocat'}),
     ('huile', "Huile d'olive vierge extra", 17270, 'prod', 'en:extra-virgin-olive-oils', {'density': 0.91}),
     ('amande', 'Amandes', 15000, 'prod', 'en:almonds', {}),
     ('cacahuete', 'Beurre de cacahuète', 15202, 'prod', 'en:peanut-butters', {}),
@@ -132,7 +132,7 @@ def per_kg(it, kind, opt):
     if price is None or it.get('price_is_discounted'):
         return None
     if kind == 'cat':
-        return float(price) if it.get('price_per') == 'KILOGRAM' else None
+        return (float(price), None) if it.get('price_per') == 'KILOGRAM' else None
     p = it.get('product') or {}
     if opt.get('unit_g'):  # œufs : prix par pièce
         txt = f"{p.get('quantity') or ''} {p.get('product_name') or ''}"
@@ -140,7 +140,7 @@ def per_kg(it, kind, opt):
         n = int(m.group(1)) if m else None
         if not n or not 2 <= n <= 30:
             return None
-        return float(price) / n / opt['unit_g'] * 1000
+        return float(price) / n / opt['unit_g'] * 1000, n
     q = p.get('product_quantity')
     unit = (p.get('product_quantity_unit') or 'g').lower()
     try:
@@ -153,7 +153,19 @@ def per_kg(it, kind, opt):
         q = q * opt.get('density', 1.0)  # ml → g
     elif unit not in ('g',):
         return None
-    return float(price) / q * 1000
+    return float(price) / q * 1000, round(q)
+
+
+def pack_mode(packs, eggs=False):
+    """Taille de paquet la plus courante (arrondie), pour dire « 1 paquet de 500 g »."""
+    if not packs:
+        return None
+    rounded = [p if eggs else (round(p / 10) * 10 if p < 1000 else round(p / 50) * 50) for p in packs]
+    counts = {}
+    for r in rounded:
+        counts[r] = counts.get(r, 0) + 1
+    best = max(counts.items(), key=lambda kv: (kv[1], -abs(kv[0] - statistics.median(rounded))))
+    return {'taille': best[0], 'part': round(best[1] / len(rounded), 2)}
 
 
 def summary(values):
@@ -172,30 +184,34 @@ def main():
             loc = it.get('location') or {}
             if loc.get('osm_address_country') != 'France':
                 continue
-            v = per_kg(it, kind, opt)
-            if v:
-                rows.append((store_of(loc), v, it.get('date')))
+            r = per_kg(it, kind, opt)
+            if r:
+                v, pack = r
+                rows.append((store_of(loc), v, it.get('date'), pack))
         # Enlève les valeurs aberrantes (erreurs de saisie, produits de luxe…)
-        med = summary([v for _, v, _ in rows])
+        med = summary([r[1] for r in rows])
         if med:
             rows = [r for r in rows if med / 4 <= r[1] <= med * 4]
         stores = {}
         for sid, _, _ in STORES:
-            vals = [v for s, v, _ in rows if s == sid]
+            vals = [r[1] for r in rows if r[0] == sid]
             if vals:
-                stores[sid] = {'kg': summary(vals), 'n': len(vals), 'date': max(d for s, _, d in rows if s == sid)}
+                stores[sid] = {'kg': summary(vals), 'n': len(vals), 'date': max(r[2] for r in rows if r[0] == sid)}
         entry = {
             'id': iid, 'nom': name, 'ciqual': code, 'ciqualNom': f['n'],
             # Valeurs pour 100 g (Ciqual)
             'kcal': f['kcal'], 'prot': f['prot'], 'gluc': f['gluc'], 'lip': f['lip'],
             'suc': f['suc'], 'fib': f['fib'], 'sel': f['sel'],
-            'prix': {'kg': summary([v for _, v, _ in rows]), 'n': len(rows), 'magasins': stores},
+            'prix': {'kg': summary([r[1] for r in rows]), 'n': len(rows), 'magasins': stores},
         }
-        for k in ('unit_g', 'unit', 'halal', 'veg', 'lait'):
+        pack = pack_mode([r[3] for r in rows if r[3]], eggs=bool(opt.get('unit_g')))
+        if pack:
+            entry['paquet'] = pack  # grammes (ou nombre d'œufs) du format le plus vendu
+        for k in ('unit_g', 'unit', 'halal', 'veg', 'lait', 'piece_g', 'piece'):
             if k in opt:
                 entry[k] = opt[k]
         out.append(entry)
-        print(f"{iid:13} {len(rows):4} relevés  médiane {entry['prix']['kg']} €/kg  " +
+        print(f"{iid:13} {len(rows):4} relevés  paquet {entry.get('paquet')}  médiane {entry['prix']['kg']} €/kg  " +
               ' '.join(f"{s}={v['kg']}({v['n']})" for s, v in stores.items()))
     with open('data/ingredients.json', 'w', encoding='utf-8') as fh:
         json.dump({
