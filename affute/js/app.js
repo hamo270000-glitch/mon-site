@@ -1,6 +1,6 @@
 import { ACTIVITY, BODIES, BODIES_MASSE, GOALS, SLOTS, computePlan, safetyCheck, bmi, isMasse, pacesFor, bodiesFor } from './calc.js';
 import {
-  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo, mealArt, mealPhoto,
+  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo, mealArt, mealPhoto, pieceCount,
 } from './data.js';
 import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
@@ -727,7 +727,7 @@ function viewRepasDetail(id) {
       <ul class="cal-ing">${m.ing.map(([iid, g]) => {
         const x = DATA.byId[iid]; const pr = ingredientPrice(x, shop);
         const q = g * factor * persons;
-        return `<li><span><b>${esc(x.nom)}</b> <em>• ${fmt((x.kcal || 0) * q / 100)} kcal</em></span><span class="q">${displayQty(x, q)}<small>${pr ? `${euro((pr.kg * q) / 1000)}${pr.reel ? '' : '*'}` : ''}</small></span></li>`;
+        return `<li><span><b>${esc(x.nom)}</b> <em>• ${fmt((x.kcal || 0) * q / 100)} kcal</em></span><span class="q">${pieceCount(x, q) || displayQty(x, q)}<small>${[pieceCount(x, q) ? displayQty(x, q) : '', pr ? `${euro((pr.kg * q) / 1000)}${pr.reel ? '' : '*'}` : ''].filter(Boolean).join(' · ')}</small></span></li>`;
       }).join('')}</ul>
 
       <div class="cal-kcal"><i class="ic fire">${I.fire}</i><div class="ck-txt"><span>Calories</span><b>${fmt(nut.kcal)}</b><em>pour 1 portion</em></div>

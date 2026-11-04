@@ -44,10 +44,10 @@ INGREDIENTS = [
     ('paincomplet', 'Pain complet', 7110, 'prod', 'en:wholemeal-breads', {}),
     ('wrap', 'Wrap / tortilla de blé', 7815, 'prod', 'en:wraps', {}),
     ('galetteriz', 'Galettes de riz soufflé', 7352, 'prod', 'en:puffed-rice-cakes', {}),
-    ('pdt', 'Pomme de terre', 4008, 'cat', 'en:potatoes', {}),
+    ('pdt', 'Pomme de terre', 4008, 'cat', 'en:potatoes', {'piece_g': 150, 'piece': 'pomme de terre'}),
     ('patatedouce', 'Patate douce', 4101, 'cat', 'en:sweet-potatoes', {'piece_g': 300, 'piece': 'patate douce'}),
     # Légumes
-    ('brocoli', 'Brocoli', 20057, 'cat', 'en:broccoli', {'piece_g': 400, 'piece': 'tête'}),
+    ('brocoli', 'Brocoli', 20057, 'cat', 'en:broccoli', {'piece_g': 400, 'piece': 'brocoli'}),
     ('haricotvert', 'Haricots verts (surgelés)', 20070, 'prod', 'en:frozen-green-beans', {}),
     ('epinard', 'Épinards (surgelés)', 20083, 'prod', 'en:frozen-spinachs', {}),
     ('courgette', 'Courgette', 20020, 'cat', 'en:zucchini', {'piece_g': 250, 'piece': 'courgette'}),
@@ -55,7 +55,7 @@ INGREDIENTS = [
     ('concombre', 'Concombre', 20019, 'cat', 'en:cucumbers', {'piece_g': 400, 'piece': 'concombre'}),
     ('carotte', 'Carotte', 20009, 'cat', 'en:carrots', {'piece_g': 100, 'piece': 'carotte'}),
     ('poivron', 'Poivron rouge', 20087, 'cat', 'en:red-bell-peppers', {'piece_g': 180, 'piece': 'poivron'}),
-    ('champignon', 'Champignons de Paris', 20056, 'cat', 'en:mushrooms', {}),
+    ('champignon', 'Champignons de Paris', 20056, 'cat', 'en:mushrooms', {'piece_g': 20, 'piece': 'champignon'}),
     ('oignon', 'Oignon', 20034, 'cat', 'en:yellow-onions', {'piece_g': 120, 'piece': 'oignon'}),
     ('salade', 'Salade verte', 20031, 'cat', 'en:lettuces', {'piece_g': 300, 'piece': 'salade'}),
     # Fruits

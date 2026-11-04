@@ -109,7 +109,26 @@ function sizeTxt(x, g) {
   }
   return kgTxt(g);
 }
-const plural = (n, w) => (n > 1 ? w.split(' ').map((m) => m.replace(/([^sx])$/, '$1s')).join(' ') : w);
+// Pluriel simple ; dans « pomme de terre », seul le premier mot prend un s.
+const plural = (n, w) => {
+  if (n <= 1) return w;
+  const words = w.split(' ');
+  const stop = words.indexOf('de');
+  return words.map((m, i) => (stop === -1 || i < stop ? m.replace(/([^sx])$/, '$1s') : m)).join(' ');
+};
+
+// Nombre de fruits ou légumes à prévoir (on ne pèse pas une banane) : « 1 banane », « ½ avocat ».
+const FRAC = { 0.25: '¼', 0.5: '½', 0.75: '¾' };
+export function pieceCount(x, g) {
+  if (!x.piece_g || !x.piece) return '';
+  const n = g / x.piece_g;
+  // Petits fruits et légumes (banane, pomme, tomate…) : à la moitié près. Gros (salade, brocoli…) : au quart près.
+  const step = x.piece_g <= 200 ? 2 : 4;
+  const q = n < 3 ? Math.max(1 / step, Math.round(n * step) / step) : n < 6 ? Math.round(n * 2) / 2 : Math.round(n);
+  const whole = Math.floor(q); const sym = FRAC[q - whole] || '';
+  const num = whole ? `${whole}${sym ? ` ${sym}` : ''}` : sym;
+  return `${num} ${plural(q > 1 ? 2 : 1, x.piece)}`;
+}
 
 /**
  * Pour une quantité nécessaire (en grammes), ce qu'il faut acheter en magasin :

@@ -1187,7 +1187,9 @@
       "date": "2026-05-17"
      }
     }
-   }
+   },
+   "piece_g": 150,
+   "piece": "pomme de terre"
   },
   {
    "id": "patatedouce",
@@ -1289,7 +1291,7 @@
     }
    },
    "piece_g": 400,
-   "piece": "tête"
+   "piece": "brocoli"
   },
   {
    "id": "haricotvert",
@@ -1649,7 +1651,9 @@
       "date": "2025-09-06"
      }
     }
-   }
+   },
+   "piece_g": 20,
+   "piece": "champignon"
   },
   {
    "id": "oignon",
