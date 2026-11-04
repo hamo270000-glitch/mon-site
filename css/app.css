@@ -240,7 +240,7 @@ td.num { text-align: right; white-space: nowrap; }
 .list li:first-child .item { border-top: 0; }
 .item img, .item .noimg { width: 56px; height: 56px; flex: none; border-radius: 10px; object-fit: contain; background: var(--surface-2); }
 .item .grow { flex: 1; min-width: 0; }
-.item .title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item .title { display: block; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .item .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .pill-score { flex: none; min-width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--c, var(--muted)); }
 .pill-score.v-excellent { background: var(--excellent); color: #fff; }

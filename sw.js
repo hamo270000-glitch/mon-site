@@ -1,5 +1,5 @@
 // Garde l'application disponible hors connexion (les données produits, elles, demandent internet).
-const CACHE = 'clair-v1';
+const CACHE = 'clair-v2';
 const ASSETS = [
   './', 'index.html', 'css/app.css', 'js/app.js', 'js/api.js', 'js/score.js', 'js/data.js',
   'vendor/html5-qrcode.min.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
