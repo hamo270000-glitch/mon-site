@@ -46,6 +46,7 @@ async function route() {
   if (page !== 'profil') wizard = null;
   document.body.classList.toggle('onboarding', page === 'profil' && !profile);
   document.body.classList.toggle('in-seance', page === 'sport' && arg === 'seance');
+  document.body.classList.toggle('detail', page === 'repas' && Boolean(arg));
   document.querySelectorAll('.tabbar a').forEach((a) => {
     const tab = ['semaine', 'aliments'].includes(page) ? 'repas' : page;
     const on = a.dataset.tab === tab;
@@ -653,49 +654,60 @@ function viewRepasDetail(id) {
   const eaten = entries().filter((e) => e.ref === ref).length;
   const photo = mealPhoto(DATA, m.id);
 
+  const I = {
+    back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+    share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>',
+    fire: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 3.5 5 5.8 5 11a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.2 1.7 1 2.8 2 3.1-.6-2.8 0-6.1.8-9.3Z"/></svg>',
+    prot: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 3a5.5 5.5 0 0 1 3.9 9.4l-3 3a5.5 5.5 0 0 1-3.3 1.6l-2.6 2.6a2 2 0 1 1-2.8-1.4 2 2 0 1 1 1.4-2.8L11.7 13a5.5 5.5 0 0 1 3.8-10Z"/></svg>',
+    gluc: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22V9"/><ellipse cx="9" cy="9" rx="2.2" ry="3.4" transform="rotate(-30 9 9)"/><ellipse cx="15" cy="9" rx="2.2" ry="3.4" transform="rotate(30 15 9)"/><ellipse cx="9" cy="15" rx="2.2" ry="3.4" transform="rotate(-30 9 15)"/><ellipse cx="15" cy="15" rx="2.2" ry="3.4" transform="rotate(30 15 15)"/><ellipse cx="12" cy="4.5" rx="2" ry="3"/><rect x="11.3" y="12" width="1.4" height="10" rx=".7"/></svg>',
+    lip: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3 4 6.5 7.7 6.5 11.5a6.5 6.5 0 0 1-13 0c0-3.8 3.5-7.5 6.5-11.5Z"/></svg>',
+    cart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21.5 8H6"/></svg>',
+  };
+  const macro = (k, label, v) => `<div class="cal-macro"><i class="ic ${k}">${I[k]}</i><span>${label}</span><b>${fmt(v)} g</b></div>`;
+
   $app.innerHTML = `
-    <a href="#/repas" class="small" style="text-decoration:none">‹ Recettes</a>
-    ${photo ? `<figure class="hero-photo"><img src="${photo.src}" alt="${esc(m.nom)}" width="800" height="600">
-        <figcaption><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}<h1>${esc(m.nom)}</h1>
-        <span>⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></figcaption></figure>
-      <p class="photo-credit">Photo : ${esc(photo.auteur)} · <a href="${esc(photo.lien)}" target="_blank" rel="noopener">${esc(photo.licence)}</a> · photo d'illustration, détourée</p>`
-    : `<div class="dish-hero"><img src="${mealArt(m.id)}" alt="${esc(m.nom)}" width="400" height="400" onerror="this.outerHTML='<div class=&quot;emoji3d big&quot;>${m.emoji}</div>'"></div>
-    <div class="center"><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}
-      <h1 class="title" style="font-size:1.7rem;margin:8px 0 4px">${esc(m.nom)}</h1>
-      <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div>`}
-    ${diet.notes.map((n) => `<div class="notice info">${esc(n)}</div>`).join('')}
+    <div class="cal-hero">
+      ${photo ? `<img src="${photo.src}" alt="${esc(m.nom)}" width="800" height="600">`
+    : `<img class="art" src="${mealArt(m.id)}" alt="${esc(m.nom)}" width="400" height="400" onerror="this.outerHTML='<div class=&quot;emoji3d big&quot;>${m.emoji}</div>'">`}
+      <div class="cal-nav">
+        <a class="cal-round" href="#/repas" aria-label="Retour aux recettes">${I.back}</a>
+        <span>Recette</span>
+        <button class="cal-round" type="button" id="share" aria-label="Partager">${I.share}</button>
+      </div>
+    </div>
 
-    <button class="btn block" id="ate" style="margin:10px 0 6px">✓ J'ai mangé ce repas${eaten ? ` (déjà ${eaten} fois aujourd'hui)` : ''}</button>
-    <p class="small muted center" style="margin:0 0 12px">Ajoute ${fmt(nut.kcal)} kcal et ${fmt(nut.prot)} g de protéines à ta journée.</p>
+    <section class="cal-sheet">
+      <div class="cal-meta"><span class="cal-tag">${slot.label}</span><span class="cal-tag">⏱ ${m.min} min</span><span class="cal-tag">${euro(cost.total)} la portion</span>${m.masse ? '<span class="cal-tag warn">💪 Masse</span>' : ''}</div>
+      <div class="cal-title">
+        <h1>${esc(m.nom)}</h1>
+        <div class="cal-stepper" role="group" aria-label="Nombre de personnes"><button type="button" id="pm" aria-label="Une personne de moins">−</button><span>${persons}</span><button type="button" id="pp" aria-label="Une personne de plus">+</button></div>
+      </div>
+      ${diet.notes.map((n) => `<div class="notice info">${esc(n)}</div>`).join('')}
 
-    <h2 style="margin:14px 0 8px">Taille de la portion</h2>
-    <div class="segmented portion-modes" role="tablist" id="pmodes">${MODES.map(([k, l]) => `<button type="button" role="tab" data-mode="${k}" aria-selected="${mode === k}">${l}</button>`).join('')}</div>
-    <p class="small muted" style="margin:8px 0 14px">${mode === 'std'
+      <div class="segmented portion-modes" role="tablist" id="pmodes" aria-label="Taille de la portion">${MODES.map(([k, l]) => `<button type="button" role="tab" data-mode="${k}" aria-selected="${mode === k}">${l}</button>`).join('')}</div>
+      <p class="small muted" style="margin:8px 0 4px">${mode === 'std'
     ? 'Portion de base de la recette, sans ajustement.'
     : `Portion pour ${mode === 'masse' ? 'une prise de masse' : 'une sèche'} : ${fmt(dayKcal * slot.part)} kcal sur ${fmt(dayKcal)} kcal par jour${profile ? ' (calculé avec ton profil)' : ' pour un adulte moyen. <a href="#/profil">Crée ton plan</a> pour une portion faite pour toi'}.`}</p>
-    <section class="card">
-      <div class="row between"><h2 style="margin:0">Ingrédients</h2>
-        <div class="stepper" role="group" aria-label="Nombre de personnes"><button type="button" id="pm" aria-label="Une personne de moins">−</button><span>${persons} pers.</span><button type="button" id="pp" aria-label="Une personne de plus">+</button></div></div>
-      <table class="t" style="margin-top:8px"><thead><tr><th>Ingrédient</th><th class="num">Quantité</th><th class="num">Coût</th></tr></thead><tbody>${m.ing.map(([iid, g]) => {
+
+      <div class="cal-h"><h2>Ingrédients</h2><span class="muted small">${persons} pers. · ${euro(cost.total * persons)}</span></div>
+      <ul class="cal-ing">${m.ing.map(([iid, g]) => {
         const x = DATA.byId[iid]; const pr = ingredientPrice(x, shop);
         const q = g * factor * persons;
-        return `<tr><td>${esc(x.nom)}</td><td class="num">${displayQty(x, q)}</td><td class="num muted">${pr ? `${euro((pr.kg * q) / 1000)}${pr.reel ? '' : '*'}` : '–'}</td></tr>`;
-      }).join('')}
-      <tr><td><b>Coût de la recette</b></td><td></td><td class="num"><b>${euro(cost.total * persons)}</b></td></tr></tbody></table>
+        return `<li><span><b>${esc(x.nom)}</b> <em>• ${fmt((x.kcal || 0) * q / 100)} kcal</em></span><span class="q">${displayQty(x, q)}<small>${pr ? `${euro((pr.kg * q) / 1000)}${pr.reel ? '' : '*'}` : ''}</small></span></li>`;
+      }).join('')}</ul>
+
+      <div class="cal-kcal"><i class="ic fire">${I.fire}</i><div><span>Calories · 1 portion</span><b>${fmt(nut.kcal)}</b></div></div>
+      <div class="cal-macros">${macro('prot', 'Protéines', nut.prot)}${macro('gluc', 'Glucides', nut.gluc)}${macro('lip', 'Lipides', nut.lip)}</div>
+      <p class="small muted" style="margin:10px 2px 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / dayKcal) * 100)} % de la journée` : ''}</p>
+      ${photo ? `<p class="photo-credit">Photo : ${esc(photo.auteur)} · <a href="${esc(photo.lien)}" target="_blank" rel="noopener">${esc(photo.licence)}</a> · photo d'illustration, détourée</p>` : ''}
     </section>
 
-    <section class="card tilt">
-      <h2>Pour 1 portion</h2>
-      <div class="nutri" style="margin:0">
-        <div><b>${fmt(nut.kcal)}</b><span>kcal</span></div>
-        <div><b style="color:var(--lime)">${fmt(nut.prot)} g</b><span>protéines</span></div>
-        <div><b style="color:var(--cyan)">${fmt(nut.gluc)} g</b><span>glucides</span></div>
-        <div><b style="color:var(--orange)">${fmt(nut.lip)} g</b><span>lipides</span></div>
-      </div>
-      <p class="small muted" style="margin:10px 0 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / dayKcal) * 100)} % de la journée` : ''}</p>
-    </section>
+    <div class="cal-actions">
+      <button class="cal-btn ghost" type="button" id="go-buy">${I.cart} Courses</button>
+      <button class="cal-btn" type="button" id="ate">${eaten ? `✓ Mangé (${eaten})` : "J'ai mangé"}</button>
+    </div>
 
-    <section class="card">
+    <section class="card" id="buy">
       <h2>🛒 À acheter chez ${esc(storeName(shop))}</h2>
       <p class="small muted" style="margin-top:-6px">Formats les plus vendus en magasin (relevés Open Prices). Tu payes le paquet entier, mais il t'en restera pour d'autres repas.</p>
       <ul class="buy-list">${buys.map((r) => `
@@ -722,6 +734,11 @@ function viewRepasDetail(id) {
   });
   document.getElementById('pm').onclick = () => { persons = Math.max(1, persons - 1); keepScroll(() => viewRepasDetail(id)); };
   document.getElementById('pp').onclick = () => { persons = Math.min(8, persons + 1); keepScroll(() => viewRepasDetail(id)); };
+  document.getElementById('go-buy').onclick = () => document.getElementById('buy').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('share').onclick = async () => {
+    const data = { title: m.nom, text: `${m.nom} : ${fmt(nut.kcal)} kcal, ${fmt(nut.prot)} g de protéines (Affûté)`, url: location.href };
+    try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(data.url); toast('Lien copié'); } } catch (e) { /* partage annulé */ }
+  };
   document.getElementById('ate').onclick = () => {
     addEntry({ nom: m.nom, emoji: m.emoji, ref, src: 'repas', ...nut });
     toast(`✓ Ajouté : +${fmt(nut.kcal)} kcal`);
