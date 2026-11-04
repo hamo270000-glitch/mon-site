@@ -484,3 +484,25 @@ ul.hist-ex li { display: flex; justify-content: space-between; gap: 10px; paddin
 .finish-card .stat { box-shadow: none; background: var(--bg); }
 body.in-seance main { padding-bottom: calc(200px + var(--safe-b)); }
 .rt-btns button { white-space: nowrap; }
+
+.kcal-set { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 4px 0 6px; }
+.kcal-val { text-align: center; min-width: 140px; }
+.kcal-val b { display: block; font-size: 2.4rem; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #fa114f; }
+.kcal-val span { font-size: 0.8rem; color: var(--muted); }
+.kbtn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--surface-2); color: var(--mint); font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+.kprev { min-height: 64px; }
+
+/* ---------- Photos des plats ---------- */
+.meal { grid-template-columns: 76px 1fr auto; }
+.meal-thumb { width: 76px; height: 76px; object-fit: cover; border-radius: 14px; display: block; background: #e5e5ea; box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.25); }
+.meal-thumb.sm { width: 44px; height: 44px; border-radius: 11px; }
+.hero-photo { position: relative; margin: 10px -16px 0; overflow: hidden; border-radius: 0; aspect-ratio: 4 / 3; background: #ddd; }
+@media (min-width: 640px) { .hero-photo { margin: 10px 0 0; border-radius: 20px; } }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-photo figcaption { position: absolute; inset: auto 0 0 0; padding: 60px 16px 16px; color: #fff;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.72) 100%); }
+.hero-photo figcaption h1 { margin: 6px 0 4px; font-size: 1.65rem; line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; }
+.hero-photo figcaption span { font-size: 0.85rem; opacity: 0.92; }
+.hero-photo .pill { background: rgba(255, 255, 255, 0.22); color: #fff; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.photo-credit { font-size: 0.68rem; color: var(--muted); margin: 6px 0 4px; }
+.photo-credit a { color: var(--muted); }

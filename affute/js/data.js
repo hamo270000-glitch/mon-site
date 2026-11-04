@@ -7,8 +7,10 @@ export async function loadData() {
     fetch('data/ingredients.json').then((r) => r.json()),
     fetch('data/repas.json').then((r) => r.json()),
   ]);
+  // Photos des plats (libres de droits, avec crédits) : facultatives.
+  const photos = await fetch('data/photos.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
   const byId = Object.fromEntries(ing.ingredients.map((x) => [x.id, x]));
-  cache = { ...ing, byId, repas: rep.repas };
+  cache = { ...ing, byId, repas: rep.repas, photos };
   return cache;
 }
 
@@ -141,3 +143,6 @@ export function buyInfo(x, grams, store) {
   const g = Math.max(grams, 250);
   return { label: `${kgTxt(Math.ceil(g / 50) * 50)} au rayon vrac ou en filet`, besoin: kgTxt(grams), price: kg ? kg * g / 1000 : null, reel, reste: '' };
 }
+
+// Photo d'un plat (ou null s'il n'y en a pas).
+export const mealPhoto = (data, id) => (data.photos && data.photos[id] ? { src: `img/repas/${id}.jpg`, ...data.photos[id] } : null);

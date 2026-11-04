@@ -112,6 +112,13 @@ export function computePlan(p) {
   let limited = false;
   if (kcal < floor) { kcal = Math.round(floor / 10) * 10; limited = true; }
   if (toLose === 0) kcal = Math.round(tdee / 10) * 10;
+  const kcalAuto = kcal;
+  // Calories choisies par la personne : jamais sous le minimum de sécurité, ni au-dessus de ses dépenses.
+  let custom = false;
+  if (p.kcalPerso && toLose > 0) {
+    kcal = Math.round(Math.max(floor, Math.min(tdee - 50, p.kcalPerso)) / 10) * 10;
+    custom = true;
+  }
   const deficit = Math.max(0, tdee - kcal);
 
   // Macros : protéines élevées pour garder le muscle, lipides suffisants pour les hormones.
@@ -146,7 +153,8 @@ export function computePlan(p) {
     target: Math.round(target * 10) / 10, toLose: Math.round(toLose * 10) / 10,
     weeks, nbWeeks, end, pace, body, act, bfAt,
     perWeek: nbWeeks ? Math.round((toLose / nbWeeks) * 100) / 100 : 0,
-    mode: 'seche', muscleAt: () => 0, warnings: [],
+    mode: 'seche', muscleAt: () => 0, warnings: [], kcalAuto, custom,
+    kcalMin: Math.round(floor / 10) * 10, kcalMax: Math.round((tdee - 100) / 10) * 10,
   };
 }
 
@@ -169,7 +177,15 @@ function computeMasse(p) {
   const toGain = Math.max(0, target - p.poids);
 
   const surplus = Math.round(((p.poids * pace.pct * KCAL_PER_KG_GAIN) / 7) / 10) * 10;
-  const kcal = Math.round((tdee + (toGain > 0 ? surplus : 0)) / 10) * 10;
+  const kcalAuto = Math.round((tdee + (toGain > 0 ? surplus : 0)) / 10) * 10;
+  let kcal = kcalAuto;
+  let custom = false;
+  if (p.kcalPerso && toGain > 0) {
+    kcal = Math.round(Math.max(tdee + 100, Math.min(tdee + 1000, p.kcalPerso)) / 10) * 10;
+    custom = true;
+  }
+  // Plus le surplus est grand, plus la part de gras dans le poids pris augmente.
+  const muscleShare = custom ? Math.max(0.25, Math.min(0.65, 0.7 - (kcal - tdee) * 0.00065)) : pace.muscle;
 
   const prot = Math.round(p.poids * (p.sexe === 'h' ? 2.0 : 1.8));
   const lip = Math.round(Math.max(p.poids * 0.9, (kcal * 0.25) / 9));
@@ -190,10 +206,10 @@ function computeMasse(p) {
   // Composition du poids pris : une partie en muscle, le reste en gras.
   const bfAt = (weight) => {
     const gained = Math.max(0, weight - p.poids);
-    const fat = fatNow + gained * (1 - pace.muscle);
+    const fat = fatNow + gained * (1 - muscleShare);
     return (fat / weight) * 100;
   };
-  const muscleAt = (weight) => Math.min(1, ((Math.max(0, weight - p.poids) * pace.muscle) / lean) * 13);
+  const muscleAt = (weight) => Math.min(1, ((Math.max(0, weight - p.poids) * muscleShare) / lean) * 13);
   const bfTarget = bfAt(target);
 
   const warnings = [];
@@ -207,7 +223,8 @@ function computeMasse(p) {
     target: Math.round(target * 10) / 10, toLose: 0, toGain: Math.round(toGain * 10) / 10,
     weeks, nbWeeks, end, pace, body, act, bfAt, muscleAt,
     perWeek: nbWeeks ? Math.round((toGain / nbWeeks) * 100) / 100 : 0,
-    mode: 'masse', warnings,
+    mode: 'masse', warnings, kcalAuto, custom, muscleShare,
+    kcalMin: Math.round((tdee + 100) / 10) * 10, kcalMax: Math.round((tdee + 1000) / 10) * 10,
   };
 }
 
