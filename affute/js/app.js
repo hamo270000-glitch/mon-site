@@ -1,6 +1,6 @@
 import { ACTIVITY, BODIES, BODIES_MASSE, GOALS, SLOTS, computePlan, safetyCheck, bmi, isMasse, pacesFor, bodiesFor } from './calc.js';
 import {
-  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo,
+  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo, mealPhoto,
 } from './data.js';
 import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
@@ -365,6 +365,19 @@ function viewPlan() {
       <p class="small muted" style="margin:6px 0 0">Normal : le poids bouge de ±1 kg d'un jour à l'autre (eau, sel). Regarde la tendance sur 2 semaines.</p>
     </section>
 
+    ${delta > 0 ? `<section class="card" id="kcal-card">
+      <div class="row between"><h2 style="margin:0">⚙️ Mes calories</h2>${plan.custom ? '<span class="pill warn">Réglage perso</span>' : '<span class="pill ok">Calcul automatique</span>'}</div>
+      <p class="small muted" style="margin:6px 0 10px">${masse ? 'Tu veux prendre du poids plus vite ? Augmente tes calories : Affûté recalcule le temps pour atteindre ton objectif.' : 'Tu veux aller plus vite ou plus doucement ? Change tes calories : Affûté recalcule la date d\'arrivée.'}</p>
+      <div class="kcal-set"><button type="button" class="kbtn" data-k="-50" aria-label="Moins 50 kcal">−</button>
+        <div class="kcal-val"><b id="kv">${fmt(plan.kcal)}</b><span>kcal / jour</span></div>
+        <button type="button" class="kbtn" data-k="50" aria-label="Plus 50 kcal">+</button></div>
+      <input type="range" id="kr" min="${plan.kcalMin}" max="${plan.kcalMax}" step="10" value="${plan.kcal}" aria-label="Calories par jour">
+      <div class="row between small muted"><span>${fmt(plan.kcalMin)}</span><span>${masse ? 'plus vite →' : '← plus vite'}</span><span>${fmt(plan.kcalMax)}</span></div>
+      <div id="kprev" class="kprev"></div>
+      <div class="grid2" style="margin-top:12px"><button class="btn small" type="button" id="kapply">Appliquer</button>
+        <button class="btn ghost small" type="button" id="kauto">Auto (${fmt(plan.kcalAuto)})</button></div>
+    </section>` : ''}
+
     <a class="btn block" href="#/semaine">🍽️ Voir mes repas de la semaine</a>
 
     <section class="card" style="margin-top:14px">
@@ -401,11 +414,47 @@ function viewPlan() {
   const slider = document.getElementById('wk');
   slider?.addEventListener('input', () => drawGoal(Number(slider.value)));
   bindDayCard($app, () => keepScroll(viewPlan));
+  const kr = document.getElementById('kr');
+  if (kr) {
+    const prev = document.getElementById('kprev');
+    const show = () => {
+      const v = Number(kr.value);
+      document.getElementById('kv').textContent = fmt(v);
+      const t = computePlan({ ...p, kcalPerso: v });
+      const diff = v - plan.tdee;
+      let warn = '';
+      if (masse && diff > 600) warn = '<div class="notice warn" style="margin:8px 0 0">Surplus très élevé : tu prendras du poids vite, mais une grande partie sera du gras.</div>';
+      else if (masse && diff > 450) warn = '<div class="notice warn" style="margin:8px 0 0">Plus rapide, mais un peu plus de gras pris. Surveille ton tour de taille.</div>';
+      else if (!masse && v <= t.kcalMin) warn = '<div class="notice warn" style="margin:8px 0 0">C\'est le minimum conseillé pour ta santé : impossible de descendre plus bas.</div>';
+      const span = t.nbWeeks > 26 ? `${Math.round(t.nbWeeks / 4.35)} mois` : `${t.nbWeeks} semaine${t.nbWeeks > 1 ? 's' : ''}`;
+      const gain = t.nbWeeks - plan.nbWeeks;
+      prev.innerHTML = `<p style="margin:10px 0 0">À <b>${fmt(v)} kcal</b> par jour, tu atteins <b>${fmt(t.target, 1)} kg</b> en <b>${span}</b> (vers le ${dateFr(t.end)}).
+        ${gain < 0 ? `<span style="color:var(--lime)">${-gain} semaine${gain < -1 ? 's' : ''} plus tôt</span>` : gain > 0 ? `<span style="color:var(--orange)">${gain} semaine${gain > 1 ? 's' : ''} plus tard</span>` : ''}</p>
+        <p class="small muted" style="margin:4px 0 0">${masse ? `Environ ${Math.round((t.muscleShare ?? 0.5) * 100)} % du poids pris en muscle · ${fmt(t.perWeek, 2)} kg par semaine.` : `${fmt(t.perWeek, 2)} kg perdus par semaine · déficit de ${fmt(t.deficit)} kcal par jour.`}</p>${warn}`;
+    };
+    kr.addEventListener('input', show);
+    $app.querySelectorAll('.kbtn').forEach((b) => b.addEventListener('click', () => { kr.value = Number(kr.value) + Number(b.dataset.k); show(); }));
+    document.getElementById('kapply').onclick = () => {
+      profile = { ...profile, kcalPerso: Number(kr.value) };
+      store.set('profil', profile); toast('✓ Calories mises à jour'); keepScroll(viewPlan); refreshChip();
+    };
+    document.getElementById('kauto').onclick = () => {
+      const { kcalPerso, ...rest } = profile; void kcalPerso;
+      profile = rest; store.set('profil', profile); toast('Calcul automatique rétabli'); keepScroll(viewPlan); refreshChip();
+    };
+    show();
+  }
   const markSkin = () => { const cur = store.get('peau', SKINS[1]); $app.querySelectorAll('[data-skin]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.skin === cur)); };
   markSkin();
   $app.querySelectorAll('[data-skin]').forEach((b) => b.addEventListener('click', () => {
     store.set('peau', b.dataset.skin); markSkin(); drawNow(); drawGoal(slider ? Number(slider.value) : plan.nbWeeks);
   }));
+}
+
+// Vignette d'un plat : vraie photo si on en a une, sinon l'émoji.
+function thumb(m, size = '') {
+  const ph = mealPhoto(DATA, m.id);
+  return ph ? `<img class="meal-thumb ${size}" src="img/repas/min/${m.id}.jpg" alt="" loading="lazy" width="240" height="180">` : `<div class="emoji3d">${m.emoji}</div>`;
 }
 
 // Sous-onglets de « Repas », façon contrôle segmenté iOS.
@@ -476,7 +525,7 @@ function viewSemaine() {
         <div class="day-head"><h3 style="margin:0">${day.name}${d === todayIdx ? ' <span class="pill ok">Aujourd\'hui</span>' : ''}</h3><span class="small muted">${fmt(day.tot.kcal)} kcal · ${fmt(day.tot.prot)} g prot.</span></div>
         ${day.meals.map((m) => `
           <div class="slot">
-            <div class="emoji3d">${m.meal.emoji}</div>
+            ${thumb(m.meal, 'sm')}
             <div><div class="small muted">${m.slot.label}</div><a href="#/repas/${m.meal.id}">${esc(m.meal.nom)}</a>
               <div class="small muted">${fmt(m.nut.kcal)} kcal · ${fmt(m.nut.prot)} g prot. · ${euro(mealPrice(m.meal, DATA, shop, m.factor).total)}</div></div>
             <div class="slot-actions">${d === todayIdx ? `<button class="eat ${findByRef(`sem:${m.key}:${m.meal.id}`) ? 'on' : ''}" data-eat="${m.key}" data-meal="${m.meal.id}" aria-pressed="${Boolean(findByRef(`sem:${m.key}:${m.meal.id}`))}" aria-label="J'ai mangé ce repas">✓</button>` : ''}
@@ -546,7 +595,7 @@ function viewRepas() {
     <div class="chips" id="sorts" style="margin:8px 0 14px">${sorts.map(([id, l]) => `<button class="chip" data-s="${id}" aria-pressed="${repasSort === id}">${l}</button>`).join('')}</div>
     <div class="meal-list">${list.map(({ m, nut, price }) => `
       <a class="meal tilt" href="#/repas/${m.id}">
-        <div class="emoji3d">${m.emoji}</div>
+        ${thumb(m)}
         <div><div class="name">${esc(m.nom)}</div>
           <div class="meta"><span class="pill k">${fmt(nut.kcal)} kcal</span><span class="pill p">${fmt(nut.prot)} g prot.</span>${m.masse ? '<span class="pill warn">💪 Masse</span>' : ''}<span>⏱ ${m.min} min</span></div></div>
         <div class="price-tag"><b>${euro(price.total)}</b><small>la portion</small></div>
@@ -573,12 +622,17 @@ function viewRepasDetail(id) {
   const toPay = buys.reduce((t, r) => t + (r.b.price || 0), 0);
   const ref = `repas:${m.id}`;
   const eaten = entries().filter((e) => e.ref === ref).length;
+  const photo = mealPhoto(DATA, m.id);
 
   $app.innerHTML = `
-    <a href="#/repas" class="small" style="text-decoration:none">← Tous les repas</a>
-    <div class="row" style="margin:12px 0 4px;gap:14px"><div class="emoji3d big">${m.emoji}</div>
+    <a href="#/repas" class="small" style="text-decoration:none">‹ Recettes</a>
+    ${photo ? `<figure class="hero-photo"><img src="${photo.src}" alt="${esc(m.nom)}" width="800" height="600">
+        <figcaption><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}<h1>${esc(m.nom)}</h1>
+        <span>⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></figcaption></figure>
+      <p class="photo-credit">Photo : ${esc(photo.auteur)} · <a href="${esc(photo.lien)}" target="_blank" rel="noopener">${esc(photo.licence)}</a> · photo d'illustration</p>`
+    : `<div class="row" style="margin:12px 0 4px;gap:14px"><div class="emoji3d big">${m.emoji}</div>
       <div><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}<h1 class="title" style="font-size:1.6rem">${esc(m.nom)}</h1>
-        <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div></div>
+        <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div></div>`}
     ${diet.notes.map((n) => `<div class="notice info">${esc(n)}</div>`).join('')}
 
     <button class="btn block" id="ate" style="margin:10px 0 6px">✓ J'ai mangé ce repas${eaten ? ` (déjà ${eaten} fois aujourd'hui)` : ''}</button>
