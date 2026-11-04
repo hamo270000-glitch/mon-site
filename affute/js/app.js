@@ -673,17 +673,6 @@ function viewRepasDetail(id) {
     <p class="small muted" style="margin:8px 0 14px">${mode === 'std'
     ? 'Portion de base de la recette, sans ajustement.'
     : `Portion pour ${mode === 'masse' ? 'une prise de masse' : 'une sèche'} : ${fmt(dayKcal * slot.part)} kcal sur ${fmt(dayKcal)} kcal par jour${profile ? ' (calculé avec ton profil)' : ' pour un adulte moyen. <a href="#/profil">Crée ton plan</a> pour une portion faite pour toi'}.`}</p>
-    <section class="card tilt">
-      <h2>Pour 1 portion</h2>
-      <div class="nutri" style="margin:0">
-        <div><b>${fmt(nut.kcal)}</b><span>kcal</span></div>
-        <div><b style="color:var(--lime)">${fmt(nut.prot)} g</b><span>protéines</span></div>
-        <div><b style="color:var(--cyan)">${fmt(nut.gluc)} g</b><span>glucides</span></div>
-        <div><b style="color:var(--orange)">${fmt(nut.lip)} g</b><span>lipides</span></div>
-      </div>
-      <p class="small muted" style="margin:10px 0 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / dayKcal) * 100)} % de la journée` : ''}</p>
-    </section>
-
     <section class="card">
       <div class="row between"><h2 style="margin:0">Ingrédients</h2>
         <div class="stepper" role="group" aria-label="Nombre de personnes"><button type="button" id="pm" aria-label="Une personne de moins">−</button><span>${persons} pers.</span><button type="button" id="pp" aria-label="Une personne de plus">+</button></div></div>
@@ -693,6 +682,17 @@ function viewRepasDetail(id) {
         return `<tr><td>${esc(x.nom)}</td><td class="num">${displayQty(x, q)}</td><td class="num muted">${pr ? `${euro((pr.kg * q) / 1000)}${pr.reel ? '' : '*'}` : '–'}</td></tr>`;
       }).join('')}
       <tr><td><b>Coût de la recette</b></td><td></td><td class="num"><b>${euro(cost.total * persons)}</b></td></tr></tbody></table>
+    </section>
+
+    <section class="card tilt">
+      <h2>Pour 1 portion</h2>
+      <div class="nutri" style="margin:0">
+        <div><b>${fmt(nut.kcal)}</b><span>kcal</span></div>
+        <div><b style="color:var(--lime)">${fmt(nut.prot)} g</b><span>protéines</span></div>
+        <div><b style="color:var(--cyan)">${fmt(nut.gluc)} g</b><span>glucides</span></div>
+        <div><b style="color:var(--orange)">${fmt(nut.lip)} g</b><span>lipides</span></div>
+      </div>
+      <p class="small muted" style="margin:10px 0 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / dayKcal) * 100)} % de la journée` : ''}</p>
     </section>
 
     <section class="card">
