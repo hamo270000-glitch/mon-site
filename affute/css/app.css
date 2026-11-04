@@ -515,3 +515,10 @@ body.in-seance main { padding-bottom: calc(200px + var(--safe-b)); }
 .photo-credit { font-size: 0.68rem; color: var(--muted); margin: 6px 0 4px; }
 .photo-credit a { color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .hero-photo img { animation: none; } }
+
+/* ---------- Questionnaire facultatif et taille des portions ---------- */
+.segmented button { text-align: center; padding: 8px 4px; border-radius: 8px; font: inherit; font-size: 0.86rem; font-weight: 600; color: var(--text); background: none; border: 0; cursor: pointer; }
+.segmented button[aria-selected='true'] { background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.04); }
+.portion-modes { margin-bottom: 0; }
+.plan-hint { display: flex; gap: 10px; align-items: flex-start; text-decoration: none; }
+.need-profile .wiz-emoji { margin: 6px auto 4px; }

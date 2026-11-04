@@ -15,6 +15,11 @@ const store = {
 };
 
 let profile = store.get('profil', null);
+// Profil « type » utilisé tant que la personne n'a pas répondu aux questions (questionnaire facultatif).
+const GUEST = { objectif: 'seche', sexe: 'h', age: 30, taille: 175, poids: 75, activite: 'leger', corps: 'athletique', rythme: 'normale', regimes: [], allergies: [], magasin: 'leclerc' };
+const who = () => profile || GUEST;
+// Pages qui ont besoin du profil : on propose de le créer au lieu de forcer le questionnaire.
+const NEEDS_PROFILE = { plan: ['📊', 'Ton plan sur mesure', 'Tes calories, tes protéines et la date où tu atteindras ton objectif.'], semaine: ['🗓️', 'Ta semaine de repas', '7 jours de repas adaptés à tes calories, avec la liste de courses et le prix dans chaque magasin.'], photos: ['📸', 'Ton suivi', 'Ta courbe de poids et la simulation de ton futur corps sur ta photo.'] };
 let DATA = null;
 
 const $app = document.getElementById('app');
@@ -36,7 +41,7 @@ async function route() {
       return;
     }
   }
-  if (!profile && page !== 'profil') { location.hash = '#/profil'; return; }
+  if (!profile && !page) { location.hash = '#/repas'; return; }
   await stopScan();
   if (page !== 'profil') wizard = null;
   document.body.classList.toggle('onboarding', page === 'profil' && !profile);
@@ -49,17 +54,18 @@ async function route() {
   window.scrollTo(0, 0);
   const views = {
     profil: viewProfil, plan: viewPlan, semaine: viewSemaine, repas: arg ? () => viewRepasDetail(arg) : viewRepas, aliments: viewAliments, photos: viewCorps,
-    scan: arg ? () => viewScanProduct($app, arg.replace(/\D/g, ''), profile, computePlan(profile)) : () => viewScan($app),
+    scan: arg ? () => viewScanProduct($app, arg.replace(/\D/g, ''), who(), computePlan(who())) : () => viewScan($app),
     sport: () => {
-      if (arg === 'jour') viewSportDay($app, profile, Number(arg2) || 0);
-      else if (arg === 'seance') viewSeance($app, profile, Number(arg2) || 0, toast);
-      else if (arg === 'ex') viewExercise($app, profile, arg2);
-      else if (arg === 'biblio') viewBiblio($app, profile);
-      else if (arg === 'historique') viewHistory($app, profile);
-      else viewSport($app, profile);
+      if (arg === 'jour') viewSportDay($app, who(), Number(arg2) || 0);
+      else if (arg === 'seance') viewSeance($app, who(), Number(arg2) || 0, toast);
+      else if (arg === 'ex') viewExercise($app, who(), arg2);
+      else if (arg === 'biblio') viewBiblio($app, who());
+      else if (arg === 'historique') viewHistory($app, who());
+      else viewSport($app, who());
     },
   };
-  (views[page] || viewPlan)();
+  if (!profile && NEEDS_PROFILE[page]) viewNeedProfile(page);
+  else (views[page] || viewPlan)();
   $app.classList.remove('fade-in'); void $app.offsetWidth; $app.classList.add('fade-in');
   refreshChip();
 }
@@ -206,7 +212,7 @@ function viewProfil(goTo) {
     </form>
     <div class="row between" style="margin-top:6px">
       ${wizard.step > 0 ? '<button class="btn ghost small" type="button" id="prev">← Retour</button>' : '<span></span>'}
-      ${profile ? '<button class="btn ghost small" type="button" id="save-now">Enregistrer maintenant</button>' : ''}
+      ${profile ? '<button class="btn ghost small" type="button" id="save-now">Enregistrer maintenant</button>' : '<a class="btn ghost small" href="#/repas" id="later">Plus tard</a>'}
     </div>
     ${profile && last ? '<button class="btn ghost block" type="button" id="reset" style="margin-top:18px">Tout effacer</button>' : ''}
     <p class="footer-note">Affûté ne remplace pas l'avis d'un médecin ou d'un diététicien.</p>`;
@@ -261,8 +267,23 @@ function viewProfil(goTo) {
   document.getElementById('reset')?.addEventListener('click', () => {
     if (!confirm('Effacer ton profil, ton suivi de poids et tes choix de repas ? (Les photos restent.)')) return;
     ['profil', 'poids', 'semaine'].forEach((k) => localStorage.removeItem(`affute.${k}`));
-    profile = null; wizard = null; location.hash = '#/profil'; viewProfil('reset');
+    profile = null; wizard = null; location.hash = '#/repas';
   });
+}
+
+// Écran proposé quand une page a besoin du profil (le questionnaire n'est plus obligatoire).
+function viewNeedProfile(page) {
+  const [emoji, title, text] = NEEDS_PROFILE[page];
+  $app.innerHTML = `
+    ${['semaine'].includes(page) ? `<h1 class="title">Repas</h1>${repasTabs('semaine')}` : ''}
+    <section class="card center need-profile" style="margin-top:18px">
+      <div class="wiz-emoji">${emoji}</div>
+      <h1 class="wiz-q">${title}</h1>
+      <p class="lead">${text}</p>
+      <p class="small muted">Réponds à quelques questions (1 minute). C'est facultatif et tes réponses restent sur ton téléphone.</p>
+      <a class="btn block" href="#/profil" style="margin-top:8px">Créer mon plan ⚡</a>
+      <a class="btn ghost block" href="#/repas" style="margin-top:10px">Voir les recettes</a>
+    </section>`;
 }
 
 // ---------- Plan ----------
@@ -584,14 +605,15 @@ function viewRepas() {
   const sorts = [['prix', '💶 Moins cher'], ['prot', '🥩 + de protéines'], ['kcal', '🔥 − de calories']];
   const list = DATA.repas
     .filter((m) => repasFilter === 'tous' || m.type === repasFilter)
-    .filter((m) => dietCheck(m, DATA, profile.regimes).ok)
+    .filter((m) => dietCheck(m, DATA, profile?.regimes).ok)
     .map((m) => ({ m, nut: mealNutrition(m, DATA), price: mealPrice(m, DATA, shop) }))
     .sort((a, b) => (repasSort === 'prix' ? a.price.total - b.price.total : repasSort === 'prot' ? b.nut.prot - a.nut.prot : a.nut.kcal - b.nut.kcal));
 
   $app.innerHTML = `
     <h1 class="title">Repas</h1>
     ${repasTabs('repas')}
-    <p class="lead">${DATA.repas.length} recettes ${isMasse(profile) ? 'pour la prise de masse' : 'pour la sèche'}, riches en protéines, avec leur prix chez ${esc(storeName(shop))}.</p>
+    <p class="lead">${DATA.repas.length} recettes ${profile ? (isMasse(profile) ? 'pour la prise de masse' : 'pour la sèche') : 'pour la sèche et la prise de masse'}, riches en protéines, avec leur prix chez ${esc(storeName(shop))}.</p>
+    ${profile ? '' : '<a class="notice info plan-hint" href="#/profil">⚡ <span><b>Envie d\'un plan sur mesure ?</b> Réponds à quelques questions (facultatif) pour avoir tes calories et des portions adaptées à toi.</span></a>'}
     <div class="chips" id="types">${types.map(([id, l]) => `<button class="chip" data-t="${id}" aria-pressed="${repasFilter === id}">${l}</button>`).join('')}</div>
     <div class="chips" id="sorts" style="margin:8px 0 14px">${sorts.map(([id, l]) => `<button class="chip" data-s="${id}" aria-pressed="${repasSort === id}">${l}</button>`).join('')}</div>
     <div class="meal-list">${list.map(({ m, nut, price }) => `
@@ -610,14 +632,20 @@ let persons = 1;
 function viewRepasDetail(id) {
   const m = DATA.repas.find((x) => x.id === id);
   if (!m) { location.hash = '#/repas'; return; }
-  const plan = computePlan(profile);
   const slot = SLOTS.find((s) => s.id === m.type);
-  const mine = store.get('portionPerso', true);
-  const factor = mine ? portionFactor(m, DATA, plan.kcal * slot.part, maxPortion()) : 1;
+  // Taille de la portion : sèche, prise de masse ou standard (par défaut : l'objectif du profil).
+  const MODES = [['seche', '🔥 Sèche'], ['masse', '💪 Prise de masse'], ['std', 'Standard']];
+  let mode = store.get('portionMode', null);
+  if (!MODES.some(([k]) => k === mode)) mode = profile ? (isMasse(profile) ? 'masse' : 'seche') : (m.masse ? 'masse' : 'seche');
+  const mine = mode !== 'std';
+  const base = { ...who(), objectif: mine ? mode : who().objectif };
+  const plan = computePlan(base);
+  const dayKcal = safetyCheck(base).length ? plan.tdee : plan.kcal;
+  const factor = mine ? portionFactor(m, DATA, dayKcal * slot.part, mode === 'masse' ? 2.4 : 1.8) : 1;
   const nut = mealNutrition(m, DATA, factor);
   const shop = myStore();
   const prices = mealPricesByStore(m, DATA, factor * persons);
-  const diet = dietCheck(m, DATA, profile.regimes);
+  const diet = dietCheck(m, DATA, profile?.regimes);
   const cost = mealPrice(m, DATA, shop, factor);
   const buys = m.ing.map(([iid, g]) => ({ x: DATA.byId[iid], g: g * factor * persons })).map((r) => ({ ...r, b: buyInfo(r.x, r.g, shop) }));
   const toPay = buys.reduce((t, r) => t + (r.b.price || 0), 0);
@@ -640,10 +668,11 @@ function viewRepasDetail(id) {
     <button class="btn block" id="ate" style="margin:10px 0 6px">✓ J'ai mangé ce repas${eaten ? ` (déjà ${eaten} fois aujourd'hui)` : ''}</button>
     <p class="small muted center" style="margin:0 0 12px">Ajoute ${fmt(nut.kcal)} kcal et ${fmt(nut.prot)} g de protéines à ta journée.</p>
 
-    <div class="chips" style="margin:6px 0 14px">
-      <button class="chip" id="p-mine" aria-pressed="${mine}">Portion pour mon objectif</button>
-      <button class="chip" id="p-std" aria-pressed="${!mine}">Portion standard</button>
-    </div>
+    <h2 style="margin:14px 0 8px">Taille de la portion</h2>
+    <div class="segmented portion-modes" role="tablist" id="pmodes">${MODES.map(([k, l]) => `<button type="button" role="tab" data-mode="${k}" aria-selected="${mode === k}">${l}</button>`).join('')}</div>
+    <p class="small muted" style="margin:8px 0 14px">${mode === 'std'
+    ? 'Portion de base de la recette, sans ajustement.'
+    : `Portion pour ${mode === 'masse' ? 'une prise de masse' : 'une sèche'} : ${fmt(dayKcal * slot.part)} kcal sur ${fmt(dayKcal)} kcal par jour${profile ? ' (calculé avec ton profil)' : ' pour un adulte moyen. <a href="#/profil">Crée ton plan</a> pour une portion faite pour toi'}.`}</p>
     <section class="card tilt">
       <h2>Pour 1 portion</h2>
       <div class="nutri" style="margin:0">
@@ -652,7 +681,7 @@ function viewRepasDetail(id) {
         <div><b style="color:var(--cyan)">${fmt(nut.gluc)} g</b><span>glucides</span></div>
         <div><b style="color:var(--orange)">${fmt(nut.lip)} g</b><span>lipides</span></div>
       </div>
-      <p class="small muted" style="margin:10px 0 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / plan.kcal) * 100)} % de ta journée` : ''}</p>
+      <p class="small muted" style="margin:10px 0 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / dayKcal) * 100)} % de la journée` : ''}</p>
     </section>
 
     <section class="card">
@@ -687,8 +716,10 @@ function viewRepasDetail(id) {
       <p class="small muted">* prix moyen en France quand il manque des relevés dans le magasin. Source : Open Prices.</p>
     </section>
     <p class="footer-note">Valeurs nutritionnelles : table Ciqual 2025 de l'ANSES.</p>`;
-  document.getElementById('p-mine').onclick = () => { store.set('portionPerso', true); viewRepasDetail(id); };
-  document.getElementById('p-std').onclick = () => { store.set('portionPerso', false); viewRepasDetail(id); };
+  document.getElementById('pmodes').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-mode]');
+    if (b) { store.set('portionMode', b.dataset.mode); keepScroll(() => viewRepasDetail(id)); }
+  });
   document.getElementById('pm').onclick = () => { persons = Math.max(1, persons - 1); keepScroll(() => viewRepasDetail(id)); };
   document.getElementById('pp').onclick = () => { persons = Math.min(8, persons + 1); keepScroll(() => viewRepasDetail(id)); };
   document.getElementById('ate').onclick = () => {
