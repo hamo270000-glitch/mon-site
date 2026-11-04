@@ -3,12 +3,13 @@ let cache = null;
 
 export async function loadData() {
   if (cache) return cache;
-  const [ing, rep] = await Promise.all([
+  const [ing, rep, photos] = await Promise.all([
     fetch('data/ingredients.json').then((r) => r.json()),
     fetch('data/repas.json').then((r) => r.json()),
+    fetch('data/photos.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
   ]);
   const byId = Object.fromEntries(ing.ingredients.map((x) => [x.id, x]));
-  cache = { ...ing, byId, repas: rep.repas };
+  cache = { ...ing, byId, repas: rep.repas, photos };
   return cache;
 }
 
@@ -142,5 +143,8 @@ export function buyInfo(x, grams, store) {
   return { label: `${kgTxt(Math.ceil(g / 50) * 50)} au rayon vrac ou en filet`, besoin: kgTxt(grams), price: kg ? kg * g / 1000 : null, reel, reste: '' };
 }
 
-// Illustration d'un plat (vue du dessus, sans arrière-plan), dessinée en SVG.
+// Illustration d'un plat (vue du dessus, sans arrière-plan), dessinée en SVG : utilisée si on n'a pas de photo.
 export const mealArt = (id) => `img/plats/${id}.svg`;
+
+// Vraie photo du plat, détourée et posée sur fond blanc (style studio), avec son auteur et sa licence.
+export const mealPhoto = (data, id) => (data.photos && data.photos[id] ? { src: `img/repas/${id}.jpg`, min: `img/repas/min/${id}.jpg`, ...data.photos[id] } : null);
