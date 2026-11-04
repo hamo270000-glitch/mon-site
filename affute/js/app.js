@@ -5,6 +5,7 @@ import {
 import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
 import { viewScan, viewScanProduct, stopScan, ALLERGENS } from './scan.js';
+import { viewSport, viewSportDay, viewSeance, viewExercise, viewBiblio, viewHistory } from './sport.js';
 import { entries, addEntry, removeEntry, findByRef, dayKey, dayCard, bindDayCard, updateChip } from './journal.js';
 
 // ---------- Stockage local (tout reste sur le téléphone) ----------
@@ -28,7 +29,7 @@ const ICON_SWAP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 
 // ---------- Navigation ----------
 async function route() {
-  const [, page = '', arg] = (location.hash || '').split('/');
+  const [, page = '', arg, arg2] = (location.hash || '').split('/');
   if (!DATA) {
     try { DATA = await loadData(); } catch (e) {
       $app.innerHTML = '<div class="notice stop">Impossible de charger les données. Vérifie ta connexion et recharge la page.</div>';
@@ -39,14 +40,24 @@ async function route() {
   await stopScan();
   if (page !== 'profil') wizard = null;
   document.body.classList.toggle('onboarding', page === 'profil' && !profile);
+  document.body.classList.toggle('in-seance', page === 'sport' && arg === 'seance');
   document.querySelectorAll('.tabbar a').forEach((a) => {
-    const on = a.dataset.tab === page || (page === 'repas' && a.dataset.tab === 'repas');
+    const tab = ['semaine', 'aliments'].includes(page) ? 'repas' : page;
+    const on = a.dataset.tab === tab;
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   window.scrollTo(0, 0);
   const views = {
     profil: viewProfil, plan: viewPlan, semaine: viewSemaine, repas: arg ? () => viewRepasDetail(arg) : viewRepas, aliments: viewAliments, photos: viewCorps,
     scan: arg ? () => viewScanProduct($app, arg.replace(/\D/g, ''), profile, computePlan(profile)) : () => viewScan($app),
+    sport: () => {
+      if (arg === 'jour') viewSportDay($app, profile, Number(arg2) || 0);
+      else if (arg === 'seance') viewSeance($app, profile, Number(arg2) || 0, toast);
+      else if (arg === 'ex') viewExercise($app, profile, arg2);
+      else if (arg === 'biblio') viewBiblio($app, profile);
+      else if (arg === 'historique') viewHistory($app, profile);
+      else viewSport($app, profile);
+    },
   };
   (views[page] || viewPlan)();
   $app.classList.remove('fade-in'); void $app.offsetWidth; $app.classList.add('fade-in');
@@ -397,6 +408,10 @@ function viewPlan() {
   }));
 }
 
+// Sous-onglets de « Repas », façon contrôle segmenté iOS.
+const repasTabs = (cur) => `<div class="segmented" role="tablist">${[['semaine', 'Ma semaine'], ['repas', 'Recettes'], ['aliments', 'Aliments']]
+  .map(([k, l]) => `<a href="#/${k}" role="tab" aria-selected="${cur === k}">${l}</a>`).join('')}</div>`;
+
 // ---------- Semaine ----------
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
@@ -446,7 +461,8 @@ function viewSemaine() {
   const cur = totals.find((t) => t.id === shop) || totals[0];
 
   $app.innerHTML = `
-    <h1 class="title">Ma semaine</h1>
+    <h1 class="title">Repas</h1>
+    ${repasTabs('semaine')}
     <p class="lead">${fmt(plan.kcal)} kcal et ${plan.prot} g de protéines par jour. Touche ⇄ pour changer un plat.</p>
     <div class="chips" id="shop-chips" style="margin-bottom:12px">${DATA.magasins.map((m) => `<button class="chip" data-store="${m.id}" aria-pressed="${m.id === shop}">${m.nom}</button>`).join('')}</div>
     <section class="card tilt">
@@ -523,8 +539,9 @@ function viewRepas() {
     .sort((a, b) => (repasSort === 'prix' ? a.price.total - b.price.total : repasSort === 'prot' ? b.nut.prot - a.nut.prot : a.nut.kcal - b.nut.kcal));
 
   $app.innerHTML = `
-    <h1 class="title">Repas <span class="grad-text">${isMasse(profile) ? 'prise de masse' : 'sèche'}</span></h1>
-    <p class="lead">${DATA.repas.length} recettes riches en protéines, avec leur prix chez ${esc(storeName(shop))}.</p>
+    <h1 class="title">Repas</h1>
+    ${repasTabs('repas')}
+    <p class="lead">${DATA.repas.length} recettes ${isMasse(profile) ? 'pour la prise de masse' : 'pour la sèche'}, riches en protéines, avec leur prix chez ${esc(storeName(shop))}.</p>
     <div class="chips" id="types">${types.map(([id, l]) => `<button class="chip" data-t="${id}" aria-pressed="${repasFilter === id}">${l}</button>`).join('')}</div>
     <div class="chips" id="sorts" style="margin:8px 0 14px">${sorts.map(([id, l]) => `<button class="chip" data-s="${id}" aria-pressed="${repasSort === id}">${l}</button>`).join('')}</div>
     <div class="meal-list">${list.map(({ m, nut, price }) => `
@@ -641,7 +658,8 @@ let foodFilter = 'tous';
 
 async function viewAliments() {
   $app.innerHTML = `
-    <h1 class="title">Tous les <span class="grad-text">aliments</span></h1>
+    <h1 class="title">Repas</h1>
+    ${repasTabs('aliments')}
     <p class="lead">La table officielle de l'ANSES (plus de 3 300 aliments) et des millions de produits de marque.</p>
     <div class="chips" id="ftabs"><button class="chip" data-tab="anses" aria-pressed="${foodTab === 'anses'}">Aliments (ANSES)</button>
       <button class="chip" data-tab="marques" aria-pressed="${foodTab === 'marques'}">Produits de marque</button></div>
