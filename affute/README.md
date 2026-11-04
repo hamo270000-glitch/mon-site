@@ -17,6 +17,14 @@ En ligne (après fusion sur `main`) : https://hamo270000-glitch.github.io/mon-si
 9. **Régimes** : halal (pas de porc, rappel de choisir une viande certifiée), végétarien, sans lactose.
 10. **Sécurité** : pas de plan de sèche pour les moins de 18 ans, pendant la grossesse ni avec un IMC bas. L'objectif ne descend jamais sous un IMC de 19 et les calories restent au-dessus d'un minimum.
 
+## Entraînement (onglet Sport)
+Inspiré des meilleures applis : programme automatique (Fitbod), suivi des séries et records (Hevy, Strong), fiches d'exercices (Jefit).
+- **Programme de la semaine** selon le lieu (salle, maison avec haltères, sans matériel, barre de traction), le nombre de séances (3 à 6) et le niveau : corps complet ×3, haut/bas ×2, un groupe par jour (pecs-triceps, dos-biceps, jambes, épaules-abdos, bras) ou push/pull/legs ×2. Chaque jour est modifiable.
+- **Séries, répétitions et repos** adaptés à l'objectif (prise de masse : 6 à 10 répétitions et 2 min de repos sur les gros exercices ; sèche : 8 à 15 répétitions, repos plus courts).
+- **Séance guidée** : poids et répétitions par série, dernière performance affichée, conseil de progression (« passe à 42,5 kg »), chrono de repos avec vibration et son, résumé et records 🏆.
+- **58 exercices** expliqués : étapes, conseil, erreur fréquente, variante, carte des muscles (face et dos), courbe de progression.
+- **Carte de récupération** : les muscles travaillés ces 3 derniers jours.
+
 ## Objectif du jour et recettes détaillées
 - **Jauge du jour** : calories, protéines, glucides et lipides se remplissent à chaque repas noté : ✓ dans « Semaine », « J'ai mangé ce repas » sur une recette, « Je l'ai mangé » sur un produit scanné, ou ajout libre. Un compteur reste visible en haut de toutes les pages, avec une série de jours réussis (🔥).
 - **Recettes détaillées** (50 recettes) : nombre de personnes réglable, quantités, coût de la recette, **liste « À acheter »** avec le format le plus vendu en magasin (ex. « 1 paquet de 500 g », « 1 boîte de 6 œufs », « 3 tomates ≈ 360 g ») et le **total à payer en caisse**, étapes et astuces.
@@ -58,6 +66,8 @@ python3 tools/build_ciqual.py <dossier Ciqual> data/aliments.json   # nouvelle v
 - `js/body.js` : avatar 3D.
 - `js/photo.js` : photos (IndexedDB) et simulation.
 - `js/scan.js` : scanner (réutilise Clair).
+- `js/sport.js`, `js/sport-data.js`, `js/muscles.js` : entraînement, exercices et carte des muscles.
+- `js/journal.js` : journal du jour.
 - `data/` : aliments (Ciqual), ingrédients avec prix, recettes.
 - `tools/` : scripts de mise à jour des données.
 
