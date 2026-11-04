@@ -4,6 +4,7 @@ import {
 } from './data.js';
 import { bodySVG } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
+import { viewScan, viewScanProduct, stopScan, ALLERGENS } from './scan.js';
 
 // ---------- Stockage local (tout reste sur le téléphone) ----------
 const store = {
@@ -34,12 +35,16 @@ async function route() {
     }
   }
   if (!profile && page !== 'profil') { location.hash = '#/profil'; return; }
+  await stopScan();
   document.querySelectorAll('.tabbar a').forEach((a) => {
     const on = a.dataset.tab === page || (page === 'repas' && a.dataset.tab === 'repas');
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   window.scrollTo(0, 0);
-  const views = { profil: viewProfil, plan: viewPlan, semaine: viewSemaine, repas: arg ? () => viewRepasDetail(arg) : viewRepas, aliments: viewAliments, photos: viewCorps };
+  const views = {
+    profil: viewProfil, plan: viewPlan, semaine: viewSemaine, repas: arg ? () => viewRepasDetail(arg) : viewRepas, aliments: viewAliments, photos: viewCorps,
+    scan: arg ? () => viewScanProduct($app, arg.replace(/\D/g, ''), profile, computePlan(profile)) : () => viewScan($app),
+  };
   (views[page] || viewPlan)();
   $app.classList.remove('fade-in'); void $app.offsetWidth; $app.classList.add('fade-in');
 }
@@ -106,6 +111,9 @@ function viewProfil() {
         <p class="small muted" style="margin-top:-6px">Régime alimentaire</p>
         <div class="chips" id="diets">${[['halal', 'Halal'], ['vegetarien', 'Végétarien'], ['sanslactose', 'Sans lactose']].map(([id, l]) => `
           <button type="button" class="chip" data-diet="${id}" aria-pressed="${(p.regimes || []).includes(id)}">${l}</button>`).join('')}</div>
+        <p class="small muted">Allergies (pour le scanner)</p>
+        <div class="chips" id="allergies" style="flex-wrap:wrap">${ALLERGENS.map((a) => `
+          <button type="button" class="chip" data-allergy="${a.tag}" aria-pressed="${(p.allergies || []).includes(a.tag)}">${a.label}</button>`).join('')}</div>
         <p class="small muted">Ton magasin habituel</p>
         <div class="chips" id="stores">${DATA.magasins.map((m) => `
           <button type="button" class="chip" data-store="${m.id}" aria-pressed="${p.magasin === m.id}">${m.nom}</button>`).join('')}</div>
@@ -139,6 +147,13 @@ function viewProfil() {
   form.addEventListener('change', (e) => { if (e.target.name === 'sexe') drawBodies(); });
 
   const diets = new Set(p.regimes || []);
+  const allergies = new Set(p.allergies || []);
+  document.getElementById('allergies').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-allergy]'); if (!b) return;
+    const id = b.dataset.allergy;
+    allergies.has(id) ? allergies.delete(id) : allergies.add(id);
+    b.setAttribute('aria-pressed', allergies.has(id));
+  });
   let shop = p.magasin || 'leclerc';
   document.getElementById('diets').addEventListener('click', (e) => {
     const b = e.target.closest('[data-diet]'); if (!b) return;
@@ -164,7 +179,7 @@ function viewProfil() {
     const np = {
       sexe: f.get('sexe') || 'h', age: n('age'), taille: n('taille'), poids: n('poids'),
       activite: f.get('activite') || 'leger', corps: f.get('corps') || 'athletique', rythme: f.get('rythme') || 'normale',
-      poidsCible: n('poidsCible'), regimes: [...diets], magasin: shop,
+      poidsCible: n('poidsCible'), regimes: [...diets], allergies: [...allergies], magasin: shop,
       tourTaille: n('tourTaille'), tourCou: n('tourCou'), tourHanches: n('tourHanches'),
       enceinte: f.get('sexe') === 'f' && f.get('enceinte') === 'on',
       depart: profile?.depart || { date: Date.now(), poids: n('poids') },

@@ -12,8 +12,9 @@ En ligne (après fusion sur `main`) : https://hamo270000-glitch.github.io/mon-si
 5. **Ma semaine** : 7 jours de repas générés automatiquement (changeables d'un geste), **liste de courses** et **le même panier comparé dans chaque magasin**.
 6. **Tous les aliments** : la table officielle Ciqual 2025 de l'ANSES (3 341 aliments : calories, protéines, glucides, sucres, lipides, fibres, sel), plus des millions de produits de marque via Open Food Facts.
 7. **Suivi** du poids avec la courbe réelle comparée à la courbe prévue.
-8. **Régimes** : halal (pas de porc, rappel de choisir une viande certifiée), végétarien, sans lactose.
-9. **Sécurité** : pas de plan de sèche pour les moins de 18 ans, pendant la grossesse ni avec un IMC bas. L'objectif ne descend jamais sous un IMC de 19 et les calories restent au-dessus d'un minimum.
+8. **Scanner de produits (Clair intégré)** : onglet Scan au centre. Tu scannes un code-barres et tu obtiens la note Clair sur 100 adaptée à ton profil (allergies, halal, végétarien, sans lactose), un **indice sèche** (part des calories venant des protéines), la part de ta journée que représente une portion, le prix et des alternatives mieux notées. Le scanner réutilise directement le code de Clair (`../js/api.js`, `../js/score.js`). Si tu utilises aussi Clair, tes allergies et ta santé y sont reprises.
+9. **Régimes** : halal (pas de porc, rappel de choisir une viande certifiée), végétarien, sans lactose.
+10. **Sécurité** : pas de plan de sèche pour les moins de 18 ans, pendant la grossesse ni avec un IMC bas. L'objectif ne descend jamais sous un IMC de 19 et les calories restent au-dessus d'un minimum.
 
 ## Pourquoi c'est mieux que les concurrents
 Ce que les applis connues (MyFitnessPal, Yazio, Foodvisor, Cal AI, Lifesum…) ne font pas, ou seulement en version payante :
@@ -49,6 +50,7 @@ python3 tools/build_ciqual.py <dossier Ciqual> data/aliments.json   # nouvelle v
 - `js/data.js` : nutrition et prix des repas.
 - `js/body.js` : avatar 3D.
 - `js/photo.js` : photos (IndexedDB) et simulation.
+- `js/scan.js` : scanner (réutilise Clair).
 - `data/` : aliments (Ciqual), ingrédients avec prix, recettes.
 - `tools/` : scripts de mise à jour des données.
 

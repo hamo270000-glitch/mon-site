@@ -67,8 +67,8 @@ main { max-width: 640px; margin: 0 auto; padding: 16px 16px calc(110px + var(--s
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: calc(10px + var(--safe-b)); z-index: 30;
   width: min(560px, calc(100% - 20px));
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  padding: 6px; gap: 2px;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  padding: 6px; gap: 0;
   background: rgba(16, 22, 20, 0.82);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
@@ -78,7 +78,7 @@ main { max-width: 640px; margin: 0 auto; padding: 16px 16px calc(110px + var(--s
 .tabbar a {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   padding: 8px 2px; border-radius: 20px;
-  color: var(--muted); text-decoration: none; font-size: 0.7rem; font-weight: 600;
+  color: var(--muted); text-decoration: none; font-size: 0.66rem; font-weight: 600;
   transition: color 0.2s, background 0.2s;
 }
 .tabbar a svg { width: 22px; height: 22px; }
@@ -288,3 +288,48 @@ ol.steps li { margin-bottom: 8px; }
   .ring-wrap { grid-template-columns: 1fr; justify-items: center; }
   .nutri { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ---------- Onglet Scan (au centre, mis en avant) ---------- */
+.tabbar a.tab-scan { position: relative; color: var(--text); }
+.tabbar a.tab-scan span {
+  width: 50px; height: 50px; margin-top: -24px; border-radius: 18px; display: grid; place-items: center;
+  background: var(--grad); color: #06140c;
+  box-shadow: 0 12px 26px -8px rgba(34, 227, 160, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform: perspective(200px) rotateX(10deg);
+}
+.tabbar a.tab-scan span svg { width: 26px; height: 26px; }
+.tabbar a.tab-scan[aria-current='page'] { background: none; box-shadow: none; color: var(--lime); }
+
+/* ---------- Scanner ---------- */
+.scan-box { position: relative; border-radius: 26px; overflow: hidden; background: #000; aspect-ratio: 4 / 3; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.scan-box #reader { position: absolute; inset: 0; }
+.scan-box #reader video { width: 100% !important; height: 100% !important; object-fit: cover; }
+.scan-ph { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 8px; text-align: center; padding: 20px;
+  background: radial-gradient(circle at 50% 30%, rgba(34, 227, 160, 0.18), transparent 60%), #070c0a; z-index: 2; }
+.scan-ph[hidden] { display: none; }
+.scan-frame { position: absolute; inset: 22% 10%; border-radius: 18px; pointer-events: none; z-index: 1;
+  box-shadow: 0 0 0 2px rgba(200, 255, 61, 0.9), 0 0 30px rgba(200, 255, 61, 0.35); }
+.scan-frame::after { content: ''; position: absolute; left: 6%; right: 6%; top: 50%; height: 2px; background: var(--lime); box-shadow: 0 0 12px var(--lime); animation: scanline 2s ease-in-out infinite; }
+@keyframes scanline { 0%, 100% { transform: translateY(-40px); } 50% { transform: translateY(40px); } }
+.thumb { width: 64px; height: 64px; object-fit: contain; border-radius: 16px; background: #fff; }
+.thumb.big { width: 96px; height: 96px; border-radius: 24px; }
+
+.score-card { text-align: center; padding: 16px 10px; margin-bottom: 14px; }
+.big-score { display: block; font-size: 2.6rem; line-height: 1.05; letter-spacing: -0.04em; margin: 4px 0; }
+.big-score small { font-size: 1rem; color: var(--muted); }
+.score-card.s-top .big-score, .score-pill.s-top { color: var(--lime); }
+.score-card.s-good .big-score, .score-pill.s-good { color: var(--mint); }
+.score-card.s-mid .big-score, .score-pill.s-mid { color: var(--orange); }
+.score-card.s-bad .big-score, .score-pill.s-bad { color: var(--red); }
+.score-card.s-top { border-color: rgba(200, 255, 61, 0.4); }
+.score-card.s-bad { border-color: rgba(255, 93, 108, 0.4); }
+.score-pill { min-width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; font-weight: 850; font-size: 1.1rem; background: var(--surface-2); color: var(--muted); }
+.pill.bad { color: var(--red); background: rgba(255, 93, 108, 0.12); }
+ul.reasons { list-style: none; padding: 0; margin: 0; }
+ul.reasons li { padding: 8px 0 8px 22px; position: relative; border-bottom: 1px solid var(--border); font-size: 0.93rem; }
+ul.reasons li:last-child { border-bottom: 0; }
+ul.reasons li::before { content: ''; position: absolute; left: 4px; top: 15px; width: 9px; height: 9px; border-radius: 50%; }
+ul.reasons li.neg::before { background: var(--red); }
+ul.reasons li.pos::before { background: var(--mint); }
+
+[hidden] { display: none !important; }
