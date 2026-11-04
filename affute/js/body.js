@@ -27,7 +27,7 @@ const sym = (right) => smooth([...right, ...mirror(right)]);
 
 let uid = 0;
 
-export function bodySVG({ sexe = 'h', bf = 20, label = '', size = 220, skin } = {}) {
+export function bodySVG({ sexe = 'h', bf = 20, label = '', size = 220, skin, muscle = 0 } = {}) {
   const id = `b${++uid}`;
   const h = sexe === 'h';
   const tone = skin || (typeof localStorage !== 'undefined' && (() => { try { return JSON.parse(localStorage.getItem('affute.peau')); } catch (e) { return null; } })()) || SKINS[1];
@@ -37,13 +37,14 @@ export function bodySVG({ sexe = 'h', bf = 20, label = '', size = 220, skin } = 
 
   const C = 100;
   // Largeurs (demi-largeurs depuis le centre)
-  const sw = (h ? 49 : 41) + 2 * f; // épaules
-  const cw = (h ? 37 : 33) + 6 * f; // poitrine
+  const m = Math.max(0, Math.min(1, muscle)); // muscle gagné (prise de masse)
+  const sw = (h ? 49 : 41) + 2 * f + (h ? 15 : 9) * m; // épaules
+  const cw = (h ? 37 : 33) + 6 * f + (h ? 12 : 5) * m; // poitrine
   const ww = (h ? 25 : 22) + 23 * f; // taille
   const lh = ww + 3.5 * f; // poignées d'amour
   const hw = (h ? 31 : 37) + 15 * f; // hanches
-  const tw = (h ? 16.5 : 18) + 9 * f; // cuisse
-  const aw = (h ? 9.5 : 7.5) + 5 * f; // bras
+  const tw = (h ? 16.5 : 18) + 9 * f + (h ? 6 : 4) * m; // cuisse
+  const aw = (h ? 9.5 : 7.5) + 5 * f + (h ? 9 : 6) * m; // bras
   const belly = Math.max(0, f - 0.15); // ventre visible
 
   const dark = shade(tone, -0.32);
@@ -101,7 +102,7 @@ export function bodySVG({ sexe = 'h', bf = 20, label = '', size = 220, skin } = 
 
   // --- Pectoraux / poitrine ---
   const chest = h
-    ? [-1, 1].map((s) => `<path d="M${C},${108} Q${C + s * 18},${100 - def * 2} ${C + s * (cw - 4)},${110} Q${C + s * (cw - 2)},${124 + 5 * f} ${C + s * 16},${130 + 6 * f} Q${C + s * 6},${132 + 6 * f} ${C},${128}" fill="url(#${id}pec)" stroke="${groove}" stroke-opacity="${(0.15 + 0.55 * def).toFixed(2)}" stroke-width="1.3"/>`).join('')
+    ? [-1, 1].map((s) => `<path d="M${C},${108} Q${C + s * 18},${100 - def * 2} ${C + s * (cw - 4)},${110} Q${C + s * (cw - 2)},${124 + 5 * f} ${C + s * 16},${130 + 6 * f} Q${C + s * 6},${132 + 6 * f} ${C},${128}" fill="url(#${id}pec)" stroke="${groove}" stroke-opacity="${(0.15 + 0.55 * Math.max(def, m * 0.8)).toFixed(2)}" stroke-width="1.3"/>`).join('')
     : `${[-1, 1].map((s) => `<path d="M${C + s * 14},${84} L${C + s * 22},${110}" stroke="${cloth}" stroke-width="4" stroke-linecap="round"/>`).join('')}
        <path d="${sym([[C + 4, 118], [C + 14, 108], [C + cw - 3, 108], [C + cw + 1, 122], [C + cw, 140 + 2 * f], [C + 3, 142 + 2 * f]])}" fill="url(#${id}sh)"/>
        ${[-1, 1].map((s) => `<path d="M${C + s * 3},${132} Q${C + s * (cw * 0.5)},${142 + 2 * f} ${C + s * (cw - 3)},${130}" stroke="${clothHi}" stroke-width="1.2" fill="none" opacity=".7"/>`).join('')}
@@ -142,12 +143,12 @@ export function bodySVG({ sexe = 'h', bf = 20, label = '', size = 220, skin } = 
   <path d="${leg(1)}" fill="url(#${id}s)"/>
   <path d="${arm(-1)}" fill="url(#${id}s)"/>
   <path d="${arm(1)}" fill="url(#${id}s)"/>
-  <path d="M${C - 9},${56} L${C - 10},${76} Q${C},${82} ${C + 10},${76} L${C + 9},${56} Z" fill="${mid}"/>
+  <path d="M${C - 9 - 2 * m},${56} L${C - 10 - 4 * m},${76} Q${C},${82} ${C + 10 + 4 * m},${76} L${C + 9 + 2 * m},${56} Z" fill="${mid}"/>
   <path d="${torso}" fill="url(#${id}s)"/>
   <ellipse cx="${C}" cy="36" rx="17" ry="22" fill="url(#${id}s)"/>
   <ellipse cx="${C - 17}" cy="38" rx="3" ry="5" fill="${mid}"/><ellipse cx="${C + 17}" cy="38" rx="3" ry="5" fill="${mid}"/>
   ${hair}
-  <g opacity="${(0.25 + 0.75 * def).toFixed(2)}">${delts}</g>
+  <g opacity="${(0.25 + 0.75 * Math.max(def, m)).toFixed(2)}">${delts}</g>
   ${chest}
   <g opacity="${def.toFixed(2)}">${abs.join('')}</g>
   ${bellyShape}

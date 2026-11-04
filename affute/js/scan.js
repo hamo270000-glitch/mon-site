@@ -31,7 +31,7 @@ export function clairProfile(p) {
     allergens: [...new Set([...(clair.allergens || []), ...(p.allergies || [])])],
     diets: [...diets],
     conditions: [...conditions],
-    goal: 'weight',
+    goal: p.objectif === 'masse' ? 'sport' : 'weight',
     children: Boolean(clair.children),
     meds: clair.meds || [],
     store: STORE_SLUG[p.magasin] || '',
@@ -91,7 +91,7 @@ async function startCamera() {
 export function viewScan(app) {
   const hist = readJSON('affute.scans', []);
   app.innerHTML = `
-    <h1 class="title">Scanne, <span class="grad-text">sèche malin</span>.</h1>
+    <h1 class="title">Scanne, <span class="grad-text">mange malin</span>.</h1>
     <p class="lead">Vise le code-barres : note sur 100 pour ton profil, protéines, calories et alternatives moins chères. Propulsé par Clair.</p>
     <div class="scan-box">
       <div id="reader"></div>
@@ -138,7 +138,16 @@ function secheInfo(p, plan) {
   const serving = num(p.serving_quantity);
   const ratio = kcal && prot != null ? (prot * 4 / kcal) * 100 : null; // % des calories venant des protéines
   let verdict;
-  if (ratio == null) verdict = { key: 's-unk', label: 'Données insuffisantes', text: 'Calories ou protéines inconnues pour ce produit.' };
+  const masse = plan?.mode === 'masse';
+  const suc = num(n.sugars_100g);
+  if (masse && ratio != null) {
+    if (ratio >= 35) verdict = { key: 's-top', label: 'Top pour le muscle', text: 'Très riche en protéines : parfait pour construire du muscle.' };
+    else if (ratio >= 20) verdict = { key: 's-good', label: 'Bon pour le muscle', text: 'Bonne source de protéines.' };
+    else if (kcal != null && kcal >= 350 && (suc == null || suc < 25)) verdict = { key: 's-good', label: 'Pratique pour la masse', text: 'Riche en calories : aide à atteindre tes calories du jour sans manger des quantités énormes.' };
+    else if (kcal != null && kcal >= 350) verdict = { key: 's-mid', label: 'Calories vides', text: 'Beaucoup de sucre et peu de protéines : ça fait grossir, mais pas en muscle. Avec modération.' };
+    else if (kcal != null && kcal <= 60) verdict = { key: 's-mid', label: 'Léger', text: 'Bon pour la santé, mais apporte peu de calories pour ta prise de masse.' };
+    else verdict = { key: 's-mid', label: 'Correct', text: 'Ça passe dans ta journée, sans être un atout particulier pour le muscle.' };
+  } else if (ratio == null) verdict = { key: 's-unk', label: 'Données insuffisantes', text: 'Calories ou protéines inconnues pour ce produit.' };
   else if (ratio >= 35) verdict = { key: 's-top', label: 'Top pour la sèche', text: 'Très riche en protéines pour peu de calories : idéal pour garder ton muscle.' };
   else if (ratio >= 20) verdict = { key: 's-good', label: 'Bon pour la sèche', text: 'Bonne source de protéines.' };
   else if (kcal != null && kcal <= 60) verdict = { key: 's-good', label: 'Léger', text: 'Peu calorique : bon pour remplir l\'assiette sans exploser tes calories.' };
@@ -186,7 +195,7 @@ export async function viewScanProduct(app, code, profile, plan) {
         <span class="small">${esc(a.verdict.label)}</span>
       </section>
       <section class="card tilt score-card ${s.verdict.key}">
-        <span class="small muted">Indice sèche</span>
+        <span class="small muted">${plan.mode === 'masse' ? 'Indice muscle' : 'Indice sèche'}</span>
         <b class="big-score">${s.ratio == null ? '?' : fmt(s.ratio)}<small>${s.ratio == null ? '' : ' %'}</small></b>
         <span class="small">${esc(s.verdict.label)}</span>
       </section>
@@ -195,8 +204,8 @@ export async function viewScanProduct(app, code, profile, plan) {
     ${a.warnings.map((w) => `<div class="notice warn">${esc(w)}</div>`).join('')}
 
     <section class="card">
-      <h2>💪 Pour ta sèche</h2>
-      <p class="small" style="margin-top:-4px">${esc(s.verdict.text)} <span class="muted">(Indice sèche = part des calories qui vient des protéines.)</span></p>
+      <h2>💪 Pour ta ${plan.mode === 'masse' ? 'prise de masse' : 'sèche'}</h2>
+      <p class="small" style="margin-top:-4px">${esc(s.verdict.text)} <span class="muted">(${plan.mode === 'masse' ? 'Indice muscle' : 'Indice sèche'} = part des calories qui vient des protéines.)</span></p>
       <div class="nutri">
         <div><b>${v(s.kcal, 0)}</b><span>kcal</span></div>
         <div><b style="color:var(--lime)">${v(s.prot)}</b><span>protéines g</span></div>
@@ -217,7 +226,7 @@ export async function viewScanProduct(app, code, profile, plan) {
     }).join('')}</div></section>
 
     <section class="card" id="price"><h2>Prix</h2><div class="spinner"></div></section>
-    <section class="card" id="alts"><h2>Mieux pour ta sèche</h2>
+    <section class="card" id="alts"><h2>Mieux pour ta ${plan.mode === 'masse' ? 'prise de masse' : 'sèche'}</h2>
       <p class="small muted" style="margin-top:-6px">Produits de la même catégorie, mieux notés pour toi.</p>
       <button class="btn ghost block" id="alt-btn">Chercher des alternatives</button><div id="alt-list"></div></section>
     <p class="footer-note">Analyse : Clair · Données : Open Food Facts et Open Prices. <a href="../#/product/${esc(code)}">Ouvrir dans Clair</a></p>`;

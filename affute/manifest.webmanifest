@@ -1,7 +1,7 @@
 {
-  "name": "Affûté – Ta sèche sur mesure",
+  "name": "Affûté – Sèche et prise de masse",
   "short_name": "Affûté",
-  "description": "Plan de sèche personnalisé, repas avec les vrais prix par magasin, base des aliments et aperçu de ton futur corps.",
+  "description": "Plan de sèche ou de prise de masse personnalisé, repas avec les vrais prix par magasin, base des aliments et aperçu de ton futur corps.",
   "lang": "fr",
   "start_url": "./#/plan",
   "scope": "./",

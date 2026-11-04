@@ -79,10 +79,10 @@ export function dietCheck(meal, data, diets = []) {
 }
 
 // Facteur de portion pour atteindre un objectif de calories (limité pour rester réaliste).
-export function portionFactor(meal, data, kcal) {
+export function portionFactor(meal, data, kcal, max = 1.8) {
   const base = mealNutrition(meal, data).kcal;
   if (!base) return 1;
-  return Math.max(0.6, Math.min(1.8, kcal / base));
+  return Math.max(0.6, Math.min(max, kcal / base));
 }
 
 // Arrondi des quantités pour la cuisine : œufs entiers, multiples de 5 g.
