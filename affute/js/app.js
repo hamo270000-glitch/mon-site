@@ -811,7 +811,8 @@ async function openSim(id) {
 
   const dot2 = document.getElementById('dot2');
   const help = document.getElementById('tap-help');
-  pick.addEventListener('click', (e) => {
+  // « pointerup » marche partout, y compris dans Safari sur iPhone (où « click » est parfois ignoré).
+  pick.addEventListener('pointerup', (e) => {
     const r = pick.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width; const y = (e.clientY - r.top) / r.height;
     if (tapStep === 0) {

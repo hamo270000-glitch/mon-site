@@ -268,7 +268,8 @@ ol.steps li { margin-bottom: 8px; }
 .compare .handle::after { content: '⇆'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: var(--grad); color: #06140c; display: grid; place-items: center; font-weight: 900; }
 .compare .tag { position: absolute; top: 10px; padding: 4px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 0.78rem; font-weight: 700; }
 .compare .tag.l { left: 10px; } .compare .tag.r { right: 10px; color: #c8ff3d; }
-.target-pick { position: relative; border-radius: 20px; overflow: hidden; cursor: crosshair; }
+.target-pick { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+.target-pick img { pointer-events: none; -webkit-touch-callout: none; }
 .target-pick img { display: block; width: 100%; }
 .target-pick .dot { position: absolute; width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--lime); transform: translate(-50%, -50%); box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.4), 0 0 18px rgba(200, 255, 61, 0.9); pointer-events: none; }
 
