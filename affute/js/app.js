@@ -1,6 +1,6 @@
 import { ACTIVITY, BODIES, BODIES_MASSE, GOALS, SLOTS, computePlan, safetyCheck, bmi, isMasse, pacesFor, bodiesFor } from './calc.js';
 import {
-  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo, mealPhoto,
+  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo, mealArt,
 } from './data.js';
 import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
@@ -451,10 +451,9 @@ function viewPlan() {
   }));
 }
 
-// Vignette d'un plat : vraie photo si on en a une, sinon l'émoji.
+// Vignette d'un plat : illustration vue du dessus (sans arrière-plan), sinon l'émoji.
 function thumb(m, size = '') {
-  const ph = mealPhoto(DATA, m.id);
-  return ph ? `<img class="meal-thumb ${size}" src="img/repas/min/${m.id}.jpg" alt="" loading="lazy" width="240" height="180">` : `<div class="emoji3d">${m.emoji}</div>`;
+  return `<img class="meal-art ${size}" src="${mealArt(m.id)}" alt="" loading="lazy" width="120" height="120" onerror="this.outerHTML='<div class=&quot;emoji3d&quot;>${m.emoji}</div>'">`;
 }
 
 // Sous-onglets de « Repas », façon contrôle segmenté iOS.
@@ -622,17 +621,13 @@ function viewRepasDetail(id) {
   const toPay = buys.reduce((t, r) => t + (r.b.price || 0), 0);
   const ref = `repas:${m.id}`;
   const eaten = entries().filter((e) => e.ref === ref).length;
-  const photo = mealPhoto(DATA, m.id);
 
   $app.innerHTML = `
     <a href="#/repas" class="small" style="text-decoration:none">‹ Recettes</a>
-    ${photo ? `<figure class="hero-photo"><img src="${photo.src}" alt="${esc(m.nom)}" width="800" height="600">
-        <figcaption><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}<h1>${esc(m.nom)}</h1>
-        <span>⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></figcaption></figure>
-      <p class="photo-credit">Photo : ${esc(photo.auteur)} · <a href="${esc(photo.lien)}" target="_blank" rel="noopener">${esc(photo.licence)}</a> · photo d'illustration</p>`
-    : `<div class="row" style="margin:12px 0 4px;gap:14px"><div class="emoji3d big">${m.emoji}</div>
-      <div><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}<h1 class="title" style="font-size:1.6rem">${esc(m.nom)}</h1>
-        <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div></div>`}
+    <div class="dish-hero"><img src="${mealArt(m.id)}" alt="${esc(m.nom)}" width="400" height="400" onerror="this.outerHTML='<div class=&quot;emoji3d big&quot;>${m.emoji}</div>'"></div>
+    <div class="center"><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}
+      <h1 class="title" style="font-size:1.7rem;margin:8px 0 4px">${esc(m.nom)}</h1>
+      <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div>
     ${diet.notes.map((n) => `<div class="notice info">${esc(n)}</div>`).join('')}
 
     <button class="btn block" id="ate" style="margin:10px 0 6px">✓ J'ai mangé ce repas${eaten ? ` (déjà ${eaten} fois aujourd'hui)` : ''}</button>
