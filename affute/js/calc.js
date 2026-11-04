@@ -1,9 +1,9 @@
-// Calculs de la sèche : besoins caloriques, macros, rythme et projection.
+// Calculs de la sèche et de la prise de masse : besoins caloriques, macros, rythme et projection.
 // Formules utilisées :
 //  - métabolisme de base : Mifflin-St Jeor (1990) ;
 //  - masse grasse : formule de la Marine américaine (tour de taille, de cou, de hanches) si mesurée,
 //    sinon estimation de Deurenberg à partir de l'IMC (moins précise) ;
-//  - 1 kg de graisse ≈ 7 700 kcal.
+//  - 1 kg de graisse ≈ 7 700 kcal ; 1 kg pris en prise de masse (muscle + un peu de gras) ≈ 7 000 kcal.
 
 export const ACTIVITY = [
   { id: 'sedentaire', label: 'Peu actif', detail: 'Bureau, peu de marche', f: 1.2 },
@@ -26,7 +26,31 @@ export const BODIES = [
   { id: 'competition', label: 'Très sec', h: 9, f: 17, detail: 'Niveau shooting photo · difficile à tenir' },
 ];
 
+// Prise de masse : rythme de prise de poids par semaine et part de muscle dans le poids pris.
+export const PACES_MASSE = [
+  { id: 'douce', label: 'Propre (lean bulk)', detail: '+0,25 % du poids par semaine · surtout du muscle, très peu de gras', pct: 0.0025, muscle: 0.6 },
+  { id: 'normale', label: 'Normale', detail: '+0,4 % par semaine · le meilleur équilibre', pct: 0.004, muscle: 0.5 },
+  { id: 'rapide', label: 'Rapide', detail: '+0,6 % par semaine · plus de force, mais plus de gras', pct: 0.006, muscle: 0.38 },
+];
+
+// Corps visés en prise de masse : poids à prendre (en % du poids actuel).
+export const BODIES_MASSE = [
+  { id: 'tonique', label: 'Plus tonique', gain: 0.05, detail: 'Un peu plus de muscle, silhouette plus ferme' },
+  { id: 'muscle', label: 'Musclé', gain: 0.1, detail: 'Épaules, bras et pectoraux bien visibles' },
+  { id: 'massif', label: 'Massif', gain: 0.15, detail: 'Gros gabarit, très fort · demande de la patience' },
+];
+
+export const GOALS = [
+  { id: 'seche', label: 'Sèche', emoji: '🔥', detail: 'Perdre du gras en gardant le muscle' },
+  { id: 'masse', label: 'Prise de masse', emoji: '💪', detail: 'Prendre du muscle et du poids' },
+];
+
+export const isMasse = (p) => p?.objectif === 'masse';
+export const pacesFor = (p) => (isMasse(p) ? PACES_MASSE : PACES);
+export const bodiesFor = (p) => (isMasse(p) ? BODIES_MASSE : BODIES);
+
 const KCAL_PER_KG = 7700;
+const KCAL_PER_KG_GAIN = 7000;
 
 export const bmi = (p) => p.poids / ((p.taille / 100) ** 2);
 
@@ -50,14 +74,21 @@ export function bodyFat(p) {
 // Situations où une sèche n'est pas adaptée : on ne propose pas de déficit.
 export function safetyCheck(p) {
   const stops = [];
+  if (isMasse(p)) {
+    if (p.age < 16) stops.push('Tu as moins de 16 ans : ton corps grandit encore. Mange à ta faim, varié, et fais du sport : pas besoin de plan de prise de masse.');
+    if (p.enceinte) stops.push('Pendant la grossesse ou l\'allaitement, pas de prise de masse sportive : suis les conseils de ta sage-femme ou de ton médecin.');
+    if (bmi(p) >= 30) stops.push('Ton IMC est de 30 ou plus : commence plutôt par une sèche pour perdre du gras, puis tu pourras prendre du muscle. Change ton objectif dans ton profil.');
+    return stops;
+  }
   if (p.age < 18) stops.push('Tu as moins de 18 ans : ton corps grandit encore. Pas de régime restrictif sans l\'avis d\'un médecin. Mange équilibré et fais du sport, c\'est le meilleur plan.');
   if (p.enceinte) stops.push('Pendant la grossesse ou l\'allaitement, pas de sèche : parles-en à ta sage-femme ou à ton médecin.');
-  if (bmi(p) < 18.5) stops.push('Ton poids est déjà bas pour ta taille (IMC sous 18,5). Une sèche serait dangereuse : vise plutôt la prise de muscle.');
+  if (bmi(p) < 18.5) stops.push('Ton poids est déjà bas pour ta taille (IMC sous 18,5). Une sèche serait dangereuse : choisis plutôt l\'objectif « Prise de masse » dans ton profil.');
   return stops;
 }
 
 // Calcule le plan complet.
 export function computePlan(p) {
+  if (isMasse(p)) return computeMasse(p);
   const act = ACTIVITY.find((a) => a.id === p.activite) || ACTIVITY[1];
   const pace = PACES.find((x) => x.id === p.rythme) || PACES[1];
   const body = BODIES.find((b) => b.id === p.corps) || BODIES[1];
@@ -115,6 +146,68 @@ export function computePlan(p) {
     target: Math.round(target * 10) / 10, toLose: Math.round(toLose * 10) / 10,
     weeks, nbWeeks, end, pace, body, act, bfAt,
     perWeek: nbWeeks ? Math.round((toLose / nbWeeks) * 100) / 100 : 0,
+    mode: 'seche', muscleAt: () => 0, warnings: [],
+  };
+}
+
+// Prise de masse : léger surplus de calories, beaucoup de protéines, prise de poids progressive.
+function computeMasse(p) {
+  const act = ACTIVITY.find((a) => a.id === p.activite) || ACTIVITY[1];
+  const pace = PACES_MASSE.find((x) => x.id === p.rythme) || PACES_MASSE[1];
+  const body = BODIES_MASSE.find((b) => b.id === p.corps) || BODIES_MASSE[1];
+  const base = bmr(p);
+  const tdee = base * act.f;
+  const bf = bodyFat(p);
+  const bfNow = Math.max(4, Math.min(60, bf.pct));
+  const lean = p.poids * (1 - bfNow / 100);
+  const fatNow = p.poids - lean;
+
+  // Poids visé : choisi, sinon d'après le corps voulu. On reste sous un IMC de 30.
+  const maxWeight = 30 * (p.taille / 100) ** 2;
+  let target = p.poidsCible || p.poids * (1 + body.gain);
+  target = Math.min(maxWeight, Math.max(p.poids, target));
+  const toGain = Math.max(0, target - p.poids);
+
+  const surplus = Math.round(((p.poids * pace.pct * KCAL_PER_KG_GAIN) / 7) / 10) * 10;
+  const kcal = Math.round((tdee + (toGain > 0 ? surplus : 0)) / 10) * 10;
+
+  const prot = Math.round(p.poids * (p.sexe === 'h' ? 2.0 : 1.8));
+  const lip = Math.round(Math.max(p.poids * 0.9, (kcal * 0.25) / 9));
+  const gluc = Math.max(100, Math.round((kcal - prot * 4 - lip * 9) / 4));
+
+  const weeks = [];
+  let w = p.poids;
+  for (let i = 0; i <= 260; i++) {
+    weeks.push(Math.round(w * 10) / 10);
+    if (w >= target - 0.05) break;
+    const tdeeW = (10 * w + 6.25 * p.taille - 5 * p.age + (p.sexe === 'h' ? 5 : -161)) * act.f;
+    const gain = Math.max(0.03, ((kcal - tdeeW) * 7) / KCAL_PER_KG_GAIN);
+    w = Math.min(target, w + gain);
+  }
+  const nbWeeks = weeks.length - 1;
+  const end = new Date(Date.now() + nbWeeks * 7 * 864e5);
+
+  // Composition du poids pris : une partie en muscle, le reste en gras.
+  const bfAt = (weight) => {
+    const gained = Math.max(0, weight - p.poids);
+    const fat = fatNow + gained * (1 - pace.muscle);
+    return (fat / weight) * 100;
+  };
+  const muscleAt = (weight) => Math.min(1, ((Math.max(0, weight - p.poids) * pace.muscle) / lean) * 13);
+  const bfTarget = bfAt(target);
+
+  const warnings = [];
+  if (bfNow > (p.sexe === 'h' ? 22 : 32)) warnings.push('Ton taux de gras est déjà assez élevé : une petite sèche avant la prise de masse te donnera un meilleur résultat. Sinon, choisis le rythme « Propre ».');
+  if (p.age < 18) warnings.push('Tu as moins de 18 ans : mange à ta faim et varié, sans compléments. Le plan reste indicatif.');
+
+  return {
+    bmr: Math.round(base), tdee: Math.round(tdee), kcal, deficit: 0, surplus: kcal - Math.round(tdee), limited: false,
+    prot, lip, gluc, eau: Math.round(p.poids * 40 / 100) / 10,
+    bfNow: Math.round(bfNow * 10) / 10, bfMesure: bf.mesure, bfTarget, lean: Math.round(lean * 10) / 10,
+    target: Math.round(target * 10) / 10, toLose: 0, toGain: Math.round(toGain * 10) / 10,
+    weeks, nbWeeks, end, pace, body, act, bfAt, muscleAt,
+    perWeek: nbWeeks ? Math.round((toGain / nbWeeks) * 100) / 100 : 0,
+    mode: 'masse', warnings,
   };
 }
 

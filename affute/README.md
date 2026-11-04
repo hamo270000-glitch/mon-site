@@ -1,10 +1,11 @@
-# Affûté – Ta sèche sur mesure
+# Affûté – Sèche et prise de masse
 
-Application web installable (PWA) pour réussir une sèche : perdre du gras en gardant le muscle, en mangeant bien et sans se ruiner.
+Application web installable (PWA) pour réussir une **sèche** (perdre du gras en gardant le muscle) ou une **prise de masse** (prendre du muscle), en mangeant bien et sans se ruiner.
 
 En ligne (après fusion sur `main`) : https://hamo270000-glitch.github.io/mon-site/affute/
 
 ## Ce que fait l'appli
+0. **Deux objectifs** au choix dès la première question : sèche ou prise de masse. Tout s'adapte : calories (déficit ou surplus), corps visé, rythme, portions, recettes, avatar, scanner et conseils.
 1. **Plan personnalisé** : âge, sexe, taille, poids, activité, corps visé et rythme → calories par jour, protéines, glucides, lipides, date d'arrivée et courbe prévue.
 2. **Aperçu de ton futur corps** : avatar « hologramme » 3D qui s'affine semaine après semaine (taux de masse grasse calculé).
 3. **Simulation sur ta photo** : tu te prends en photo, tu touches ton nombril, et l'appli affine ta silhouette selon le poids prévu, avec une comparaison avant/après à faire glisser. Les photos restent sur le téléphone.
@@ -35,6 +36,7 @@ Ce que les applis connues (MyFitnessPal, Yazio, Foodvisor, Cal AI, Lifesum…) n
 - Masse grasse : formule de la Marine américaine (avec les mensurations), sinon estimation de Deurenberg à partir de l'IMC.
 - 1 kg de graisse ≈ 7 700 kcal. Rythme de 0,5 %, 0,75 % ou 1 % du poids par semaine.
 - Protéines : 2 g/kg (hommes) ou 1,8 g/kg (femmes). Lipides : au moins 0,8 g/kg. Le reste en glucides.
+- Prise de masse : surplus calculé pour prendre 0,25 %, 0,4 % ou 0,6 % du poids par semaine (1 kg pris ≈ 7 000 kcal), avec une part de muscle estimée à 60 %, 50 % ou 38 % selon le rythme. Lipides : au moins 0,9 g/kg. Objectif plafonné à un IMC de 30. Pas de plan avant 16 ans, pendant la grossesse ni avec un IMC de 30 ou plus (une sèche est conseillée d'abord).
 
 ## Mettre à jour les données
 Depuis le dossier `affute` :

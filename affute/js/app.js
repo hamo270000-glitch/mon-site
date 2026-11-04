@@ -1,4 +1,4 @@
-import { ACTIVITY, PACES, BODIES, SLOTS, computePlan, safetyCheck, bmi } from './calc.js';
+import { ACTIVITY, BODIES, BODIES_MASSE, GOALS, SLOTS, computePlan, safetyCheck, bmi, isMasse, pacesFor, bodiesFor } from './calc.js';
 import {
   loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice,
 } from './data.js';
@@ -75,6 +75,15 @@ function wizardSteps(d) {
   const nOrNull = (v) => { const x = parseFloat(String(v ?? '').replace(',', '.')); return Number.isFinite(x) ? x : null; };
 
   return [
+    { id: 'objectif', emoji: '🎯', q: 'Quel est ton objectif ?', help: 'Tu pourras le changer à tout moment dans ton profil.',
+      html: () => `<div class="choices two big-choices">${GOALS.map((g) => `
+        <label class="choice"><input type="radio" name="objectif" value="${g.id}" ${d.objectif === g.id ? 'checked' : ''}><span class="big-emoji">${g.emoji}</span><b>${g.label}</b><small>${g.detail}</small></label>`).join('')}</div>`,
+      read: (f) => {
+        const v = f.get('objectif'); if (!v) return 'Choisis ton objectif.';
+        if (v !== d.objectif) { d.corps = null; d.poidsCible = null; d.rythme = 'normale'; }
+        d.objectif = v; return null;
+      },
+      done: () => GOALS.find((g) => g.id === d.objectif)?.label },
     { id: 'sexe', emoji: '👤', q: 'Tu es…', help: 'Les besoins en calories ne sont pas les mêmes pour un homme et une femme.',
       html: () => `<div class="choices two big-choices">${[['h', 'Homme', '🙋‍♂️'], ['f', 'Femme', '🙋‍♀️']].map(([v, l, e]) => `
         <label class="choice"><input type="radio" name="sexe" value="${v}" ${d.sexe === v ? 'checked' : ''}><span class="big-emoji">${e}</span><b>${l}</b></label>`).join('')}</div>`,
@@ -89,33 +98,41 @@ function wizardSteps(d) {
     { id: 'poids', emoji: '⚖️', q: 'Combien pèses-tu ?', help: 'Idéalement le matin, à jeun.', html: () => num('poids', 'kg', 'min="30" max="300" step="0.1"', 'Ex. 82,5'),
       read: (f) => { const v = nOrNull(f.get('poids')); if (!v || v < 30 || v > 300) return 'Entre ton poids en kg (ex. 82,5).'; d.poids = Math.round(v * 10) / 10; return null; },
       done: () => (d.poids ? `${fmt(d.poids, 1)} kg` : null) },
-    { id: 'enceinte', emoji: '🤰', q: 'Es-tu enceinte ou allaites-tu ?', help: 'Dans ce cas, pas de sèche : on te propose seulement une alimentation équilibrée.', skip: () => d.sexe !== 'f',
+    { id: 'enceinte', emoji: '🤰', q: 'Es-tu enceinte ou allaites-tu ?', help: 'Dans ce cas, pas de sèche ni de prise de masse : on te propose seulement une alimentation équilibrée.', skip: () => d.sexe !== 'f',
       html: () => radios('enceinte', [{ id: 'non', label: 'Non' }, { id: 'oui', label: 'Oui' }]).replace(`value="${d.enceinte ? 'oui' : 'non'}"`, `value="${d.enceinte ? 'oui' : 'non'}" checked`),
       read: (f) => (f.get('enceinte') ? (d.enceinte = f.get('enceinte') === 'oui', null) : 'Choisis une réponse.'),
       done: () => (d.enceinte == null ? null : d.enceinte ? 'Oui' : 'Non') },
     { id: 'activite', emoji: '🏃', q: 'Quel est ton niveau d\'activité ?', html: () => radios('activite', ACTIVITY),
       read: (f) => (f.get('activite') ? (d.activite = f.get('activite'), null) : 'Choisis une réponse.'),
       done: () => ACTIVITY.find((a) => a.id === d.activite)?.label },
-    { id: 'corps', emoji: '🔥', q: 'Quel corps veux-tu avoir ?', help: 'Plus le corps est sec, plus il faut de temps et de rigueur.',
-      html: () => `<div class="choices two">${BODIES.map((b) => `
+    { id: 'corps', emoji: isMasse(d) ? '💪' : '🔥', q: 'Quel corps veux-tu avoir ?', help: isMasse(d) ? 'Plus tu veux être massif, plus il faut de temps (le muscle se construit lentement).' : 'Plus le corps est sec, plus il faut de temps et de rigueur.',
+      html: () => `<div class="choices two">${bodiesFor(d).map((b) => `
         <label class="choice body-choice"><input type="radio" name="corps" value="${b.id}" ${d.corps === b.id ? 'checked' : ''}>
-          ${bodySVG({ sexe: d.sexe || 'h', bf: d.sexe === 'f' ? b.f : b.h, size: 90, label: b.label })}<b>${b.label}</b><small>${b.detail}</small></label>`).join('')}</div>`,
+          ${isMasse(d)
+    ? bodySVG({ sexe: d.sexe || 'h', bf: d.sexe === 'f' ? 22 : 13, muscle: b.gain / 0.15, size: 90, label: b.label })
+    : bodySVG({ sexe: d.sexe || 'h', bf: d.sexe === 'f' ? b.f : b.h, size: 90, label: b.label })}<b>${b.label}</b><small>${b.detail}</small></label>`).join('')}</div>`,
       read: (f) => (f.get('corps') ? (d.corps = f.get('corps'), null) : 'Choisis une silhouette.'),
-      done: () => BODIES.find((b) => b.id === d.corps)?.label },
+      done: () => bodiesFor(d).find((b) => b.id === d.corps)?.label },
     { id: 'poidsCible', emoji: '🎯', q: 'As-tu un poids précis en tête ?', help: 'Facultatif. Si tu ne sais pas, touche « Passer » : Affûté le calcule d\'après le corps choisi.', optional: true,
       html: () => num('poidsCible', 'kg', 'min="35" max="250" step="0.5"', 'Ex. 75'),
       read: (f) => {
         const v = nOrNull(f.get('poidsCible'));
         if (v == null) { d.poidsCible = null; return null; }
-        if (v >= d.poids) return `Ton poids visé doit être inférieur à ton poids actuel (${fmt(d.poids, 1)} kg).`;
-        const min = 19 * (d.taille / 100) ** 2;
-        if (v < min) return `Trop bas pour ta taille : minimum ${fmt(Math.ceil(min), 0)} kg pour rester en bonne santé.`;
+        if (isMasse(d)) {
+          if (v <= d.poids) return `En prise de masse, ton poids visé doit être supérieur à ton poids actuel (${fmt(d.poids, 1)} kg).`;
+          const max = 30 * (d.taille / 100) ** 2;
+          if (v > max) return `Trop haut pour ta taille : maximum ${fmt(Math.floor(max), 0)} kg.`;
+        } else {
+          if (v >= d.poids) return `Ton poids visé doit être inférieur à ton poids actuel (${fmt(d.poids, 1)} kg).`;
+          const min = 19 * (d.taille / 100) ** 2;
+          if (v < min) return `Trop bas pour ta taille : minimum ${fmt(Math.ceil(min), 0)} kg pour rester en bonne santé.`;
+        }
         d.poidsCible = v; return null;
       },
       done: () => (d.poidsCible ? `${fmt(d.poidsCible, 1)} kg` : 'Calculé pour moi') },
-    { id: 'rythme', emoji: '⏱️', q: 'À quel rythme veux-tu avancer ?', html: () => radios('rythme', PACES.map((x) => ({ ...x, emoji: { douce: '🐢', normale: '🚶', rapide: '🚀' }[x.id] }))),
+    { id: 'rythme', emoji: '⏱️', q: 'À quel rythme veux-tu avancer ?', html: () => radios('rythme', pacesFor(d).map((x) => ({ ...x, emoji: { douce: '🐢', normale: '🚶', rapide: '🚀' }[x.id] }))),
       read: (f) => (f.get('rythme') ? (d.rythme = f.get('rythme'), null) : 'Choisis un rythme.'),
-      done: () => PACES.find((x) => x.id === d.rythme)?.label },
+      done: () => pacesFor(d).find((x) => x.id === d.rythme)?.label },
     { id: 'regimes', emoji: '🍽️', q: 'Suis-tu un régime particulier ?', help: 'Tu peux en choisir plusieurs, ou aucun.', optional: true,
       html: () => `<div class="choices">${DIET_OPTIONS.map(([id, l, e]) => `
         <label class="choice"><input type="checkbox" name="regimes" value="${id}" ${(d.regimes || []).includes(id) ? 'checked' : ''}><b>${e} ${l}</b></label>`).join('')}</div>`,
@@ -143,7 +160,7 @@ function wizardSteps(d) {
 
 function viewProfil(goTo) {
   if (!wizard || goTo === 'reset') {
-    const base = profile ? { ...profile } : { sexe: null, activite: null, rythme: 'normale', corps: null, regimes: [], allergies: [], magasin: null, enceinte: null };
+    const base = profile ? { objectif: 'seche', ...profile } : { objectif: null, sexe: null, activite: null, rythme: 'normale', corps: null, regimes: [], allergies: [], magasin: null, enceinte: null };
     wizard = { step: 0, draft: base, seen: new Set(profile ? wizardSteps(base).map((s) => s.id) : []) };
   }
   const d = wizard.draft;
@@ -160,7 +177,7 @@ function viewProfil(goTo) {
       <div class="wiz-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Questions effectuées : ${pct} %"><i style="width:${pct}%"></i></div>
       <span class="wiz-pct">${pct} %</span>
     </div>
-    ${!profile && wizard.step === 0 ? '<p class="lead center" style="margin:6px 0 0">Ta sèche sur mesure en <b style="color:var(--text)">1 minute</b>. Tes réponses restent sur ton téléphone.</p>' : ''}
+    ${!profile && wizard.step === 0 ? '<p class="lead center" style="margin:6px 0 0">Ta sèche ou ta prise de masse sur mesure en <b style="color:var(--text)">1 minute</b>. Tes réponses restent sur ton téléphone.</p>' : ''}
     <form id="wf" class="wiz-card card slide-in" novalidate>
       <div class="wiz-emoji">${st.emoji}</div>
       <h1 class="wiz-q">${st.q}</h1>
@@ -185,7 +202,8 @@ function viewProfil(goTo) {
   const finish = () => {
     const np = {
       ...d,
-      sexe: d.sexe || 'h', activite: d.activite || 'leger', corps: d.corps || 'athletique', rythme: d.rythme || 'normale',
+      objectif: d.objectif || 'seche',
+      sexe: d.sexe || 'h', activite: d.activite || 'leger', corps: d.corps || (isMasse(d) ? 'muscle' : 'athletique'), rythme: d.rythme || 'normale',
       magasin: d.magasin || 'leclerc', regimes: d.regimes || [], allergies: d.allergies || [],
       enceinte: d.sexe === 'f' && Boolean(d.enceinte),
       depart: profile?.depart || { date: Date.now(), poids: d.poids },
@@ -257,6 +275,8 @@ function viewPlan() {
   const p = profile;
   const stops = safetyCheck(p);
   const plan = computePlan(p);
+  const masse = plan.mode === 'masse';
+  const delta = masse ? plan.toGain : plan.toLose;
   const ring = (val, max, color) => {
     const r = 58; const c = 2 * Math.PI * r;
     return `<circle cx="68" cy="68" r="${r}" fill="none" stroke="rgba(16,60,38,.07)" stroke-width="14"/>
@@ -279,8 +299,9 @@ function viewPlan() {
   }
 
   $app.innerHTML = `
-    <h1 class="title">${plan.toLose > 0 ? `<span class="grad-text">−${fmt(plan.toLose, 1)} kg</span> en ${plan.nbWeeks > 26 ? `${Math.round(plan.nbWeeks / 4.35)} mois` : `${plan.nbWeeks} semaines`}` : 'Tu es déjà à ton objectif 💪'}</h1>
-    <p class="lead">${plan.toLose > 0 ? `Objectif atteint vers le <b style="color:var(--text)">${dateFr(plan.end)}</b> en suivant ton plan.` : 'On garde tes calories à l\'équilibre et on mise sur le muscle.'}</p>
+    <h1 class="title">${delta > 0 ? `<span class="grad-text">${masse ? '+' : '−'}${fmt(delta, 1)} kg</span> en ${plan.nbWeeks > 26 ? `${Math.round(plan.nbWeeks / 4.35)} mois` : `${plan.nbWeeks} semaines`}` : 'Tu es déjà à ton objectif 💪'}</h1>
+    <p class="lead">${delta > 0 ? `${masse ? 'Prise de masse' : 'Sèche'} : objectif atteint vers le <b style="color:var(--text)">${dateFr(plan.end)}</b> en suivant ton plan.` : 'On garde tes calories à l\'équilibre et on mise sur le muscle.'}</p>
+    ${plan.warnings.map((w) => `<div class="notice warn">${esc(w)}</div>`).join('')}
 
     <section class="card">
       <div class="hero3d">
@@ -307,13 +328,13 @@ function viewPlan() {
         </div>
       </div>
       ${plan.limited ? '<div class="notice warn" style="margin:12px 0 0">Ton rythme a été ralenti pour ne pas descendre sous un minimum de calories sans danger.</div>' : ''}
-      ${plan.nbWeeks > 26 ? '<div class="notice info" style="margin:12px 0 0">Objectif sur le long terme : fixe-toi des étapes de 5 kg et fais une pause de 1 à 2 semaines à l\'équilibre tous les 3 mois. Un suivi par un médecin ou un diététicien est conseillé.</div>' : ''}
+      ${plan.nbWeeks > 26 ? `<div class="notice info" style="margin:12px 0 0">${masse ? 'Le muscle se construit lentement : c\'est normal que ça prenne plusieurs mois. Mesure ton tour de taille chaque mois : s\'il grossit plus vite que tes bras, baisse un peu les calories.' : 'Objectif sur le long terme : fixe-toi des étapes de 5 kg et fais une pause de 1 à 2 semaines à l\'équilibre tous les 3 mois. Un suivi par un médecin ou un diététicien est conseillé.'}</div>` : ''}
     </section>
 
     <div class="grid2">
       <div class="stat"><b>${fmt(plan.tdee)}</b><span>kcal dépensées / jour</span></div>
-      <div class="stat"><b>−${fmt(plan.deficit)}</b><span>kcal de déficit / jour</span></div>
-      <div class="stat"><b>${fmt(plan.perWeek, 2)} kg</b><span>perdus / semaine en moyenne</span></div>
+      ${masse ? `<div class="stat"><b>+${fmt(plan.surplus)}</b><span>kcal en plus / jour</span></div>` : `<div class="stat"><b>−${fmt(plan.deficit)}</b><span>kcal de déficit / jour</span></div>`}
+      <div class="stat"><b>${fmt(plan.perWeek, 2)} kg</b><span>${masse ? 'pris' : 'perdus'} / semaine en moyenne</span></div>
       <div class="stat"><b>${fmt(plan.eau, 1)} L</b><span>d'eau / jour au minimum</span></div>
     </div>
 
@@ -329,17 +350,23 @@ function viewPlan() {
     <a class="btn block" href="#/semaine">🍽️ Voir mes repas de la semaine</a>
 
     <section class="card" style="margin-top:14px">
-      <h2>Les 6 règles d'une sèche réussie</h2>
-      <ol class="steps">
+      <h2>Les 6 règles d'une ${masse ? 'prise de masse' : 'sèche'} réussie</h2>
+      <ol class="steps">${masse ? `
+        <li><b>Muscu 3 à 5 fois par semaine</b>, avec des charges qui augmentent petit à petit : sans ça, le surplus devient du gras.</li>
+        <li><b>${plan.prot} g de protéines par jour</b>, réparties sur 4 repas.</li>
+        <li><b>Mange tes ${fmt(plan.kcal)} kcal chaque jour</b>, même sans faim : collations, smoothies, oléagineux.</li>
+        <li><b>7 à 9 heures de sommeil</b> : c'est là que le muscle se construit.</li>
+        <li><b>Pèse-toi le matin</b>, à jeun : vise ${fmt(plan.perWeek, 2)} kg de plus par semaine en moyenne.</li>
+        <li><b>Si ton poids ne bouge pas 2 semaines</b> : ajoute 150 kcal. Si ton ventre grossit trop vite : enlève 100 kcal.</li>` : `
         <li><b>Muscu 3 à 4 fois par semaine</b> : sinon tu perds du muscle en même temps que le gras.</li>
         <li><b>${plan.prot} g de protéines par jour</b>, réparties sur tes repas.</li>
         <li><b>8 000 à 10 000 pas par jour</b> : ça brûle sans donner faim.</li>
         <li><b>7 à 9 heures de sommeil</b> : moins de faim et meilleure récupération.</li>
         <li><b>Pèse-toi le matin</b>, à jeun, et regarde la moyenne de la semaine.</li>
-        <li><b>Si tu stagnes 3 semaines</b> : baisse de 100 à 150 kcal ou ajoute 2 000 pas.</li>
+        <li><b>Si tu stagnes 3 semaines</b> : baisse de 100 à 150 kcal ou ajoute 2 000 pas.</li>`}
       </ol>
     </section>
-    <p class="footer-note">Calculs : Mifflin-St Jeor, 1 kg de gras ≈ 7 700 kcal, protéines ${p.sexe === 'h' ? '2' : '1,8'} g/kg. Estimations : chaque corps réagit différemment. Ne descends jamais sous ${p.sexe === 'h' ? '1 500' : '1 200'} kcal sans suivi médical.</p>`;
+    <p class="footer-note">Calculs : Mifflin-St Jeor, 1 kg de gras ≈ 7 700 kcal, protéines ${p.sexe === 'h' ? '2' : '1,8'} g/kg. Estimations : chaque corps réagit différemment. ${masse ? 'En prise de masse, une partie du poids pris est du gras : c\'est normal.' : `Ne descends jamais sous ${p.sexe === 'h' ? '1 500' : '1 200'} kcal sans suivi médical.`}</p>`;
 
   const now = document.getElementById('fig-now');
   const goal = document.getElementById('fig-goal');
@@ -348,7 +375,7 @@ function viewPlan() {
   const drawGoal = (w) => {
     const kg = plan.weeks[w];
     const bf = plan.bfAt(kg);
-    goal.innerHTML = bodySVG({ sexe: p.sexe, bf, size: 150, label: `Toi dans ${w} semaines` });
+    goal.innerHTML = bodySVG({ sexe: p.sexe, bf, muscle: plan.muscleAt(kg), size: 150, label: `Toi dans ${w} semaines` });
     document.getElementById('goal-kg').textContent = `${fmt(kg, 1)} kg`;
     document.getElementById('goal-bf').textContent = `${w === plan.nbWeeks ? 'Objectif' : `Semaine ${w}`} · ${fmt(bf)} % de gras`;
   };
@@ -366,8 +393,13 @@ function viewPlan() {
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
 function candidates(slot) {
-  return DATA.repas.filter((m) => m.type === slot && dietCheck(m, DATA, profile.regimes).ok);
+  const masse = isMasse(profile);
+  return DATA.repas
+    .filter((m) => m.type === slot && dietCheck(m, DATA, profile.regimes).ok && (masse || !m.masse))
+    // En prise de masse, les recettes riches en calories passent en premier.
+    .sort((a, b) => (masse ? Boolean(b.masse) - Boolean(a.masse) : 0));
 }
+const maxPortion = () => (isMasse(profile) ? 2.4 : 1.8);
 
 function weekPlan() {
   const plan = computePlan(profile);
@@ -380,7 +412,7 @@ function weekPlan() {
       const key = `${d}-${s.id}`;
       const idx = (picks[key] ?? (d * 3 + si * 2)) % list.length;
       const meal = list[idx];
-      const factor = portionFactor(meal, DATA, kcal * s.part);
+      const factor = portionFactor(meal, DATA, kcal * s.part, maxPortion());
       return { slot: s, meal, factor, key, nut: mealNutrition(meal, DATA, factor) };
     }).filter(Boolean);
     const tot = meals.reduce((t, m) => ({ kcal: t.kcal + m.nut.kcal, prot: t.prot + m.nut.prot }), { kcal: 0, prot: 0 });
@@ -470,7 +502,7 @@ function viewRepas() {
     .sort((a, b) => (repasSort === 'prix' ? a.price.total - b.price.total : repasSort === 'prot' ? b.nut.prot - a.nut.prot : a.nut.kcal - b.nut.kcal));
 
   $app.innerHTML = `
-    <h1 class="title">Repas <span class="grad-text">sèche</span></h1>
+    <h1 class="title">Repas <span class="grad-text">${isMasse(profile) ? 'prise de masse' : 'sèche'}</span></h1>
     <p class="lead">${DATA.repas.length} recettes riches en protéines, avec leur prix chez ${esc(storeName(shop))}.</p>
     <div class="chips" id="types">${types.map(([id, l]) => `<button class="chip" data-t="${id}" aria-pressed="${repasFilter === id}">${l}</button>`).join('')}</div>
     <div class="chips" id="sorts" style="margin:8px 0 14px">${sorts.map(([id, l]) => `<button class="chip" data-s="${id}" aria-pressed="${repasSort === id}">${l}</button>`).join('')}</div>
@@ -478,7 +510,7 @@ function viewRepas() {
       <a class="meal tilt" href="#/repas/${m.id}">
         <div class="emoji3d">${m.emoji}</div>
         <div><div class="name">${esc(m.nom)}</div>
-          <div class="meta"><span class="pill k">${fmt(nut.kcal)} kcal</span><span class="pill p">${fmt(nut.prot)} g prot.</span><span>⏱ ${m.min} min</span></div></div>
+          <div class="meta"><span class="pill k">${fmt(nut.kcal)} kcal</span><span class="pill p">${fmt(nut.prot)} g prot.</span>${m.masse ? '<span class="pill warn">💪 Masse</span>' : ''}<span>⏱ ${m.min} min</span></div></div>
         <div class="price-tag"><b>${euro(price.total)}</b><small>la portion</small></div>
       </a>`).join('') || '<p class="muted">Aucun repas ne correspond à ton régime dans cette catégorie.</p>'}
     </div>`;
@@ -492,7 +524,7 @@ function viewRepasDetail(id) {
   const plan = computePlan(profile);
   const slot = SLOTS.find((s) => s.id === m.type);
   const mine = store.get('portionPerso', true);
-  const factor = mine ? portionFactor(m, DATA, plan.kcal * slot.part) : 1;
+  const factor = mine ? portionFactor(m, DATA, plan.kcal * slot.part, maxPortion()) : 1;
   const nut = mealNutrition(m, DATA, factor);
   const shop = myStore();
   const prices = mealPricesByStore(m, DATA, factor);
@@ -750,7 +782,7 @@ async function openSim(id) {
         <input type="range" id="sim-wk" min="1" max="${Math.max(1, plan.nbWeeks)}" value="${Math.max(1, plan.nbWeeks)}"></label>
       <div class="chips" id="cmp-mode" style="margin-top:10px"><button class="chip" data-mode="cote" aria-pressed="true">Côte à côte</button><button class="chip" data-mode="glisser" aria-pressed="false">Glisser pour comparer</button></div>
       <div class="compare" id="cmp" style="margin-top:10px"></div>
-      <div class="notice warn" style="margin:12px 0 0">Simulation approximative : Affûté affine la silhouette sur ta photo selon le poids prévu. Ce n'est pas une prédiction exacte. La vraie transformation dépend de ton entraînement, de ton sommeil et de ta génétique.</div>
+      <div class="notice warn" style="margin:12px 0 0">Simulation approximative : Affûté ${plan.mode === 'masse' ? 'élargit le haut du corps' : 'affine la silhouette'} sur ta photo selon le poids prévu. Ce n'est pas une prédiction exacte. La vraie transformation dépend de ton entraînement, de ton sommeil et de ta génétique.</div>
       <div class="row" style="margin-top:12px">
         ${older ? `<button class="btn ghost small" id="vs">Comparer avec ma 1<sup>re</sup> photo</button>` : ''}
         <button class="btn ghost small" id="del">Supprimer la photo</button>
@@ -799,13 +831,17 @@ async function openSim(id) {
     const kg = plan.weeks[Math.min(w, plan.weeks.length - 1)] ?? ph.kg;
     // Tour de taille : environ 1 cm de moins par kilo perdu. La largeur du ventre suit le même rapport.
     const waist = profile.tourTaille || profile.taille * 0.5;
-    const lostKg = Math.max(0, ph.kg - kg);
-    const squeeze = Math.max(0.7, 1 - (lostKg * 1.6) / waist);
+    const masse = plan.mode === 'masse';
+    const diff = masse ? Math.max(0, kg - ph.kg) : Math.max(0, ph.kg - kg);
+    // Sèche : on affine le ventre. Prise de masse : on élargit le haut du corps (épaules, pectoraux, bras).
+    const squeeze = masse ? Math.min(1.16, 1 + (diff * 1.4) / waist) : Math.max(0.7, 1 - (diff * 1.6) / waist);
     document.getElementById('sim-label').textContent = plan.nbWeeks
-      ? `Dans ${w} semaine${w > 1 ? 's' : ''} : environ ${fmt(kg, 1)} kg (−${fmt(Math.max(0, ph.kg - kg), 1)} kg)`
+      ? `Dans ${w} semaine${w > 1 ? 's' : ''} : environ ${fmt(kg, 1)} kg (${masse ? '+' : '−'}${fmt(diff, 1)} kg)`
       : 'Tu es déjà à ton objectif : la simulation montre peu de changement.';
     const before = new Image(); before.src = img.src; before.alt = 'Avant';
-    const after = simulate(img, { ...center, squeeze });
+    const img0 = img.naturalWidth || img.width; const imgH = img.naturalHeight || img.height;
+    const zone = masse ? { ...center, cy: Math.max(0.05, center.cy - (center.rx * img0 * 1.7) / imgH) } : center;
+    const after = simulate(img, { ...zone, squeeze });
     renderCompare(before, after, 'Maintenant', `Semaine ${w}`);
   };
 
