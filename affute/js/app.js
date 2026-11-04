@@ -1,6 +1,6 @@
 import { ACTIVITY, BODIES, BODIES_MASSE, GOALS, SLOTS, computePlan, safetyCheck, bmi, isMasse, pacesFor, bodiesFor } from './calc.js';
 import {
-  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo, mealArt,
+  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo, mealArt, mealPhoto,
 } from './data.js';
 import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
@@ -451,8 +451,10 @@ function viewPlan() {
   }));
 }
 
-// Vignette d'un plat : illustration vue du dessus (sans arrière-plan), sinon l'émoji.
+// Vignette d'un plat : vraie photo sur fond blanc, sinon l'illustration, sinon l'émoji.
 function thumb(m, size = '') {
+  const ph = mealPhoto(DATA, m.id);
+  if (ph) return `<img class="meal-thumb ${size}" src="${ph.min}" alt="" loading="lazy" width="200" height="200">`;
   return `<img class="meal-art ${size}" src="${mealArt(m.id)}" alt="" loading="lazy" width="120" height="120" onerror="this.outerHTML='<div class=&quot;emoji3d&quot;>${m.emoji}</div>'">`;
 }
 
@@ -621,13 +623,18 @@ function viewRepasDetail(id) {
   const toPay = buys.reduce((t, r) => t + (r.b.price || 0), 0);
   const ref = `repas:${m.id}`;
   const eaten = entries().filter((e) => e.ref === ref).length;
+  const photo = mealPhoto(DATA, m.id);
 
   $app.innerHTML = `
     <a href="#/repas" class="small" style="text-decoration:none">‹ Recettes</a>
-    <div class="dish-hero"><img src="${mealArt(m.id)}" alt="${esc(m.nom)}" width="400" height="400" onerror="this.outerHTML='<div class=&quot;emoji3d big&quot;>${m.emoji}</div>'"></div>
+    ${photo ? `<figure class="hero-photo"><img src="${photo.src}" alt="${esc(m.nom)}" width="800" height="600">
+        <figcaption><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}<h1>${esc(m.nom)}</h1>
+        <span>⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></figcaption></figure>
+      <p class="photo-credit">Photo : ${esc(photo.auteur)} · <a href="${esc(photo.lien)}" target="_blank" rel="noopener">${esc(photo.licence)}</a> · photo d'illustration, détourée</p>`
+    : `<div class="dish-hero"><img src="${mealArt(m.id)}" alt="${esc(m.nom)}" width="400" height="400" onerror="this.outerHTML='<div class=&quot;emoji3d big&quot;>${m.emoji}</div>'"></div>
     <div class="center"><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}
       <h1 class="title" style="font-size:1.7rem;margin:8px 0 4px">${esc(m.nom)}</h1>
-      <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div>
+      <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div>`}
     ${diet.notes.map((n) => `<div class="notice info">${esc(n)}</div>`).join('')}
 
     <button class="btn block" id="ate" style="margin:10px 0 6px">✓ J'ai mangé ce repas${eaten ? ` (déjà ${eaten} fois aujourd'hui)` : ''}</button>
