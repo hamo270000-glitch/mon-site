@@ -333,3 +333,32 @@ ul.reasons li.neg::before { background: var(--red); }
 ul.reasons li.pos::before { background: var(--mint); }
 
 [hidden] { display: none !important; }
+
+/* ---------- Questionnaire une question à la fois ---------- */
+.wiz-top { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 61px); z-index: 15; margin: -16px -16px 14px; padding: 12px 16px 10px;
+  background: rgba(244, 248, 242, 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+.wiz-pct { font-weight: 800; color: var(--mint); }
+.wiz-bar { height: 10px; border-radius: 10px; background: var(--surface-2); overflow: hidden; margin: 8px 0 10px; box-shadow: inset 0 1px 2px rgba(16, 60, 38, 0.12); }
+.wiz-bar i { display: block; height: 100%; border-radius: inherit; background: var(--grad); transition: width 0.45s cubic-bezier(.2, .8, .2, 1); box-shadow: 0 0 12px rgba(43, 216, 156, 0.6); }
+.wiz-dots { display: flex; gap: 6px; flex-wrap: wrap; }
+.wiz-dot { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--surface); color: var(--muted); font-size: 0.72rem; font-weight: 800; display: grid; place-items: center; padding: 0; cursor: pointer; }
+.wiz-dot.done { background: var(--grad); color: #06140c; border-color: transparent; }
+.wiz-dot.cur { outline: 2.5px solid var(--mint); outline-offset: 2px; }
+.wiz-dot:disabled { opacity: 0.45; cursor: default; }
+.wiz-card { padding: 22px 18px; }
+.wiz-emoji { font-size: 2.6rem; line-height: 1; margin-bottom: 8px; filter: drop-shadow(0 6px 10px rgba(16, 60, 38, 0.2)); }
+.wiz-q { font-size: clamp(1.45rem, 6.5vw, 1.9rem); letter-spacing: -0.03em; line-height: 1.1; margin: 0 0 6px; font-weight: 850; }
+.big-input .input { font-size: 1.7rem; font-weight: 800; padding: 18px 60px 18px 18px; text-align: center; }
+.big-input em { font-size: 1.1rem; }
+.big-choices .choice { text-align: center; padding: 22px 10px; }
+.big-emoji { display: block; font-size: 2.6rem; margin-bottom: 6px; }
+.chips.wrap { flex-wrap: wrap; overflow: visible; }
+.chip.check { position: relative; }
+.chip.check input { position: absolute; opacity: 0; pointer-events: none; }
+.chip.check:has(input:checked) { background: var(--grad); color: #06140c; border-color: transparent; }
+.slide-in { animation: slide 0.35s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes slide { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .slide-in { animation: none; } }
+
+body.onboarding .tabbar { display: none; }
+body.onboarding main { padding-bottom: calc(40px + var(--safe-b)); }
