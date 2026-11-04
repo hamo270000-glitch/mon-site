@@ -1,10 +1,11 @@
 import { ACTIVITY, BODIES, BODIES_MASSE, GOALS, SLOTS, computePlan, safetyCheck, bmi, isMasse, pacesFor, bodiesFor } from './calc.js';
 import {
-  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice,
+  loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice, buyInfo,
 } from './data.js';
 import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
 import { viewScan, viewScanProduct, stopScan, ALLERGENS } from './scan.js';
+import { entries, addEntry, removeEntry, findByRef, dayKey, dayCard, bindDayCard, updateChip } from './journal.js';
 
 // ---------- Stockage local (tout reste sur le téléphone) ----------
 const store = {
@@ -49,8 +50,13 @@ async function route() {
   };
   (views[page] || viewPlan)();
   $app.classList.remove('fade-in'); void $app.offsetWidth; $app.classList.add('fade-in');
+  refreshChip();
 }
 window.addEventListener('hashchange', route);
+function refreshChip() {
+  try { updateChip(profile && !safetyCheck(profile).length ? computePlan(profile) : null); } catch (e) { updateChip(null); }
+}
+window.addEventListener('journal', refreshChip);
 
 // Petit effet 3D : les cartes « .tilt » suivent le doigt.
 document.addEventListener('pointermove', (e) => {
@@ -302,6 +308,7 @@ function viewPlan() {
     <h1 class="title">${delta > 0 ? `<span class="grad-text">${masse ? '+' : '−'}${fmt(delta, 1)} kg</span> en ${plan.nbWeeks > 26 ? `${Math.round(plan.nbWeeks / 4.35)} mois` : `${plan.nbWeeks} semaines`}` : 'Tu es déjà à ton objectif 💪'}</h1>
     <p class="lead">${delta > 0 ? `${masse ? 'Prise de masse' : 'Sèche'} : objectif atteint vers le <b style="color:var(--text)">${dateFr(plan.end)}</b> en suivant ton plan.` : 'On garde tes calories à l\'équilibre et on mise sur le muscle.'}</p>
     ${plan.warnings.map((w) => `<div class="notice warn">${esc(w)}</div>`).join('')}
+    ${dayCard(plan, { masse })}
 
     <section class="card">
       <div class="hero3d">
@@ -382,6 +389,7 @@ function viewPlan() {
   drawGoal(plan.nbWeeks);
   const slider = document.getElementById('wk');
   slider?.addEventListener('input', () => drawGoal(Number(slider.value)));
+  bindDayCard($app, () => keepScroll(viewPlan));
   const markSkin = () => { const cur = store.get('peau', SKINS[1]); $app.querySelectorAll('[data-skin]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.skin === cur)); };
   markSkin();
   $app.querySelectorAll('[data-skin]').forEach((b) => b.addEventListener('click', () => {
@@ -421,6 +429,7 @@ function weekPlan() {
 }
 
 function viewSemaine() {
+  const todayIdx = (new Date().getDay() + 6) % 7; // lundi = 0
   const plan = computePlan(profile);
   const shop = store.get('magasinSemaine', myStore());
   const week = weekPlan();
@@ -448,25 +457,27 @@ function viewSemaine() {
     </section>
     ${week.map((day, d) => `
       <div class="day">
-        <div class="day-head"><h3 style="margin:0">${day.name}</h3><span class="small muted">${fmt(day.tot.kcal)} kcal · ${fmt(day.tot.prot)} g prot.</span></div>
+        <div class="day-head"><h3 style="margin:0">${day.name}${d === todayIdx ? ' <span class="pill ok">Aujourd\'hui</span>' : ''}</h3><span class="small muted">${fmt(day.tot.kcal)} kcal · ${fmt(day.tot.prot)} g prot.</span></div>
         ${day.meals.map((m) => `
           <div class="slot">
             <div class="emoji3d">${m.meal.emoji}</div>
             <div><div class="small muted">${m.slot.label}</div><a href="#/repas/${m.meal.id}">${esc(m.meal.nom)}</a>
               <div class="small muted">${fmt(m.nut.kcal)} kcal · ${fmt(m.nut.prot)} g prot. · ${euro(mealPrice(m.meal, DATA, shop, m.factor).total)}</div></div>
-            <button class="swap" data-swap="${m.key}" data-slot="${m.slot.id}" aria-label="Changer de plat">${ICON_SWAP}</button>
+            <div class="slot-actions">${d === todayIdx ? `<button class="eat ${findByRef(`sem:${m.key}:${m.meal.id}`) ? 'on' : ''}" data-eat="${m.key}" data-meal="${m.meal.id}" aria-pressed="${Boolean(findByRef(`sem:${m.key}:${m.meal.id}`))}" aria-label="J'ai mangé ce repas">✓</button>` : ''}
+              <button class="swap" data-swap="${m.key}" data-slot="${m.slot.id}" aria-label="Changer de plat">${ICON_SWAP}</button></div>
           </div>`).join('')}
       </div>`).join('')}
 
     <section class="card">
       <h2>🛒 Liste de courses</h2>
-      <table class="t"><thead><tr><th>Produit</th><th class="num">Quantité</th><th class="num">${esc(cur.nom)}</th></tr></thead><tbody>
-      ${shopping.sort((a, b) => a.x.nom.localeCompare(b.x.nom)).map((r) => {
-        const pr = ingredientPrice(r.x, shop);
-        return `<tr><td>${esc(r.x.nom)}</td><td class="num">${r.x.unit_g ? displayQty(r.x, r.g) : r.g >= 1000 ? `${fmt(r.g / 1000, 1)} kg` : `${Math.round(r.g / 10) * 10} g`}</td>
-          <td class="num">${pr ? `${euro((pr.kg * r.g) / 1000)}${pr.reel ? '' : '*'}` : '–'}</td></tr>`;
-      }).join('')}
-      </tbody></table>
+      <p class="small muted" style="margin-top:-6px">Coche au fur et à mesure dans le magasin. Formats les plus vendus d'après les relevés Open Prices.</p>
+      <ul class="buy-list">${shopping.sort((a, b) => a.x.nom.localeCompare(b.x.nom)).map((r) => {
+        const bi = buyInfo(r.x, r.g, shop);
+        return `<li><label><input type="checkbox"><span><b>${esc(r.x.nom)}</b><small>${esc(bi.label)} · il te faut ${esc(bi.besoin)}</small></span></label>
+          <span class="num">${bi.price != null ? `${euro(bi.price)}${bi.reel ? '' : '*'}` : '–'}</span></li>`;
+      }).join('')}</ul>
+      <div class="row between total-row"><span>Total à payer en caisse</span><b>${euro(shopping.reduce((t, r) => t + (buyInfo(r.x, r.g, shop).price || 0), 0))}</b></div>
+      <p class="small muted" style="margin:6px 0 0">Ce que tu consommes vraiment cette semaine : ${euro(cur.total)}. Le reste (huile, riz, épices…) te servira les semaines suivantes.</p>
       <hr>
       <h3>Le même panier dans chaque magasin</h3>
       <table class="t"><tbody>${totals.map((t) => `<tr class="${t.id === best.id ? 'best' : ''}"><td>${esc(t.nom)}</td><td class="small muted">${t.reels}/${shopping.length} prix réels</td><td class="num">${euro(t.total)}</td></tr>`).join('')}</tbody></table>
@@ -477,6 +488,16 @@ function viewSemaine() {
     const b = e.target.closest('[data-store]'); if (!b) return;
     store.set('magasinSemaine', b.dataset.store); viewSemaine();
   });
+  $app.querySelectorAll('[data-eat]').forEach((b) => b.addEventListener('click', () => {
+    const day = week[todayIdx];
+    const it = day.meals.find((x) => x.key === b.dataset.eat);
+    if (!it) return;
+    const ref = `sem:${it.key}:${it.meal.id}`;
+    const ex = findByRef(ref);
+    if (ex) removeEntry(ex.id);
+    else { addEntry({ nom: it.meal.nom, emoji: it.meal.emoji, ref, src: 'semaine', ...it.nut }); toast(`✓ ${it.slot.label} noté : +${fmt(it.nut.kcal)} kcal`); }
+    keepScroll(viewSemaine);
+  }));
   $app.querySelectorAll('[data-swap]').forEach((b) => b.addEventListener('click', () => {
     const picks = store.get('semaine', {});
     const [d] = b.dataset.swap.split('-');
@@ -518,6 +539,7 @@ function viewRepas() {
   document.getElementById('sorts').addEventListener('click', (e) => { const b = e.target.closest('[data-s]'); if (b) { repasSort = b.dataset.s; viewRepas(); } });
 }
 
+let persons = 1;
 function viewRepasDetail(id) {
   const m = DATA.repas.find((x) => x.id === id);
   if (!m) { location.hash = '#/repas'; return; }
@@ -527,19 +549,30 @@ function viewRepasDetail(id) {
   const factor = mine ? portionFactor(m, DATA, plan.kcal * slot.part, maxPortion()) : 1;
   const nut = mealNutrition(m, DATA, factor);
   const shop = myStore();
-  const prices = mealPricesByStore(m, DATA, factor);
+  const prices = mealPricesByStore(m, DATA, factor * persons);
   const diet = dietCheck(m, DATA, profile.regimes);
+  const cost = mealPrice(m, DATA, shop, factor);
+  const buys = m.ing.map(([iid, g]) => ({ x: DATA.byId[iid], g: g * factor * persons })).map((r) => ({ ...r, b: buyInfo(r.x, r.g, shop) }));
+  const toPay = buys.reduce((t, r) => t + (r.b.price || 0), 0);
+  const ref = `repas:${m.id}`;
+  const eaten = entries().filter((e) => e.ref === ref).length;
 
   $app.innerHTML = `
     <a href="#/repas" class="small" style="text-decoration:none">← Tous les repas</a>
     <div class="row" style="margin:12px 0 4px;gap:14px"><div class="emoji3d big">${m.emoji}</div>
-      <div><span class="pill">${slot.label}</span><h1 class="title" style="font-size:1.6rem">${esc(m.nom)}</h1><span class="muted small">⏱ ${m.min} min · 1 portion</span></div></div>
+      <div><span class="pill">${slot.label}</span>${m.masse ? ' <span class="pill warn">💪 Masse</span>' : ''}<h1 class="title" style="font-size:1.6rem">${esc(m.nom)}</h1>
+        <span class="muted small">⏱ ${m.min} min · ${euro(cost.total)} la portion chez ${esc(storeName(shop))}</span></div></div>
     ${diet.notes.map((n) => `<div class="notice info">${esc(n)}</div>`).join('')}
-    <div class="chips" style="margin:10px 0 14px">
+
+    <button class="btn block" id="ate" style="margin:10px 0 6px">✓ J'ai mangé ce repas${eaten ? ` (déjà ${eaten} fois aujourd'hui)` : ''}</button>
+    <p class="small muted center" style="margin:0 0 12px">Ajoute ${fmt(nut.kcal)} kcal et ${fmt(nut.prot)} g de protéines à ta journée.</p>
+
+    <div class="chips" style="margin:6px 0 14px">
       <button class="chip" id="p-mine" aria-pressed="${mine}">Portion pour mon objectif</button>
       <button class="chip" id="p-std" aria-pressed="${!mine}">Portion standard</button>
     </div>
     <section class="card tilt">
+      <h2>Pour 1 portion</h2>
       <div class="nutri" style="margin:0">
         <div><b>${fmt(nut.kcal)}</b><span>kcal</span></div>
         <div><b style="color:var(--lime)">${fmt(nut.prot)} g</b><span>protéines</span></div>
@@ -548,13 +581,31 @@ function viewRepasDetail(id) {
       </div>
       <p class="small muted" style="margin:10px 0 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / plan.kcal) * 100)} % de ta journée` : ''}</p>
     </section>
+
     <section class="card">
-      <h2>Ingrédients</h2>
-      <table class="t"><tbody>${m.ing.map(([iid, g]) => {
+      <div class="row between"><h2 style="margin:0">Ingrédients</h2>
+        <div class="stepper" role="group" aria-label="Nombre de personnes"><button type="button" id="pm" aria-label="Une personne de moins">−</button><span>${persons} pers.</span><button type="button" id="pp" aria-label="Une personne de plus">+</button></div></div>
+      <table class="t" style="margin-top:8px"><thead><tr><th>Ingrédient</th><th class="num">Quantité</th><th class="num">Coût</th></tr></thead><tbody>${m.ing.map(([iid, g]) => {
         const x = DATA.byId[iid]; const pr = ingredientPrice(x, shop);
-        return `<tr><td>${esc(x.nom)}</td><td class="num">${displayQty(x, g * factor)}</td><td class="num muted">${pr ? `${euro((pr.kg * g * factor) / 1000)}${pr.reel ? '' : '*'}` : '–'}</td></tr>`;
-      }).join('')}</tbody></table>
+        const q = g * factor * persons;
+        return `<tr><td>${esc(x.nom)}</td><td class="num">${displayQty(x, q)}</td><td class="num muted">${pr ? `${euro((pr.kg * q) / 1000)}${pr.reel ? '' : '*'}` : '–'}</td></tr>`;
+      }).join('')}
+      <tr><td><b>Coût de la recette</b></td><td></td><td class="num"><b>${euro(cost.total * persons)}</b></td></tr></tbody></table>
     </section>
+
+    <section class="card">
+      <h2>🛒 À acheter chez ${esc(storeName(shop))}</h2>
+      <p class="small muted" style="margin-top:-6px">Formats les plus vendus en magasin (relevés Open Prices). Tu payes le paquet entier, mais il t'en restera pour d'autres repas.</p>
+      <ul class="buy-list">${buys.map((r) => `
+        <li><label><input type="checkbox"><span><b>${esc(r.x.nom)}</b><small>${esc(r.b.label)} · il te faut ${esc(r.b.besoin)}${r.b.reste ? ` · ${esc(r.b.reste)}` : ''}</small></span></label>
+          <span class="num">${r.b.price != null ? `${euro(r.b.price)}${r.b.reel ? '' : '*'}` : '–'}</span></li>`).join('')}</ul>
+      <div class="row between total-row"><span>Total à payer en caisse</span><b>${euro(toPay)}</b></div>
+      <p class="small muted" style="margin:6px 0 0">Coût réel de ce que tu cuisines : ${euro(cost.total * persons)}. Le reste te servira pour les prochains repas.</p>
+    </section>
+
+    <section class="card"><h2>👩‍🍳 Préparation</h2><ol class="steps">${m.etapes.map((e) => `<li>${esc(e)}</li>`).join('')}</ol>
+      ${m.astuce ? `<div class="notice info" style="margin:12px 0 0">💡 <b>Astuce :</b> ${esc(m.astuce)}</div>` : ''}</section>
+
     <section class="card">
       <h2>Prix dans chaque magasin</h2>
       <table class="t"><tbody>${prices.map((s, i) => `
@@ -562,10 +613,25 @@ function viewRepasDetail(id) {
           <td class="small muted">${s.reels}/${s.nb} prix réels</td><td class="num">${euro(s.total)}</td></tr>`).join('')}</tbody></table>
       <p class="small muted">* prix moyen en France quand il manque des relevés dans le magasin. Source : Open Prices.</p>
     </section>
-    <section class="card"><h2>Préparation</h2><ol class="steps">${m.etapes.map((e) => `<li>${esc(e)}</li>`).join('')}</ol></section>
     <p class="footer-note">Valeurs nutritionnelles : table Ciqual 2025 de l'ANSES.</p>`;
   document.getElementById('p-mine').onclick = () => { store.set('portionPerso', true); viewRepasDetail(id); };
   document.getElementById('p-std').onclick = () => { store.set('portionPerso', false); viewRepasDetail(id); };
+  document.getElementById('pm').onclick = () => { persons = Math.max(1, persons - 1); keepScroll(() => viewRepasDetail(id)); };
+  document.getElementById('pp').onclick = () => { persons = Math.min(8, persons + 1); keepScroll(() => viewRepasDetail(id)); };
+  document.getElementById('ate').onclick = () => {
+    addEntry({ nom: m.nom, emoji: m.emoji, ref, src: 'repas', ...nut });
+    toast(`✓ Ajouté : +${fmt(nut.kcal)} kcal`);
+    keepScroll(() => viewRepasDetail(id));
+  };
+}
+
+function keepScroll(fn) { const y = window.scrollY; fn(); window.scrollTo(0, y); }
+
+function toast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+  t.textContent = msg;
+  t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
 }
 
 // ---------- Aliments ----------

@@ -376,3 +376,44 @@ body.onboarding main { padding-bottom: calc(40px + var(--safe-b)); }
 .side-by-side figcaption { position: absolute; left: 8px; top: 8px; padding: 3px 9px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 0.75rem; font-weight: 700; }
 .side-by-side .after-fig figcaption { color: #c8ff3d; }
 .side-by-side .after-fig { box-shadow: 0 0 0 2.5px var(--mint); }
+
+/* ---------- Journal du jour ---------- */
+.day-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px 6px 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); color: var(--text); text-decoration: none; font-size: 0.82rem; box-shadow: var(--shadow); }
+.day-chip[hidden] { display: none; }
+.day-chip b { font-variant-numeric: tabular-nums; }
+.day-card { border: 1.5px solid rgba(12, 159, 112, 0.28); background: linear-gradient(180deg, #f2fcf6, #fff 60%); }
+.bar.fill { height: 11px; }
+.bar.fill i { transition: width 0.6s cubic-bezier(.2, .8, .2, 1); }
+.ring-fill { transition: stroke-dasharray 0.8s cubic-bezier(.2, .8, .2, 1); }
+.ok-notice { background: #ecfbf3; border-color: #9fe0bf; color: #0a6b48; }
+ul.day-list { list-style: none; padding: 0; margin: 12px 0 0; }
+ul.day-list li { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; padding: 8px 0; border-top: 1px solid var(--border); font-size: 0.92rem; }
+ul.day-list .chip { padding: 4px 10px; }
+.quick-add { margin-top: 10px; }
+.quick-add summary { cursor: pointer; color: var(--mint); font-weight: 700; }
+.slot { grid-template-columns: 44px 1fr auto; }
+.slot-actions { display: flex; gap: 6px; }
+.eat { width: 36px; height: 36px; border-radius: 12px; border: 1.5px solid var(--mint); background: #fff; color: var(--mint); font-weight: 900; cursor: pointer; }
+.eat.on { background: var(--grad); color: #06140c; border-color: transparent; }
+
+/* ---------- Recette détaillée ---------- */
+.stepper { display: inline-flex; align-items: center; gap: 8px; background: var(--surface-2); border-radius: 999px; padding: 4px; }
+.stepper button { width: 32px; height: 32px; border-radius: 50%; border: 0; background: #fff; font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 1px 3px rgba(16, 60, 38, 0.15); }
+.stepper span { font-weight: 800; min-width: 4.2em; text-align: center; font-size: 0.9rem; }
+ul.buy-list { list-style: none; padding: 0; margin: 0; }
+ul.buy-list li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+ul.buy-list label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+ul.buy-list input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--mint); flex: none; }
+ul.buy-list small { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+ul.buy-list label:has(input:checked) b { text-decoration: line-through; color: var(--muted); }
+ul.buy-list .num { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.total-row { padding-top: 12px; font-size: 1.05rem; }
+.total-row b { font-size: 1.3rem; color: var(--mint); }
+.toast { position: fixed; left: 50%; bottom: calc(100px + var(--safe-b)); transform: translate(-50%, 20px); opacity: 0; z-index: 50;
+  background: #11231a; color: #fff; padding: 12px 18px; border-radius: 999px; font-weight: 700; font-size: 0.92rem; box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5); pointer-events: none; }
+.toast.show { animation: toast 2.4s ease both; }
+@keyframes toast { 0% { opacity: 0; transform: translate(-50%, 20px); } 12%, 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, 0); } }
+@media (max-width: 380px) { .brand b { display: none; } }
+.day-card .macro { font-size: 0.86rem; }
+.day-card .nw { white-space: nowrap; }
+.day-card .ring .val span { font-size: 0.68rem; line-height: 1.2; }

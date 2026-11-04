@@ -17,6 +17,11 @@ En ligne (après fusion sur `main`) : https://hamo270000-glitch.github.io/mon-si
 9. **Régimes** : halal (pas de porc, rappel de choisir une viande certifiée), végétarien, sans lactose.
 10. **Sécurité** : pas de plan de sèche pour les moins de 18 ans, pendant la grossesse ni avec un IMC bas. L'objectif ne descend jamais sous un IMC de 19 et les calories restent au-dessus d'un minimum.
 
+## Objectif du jour et recettes détaillées
+- **Jauge du jour** : calories, protéines, glucides et lipides se remplissent à chaque repas noté : ✓ dans « Semaine », « J'ai mangé ce repas » sur une recette, « Je l'ai mangé » sur un produit scanné, ou ajout libre. Un compteur reste visible en haut de toutes les pages, avec une série de jours réussis (🔥).
+- **Recettes détaillées** (50 recettes) : nombre de personnes réglable, quantités, coût de la recette, **liste « À acheter »** avec le format le plus vendu en magasin (ex. « 1 paquet de 500 g », « 1 boîte de 6 œufs », « 3 tomates ≈ 360 g ») et le **total à payer en caisse**, étapes et astuces.
+- Les formats de paquets sont calculés à partir des relevés Open Prices (taille la plus fréquente).
+
 ## Pourquoi c'est mieux que les concurrents
 Ce que les applis connues (MyFitnessPal, Yazio, Foodvisor, Cal AI, Lifesum…) ne font pas, ou seulement en version payante :
 - **les prix** : à notre connaissance, aucune ne donne le prix d'un menu dans chaque enseigne française. Affûté calcule le coût de ta semaine et te dit où faire tes courses ;
