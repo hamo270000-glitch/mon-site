@@ -5,6 +5,7 @@ Application web installable (PWA) pour réussir une **sèche** (perdre du gras e
 En ligne (après fusion sur `main`) : https://hamo270000-glitch.github.io/mon-site/affute/
 
 ## Ce que fait l'appli
+- **Questionnaire facultatif** : l'appli s'ouvre directement sur les recettes. Sur chaque plat, on choisit la taille de la portion : 🔥 Sèche, 💪 Prise de masse ou Standard. Le plan, la semaine et le suivi proposent de répondre aux questions (1 minute) pour un calcul sur mesure.
 0. **Deux objectifs** au choix dès la première question : sèche ou prise de masse. Tout s'adapte : calories (déficit ou surplus), corps visé, rythme, portions, recettes, avatar, scanner et conseils.
 1. **Plan personnalisé** : âge, sexe, taille, poids, activité, corps visé et rythme → calories par jour, protéines, glucides, lipides, date d'arrivée et courbe prévue.
 2. **Aperçu de ton futur corps** : avatar « hologramme » 3D qui s'affine semaine après semaine (taux de masse grasse calculé).
