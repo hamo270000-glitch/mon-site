@@ -62,7 +62,7 @@ python3 tools/build_ciqual.py <dossier Ciqual> data/aliments.json   # nouvelle v
 ```
 
 ## Logo
-Un « A » géométrique taillé comme une lame (facette ombrée), dont le creux a la forme d'une pousse, sur un dégradé vert émeraude (`icons/logo.svg`, icônes PNG 180, 192 et 512 px).
+Une banane musclée qui contracte ses biceps, l'air déterminé, sur fond noir (`icons/logo.svg`, icônes PNG 180, 192 et 512 px).
 
 ## Organisation
 - `index.html`, `css/app.css` : page et design.
