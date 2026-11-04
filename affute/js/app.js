@@ -210,16 +210,16 @@ function chartSVG(series, { height = 170, target, labels = [] } = {}) {
   const Y = (y) => pad.t + (1 - (y - minY) / (maxY - minY || 1)) * (H - pad.t - pad.b);
   const ticks = [minY, Math.round((minY + maxY) / 2), maxY];
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Évolution du poids">
-    <defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22e3a0" stop-opacity=".35"/><stop offset="1" stop-color="#22e3a0" stop-opacity="0"/></linearGradient></defs>
-    ${ticks.map((t) => `<line x1="${pad.l}" x2="${W - pad.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="rgba(255,255,255,.07)"/><text x="${pad.l - 6}" y="${Y(t) + 4}" fill="#8f9d94" font-size="10" text-anchor="end">${t}</text>`).join('')}
-    ${target ? `<line x1="${pad.l}" x2="${W - pad.r}" y1="${Y(target)}" y2="${Y(target)}" stroke="#c8ff3d" stroke-dasharray="4 4" opacity=".7"/><text x="${W - pad.r}" y="${Y(target) - 5}" fill="#c8ff3d" font-size="10" text-anchor="end">Objectif ${fmt(target, 1)} kg</text>` : ''}
+    <defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2bd89c" stop-opacity=".35"/><stop offset="1" stop-color="#2bd89c" stop-opacity="0"/></linearGradient></defs>
+    ${ticks.map((t) => `<line x1="${pad.l}" x2="${W - pad.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="rgba(16,60,38,.08)"/><text x="${pad.l - 6}" y="${Y(t) + 4}" fill="#5f6f66" font-size="10" text-anchor="end">${t}</text>`).join('')}
+    ${target ? `<line x1="${pad.l}" x2="${W - pad.r}" y1="${Y(target)}" y2="${Y(target)}" stroke="#4a9a00" stroke-dasharray="4 4" opacity=".8"/><text x="${W - pad.r}" y="${Y(target) - 5}" fill="#4a9a00" font-size="10" text-anchor="end">Objectif ${fmt(target, 1)} kg</text>` : ''}
     ${series.map((s) => {
       const pts = s.points.map(([x, y]) => `${X(x).toFixed(1)},${Y(y).toFixed(1)}`);
       const area = s.fill ? `<path d="M${pts[0]} L${pts.join(' L')} L${X(s.points.at(-1)[0])},${H - pad.b} L${X(s.points[0][0])},${H - pad.b} Z" fill="url(#cg)"/>` : '';
       const dots = s.dots ? s.points.map(([x, y]) => `<circle cx="${X(x)}" cy="${Y(y)}" r="3.5" fill="${s.color}"/>`).join('') : '';
       return `${area}<polyline points="${pts.join(' ')}" fill="none" stroke="${s.color}" stroke-width="${s.width || 2.5}" stroke-linecap="round" stroke-linejoin="round" ${s.dash ? 'stroke-dasharray="5 5"' : ''}/>${dots}`;
     }).join('')}
-    ${labels.map(([x, t]) => `<text x="${X(x)}" y="${H - 6}" fill="#8f9d94" font-size="10" text-anchor="middle">${t}</text>`).join('')}
+    ${labels.map(([x, t]) => `<text x="${X(x)}" y="${H - 6}" fill="#5f6f66" font-size="10" text-anchor="middle">${t}</text>`).join('')}
   </svg>`;
 }
 
@@ -229,7 +229,7 @@ function viewPlan() {
   const plan = computePlan(p);
   const ring = (val, max, color) => {
     const r = 58; const c = 2 * Math.PI * r;
-    return `<circle cx="68" cy="68" r="${r}" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="14"/>
+    return `<circle cx="68" cy="68" r="${r}" fill="none" stroke="rgba(16,60,38,.07)" stroke-width="14"/>
       <circle cx="68" cy="68" r="${r}" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${(c * Math.min(1, val / max)).toFixed(1)} ${c.toFixed(1)}"/>`;
   };
   const macroKcal = plan.prot * 4 + plan.gluc * 4 + plan.lip * 9;
@@ -288,7 +288,7 @@ function viewPlan() {
 
     <section class="card" style="margin-top:14px">
       <h2>Ta courbe prévue</h2>
-      ${chartSVG([{ points: plan.weeks.map((w, i) => [i, w]), color: '#22e3a0', fill: true }], {
+      ${chartSVG([{ points: plan.weeks.map((w, i) => [i, w]), color: '#0c9f70', fill: true }], {
         target: plan.target,
         labels: [[0, 'Auj.'], [Math.round(plan.nbWeeks / 2), `S${Math.round(plan.nbWeeks / 2)}`], [plan.nbWeeks, `S${plan.nbWeeks}`]],
       })}
@@ -638,10 +638,10 @@ async function viewCorps() {
         <div class="stat"><b>${last ? fmt(Math.max(0, last.kg - plan.target), 1) : '–'} kg</b><span>restants jusqu'à ${fmt(plan.target, 1)} kg</span></div>
       </div>
       <div style="margin-top:12px">${chartSVG([
-        { points: planPts, color: 'rgba(34,227,160,.55)', dash: true, width: 2 },
-        ...(realPts.length ? [{ points: realPts, color: '#c8ff3d', dots: true }] : []),
+        { points: planPts, color: 'rgba(12,159,112,.6)', dash: true, width: 2 },
+        ...(realPts.length ? [{ points: realPts, color: '#4a9a00', dots: true }] : []),
       ], { target: plan.target, labels: [[0, 'Début'], [plan.nbWeeks || 1, `S${plan.nbWeeks}`]] })}</div>
-      <p class="small muted" style="margin:4px 0 0"><span style="color:#c8ff3d">●</span> ton poids réel · <span style="color:var(--mint)">- -</span> la courbe prévue</p>
+      <p class="small muted" style="margin:4px 0 0"><span style="color:var(--lime)">●</span> ton poids réel · <span style="color:var(--mint)">- -</span> la courbe prévue</p>
       ${log.length > 1 ? `<details style="margin-top:8px"><summary class="small" style="cursor:pointer;color:var(--mint)">Historique</summary>
         <table class="t">${log.slice().reverse().map((e) => `<tr><td>${dateFr(e.d, { weekday: 'short', day: 'numeric', month: 'short' })}</td><td class="num">${fmt(e.kg, 1)} kg</td>
           <td class="num"><button class="chip" data-del="${e.d}" aria-label="Supprimer">✕</button></td></tr>`).join('')}</table></details>` : ''}
