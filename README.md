@@ -16,6 +16,11 @@ Le profil et l'historique restent sur le téléphone (localStorage).
 - [Open Prices](https://prices.openfoodfacts.org) : prix relevés par la communauté.
 - Scanner de code-barres : [html5-qrcode](https://github.com/mebjas/html5-qrcode) (Apache 2.0), dans `vendor/`.
 
+### Bon à savoir (testé avec les vraies données, novembre 2026)
+- La recherche d'Open Food Facts est limitée (environ 10 recherches par minute) et renvoie parfois une erreur 503 passagère : Clair réessaie automatiquement et garde les résultats en mémoire.
+- Certaines fiches ont des catégories mal saisies (ex. Nutella rangé aussi en « poudre de cacao ») : Clair ignore les catégories mal écrites et remonte vers la catégorie « parente » grâce à la taxonomie d'Open Food Facts.
+- Les prix relevés en France, puis dans ton magasin habituel, sont choisis en priorité.
+
 ## Lancer en local
 ```
 python3 -m http.server 8000

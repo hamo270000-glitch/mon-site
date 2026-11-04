@@ -1,0 +1,16 @@
+{
+  "name": "Affûté – Ta sèche sur mesure",
+  "short_name": "Affûté",
+  "description": "Plan de sèche personnalisé, repas avec les vrais prix par magasin, base des aliments et aperçu de ton futur corps.",
+  "lang": "fr",
+  "start_url": "./#/plan",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f8f2",
+  "theme_color": "#f4f8f2",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
