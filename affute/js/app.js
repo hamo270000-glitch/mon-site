@@ -663,7 +663,12 @@ function viewRepasDetail(id) {
     lip: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3 4 6.5 7.7 6.5 11.5a6.5 6.5 0 0 1-13 0c0-3.8 3.5-7.5 6.5-11.5Z"/></svg>',
     cart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21.5 8H6"/></svg>',
   };
-  const macro = (k, label, v) => `<div class="cal-macro"><i class="ic ${k}">${I[k]}</i><span>${label}</span><b>${fmt(v)} g</b></div>`;
+  // Part de la journée (objectifs du plan) : petite jauge sous chaque valeur.
+  const pctOf = (v, goal) => (goal ? Math.min(100, Math.round((v / goal) * 100)) : 0);
+  const macro = (k, label, v, goal) => `<div class="cal-macro ${k}"><div class="cm-top"><i class="ic ${k}">${I[k]}</i><span>${label}</span></div>
+    <b>${fmt(v)}<small>\u202Fg</small></b><div class="cm-bar"><i style="width:${pctOf(v, goal)}%"></i></div><em>${pctOf(v, goal)} % du jour</em></div>`;
+  const kPct = pctOf(nut.kcal, dayKcal);
+  const R = 26; const CIRC = 2 * Math.PI * R;
 
   $app.innerHTML = `
     <div class="cal-hero">
@@ -696,9 +701,11 @@ function viewRepasDetail(id) {
         return `<li><span><b>${esc(x.nom)}</b> <em>• ${fmt((x.kcal || 0) * q / 100)} kcal</em></span><span class="q">${displayQty(x, q)}<small>${pr ? `${euro((pr.kg * q) / 1000)}${pr.reel ? '' : '*'}` : ''}</small></span></li>`;
       }).join('')}</ul>
 
-      <div class="cal-kcal"><i class="ic fire">${I.fire}</i><div><span>Calories · 1 portion</span><b>${fmt(nut.kcal)}</b></div></div>
-      <div class="cal-macros">${macro('prot', 'Protéines', nut.prot)}${macro('gluc', 'Glucides', nut.gluc)}${macro('lip', 'Lipides', nut.lip)}</div>
-      <p class="small muted" style="margin:10px 2px 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g${mine ? ` · ${Math.round((nut.kcal / dayKcal) * 100)} % de la journée` : ''}</p>
+      <div class="cal-kcal"><i class="ic fire">${I.fire}</i><div class="ck-txt"><span>Calories</span><b>${fmt(nut.kcal)}</b><em>pour 1 portion</em></div>
+        <div class="ck-ring" aria-label="${kPct} % des calories du jour"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="${R}" fill="none" stroke="#f0f0f3" stroke-width="7"/>
+          <circle cx="32" cy="32" r="${R}" fill="none" stroke="#1c1c1e" stroke-width="7" stroke-linecap="round" stroke-dasharray="${(CIRC * kPct) / 100} ${CIRC}" transform="rotate(-90 32 32)"/></svg><span>${kPct}<small>%</small></span></div></div>
+      <div class="cal-macros">${macro('prot', 'Protéines', nut.prot, plan.prot)}${macro('gluc', 'Glucides', nut.gluc, plan.gluc)}${macro('lip', 'Lipides', nut.lip, plan.lip)}</div>
+      <p class="small muted" style="margin:10px 2px 0">Dont sucres ${fmt(nut.suc, 1)} g · fibres ${fmt(nut.fib, 1)} g · sel ${fmt(nut.sel, 2)} g · pourcentages calculés sur ${fmt(dayKcal)} kcal par jour.</p>
       ${photo ? `<p class="photo-credit">Photo : ${esc(photo.auteur)} · <a href="${esc(photo.lien)}" target="_blank" rel="noopener">${esc(photo.licence)}</a> · photo d'illustration, détourée</p>` : ''}
     </section>
 
