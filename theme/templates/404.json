@@ -7,7 +7,7 @@
     "bestsellers": {
       "type": "featured-collection",
       "settings": {
-        "collection": "all",
+        "collection": "nos-essentiels",
         "limit": 4
       }
     }

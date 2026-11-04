@@ -9,7 +9,7 @@
       "settings": {
         "eyebrow": "Le rituel",
         "heading": "Les produits de l'article",
-        "collection": "all",
+        "collection": "nos-essentiels",
         "limit": 4,
         "cream": true
       }
