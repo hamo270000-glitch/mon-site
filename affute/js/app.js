@@ -7,7 +7,7 @@ import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } 
 import { viewScan, viewScanProduct, stopScan, ALLERGENS } from './scan.js';
 import { viewSport, viewSportDay, viewSeance, viewExercise, viewBiblio, viewHistory } from './sport.js';
 import { enterPage } from './fx.js';
-import { entries, addEntry, removeEntry, findByRef, dayKey, dayCard, bindDayCard, updateChip } from './journal.js';
+import { entries, addEntry, removeEntry, findByRef, dayKey, dayCard, bindDayCard, updateChip, totals } from './journal.js';
 
 // ---------- Stockage local (tout reste sur le téléphone) ----------
 const store = {
@@ -602,29 +602,56 @@ function viewSemaine() {
 let repasFilter = 'tous';
 let repasSort = 'prix';
 
+// Carte « Objectif du jour » : calories à atteindre et ce qui a déjà été mangé.
+function goalCard() {
+  const plan = computePlan(who());
+  const target = safetyCheck(who()).length ? plan.tdee : plan.kcal;
+  const t = totals(entries());
+  const pct = Math.min(1, t.kcal / target);
+  const left = Math.max(0, target - t.kcal);
+  const R = 46; const C = 2 * Math.PI * R;
+  const done = t.kcal >= target * 0.95;
+  return `<a class="goal-card" href="${profile ? '#/plan' : '#/profil'}">
+    <div class="gc-txt">
+      <span class="gc-lbl">${done ? '🎉 Objectif atteint' : 'Objectif du jour'}</span>
+      <b class="gc-num">${fmt(target)}<small> kcal</small></b>
+      <div class="gc-macros"><span class="p">${fmt(plan.prot)} g prot.</span><span class="g">${fmt(plan.gluc)} g gluc.</span><span class="l">${fmt(plan.lip)} g lip.</span></div>
+      ${profile ? '' : '<span class="gc-link">Personnaliser mon objectif ›</span>'}
+    </div>
+    <div class="gc-ring"><svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="${R}" fill="none" stroke="#f0f0f3" stroke-width="11"/>
+      <circle cx="55" cy="55" r="${R}" fill="none" stroke="url(#gcg)" stroke-width="11" stroke-linecap="${pct > 0 ? 'round' : 'butt'}" stroke-dasharray="${(C * pct).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 55 55)"/>
+      <defs><linearGradient id="gcg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34c759"/><stop offset="1" stop-color="#0a7a6b"/></linearGradient></defs></svg>
+      <div><b>${fmt(left)}</b><span>restantes</span></div></div>
+  </a>`;
+}
+
 function viewRepas() {
   const shop = myStore();
-  const types = [['tous', 'Tous'], ...SLOTS.map((s) => [s.id, s.label])];
-  const sorts = [['prix', '💶 Moins cher'], ['prot', '🥩 + de protéines'], ['kcal', '🔥 − de calories']];
+  const types = [['tous', '✨', 'Tous'], ...SLOTS.map((s) => [s.id, s.emoji, s.id === 'matin' ? 'Petit-déj' : s.label])];
+  const sorts = [['prix', 'Prix'], ['prot', 'Protéines'], ['kcal', 'Calories']];
   const list = DATA.repas
     .filter((m) => repasFilter === 'tous' || m.type === repasFilter)
     .filter((m) => dietCheck(m, DATA, profile?.regimes).ok)
     .map((m) => ({ m, nut: mealNutrition(m, DATA), price: mealPrice(m, DATA, shop) }))
     .sort((a, b) => (repasSort === 'prix' ? a.price.total - b.price.total : repasSort === 'prot' ? b.nut.prot - a.nut.prot : a.nut.kcal - b.nut.kcal));
+  const pic = (m) => {
+    const ph = mealPhoto(DATA, m.id);
+    return ph ? `<img src="${ph.src}" alt="" loading="lazy" width="800" height="600">`
+      : `<img class="art" src="${mealArt(m.id)}" alt="" loading="lazy" width="400" height="400" onerror="this.outerHTML='<div class=&quot;emoji3d&quot;>${m.emoji}</div>'">`;
+  };
 
   $app.innerHTML = `
     <h1 class="title">Repas</h1>
     ${repasTabs('repas')}
-    <p class="lead">${DATA.repas.length} recettes ${profile ? (isMasse(profile) ? 'pour la prise de masse' : 'pour la sèche') : 'pour la sèche et la prise de masse'}, riches en protéines, avec leur prix chez ${esc(storeName(shop))}.</p>
-    ${profile ? '' : '<a class="notice info plan-hint" href="#/profil">⚡ <span><b>Envie d\'un plan sur mesure ?</b> Réponds à quelques questions (facultatif) pour avoir tes calories et des portions adaptées à toi.</span></a>'}
-    <div class="chips" id="types">${types.map(([id, l]) => `<button class="chip" data-t="${id}" aria-pressed="${repasFilter === id}">${l}</button>`).join('')}</div>
-    <div class="chips" id="sorts" style="margin:8px 0 14px">${sorts.map(([id, l]) => `<button class="chip" data-s="${id}" aria-pressed="${repasSort === id}">${l}</button>`).join('')}</div>
-    <div class="meal-list">${list.map(({ m, nut, price }) => `
-      <a class="meal tilt" href="#/repas/${m.id}">
-        ${thumb(m)}
-        <div><div class="name">${esc(m.nom)}</div>
-          <div class="meta"><span class="pill k">${fmt(nut.kcal)} kcal</span><span class="pill p">${fmt(nut.prot)} g prot.</span>${m.masse ? '<span class="pill warn">💪 Masse</span>' : ''}<span>⏱ ${m.min} min</span></div></div>
-        <div class="price-tag"><b>${euro(price.total)}</b><small>la portion</small></div>
+    ${goalCard()}
+    <div class="chips cat-chips" id="types">${types.map(([id, e, l]) => `<button class="chip" data-t="${id}" aria-pressed="${repasFilter === id}"><span>${e}</span> ${l}</button>`).join('')}</div>
+    <div class="row between rc-head"><h2>${list.length} recettes</h2>
+      <div class="segmented mini" id="sorts" role="tablist" aria-label="Trier par">${sorts.map(([id, l]) => `<button type="button" role="tab" data-s="${id}" aria-selected="${repasSort === id}">${l}</button>`).join('')}</div></div>
+    <div class="rgrid">${list.map(({ m, nut, price }) => `
+      <a class="rcard" href="#/repas/${m.id}">
+        <div class="rimg">${pic(m)}<span class="rprice">${euro(price.total)}</span>${m.masse ? '<span class="rmasse">💪</span>' : ''}</div>
+        <div class="rname">${esc(m.nom)}</div>
+        <div class="rmeta"><span class="k">🔥 ${fmt(nut.kcal)}</span><span class="p">${fmt(nut.prot)} g prot.</span></div>
       </a>`).join('') || '<p class="muted">Aucun repas ne correspond à ton régime dans cette catégorie.</p>'}
     </div>`;
   document.getElementById('types').addEventListener('click', (e) => { const b = e.target.closest('[data-t]'); if (b) { repasFilter = b.dataset.t; viewRepas(); } });
