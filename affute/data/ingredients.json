@@ -1,0 +1,2175 @@
+{
+ "maj": "2026-11-04",
+ "sources": {
+  "nutrition": "Anses. 2025. Table de composition nutritionnelle des aliments Ciqual (CC-BY 4.0)",
+  "prix": "Open Prices (Open Food Facts), relevés en France depuis le 2025-05-13, licence ODbL"
+ },
+ "magasins": [
+  {
+   "id": "leclerc",
+   "nom": "E.Leclerc"
+  },
+  {
+   "id": "lidl",
+   "nom": "Lidl"
+  },
+  {
+   "id": "superu",
+   "nom": "Super U"
+  },
+  {
+   "id": "carrefour",
+   "nom": "Carrefour"
+  },
+  {
+   "id": "intermarche",
+   "nom": "Intermarché"
+  },
+  {
+   "id": "auchan",
+   "nom": "Auchan"
+  },
+  {
+   "id": "aldi",
+   "nom": "Aldi"
+  }
+ ],
+ "ingredients": [
+  {
+   "id": "poulet",
+   "nom": "Blanc de poulet",
+   "ciqual": 36017,
+   "ciqualNom": "Poulet, filet sans peau cru",
+   "kcal": 110.0,
+   "prot": 23.4,
+   "gluc": 0.0,
+   "lip": 1.5,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 0.11,
+   "prix": {
+    "kg": 15.17,
+    "n": 33,
+    "magasins": {
+     "leclerc": {
+      "kg": 13.71,
+      "n": 21,
+      "date": "2026-08-04"
+     },
+     "lidl": {
+      "kg": 11.54,
+      "n": 2,
+      "date": "2026-06-05"
+     },
+     "superu": {
+      "kg": 16.97,
+      "n": 3,
+      "date": "2026-10-27"
+     },
+     "carrefour": {
+      "kg": 16.99,
+      "n": 2,
+      "date": "2026-04-16"
+     },
+     "intermarche": {
+      "kg": 20.44,
+      "n": 1,
+      "date": "2026-09-23"
+     },
+     "auchan": {
+      "kg": 19.41,
+      "n": 2,
+      "date": "2026-10-07"
+     }
+    }
+   },
+   "halal": "certif",
+   "veg": false
+  },
+  {
+   "id": "dinde",
+   "nom": "Escalope de dinde",
+   "ciqual": 36304,
+   "ciqualNom": "Dinde, escalope crue",
+   "kcal": 108.0,
+   "prot": 23.7,
+   "gluc": 0.0,
+   "lip": 1.48,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 0.28,
+   "prix": {
+    "kg": 16.79,
+    "n": 5,
+    "magasins": {
+     "leclerc": {
+      "kg": 14.54,
+      "n": 3,
+      "date": "2026-03-01"
+     },
+     "superu": {
+      "kg": 16.79,
+      "n": 1,
+      "date": "2026-02-07"
+     },
+     "intermarche": {
+      "kg": 25.08,
+      "n": 1,
+      "date": "2026-06-29"
+     }
+    }
+   },
+   "halal": "certif",
+   "veg": false
+  },
+  {
+   "id": "steak5",
+   "nom": "Steak haché 5 % MG",
+   "ciqual": 6250,
+   "ciqualNom": "Boeuf, steak haché 5% MG cru",
+   "kcal": 130.0,
+   "prot": 21.9,
+   "gluc": 0.3,
+   "lip": 4.59,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 0.1,
+   "prix": {
+    "kg": 18.52,
+    "n": 271,
+    "magasins": {
+     "leclerc": {
+      "kg": 17.48,
+      "n": 139,
+      "date": "2026-10-13"
+     },
+     "lidl": {
+      "kg": 16.6,
+      "n": 1,
+      "date": "2025-06-28"
+     },
+     "superu": {
+      "kg": 23.0,
+      "n": 21,
+      "date": "2026-10-04"
+     },
+     "carrefour": {
+      "kg": 20.45,
+      "n": 38,
+      "date": "2026-07-04"
+     },
+     "intermarche": {
+      "kg": 17.11,
+      "n": 36,
+      "date": "2026-05-16"
+     },
+     "auchan": {
+      "kg": 19.89,
+      "n": 14,
+      "date": "2026-11-01"
+     }
+    }
+   },
+   "halal": "certif",
+   "veg": false
+  },
+  {
+   "id": "oeuf",
+   "nom": "Œuf",
+   "ciqual": 22000,
+   "ciqualNom": "Oeuf cru",
+   "kcal": 140.0,
+   "prot": 12.8,
+   "gluc": 0.06,
+   "lip": 9.83,
+   "suc": 0.06,
+   "fib": 0.0,
+   "sel": 0.31,
+   "prix": {
+    "kg": 6.8,
+    "n": 394,
+    "magasins": {
+     "leclerc": {
+      "kg": 5.92,
+      "n": 194,
+      "date": "2026-10-28"
+     },
+     "lidl": {
+      "kg": 6.82,
+      "n": 3,
+      "date": "2026-04-20"
+     },
+     "superu": {
+      "kg": 8.3,
+      "n": 17,
+      "date": "2026-09-26"
+     },
+     "carrefour": {
+      "kg": 7.93,
+      "n": 56,
+      "date": "2026-10-10"
+     },
+     "intermarche": {
+      "kg": 8.2,
+      "n": 26,
+      "date": "2026-10-23"
+     },
+     "auchan": {
+      "kg": 6.46,
+      "n": 34,
+      "date": "2026-10-07"
+     }
+    }
+   },
+   "unit_g": 50,
+   "unit": "œuf"
+  },
+  {
+   "id": "thon",
+   "nom": "Thon au naturel (boîte)",
+   "ciqual": 26039,
+   "ciqualNom": "Thon, au naturel, appertisé, égoutté",
+   "kcal": 143.0,
+   "prot": 26.8,
+   "gluc": 0.0,
+   "lip": 3.94,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 0.74,
+   "prix": {
+    "kg": 17.9,
+    "n": 397,
+    "magasins": {
+     "leclerc": {
+      "kg": 15.52,
+      "n": 218,
+      "date": "2026-10-21"
+     },
+     "lidl": {
+      "kg": 9.68,
+      "n": 3,
+      "date": "2026-02-04"
+     },
+     "superu": {
+      "kg": 19.09,
+      "n": 39,
+      "date": "2026-10-04"
+     },
+     "carrefour": {
+      "kg": 20.73,
+      "n": 18,
+      "date": "2026-09-16"
+     },
+     "intermarche": {
+      "kg": 21.26,
+      "n": 21,
+      "date": "2026-10-11"
+     },
+     "auchan": {
+      "kg": 20.84,
+      "n": 50,
+      "date": "2026-10-13"
+     },
+     "aldi": {
+      "kg": 10.2,
+      "n": 2,
+      "date": "2026-02-07"
+     }
+    }
+   },
+   "veg": false
+  },
+  {
+   "id": "saumon",
+   "nom": "Pavé de saumon",
+   "ciqual": 26036,
+   "ciqualNom": "Saumon, élevage, cru",
+   "kcal": 193.0,
+   "prot": 20.5,
+   "gluc": 0.0,
+   "lip": 12.4,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 0.16,
+   "prix": {
+    "kg": 28.01,
+    "n": 24,
+    "magasins": {
+     "leclerc": {
+      "kg": 27.61,
+      "n": 10,
+      "date": "2026-11-02"
+     },
+     "lidl": {
+      "kg": 22.98,
+      "n": 1,
+      "date": "2026-04-20"
+     },
+     "superu": {
+      "kg": 25.8,
+      "n": 3,
+      "date": "2026-10-04"
+     },
+     "carrefour": {
+      "kg": 29.07,
+      "n": 3,
+      "date": "2026-10-24"
+     },
+     "intermarche": {
+      "kg": 27.76,
+      "n": 1,
+      "date": "2026-02-01"
+     },
+     "auchan": {
+      "kg": 23.96,
+      "n": 1,
+      "date": "2026-02-07"
+     }
+    }
+   },
+   "veg": false
+  },
+  {
+   "id": "cabillaud",
+   "nom": "Filet de cabillaud",
+   "ciqual": 26043,
+   "ciqualNom": "Cabillaud, cru",
+   "kcal": 77.4,
+   "prot": 18.1,
+   "gluc": 0.0,
+   "lip": 0.57,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 0.23,
+   "prix": {
+    "kg": 19.98,
+    "n": 51,
+    "magasins": {
+     "leclerc": {
+      "kg": 19.08,
+      "n": 34,
+      "date": "2026-11-02"
+     },
+     "superu": {
+      "kg": 22.19,
+      "n": 2,
+      "date": "2026-02-18"
+     },
+     "carrefour": {
+      "kg": 19.98,
+      "n": 9,
+      "date": "2026-10-10"
+     },
+     "intermarche": {
+      "kg": 22.95,
+      "n": 3,
+      "date": "2026-02-08"
+     }
+    }
+   },
+   "veg": false
+  },
+  {
+   "id": "crevette",
+   "nom": "Crevettes cuites",
+   "ciqual": 10061,
+   "ciqualNom": "Crevette blanche ou crevette tropicale (rose), élevage, cuite",
+   "kcal": 97.5,
+   "prot": 22.1,
+   "gluc": 0.14,
+   "lip": 0.93,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 1.79,
+   "prix": {
+    "kg": 27.19,
+    "n": 154,
+    "magasins": {
+     "leclerc": {
+      "kg": 27.22,
+      "n": 69,
+      "date": "2026-07-07"
+     },
+     "superu": {
+      "kg": 31.62,
+      "n": 18,
+      "date": "2026-10-08"
+     },
+     "carrefour": {
+      "kg": 26.5,
+      "n": 19,
+      "date": "2026-10-02"
+     },
+     "intermarche": {
+      "kg": 27.15,
+      "n": 19,
+      "date": "2026-08-28"
+     },
+     "auchan": {
+      "kg": 16.41,
+      "n": 16,
+      "date": "2026-11-01"
+     }
+    }
+   },
+   "veg": false
+  },
+  {
+   "id": "jambon",
+   "nom": "Jambon blanc découenné",
+   "ciqual": 28913,
+   "ciqualNom": "Jambon cuit, choix, découenné dégraissé",
+   "kcal": 115.0,
+   "prot": 19.6,
+   "gluc": 1.88,
+   "lip": 3.24,
+   "suc": 1.32,
+   "fib": 0.15,
+   "sel": 1.96,
+   "prix": {
+    "kg": 19.99,
+    "n": 440,
+    "magasins": {
+     "leclerc": {
+      "kg": 18.33,
+      "n": 214,
+      "date": "2026-11-02"
+     },
+     "lidl": {
+      "kg": 13.21,
+      "n": 1,
+      "date": "2026-03-16"
+     },
+     "superu": {
+      "kg": 23.0,
+      "n": 31,
+      "date": "2026-10-19"
+     },
+     "carrefour": {
+      "kg": 22.88,
+      "n": 46,
+      "date": "2026-10-26"
+     },
+     "intermarche": {
+      "kg": 14.65,
+      "n": 28,
+      "date": "2026-07-13"
+     },
+     "auchan": {
+      "kg": 17.42,
+      "n": 21,
+      "date": "2026-09-04"
+     }
+    }
+   },
+   "halal": "non",
+   "veg": false
+  },
+  {
+   "id": "skyr",
+   "nom": "Skyr nature",
+   "ciqual": 19724,
+   "ciqualNom": "Spécialité laitière riche en protéines, nature",
+   "kcal": 74.5,
+   "prot": 9.29,
+   "gluc": 3.45,
+   "lip": 2.7,
+   "suc": 3.45,
+   "fib": 0.0,
+   "sel": 0.12,
+   "prix": {
+    "kg": 7.48,
+    "n": 207,
+    "magasins": {
+     "leclerc": {
+      "kg": 7.06,
+      "n": 61,
+      "date": "2026-11-02"
+     },
+     "lidl": {
+      "kg": 4.34,
+      "n": 2,
+      "date": "2026-08-09"
+     },
+     "superu": {
+      "kg": 8.22,
+      "n": 9,
+      "date": "2026-09-09"
+     },
+     "carrefour": {
+      "kg": 7.48,
+      "n": 76,
+      "date": "2026-10-14"
+     },
+     "intermarche": {
+      "kg": 6.82,
+      "n": 7,
+      "date": "2026-08-24"
+     },
+     "auchan": {
+      "kg": 6.23,
+      "n": 15,
+      "date": "2026-11-01"
+     }
+    }
+   },
+   "lait": true
+  },
+  {
+   "id": "grec",
+   "nom": "Yaourt à la grecque",
+   "ciqual": 19860,
+   "ciqualNom": "Yaourt à la grecque nature",
+   "kcal": 103.0,
+   "prot": 3.02,
+   "gluc": 3.73,
+   "lip": 8.16,
+   "suc": 3.11,
+   "fib": 0.07,
+   "sel": 0.08,
+   "prix": {
+    "kg": 4.23,
+    "n": 146,
+    "magasins": {
+     "leclerc": {
+      "kg": 4.23,
+      "n": 38,
+      "date": "2026-09-01"
+     },
+     "lidl": {
+      "kg": 3.07,
+      "n": 4,
+      "date": "2026-06-01"
+     },
+     "superu": {
+      "kg": 5.36,
+      "n": 6,
+      "date": "2026-10-04"
+     },
+     "carrefour": {
+      "kg": 4.98,
+      "n": 24,
+      "date": "2026-06-12"
+     },
+     "intermarche": {
+      "kg": 2.15,
+      "n": 3,
+      "date": "2026-09-12"
+     },
+     "auchan": {
+      "kg": 2.57,
+      "n": 40,
+      "date": "2026-11-03"
+     }
+    }
+   },
+   "lait": true
+  },
+  {
+   "id": "lait",
+   "nom": "Lait demi-écrémé",
+   "ciqual": 19041,
+   "ciqualNom": "Lait demi-écrémé, UHT",
+   "kcal": 47.7,
+   "prot": 3.48,
+   "gluc": 5.0,
+   "lip": 1.56,
+   "suc": 4.96,
+   "fib": 0.0,
+   "sel": 0.09,
+   "prix": {
+    "kg": 1.46,
+    "n": 407,
+    "magasins": {
+     "leclerc": {
+      "kg": 1.26,
+      "n": 58,
+      "date": "2026-10-25"
+     },
+     "superu": {
+      "kg": 1.68,
+      "n": 24,
+      "date": "2026-10-17"
+     },
+     "carrefour": {
+      "kg": 1.4,
+      "n": 91,
+      "date": "2026-08-15"
+     },
+     "intermarche": {
+      "kg": 1.7,
+      "n": 58,
+      "date": "2026-10-23"
+     },
+     "auchan": {
+      "kg": 1.17,
+      "n": 81,
+      "date": "2026-10-24"
+     }
+    }
+   },
+   "lait": true
+  },
+  {
+   "id": "lentilles",
+   "nom": "Lentilles (sèches)",
+   "ciqual": 20585,
+   "ciqualNom": "Lentille verte, sèche",
+   "kcal": 327.0,
+   "prot": 25.1,
+   "gluc": 44.5,
+   "lip": 1.8,
+   "suc": 1.1,
+   "fib": 16.4,
+   "sel": 0.0,
+   "prix": {
+    "kg": 2.76,
+    "n": 98,
+    "magasins": {
+     "leclerc": {
+      "kg": 2.76,
+      "n": 77,
+      "date": "2026-10-28"
+     },
+     "superu": {
+      "kg": 3.32,
+      "n": 1,
+      "date": "2025-09-19"
+     },
+     "carrefour": {
+      "kg": 7.88,
+      "n": 1,
+      "date": "2025-06-30"
+     },
+     "intermarche": {
+      "kg": 7.56,
+      "n": 2,
+      "date": "2025-10-03"
+     },
+     "aldi": {
+      "kg": 3.3,
+      "n": 1,
+      "date": "2025-07-26"
+     }
+    }
+   }
+  },
+  {
+   "id": "poischiche",
+   "nom": "Pois chiches (boîte, égouttés)",
+   "ciqual": 20532,
+   "ciqualNom": "Pois chiche, appertisé, égoutté",
+   "kcal": 122.0,
+   "prot": 6.74,
+   "gluc": 15.0,
+   "lip": 2.68,
+   "suc": 0.5,
+   "fib": 5.45,
+   "sel": 0.54,
+   "prix": {
+    "kg": 4.31,
+    "n": 156,
+    "magasins": {
+     "leclerc": {
+      "kg": 4.23,
+      "n": 61,
+      "date": "2026-10-16"
+     },
+     "lidl": {
+      "kg": 1.72,
+      "n": 1,
+      "date": "2025-07-10"
+     },
+     "superu": {
+      "kg": 6.33,
+      "n": 11,
+      "date": "2026-10-08"
+     },
+     "carrefour": {
+      "kg": 3.45,
+      "n": 26,
+      "date": "2026-10-26"
+     },
+     "intermarche": {
+      "kg": 4.2,
+      "n": 10,
+      "date": "2026-08-28"
+     },
+     "auchan": {
+      "kg": 4.19,
+      "n": 14,
+      "date": "2026-08-23"
+     },
+     "aldi": {
+      "kg": 2.97,
+      "n": 1,
+      "date": "2026-03-25"
+     }
+    }
+   }
+  },
+  {
+   "id": "riz",
+   "nom": "Riz basmati (cru)",
+   "ciqual": 9119,
+   "ciqualNom": "Riz thaï ou basmati, cru",
+   "kcal": 351.0,
+   "prot": 7.08,
+   "gluc": 78.4,
+   "lip": 0.63,
+   "suc": 0.0,
+   "fib": 1.06,
+   "sel": 0.03,
+   "prix": {
+    "kg": 5.03,
+    "n": 150,
+    "magasins": {
+     "leclerc": {
+      "kg": 4.54,
+      "n": 35,
+      "date": "2026-10-21"
+     },
+     "lidl": {
+      "kg": 6.05,
+      "n": 2,
+      "date": "2026-09-12"
+     },
+     "superu": {
+      "kg": 5.1,
+      "n": 19,
+      "date": "2026-11-02"
+     },
+     "carrefour": {
+      "kg": 4.97,
+      "n": 20,
+      "date": "2026-08-29"
+     },
+     "intermarche": {
+      "kg": 3.99,
+      "n": 10,
+      "date": "2026-08-29"
+     },
+     "auchan": {
+      "kg": 3.67,
+      "n": 19,
+      "date": "2026-11-01"
+     },
+     "aldi": {
+      "kg": 2.98,
+      "n": 3,
+      "date": "2026-02-25"
+     }
+    }
+   }
+  },
+  {
+   "id": "pates",
+   "nom": "Pâtes (crues)",
+   "ciqual": 9810,
+   "ciqualNom": "Pâtes sèches, standard, crues",
+   "kcal": 364.0,
+   "prot": 12.0,
+   "gluc": 72.7,
+   "lip": 1.6,
+   "suc": 2.58,
+   "fib": 2.91,
+   "sel": 0.02,
+   "prix": {
+    "kg": 2.59,
+    "n": 411,
+    "magasins": {
+     "leclerc": {
+      "kg": 1.7,
+      "n": 146,
+      "date": "2026-11-03"
+     },
+     "superu": {
+      "kg": 2.86,
+      "n": 40,
+      "date": "2026-11-02"
+     },
+     "carrefour": {
+      "kg": 3.3,
+      "n": 54,
+      "date": "2026-10-24"
+     },
+     "intermarche": {
+      "kg": 3.84,
+      "n": 13,
+      "date": "2026-10-05"
+     },
+     "auchan": {
+      "kg": 3.1,
+      "n": 107,
+      "date": "2026-11-01"
+     }
+    }
+   }
+  },
+  {
+   "id": "quinoa",
+   "nom": "Quinoa (cru)",
+   "ciqual": 9340,
+   "ciqualNom": "Quinoa, cru",
+   "kcal": 358.0,
+   "prot": 13.2,
+   "gluc": 58.1,
+   "lip": 6.07,
+   "suc": null,
+   "fib": 7.0,
+   "sel": 0.01,
+   "prix": {
+    "kg": 9.8,
+    "n": 83,
+    "magasins": {
+     "leclerc": {
+      "kg": 6.8,
+      "n": 21,
+      "date": "2026-07-27"
+     },
+     "lidl": {
+      "kg": 5.12,
+      "n": 1,
+      "date": "2026-02-06"
+     },
+     "superu": {
+      "kg": 9.49,
+      "n": 7,
+      "date": "2026-08-25"
+     },
+     "carrefour": {
+      "kg": 10.25,
+      "n": 17,
+      "date": "2026-10-26"
+     },
+     "intermarche": {
+      "kg": 9.68,
+      "n": 7,
+      "date": "2026-09-23"
+     },
+     "auchan": {
+      "kg": 7.92,
+      "n": 11,
+      "date": "2026-11-01"
+     }
+    }
+   }
+  },
+  {
+   "id": "avoine",
+   "nom": "Flocons d'avoine",
+   "ciqual": 32140,
+   "ciqualNom": "Flocons d'avoine",
+   "kcal": 369.0,
+   "prot": 10.6,
+   "gluc": 57.7,
+   "lip": 7.82,
+   "suc": 1.04,
+   "fib": 11.2,
+   "sel": 0.01,
+   "prix": {
+    "kg": 3.9,
+    "n": 73,
+    "magasins": {
+     "leclerc": {
+      "kg": 2.93,
+      "n": 10,
+      "date": "2026-09-21"
+     },
+     "lidl": {
+      "kg": 1.68,
+      "n": 1,
+      "date": "2026-03-01"
+     },
+     "superu": {
+      "kg": 3.1,
+      "n": 1,
+      "date": "2026-10-17"
+     },
+     "carrefour": {
+      "kg": 3.9,
+      "n": 25,
+      "date": "2026-07-04"
+     },
+     "intermarche": {
+      "kg": 3.16,
+      "n": 3,
+      "date": "2026-10-24"
+     },
+     "auchan": {
+      "kg": 3.78,
+      "n": 10,
+      "date": "2026-11-01"
+     },
+     "aldi": {
+      "kg": 3.32,
+      "n": 1,
+      "date": "2025-07-26"
+     }
+    }
+   }
+  },
+  {
+   "id": "paincomplet",
+   "nom": "Pain complet",
+   "ciqual": 7110,
+   "ciqualNom": "Pain complet ou intégral (à la farine T150)",
+   "kcal": 234.0,
+   "prot": 8.66,
+   "gluc": 41.2,
+   "lip": 1.7,
+   "suc": 2.41,
+   "fib": 7.3,
+   "sel": 1.17,
+   "prix": {
+    "kg": 4.27,
+    "n": 290,
+    "magasins": {
+     "leclerc": {
+      "kg": 3.78,
+      "n": 91,
+      "date": "2026-10-12"
+     },
+     "lidl": {
+      "kg": 2.96,
+      "n": 5,
+      "date": "2026-10-02"
+     },
+     "superu": {
+      "kg": 4.93,
+      "n": 18,
+      "date": "2026-10-04"
+     },
+     "carrefour": {
+      "kg": 5.34,
+      "n": 78,
+      "date": "2026-10-27"
+     },
+     "intermarche": {
+      "kg": 4.56,
+      "n": 19,
+      "date": "2026-10-24"
+     },
+     "auchan": {
+      "kg": 4.18,
+      "n": 35,
+      "date": "2026-11-01"
+     }
+    }
+   }
+  },
+  {
+   "id": "wrap",
+   "nom": "Wrap / tortilla de blé",
+   "ciqual": 7815,
+   "ciqualNom": "Tortilla souple (à garnir), à base de blé",
+   "kcal": 320.0,
+   "prot": 8.01,
+   "gluc": 53.0,
+   "lip": 7.48,
+   "suc": 2.12,
+   "fib": 2.89,
+   "sel": 1.41,
+   "prix": {
+    "kg": 17.74,
+    "n": 169,
+    "magasins": {
+     "leclerc": {
+      "kg": 16.92,
+      "n": 90,
+      "date": "2026-09-01"
+     },
+     "lidl": {
+      "kg": 13.58,
+      "n": 1,
+      "date": "2026-01-10"
+     },
+     "superu": {
+      "kg": 21.42,
+      "n": 2,
+      "date": "2025-12-18"
+     },
+     "carrefour": {
+      "kg": 21.32,
+      "n": 11,
+      "date": "2026-08-11"
+     },
+     "intermarche": {
+      "kg": 15.26,
+      "n": 6,
+      "date": "2026-10-09"
+     },
+     "auchan": {
+      "kg": 19.37,
+      "n": 25,
+      "date": "2026-07-31"
+     }
+    }
+   }
+  },
+  {
+   "id": "galetteriz",
+   "nom": "Galettes de riz soufflé",
+   "ciqual": 7352,
+   "ciqualNom": "Galette de riz complet soufflé",
+   "kcal": 381.0,
+   "prot": 8.39,
+   "gluc": 77.9,
+   "lip": 3.0,
+   "suc": 0.55,
+   "fib": 3.4,
+   "sel": 0.22,
+   "prix": {
+    "kg": 17.7,
+    "n": 97,
+    "magasins": {
+     "leclerc": {
+      "kg": 18.9,
+      "n": 13,
+      "date": "2026-10-03"
+     },
+     "lidl": {
+      "kg": 13.9,
+      "n": 1,
+      "date": "2025-06-24"
+     },
+     "superu": {
+      "kg": 12.31,
+      "n": 13,
+      "date": "2026-08-20"
+     },
+     "carrefour": {
+      "kg": 20.25,
+      "n": 30,
+      "date": "2026-10-27"
+     },
+     "intermarche": {
+      "kg": 13.08,
+      "n": 5,
+      "date": "2026-10-07"
+     },
+     "auchan": {
+      "kg": 27.27,
+      "n": 2,
+      "date": "2026-11-01"
+     }
+    }
+   }
+  },
+  {
+   "id": "pdt",
+   "nom": "Pomme de terre",
+   "ciqual": 4008,
+   "ciqualNom": "Pomme de terre, sans peau, crue",
+   "kcal": 80.0,
+   "prot": 2.02,
+   "gluc": 16.2,
+   "lip": 0.09,
+   "suc": 0.78,
+   "fib": 2.2,
+   "sel": 0.0,
+   "prix": {
+    "kg": 2.0,
+    "n": 112,
+    "magasins": {
+     "leclerc": {
+      "kg": 2.47,
+      "n": 10,
+      "date": "2026-08-29"
+     },
+     "lidl": {
+      "kg": 1.56,
+      "n": 10,
+      "date": "2026-04-20"
+     },
+     "superu": {
+      "kg": 2.49,
+      "n": 2,
+      "date": "2026-03-17"
+     },
+     "carrefour": {
+      "kg": 2.75,
+      "n": 20,
+      "date": "2026-09-12"
+     },
+     "intermarche": {
+      "kg": 2.63,
+      "n": 2,
+      "date": "2026-05-29"
+     },
+     "auchan": {
+      "kg": 2.49,
+      "n": 1,
+      "date": "2026-05-17"
+     }
+    }
+   }
+  },
+  {
+   "id": "patatedouce",
+   "nom": "Patate douce",
+   "ciqual": 4101,
+   "ciqualNom": "Patate douce, crue",
+   "kcal": 81.2,
+   "prot": 1.57,
+   "gluc": 17.1,
+   "lip": 0.05,
+   "suc": 4.18,
+   "fib": 3.0,
+   "sel": 0.14,
+   "prix": {
+    "kg": 2.99,
+    "n": 41,
+    "magasins": {
+     "leclerc": {
+      "kg": 2.99,
+      "n": 3,
+      "date": "2026-09-01"
+     },
+     "lidl": {
+      "kg": 2.49,
+      "n": 5,
+      "date": "2026-08-11"
+     },
+     "superu": {
+      "kg": 2.49,
+      "n": 1,
+      "date": "2026-03-17"
+     },
+     "carrefour": {
+      "kg": 2.99,
+      "n": 7,
+      "date": "2026-09-20"
+     },
+     "intermarche": {
+      "kg": 2.89,
+      "n": 4,
+      "date": "2026-07-18"
+     },
+     "aldi": {
+      "kg": 2.79,
+      "n": 1,
+      "date": "2025-10-18"
+     }
+    }
+   }
+  },
+  {
+   "id": "brocoli",
+   "nom": "Brocoli",
+   "ciqual": 20057,
+   "ciqualNom": "Brocoli, cru",
+   "kcal": 31.9,
+   "prot": 2.9,
+   "gluc": 2.15,
+   "lip": 0.36,
+   "suc": 1.7,
+   "fib": 2.6,
+   "sel": 0.07,
+   "prix": {
+    "kg": 5.14,
+    "n": 24,
+    "magasins": {
+     "leclerc": {
+      "kg": 6.99,
+      "n": 3,
+      "date": "2025-11-04"
+     },
+     "lidl": {
+      "kg": 2.48,
+      "n": 1,
+      "date": "2025-10-17"
+     },
+     "superu": {
+      "kg": 3.99,
+      "n": 1,
+      "date": "2026-08-09"
+     },
+     "carrefour": {
+      "kg": 3.99,
+      "n": 1,
+      "date": "2026-01-24"
+     },
+     "intermarche": {
+      "kg": 2.58,
+      "n": 1,
+      "date": "2026-05-29"
+     },
+     "auchan": {
+      "kg": 8.6,
+      "n": 1,
+      "date": "2025-09-06"
+     }
+    }
+   }
+  },
+  {
+   "id": "haricotvert",
+   "nom": "Haricots verts (surgelés)",
+   "ciqual": 20070,
+   "ciqualNom": "Haricot vert, surgelé, cru",
+   "kcal": 33.1,
+   "prot": 1.79,
+   "gluc": 4.76,
+   "lip": 0.21,
+   "suc": 2.21,
+   "fib": 2.6,
+   "sel": 0.01,
+   "prix": {
+    "kg": 2.55,
+    "n": 42,
+    "magasins": {
+     "leclerc": {
+      "kg": 2.21,
+      "n": 19,
+      "date": "2026-07-30"
+     },
+     "carrefour": {
+      "kg": 3.4,
+      "n": 7,
+      "date": "2026-05-09"
+     },
+     "intermarche": {
+      "kg": 1.85,
+      "n": 4,
+      "date": "2026-05-17"
+     },
+     "auchan": {
+      "kg": 2.65,
+      "n": 1,
+      "date": "2025-07-26"
+     }
+    }
+   }
+  },
+  {
+   "id": "epinard",
+   "nom": "Épinards (surgelés)",
+   "ciqual": 20083,
+   "ciqualNom": "Epinard, haché ou purée ou en branches, surgelé, cru",
+   "kcal": 28.0,
+   "prot": 3.32,
+   "gluc": 1.0,
+   "lip": 0.54,
+   "suc": 0.83,
+   "fib": 2.95,
+   "sel": 0.14,
+   "prix": {
+    "kg": 2.76,
+    "n": 43,
+    "magasins": {
+     "leclerc": {
+      "kg": 2.25,
+      "n": 21,
+      "date": "2026-09-14"
+     },
+     "carrefour": {
+      "kg": 3.42,
+      "n": 6,
+      "date": "2026-02-08"
+     },
+     "intermarche": {
+      "kg": 6.14,
+      "n": 4,
+      "date": "2026-09-30"
+     },
+     "auchan": {
+      "kg": 3.13,
+      "n": 1,
+      "date": "2026-03-02"
+     }
+    }
+   }
+  },
+  {
+   "id": "courgette",
+   "nom": "Courgette",
+   "ciqual": 20020,
+   "ciqualNom": "Courgette, chair et peau, crue",
+   "kcal": 16.7,
+   "prot": 1.21,
+   "gluc": 1.75,
+   "lip": 0.32,
+   "suc": 1.74,
+   "fib": 1.0,
+   "sel": 0.02,
+   "prix": {
+    "kg": 2.9,
+    "n": 68,
+    "magasins": {
+     "leclerc": {
+      "kg": 1.79,
+      "n": 4,
+      "date": "2025-12-02"
+     },
+     "lidl": {
+      "kg": 2.14,
+      "n": 2,
+      "date": "2026-08-07"
+     },
+     "carrefour": {
+      "kg": 2.89,
+      "n": 17,
+      "date": "2026-08-08"
+     },
+     "intermarche": {
+      "kg": 2.64,
+      "n": 2,
+      "date": "2026-07-04"
+     }
+    }
+   }
+  },
+  {
+   "id": "tomate",
+   "nom": "Tomate",
+   "ciqual": 20276,
+   "ciqualNom": "Tomate ronde, crue",
+   "kcal": 17.5,
+   "prot": 0.5,
+   "gluc": 3.42,
+   "lip": 0.0,
+   "suc": 3.0,
+   "fib": 1.0,
+   "sel": 0.0,
+   "prix": {
+    "kg": 3.99,
+    "n": 143,
+    "magasins": {
+     "leclerc": {
+      "kg": 1.99,
+      "n": 7,
+      "date": "2026-07-04"
+     },
+     "lidl": {
+      "kg": 1.99,
+      "n": 6,
+      "date": "2026-08-07"
+     },
+     "superu": {
+      "kg": 4.99,
+      "n": 9,
+      "date": "2026-09-26"
+     },
+     "carrefour": {
+      "kg": 4.49,
+      "n": 28,
+      "date": "2026-09-04"
+     },
+     "intermarche": {
+      "kg": 3.99,
+      "n": 12,
+      "date": "2026-07-25"
+     },
+     "auchan": {
+      "kg": 2.49,
+      "n": 12,
+      "date": "2026-09-04"
+     },
+     "aldi": {
+      "kg": 1.92,
+      "n": 2,
+      "date": "2026-09-04"
+     }
+    }
+   }
+  },
+  {
+   "id": "concombre",
+   "nom": "Concombre",
+   "ciqual": 20019,
+   "ciqualNom": "Concombre, chair et peau, cru",
+   "kcal": 16.8,
+   "prot": 0.65,
+   "gluc": 2.87,
+   "lip": 0.11,
+   "suc": 1.67,
+   "fib": 0.5,
+   "sel": 0.01,
+   "prix": {
+    "kg": 2.04,
+    "n": 8,
+    "magasins": {
+     "leclerc": {
+      "kg": 1.19,
+      "n": 1,
+      "date": "2025-10-18"
+     },
+     "lidl": {
+      "kg": 1.49,
+      "n": 1,
+      "date": "2026-08-07"
+     },
+     "carrefour": {
+      "kg": 4.99,
+      "n": 1,
+      "date": "2026-07-04"
+     }
+    }
+   }
+  },
+  {
+   "id": "carotte",
+   "nom": "Carotte",
+   "ciqual": 20009,
+   "ciqualNom": "Carotte, crue",
+   "kcal": 30.2,
+   "prot": 0.78,
+   "gluc": 5.16,
+   "lip": 0.0,
+   "suc": 4.85,
+   "fib": 2.9,
+   "sel": 0.12,
+   "prix": {
+    "kg": 2.19,
+    "n": 91,
+    "magasins": {
+     "leclerc": {
+      "kg": 1.99,
+      "n": 5,
+      "date": "2026-09-02"
+     },
+     "lidl": {
+      "kg": 1.69,
+      "n": 8,
+      "date": "2026-08-11"
+     },
+     "superu": {
+      "kg": 1.95,
+      "n": 1,
+      "date": "2026-04-21"
+     },
+     "carrefour": {
+      "kg": 1.99,
+      "n": 20,
+      "date": "2026-09-12"
+     },
+     "intermarche": {
+      "kg": 1.99,
+      "n": 8,
+      "date": "2026-07-10"
+     },
+     "auchan": {
+      "kg": 2.75,
+      "n": 1,
+      "date": "2025-09-04"
+     },
+     "aldi": {
+      "kg": 1.84,
+      "n": 4,
+      "date": "2026-09-04"
+     }
+    }
+   }
+  },
+  {
+   "id": "poivron",
+   "nom": "Poivron rouge",
+   "ciqual": 20087,
+   "ciqualNom": "Poivron rouge, cru",
+   "kcal": 33.6,
+   "prot": 1.06,
+   "gluc": 5.98,
+   "lip": 0.0,
+   "suc": 4.8,
+   "fib": 3.2,
+   "sel": 0.0,
+   "prix": {
+    "kg": 5.49,
+    "n": 39,
+    "magasins": {
+     "leclerc": {
+      "kg": 3.49,
+      "n": 1,
+      "date": "2025-10-18"
+     },
+     "superu": {
+      "kg": 4.49,
+      "n": 2,
+      "date": "2026-07-18"
+     },
+     "carrefour": {
+      "kg": 5.24,
+      "n": 8,
+      "date": "2026-08-08"
+     },
+     "intermarche": {
+      "kg": 5.09,
+      "n": 3,
+      "date": "2026-07-10"
+     }
+    }
+   }
+  },
+  {
+   "id": "champignon",
+   "nom": "Champignons de Paris",
+   "ciqual": 20056,
+   "ciqualNom": "Champignon de Paris ou champignon de couche, cru",
+   "kcal": 21.0,
+   "prot": 2.11,
+   "gluc": 1.83,
+   "lip": 0.36,
+   "suc": 1.55,
+   "fib": 1.0,
+   "sel": 0.1,
+   "prix": {
+    "kg": 11.23,
+    "n": 34,
+    "magasins": {
+     "lidl": {
+      "kg": 7.16,
+      "n": 3,
+      "date": "2026-01-30"
+     },
+     "superu": {
+      "kg": 4.99,
+      "n": 1,
+      "date": "2026-07-28"
+     },
+     "carrefour": {
+      "kg": 6.99,
+      "n": 8,
+      "date": "2026-07-04"
+     },
+     "intermarche": {
+      "kg": 12.95,
+      "n": 3,
+      "date": "2025-12-06"
+     },
+     "auchan": {
+      "kg": 6.98,
+      "n": 1,
+      "date": "2025-09-06"
+     }
+    }
+   }
+  },
+  {
+   "id": "oignon",
+   "nom": "Oignon",
+   "ciqual": 20034,
+   "ciqualNom": "Oignon, cru",
+   "kcal": 39.0,
+   "prot": 1.1,
+   "gluc": 6.25,
+   "lip": 0.62,
+   "suc": 4.8,
+   "fib": 1.7,
+   "sel": 0.1,
+   "prix": {
+    "kg": 2.95,
+    "n": 62,
+    "magasins": {
+     "leclerc": {
+      "kg": 3.54,
+      "n": 2,
+      "date": "2026-11-02"
+     },
+     "lidl": {
+      "kg": 1.95,
+      "n": 2,
+      "date": "2026-04-20"
+     },
+     "carrefour": {
+      "kg": 2.79,
+      "n": 7,
+      "date": "2026-07-04"
+     },
+     "intermarche": {
+      "kg": 2.99,
+      "n": 3,
+      "date": "2026-07-18"
+     },
+     "auchan": {
+      "kg": 2.97,
+      "n": 2,
+      "date": "2025-07-12"
+     },
+     "aldi": {
+      "kg": 2.49,
+      "n": 2,
+      "date": "2026-10-17"
+     }
+    }
+   }
+  },
+  {
+   "id": "salade",
+   "nom": "Salade verte",
+   "ciqual": 20031,
+   "ciqualNom": "Laitue, crue",
+   "kcal": 14.7,
+   "prot": 1.35,
+   "gluc": 1.22,
+   "lip": 0.2,
+   "suc": 0.73,
+   "fib": 1.1,
+   "sel": 0.02,
+   "prix": {
+    "kg": 9.01,
+    "n": 5,
+    "magasins": {
+     "leclerc": {
+      "kg": 6.66,
+      "n": 2,
+      "date": "2025-11-04"
+     }
+    }
+   }
+  },
+  {
+   "id": "banane",
+   "nom": "Banane",
+   "ciqual": 13005,
+   "ciqualNom": "Banane, chair sans peau, crue",
+   "kcal": 87.6,
+   "prot": 1.06,
+   "gluc": 19.7,
+   "lip": 0.0,
+   "suc": 15.6,
+   "fib": 2.7,
+   "sel": 0.0,
+   "prix": {
+    "kg": 1.99,
+    "n": 90,
+    "magasins": {
+     "leclerc": {
+      "kg": 4.49,
+      "n": 1,
+      "date": "2026-03-28"
+     },
+     "lidl": {
+      "kg": 1.39,
+      "n": 2,
+      "date": "2026-08-11"
+     },
+     "superu": {
+      "kg": 2.6,
+      "n": 2,
+      "date": "2026-05-26"
+     },
+     "carrefour": {
+      "kg": 1.99,
+      "n": 8,
+      "date": "2026-10-10"
+     },
+     "intermarche": {
+      "kg": 1.99,
+      "n": 11,
+      "date": "2026-07-10"
+     },
+     "auchan": {
+      "kg": 1.99,
+      "n": 20,
+      "date": "2026-10-13"
+     },
+     "aldi": {
+      "kg": 1.49,
+      "n": 1,
+      "date": "2026-10-30"
+     }
+    }
+   }
+  },
+  {
+   "id": "pomme",
+   "nom": "Pomme",
+   "ciqual": 13039,
+   "ciqualNom": "Pomme, chair et peau, crue",
+   "kcal": 54.0,
+   "prot": 0.25,
+   "gluc": 11.6,
+   "lip": 0.25,
+   "suc": 10.6,
+   "fib": 1.4,
+   "sel": 0.0,
+   "prix": {
+    "kg": 2.99,
+    "n": 128,
+    "magasins": {
+     "leclerc": {
+      "kg": 2.94,
+      "n": 6,
+      "date": "2026-07-07"
+     },
+     "lidl": {
+      "kg": 1.99,
+      "n": 13,
+      "date": "2026-08-11"
+     },
+     "superu": {
+      "kg": 2.84,
+      "n": 2,
+      "date": "2026-07-31"
+     },
+     "carrefour": {
+      "kg": 2.95,
+      "n": 20,
+      "date": "2026-09-20"
+     },
+     "intermarche": {
+      "kg": 3.2,
+      "n": 6,
+      "date": "2026-07-04"
+     },
+     "auchan": {
+      "kg": 3.99,
+      "n": 1,
+      "date": "2026-04-25"
+     },
+     "aldi": {
+      "kg": 1.99,
+      "n": 1,
+      "date": "2025-10-18"
+     }
+    }
+   }
+  },
+  {
+   "id": "kiwi",
+   "nom": "Kiwi",
+   "ciqual": 13021,
+   "ciqualNom": "Kiwi, chair sans peau, avec pépins, cru",
+   "kcal": 60.9,
+   "prot": 0.88,
+   "gluc": 11.0,
+   "lip": 0.6,
+   "suc": 8.9,
+   "fib": 2.4,
+   "sel": 0.0,
+   "prix": {
+    "kg": 5.5,
+    "n": 17,
+    "magasins": {
+     "lidl": {
+      "kg": 5.98,
+      "n": 5,
+      "date": "2026-08-11"
+     },
+     "carrefour": {
+      "kg": 4.5,
+      "n": 1,
+      "date": "2025-06-03"
+     }
+    }
+   }
+  },
+  {
+   "id": "orange",
+   "nom": "Orange",
+   "ciqual": 13034,
+   "ciqualNom": "Orange, chair sans peau, sans pépins, crue",
+   "kcal": 42.0,
+   "prot": 0.75,
+   "gluc": 8.03,
+   "lip": 0.0,
+   "suc": 7.6,
+   "fib": 2.7,
+   "sel": 0.0,
+   "prix": {
+    "kg": 2.92,
+    "n": 86,
+    "magasins": {
+     "lidl": {
+      "kg": 1.5,
+      "n": 7,
+      "date": "2026-08-11"
+     },
+     "superu": {
+      "kg": 2.99,
+      "n": 1,
+      "date": "2026-07-18"
+     },
+     "carrefour": {
+      "kg": 2.89,
+      "n": 20,
+      "date": "2026-09-20"
+     },
+     "intermarche": {
+      "kg": 2.49,
+      "n": 5,
+      "date": "2026-07-18"
+     },
+     "auchan": {
+      "kg": 2.94,
+      "n": 7,
+      "date": "2026-05-09"
+     }
+    }
+   }
+  },
+  {
+   "id": "fruitsrouges",
+   "nom": "Fruits rouges (surgelés)",
+   "ciqual": 13015,
+   "ciqualNom": "Framboise, crue",
+   "kcal": 47.9,
+   "prot": 1.19,
+   "gluc": 5.83,
+   "lip": 0.8,
+   "suc": 5.4,
+   "fib": 4.3,
+   "sel": 0.0,
+   "prix": {
+    "kg": 10.92,
+    "n": 19,
+    "magasins": {
+     "leclerc": {
+      "kg": 12.08,
+      "n": 4,
+      "date": "2026-02-08"
+     },
+     "superu": {
+      "kg": 11.06,
+      "n": 6,
+      "date": "2026-04-02"
+     },
+     "carrefour": {
+      "kg": 7.58,
+      "n": 5,
+      "date": "2026-05-09"
+     },
+     "intermarche": {
+      "kg": 11.89,
+      "n": 1,
+      "date": "2026-02-01"
+     }
+    }
+   }
+  },
+  {
+   "id": "citron",
+   "nom": "Citron",
+   "ciqual": 13009,
+   "ciqualNom": "Citron, chair sans peau, sans pépins, cru",
+   "kcal": 24.3,
+   "prot": 0.25,
+   "gluc": 1.56,
+   "lip": 0.0,
+   "suc": 0.8,
+   "fib": 0.0,
+   "sel": 0.0,
+   "prix": {
+    "kg": 3.98,
+    "n": 55,
+    "magasins": {
+     "leclerc": {
+      "kg": 3.99,
+      "n": 1,
+      "date": "2026-07-07"
+     },
+     "lidl": {
+      "kg": 2.58,
+      "n": 5,
+      "date": "2026-08-11"
+     },
+     "superu": {
+      "kg": 4.99,
+      "n": 1,
+      "date": "2026-07-31"
+     },
+     "carrefour": {
+      "kg": 3.04,
+      "n": 4,
+      "date": "2026-05-29"
+     },
+     "intermarche": {
+      "kg": 3.99,
+      "n": 5,
+      "date": "2026-07-04"
+     },
+     "auchan": {
+      "kg": 4.84,
+      "n": 4,
+      "date": "2026-05-09"
+     },
+     "aldi": {
+      "kg": 4.78,
+      "n": 1,
+      "date": "2025-10-18"
+     }
+    }
+   }
+  },
+  {
+   "id": "avocat",
+   "nom": "Avocat",
+   "ciqual": 13004,
+   "ciqualNom": "Avocat, chair sans peau, sans noyau, cru",
+   "kcal": 203.0,
+   "prot": 1.56,
+   "gluc": 0.0,
+   "lip": 20.6,
+   "suc": 0.4,
+   "fib": 3.6,
+   "sel": 0.01,
+   "prix": {
+    "kg": 5.85,
+    "n": 16,
+    "magasins": {
+     "leclerc": {
+      "kg": 4.67,
+      "n": 3,
+      "date": "2026-03-28"
+     },
+     "superu": {
+      "kg": 6.74,
+      "n": 2,
+      "date": "2026-05-26"
+     },
+     "carrefour": {
+      "kg": 5.98,
+      "n": 3,
+      "date": "2026-07-04"
+     }
+    }
+   }
+  },
+  {
+   "id": "huile",
+   "nom": "Huile d'olive vierge extra",
+   "ciqual": 17270,
+   "ciqualNom": "Huile d'olive vierge extra",
+   "kcal": 899.0,
+   "prot": 0.25,
+   "gluc": 0.0,
+   "lip": 99.9,
+   "suc": 0.0,
+   "fib": 0.0,
+   "sel": 0.0,
+   "prix": {
+    "kg": 14.82,
+    "n": 370,
+    "magasins": {
+     "leclerc": {
+      "kg": 10.55,
+      "n": 105,
+      "date": "2026-11-03"
+     },
+     "lidl": {
+      "kg": 10.97,
+      "n": 5,
+      "date": "2026-10-05"
+     },
+     "superu": {
+      "kg": 15.38,
+      "n": 48,
+      "date": "2026-10-08"
+     },
+     "carrefour": {
+      "kg": 15.62,
+      "n": 66,
+      "date": "2026-10-10"
+     },
+     "intermarche": {
+      "kg": 15.19,
+      "n": 19,
+      "date": "2026-10-11"
+     },
+     "auchan": {
+      "kg": 17.14,
+      "n": 42,
+      "date": "2026-09-04"
+     },
+     "aldi": {
+      "kg": 11.63,
+      "n": 1,
+      "date": "2026-09-22"
+     }
+    }
+   }
+  },
+  {
+   "id": "amande",
+   "nom": "Amandes",
+   "ciqual": 15000,
+   "ciqualNom": "Amande, avec peau, sans sel ajouté",
+   "kcal": 615.0,
+   "prot": 18.8,
+   "gluc": 9.51,
+   "lip": 51.3,
+   "suc": 4.2,
+   "fib": 12.5,
+   "sel": 0.0,
+   "prix": {
+    "kg": 24.75,
+    "n": 189,
+    "magasins": {
+     "leclerc": {
+      "kg": 22.32,
+      "n": 55,
+      "date": "2026-10-10"
+     },
+     "lidl": {
+      "kg": 13.95,
+      "n": 7,
+      "date": "2026-03-17"
+     },
+     "superu": {
+      "kg": 25.6,
+      "n": 36,
+      "date": "2026-10-16"
+     },
+     "carrefour": {
+      "kg": 25.05,
+      "n": 28,
+      "date": "2026-08-19"
+     },
+     "intermarche": {
+      "kg": 23.31,
+      "n": 27,
+      "date": "2026-10-11"
+     },
+     "auchan": {
+      "kg": 16.05,
+      "n": 13,
+      "date": "2026-11-01"
+     }
+    }
+   }
+  },
+  {
+   "id": "cacahuete",
+   "nom": "Beurre de cacahuète",
+   "ciqual": 15202,
+   "ciqualNom": "Beurre de cacahuète ou pâte d'arachide",
+   "kcal": 643.0,
+   "prot": 22.2,
+   "gluc": 17.3,
+   "lip": 51.4,
+   "suc": 10.5,
+   "fib": 5.0,
+   "sel": 1.07,
+   "prix": {
+    "kg": 10.49,
+    "n": 429,
+    "magasins": {
+     "leclerc": {
+      "kg": 9.13,
+      "n": 203,
+      "date": "2026-11-03"
+     },
+     "lidl": {
+      "kg": 5.93,
+      "n": 4,
+      "date": "2026-10-18"
+     },
+     "superu": {
+      "kg": 11.31,
+      "n": 35,
+      "date": "2026-09-20"
+     },
+     "carrefour": {
+      "kg": 12.14,
+      "n": 39,
+      "date": "2026-10-10"
+     },
+     "intermarche": {
+      "kg": 11.2,
+      "n": 28,
+      "date": "2026-09-23"
+     },
+     "auchan": {
+      "kg": 12.49,
+      "n": 50,
+      "date": "2026-11-01"
+     }
+    }
+   }
+  },
+  {
+   "id": "chocolat",
+   "nom": "Chocolat noir 70 %",
+   "ciqual": 31074,
+   "ciqualNom": "Chocolat noir 70 % de cacao environ, de dégustation, tablette",
+   "kcal": 591.0,
+   "prot": 10.4,
+   "gluc": 26.9,
+   "lip": 46.3,
+   "suc": 17.9,
+   "fib": 12.8,
+   "sel": 0.02,
+   "prix": {
+    "kg": 27.05,
+    "n": 412,
+    "magasins": {
+     "leclerc": {
+      "kg": 14.15,
+      "n": 91,
+      "date": "2026-11-02"
+     },
+     "lidl": {
+      "kg": 15.9,
+      "n": 6,
+      "date": "2026-09-11"
+     },
+     "superu": {
+      "kg": 30.5,
+      "n": 25,
+      "date": "2026-10-17"
+     },
+     "carrefour": {
+      "kg": 28.5,
+      "n": 111,
+      "date": "2026-10-31"
+     },
+     "intermarche": {
+      "kg": 28.5,
+      "n": 43,
+      "date": "2026-10-24"
+     },
+     "auchan": {
+      "kg": 26.88,
+      "n": 75,
+      "date": "2026-09-04"
+     }
+    }
+   }
+  },
+  {
+   "id": "miel",
+   "nom": "Miel",
+   "ciqual": 31008,
+   "ciqualNom": "Miel",
+   "kcal": 331.0,
+   "prot": 0.65,
+   "gluc": 82.1,
+   "lip": 0.0,
+   "suc": 81.1,
+   "fib": 0.0,
+   "sel": 0.01,
+   "prix": {
+    "kg": 17.31,
+    "n": 271,
+    "magasins": {
+     "leclerc": {
+      "kg": 9.24,
+      "n": 14,
+      "date": "2026-11-02"
+     },
+     "superu": {
+      "kg": 15.65,
+      "n": 55,
+      "date": "2026-10-04"
+     },
+     "carrefour": {
+      "kg": 16.83,
+      "n": 46,
+      "date": "2026-10-10"
+     },
+     "intermarche": {
+      "kg": 18.1,
+      "n": 49,
+      "date": "2026-09-23"
+     },
+     "auchan": {
+      "kg": 18.51,
+      "n": 57,
+      "date": "2026-11-01"
+     }
+    }
+   }
+  }
+ ]
+}
