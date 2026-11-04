@@ -2,7 +2,7 @@ import { ACTIVITY, PACES, BODIES, SLOTS, computePlan, safetyCheck, bmi } from '.
 import {
   loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice,
 } from './data.js';
-import { bodySVG } from './body.js';
+import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
 import { viewScan, viewScanProduct, stopScan, ALLERGENS } from './scan.js';
 
@@ -36,6 +36,8 @@ async function route() {
   }
   if (!profile && page !== 'profil') { location.hash = '#/profil'; return; }
   await stopScan();
+  if (page !== 'profil') wizard = null;
+  document.body.classList.toggle('onboarding', page === 'profil' && !profile);
   document.querySelectorAll('.tabbar a').forEach((a) => {
     const on = a.dataset.tab === page || (page === 'repas' && a.dataset.tab === 'repas');
     if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
@@ -61,142 +63,170 @@ document.addEventListener('pointermove', (e) => {
 });
 document.addEventListener('pointerout', (e) => { const el = e.target.closest?.('.tilt'); if (el) el.style.transform = ''; });
 
-// ---------- Profil ----------
-function viewProfil() {
-  const p = profile || { sexe: 'h', activite: 'leger', rythme: 'normale', corps: 'athletique', regimes: [], magasin: 'leclerc' };
-  const radio = (name, value, label, detail, extra = '') => `
-    <label class="choice ${extra}"><input type="radio" name="${name}" value="${value}" ${p[name] === value ? 'checked' : ''}>
-      <b>${label}</b>${detail ? `<small>${detail}</small>` : ''}</label>`;
-  const num = (name, label, unit, attrs) => `
-    <label class="field"><span>${label}</span><div class="unit-input">
-      <input class="input" type="number" inputmode="decimal" name="${name}" value="${p[name] ?? ''}" ${attrs}><em>${unit}</em></div></label>`;
+// ---------- Profil : questionnaire, une question à la fois ----------
+const DIET_OPTIONS = [['halal', 'Halal', '🕌'], ['vegetarien', 'Végétarien', '🥦'], ['sanslactose', 'Sans lactose', '🥛']];
+let wizard = null; // { step, draft }
+
+function wizardSteps(d) {
+  const num = (name, unit, attrs, ph) => `
+    <div class="unit-input big-input"><input class="input" type="text" inputmode="decimal" name="${name}" value="${d[name] ?? ''}" placeholder="${ph}" ${attrs} autocomplete="off"><em>${unit}</em></div>`;
+  const radios = (name, opts) => `<div class="choices">${opts.map((o) => `
+    <label class="choice"><input type="radio" name="${name}" value="${o.id}" ${d[name] === o.id ? 'checked' : ''}><b>${o.emoji ? `${o.emoji} ` : ''}${o.label}</b>${o.detail ? `<small>${o.detail}</small>` : ''}</label>`).join('')}</div>`;
+  const nOrNull = (v) => { const x = parseFloat(String(v ?? '').replace(',', '.')); return Number.isFinite(x) ? x : null; };
+
+  return [
+    { id: 'sexe', emoji: '👤', q: 'Tu es…', help: 'Les besoins en calories ne sont pas les mêmes pour un homme et une femme.',
+      html: () => `<div class="choices two big-choices">${[['h', 'Homme', '🙋‍♂️'], ['f', 'Femme', '🙋‍♀️']].map(([v, l, e]) => `
+        <label class="choice"><input type="radio" name="sexe" value="${v}" ${d.sexe === v ? 'checked' : ''}><span class="big-emoji">${e}</span><b>${l}</b></label>`).join('')}</div>`,
+      read: (f) => (f.get('sexe') ? (d.sexe = f.get('sexe'), null) : 'Choisis une réponse.'),
+      done: () => (d.sexe ? (d.sexe === 'h' ? 'Homme' : 'Femme') : null) },
+    { id: 'age', emoji: '🎂', q: 'Quel âge as-tu ?', html: () => num('age', 'ans', 'min="12" max="99"', 'Ex. 28'),
+      read: (f) => { const v = nOrNull(f.get('age')); if (!v || v < 12 || v > 99) return 'Entre un âge entre 12 et 99 ans.'; d.age = Math.round(v); return null; },
+      done: () => (d.age ? `${d.age} ans` : null) },
+    { id: 'taille', emoji: '📏', q: 'Combien mesures-tu ?', help: 'En centimètres : 1,78 m = 178 cm.', html: () => num('taille', 'cm', 'min="120" max="230"', 'Ex. 178'),
+      read: (f) => { let v = nOrNull(f.get('taille')); if (v && v < 3) v *= 100; if (!v || v < 120 || v > 230) return 'Entre ta taille en cm (ex. 178).'; d.taille = Math.round(v); return null; },
+      done: () => (d.taille ? `${d.taille} cm` : null) },
+    { id: 'poids', emoji: '⚖️', q: 'Combien pèses-tu ?', help: 'Idéalement le matin, à jeun.', html: () => num('poids', 'kg', 'min="30" max="300" step="0.1"', 'Ex. 82,5'),
+      read: (f) => { const v = nOrNull(f.get('poids')); if (!v || v < 30 || v > 300) return 'Entre ton poids en kg (ex. 82,5).'; d.poids = Math.round(v * 10) / 10; return null; },
+      done: () => (d.poids ? `${fmt(d.poids, 1)} kg` : null) },
+    { id: 'enceinte', emoji: '🤰', q: 'Es-tu enceinte ou allaites-tu ?', help: 'Dans ce cas, pas de sèche : on te propose seulement une alimentation équilibrée.', skip: () => d.sexe !== 'f',
+      html: () => radios('enceinte', [{ id: 'non', label: 'Non' }, { id: 'oui', label: 'Oui' }]).replace(`value="${d.enceinte ? 'oui' : 'non'}"`, `value="${d.enceinte ? 'oui' : 'non'}" checked`),
+      read: (f) => (f.get('enceinte') ? (d.enceinte = f.get('enceinte') === 'oui', null) : 'Choisis une réponse.'),
+      done: () => (d.enceinte == null ? null : d.enceinte ? 'Oui' : 'Non') },
+    { id: 'activite', emoji: '🏃', q: 'Quel est ton niveau d\'activité ?', html: () => radios('activite', ACTIVITY),
+      read: (f) => (f.get('activite') ? (d.activite = f.get('activite'), null) : 'Choisis une réponse.'),
+      done: () => ACTIVITY.find((a) => a.id === d.activite)?.label },
+    { id: 'corps', emoji: '🔥', q: 'Quel corps veux-tu avoir ?', help: 'Plus le corps est sec, plus il faut de temps et de rigueur.',
+      html: () => `<div class="choices two">${BODIES.map((b) => `
+        <label class="choice body-choice"><input type="radio" name="corps" value="${b.id}" ${d.corps === b.id ? 'checked' : ''}>
+          ${bodySVG({ sexe: d.sexe || 'h', bf: d.sexe === 'f' ? b.f : b.h, size: 90, label: b.label })}<b>${b.label}</b><small>${b.detail}</small></label>`).join('')}</div>`,
+      read: (f) => (f.get('corps') ? (d.corps = f.get('corps'), null) : 'Choisis une silhouette.'),
+      done: () => BODIES.find((b) => b.id === d.corps)?.label },
+    { id: 'poidsCible', emoji: '🎯', q: 'As-tu un poids précis en tête ?', help: 'Facultatif. Si tu ne sais pas, touche « Passer » : Affûté le calcule d\'après le corps choisi.', optional: true,
+      html: () => num('poidsCible', 'kg', 'min="35" max="250" step="0.5"', 'Ex. 75'),
+      read: (f) => {
+        const v = nOrNull(f.get('poidsCible'));
+        if (v == null) { d.poidsCible = null; return null; }
+        if (v >= d.poids) return `Ton poids visé doit être inférieur à ton poids actuel (${fmt(d.poids, 1)} kg).`;
+        const min = 19 * (d.taille / 100) ** 2;
+        if (v < min) return `Trop bas pour ta taille : minimum ${fmt(Math.ceil(min), 0)} kg pour rester en bonne santé.`;
+        d.poidsCible = v; return null;
+      },
+      done: () => (d.poidsCible ? `${fmt(d.poidsCible, 1)} kg` : 'Calculé pour moi') },
+    { id: 'rythme', emoji: '⏱️', q: 'À quel rythme veux-tu avancer ?', html: () => radios('rythme', PACES.map((x) => ({ ...x, emoji: { douce: '🐢', normale: '🚶', rapide: '🚀' }[x.id] }))),
+      read: (f) => (f.get('rythme') ? (d.rythme = f.get('rythme'), null) : 'Choisis un rythme.'),
+      done: () => PACES.find((x) => x.id === d.rythme)?.label },
+    { id: 'regimes', emoji: '🍽️', q: 'Suis-tu un régime particulier ?', help: 'Tu peux en choisir plusieurs, ou aucun.', optional: true,
+      html: () => `<div class="choices">${DIET_OPTIONS.map(([id, l, e]) => `
+        <label class="choice"><input type="checkbox" name="regimes" value="${id}" ${(d.regimes || []).includes(id) ? 'checked' : ''}><b>${e} ${l}</b></label>`).join('')}</div>`,
+      read: (f) => { d.regimes = f.getAll('regimes'); return null; },
+      done: () => (d.regimes?.length ? d.regimes.map((r) => DIET_OPTIONS.find((o) => o[0] === r)?.[1]).join(', ') : 'Aucun') },
+    { id: 'allergies', emoji: '⚠️', q: 'As-tu des allergies ?', help: 'Le scanner te préviendra si un produit en contient.', optional: true,
+      html: () => `<div class="chips wrap">${ALLERGENS.map((a) => `
+        <label class="chip check"><input type="checkbox" name="allergies" value="${a.tag}" ${(d.allergies || []).includes(a.tag) ? 'checked' : ''}>${a.label}</label>`).join('')}</div>`,
+      read: (f) => { d.allergies = f.getAll('allergies'); return null; },
+      done: () => (d.allergies?.length ? `${d.allergies.length} allergie${d.allergies.length > 1 ? 's' : ''}` : 'Aucune') },
+    { id: 'magasin', emoji: '🛒', q: 'Où fais-tu tes courses ?', help: 'Les prix des repas seront calculés pour ce magasin.',
+      html: () => `<div class="choices two">${DATA.magasins.map((m) => `
+        <label class="choice"><input type="radio" name="magasin" value="${m.id}" ${d.magasin === m.id ? 'checked' : ''}><b>${m.nom}</b></label>`).join('')}</div>`,
+      read: (f) => (f.get('magasin') ? (d.magasin = f.get('magasin'), null) : 'Choisis un magasin.'),
+      done: () => DATA.magasins.find((m) => m.id === d.magasin)?.nom },
+    { id: 'mensurations', emoji: '📐', q: 'Tes mensurations', help: `Facultatif, mais plus précis. Avec un mètre ruban : tour de taille au nombril, tour de cou sous la pomme d'Adam${d.sexe === 'f' ? ', tour de hanches au plus large' : ''}.`, optional: true,
+      html: () => `<div class="stack">
+        <label class="field"><span>Tour de taille</span>${num('tourTaille', 'cm', 'min="40" max="200"', 'Ex. 90')}</label>
+        <label class="field"><span>Tour de cou</span>${num('tourCou', 'cm', 'min="20" max="70"', 'Ex. 39')}</label>
+        ${d.sexe === 'f' ? `<label class="field"><span>Tour de hanches</span>${num('tourHanches', 'cm', 'min="50" max="200"', 'Ex. 100')}</label>` : ''}</div>`,
+      read: (f) => { d.tourTaille = nOrNull(f.get('tourTaille')); d.tourCou = nOrNull(f.get('tourCou')); d.tourHanches = nOrNull(f.get('tourHanches')); return null; },
+      done: () => (d.tourTaille && d.tourCou ? 'Renseignées' : 'Passé') },
+  ];
+}
+
+function viewProfil(goTo) {
+  if (!wizard || goTo === 'reset') {
+    const base = profile ? { ...profile } : { sexe: null, activite: null, rythme: 'normale', corps: null, regimes: [], allergies: [], magasin: null, enceinte: null };
+    wizard = { step: 0, draft: base, seen: new Set(profile ? wizardSteps(base).map((s) => s.id) : []) };
+  }
+  const d = wizard.draft;
+  const steps = wizardSteps(d).filter((s) => !s.skip || !s.skip());
+  if (wizard.step >= steps.length) wizard.step = steps.length - 1;
+  const st = steps[wizard.step];
+  const total = steps.length;
+  const doneCount = steps.filter((s) => wizard.seen.has(s.id)).length;
+  const pct = Math.round((doneCount / total) * 100);
+  const last = wizard.step === total - 1;
 
   $app.innerHTML = `
-    <h1 class="title">${profile ? 'Mon profil' : 'Ta sèche, <span class="grad-text">sur mesure</span>.'}</h1>
-    <p class="lead">${profile ? 'Modifie tes infos : ton plan se recalcule tout seul.' : 'Réponds en 1 minute : calories, protéines, repas avec les vrais prix de ton magasin et l\'aperçu de ton futur corps.'}</p>
-    <form id="pf" class="stack" novalidate>
-      <section class="card">
-        <h2>1. Toi</h2>
-        <div class="choices two">${radio('sexe', 'h', 'Homme')}${radio('sexe', 'f', 'Femme')}</div>
-        <div class="grid3" style="margin-top:12px">
-          ${num('age', 'Âge', 'ans', 'min="12" max="99" required')}
-          ${num('taille', 'Taille', 'cm', 'min="120" max="230" required')}
-          ${num('poids', 'Poids', 'kg', 'min="30" max="300" step="0.1" required')}
-        </div>
-        <label class="choice" id="preg-wrap" style="margin-top:12px;${p.sexe === 'f' ? '' : 'display:none'}">
-          <input type="checkbox" name="enceinte" ${p.enceinte ? 'checked' : ''}><b>Je suis enceinte ou j'allaite</b></label>
-      </section>
+    <div class="wiz-top">
+      <div class="wiz-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Questions effectuées : ${pct} %"><i style="width:${pct}%"></i></div>
+      <span class="wiz-pct">${pct} %</span>
+    </div>
+    ${!profile && wizard.step === 0 ? '<p class="lead center" style="margin:6px 0 0">Ta sèche sur mesure en <b style="color:var(--text)">1 minute</b>. Tes réponses restent sur ton téléphone.</p>' : ''}
+    <form id="wf" class="wiz-card card slide-in" novalidate>
+      <div class="wiz-emoji">${st.emoji}</div>
+      <h1 class="wiz-q">${st.q}</h1>
+      ${st.help ? `<p class="lead" style="margin-bottom:14px">${st.help}</p>` : ''}
+      ${st.html()}
+      <p id="err" class="notice stop" hidden style="margin-top:12px"></p>
+      <button class="btn block" type="submit" style="margin-top:16px">${last ? (profile ? 'Enregistrer ✓' : 'Voir mon plan ⚡') : 'Valider →'}</button>
+      ${st.optional && !last ? '<button class="btn ghost block" type="button" id="skip" style="margin-top:10px">Passer</button>' : ''}
+    </form>
+    <div class="row between" style="margin-top:6px">
+      ${wizard.step > 0 ? '<button class="btn ghost small" type="button" id="prev">← Retour</button>' : '<span></span>'}
+      ${profile ? '<button class="btn ghost small" type="button" id="save-now">Enregistrer maintenant</button>' : ''}
+    </div>
+    ${profile && last ? '<button class="btn ghost block" type="button" id="reset" style="margin-top:18px">Tout effacer</button>' : ''}
+    <p class="footer-note">Affûté ne remplace pas l'avis d'un médecin ou d'un diététicien.</p>`;
 
-      <section class="card">
-        <h2>2. Ton activité</h2>
-        <div class="choices">${ACTIVITY.map((a) => radio('activite', a.id, a.label, a.detail)).join('')}</div>
-      </section>
+  const form = document.getElementById('wf');
+  const err = document.getElementById('err');
+  const firstInput = form.querySelector('input[inputmode=decimal]');
+  if (firstInput && !('ontouchstart' in window)) firstInput.focus();
 
-      <section class="card">
-        <h2>3. Le corps que tu veux</h2>
-        <div class="choices two" id="bodies">${BODIES.map((b) => `
-          <label class="choice body-choice"><input type="radio" name="corps" value="${b.id}" ${p.corps === b.id ? 'checked' : ''}>
-            <span class="fig" data-body="${b.id}"></span><b>${b.label}</b><small>${b.detail}</small></label>`).join('')}
-        </div>
-        <div style="margin-top:12px">${num('poidsCible', 'Poids visé (facultatif : sinon calculé pour toi)', 'kg', 'min="35" max="250" step="0.5"')}</div>
-      </section>
-
-      <section class="card">
-        <h2>4. Ton rythme</h2>
-        <div class="choices">${PACES.map((x) => radio('rythme', x.id, x.label, x.detail)).join('')}</div>
-      </section>
-
-      <section class="card">
-        <h2>5. Tes habitudes</h2>
-        <p class="small muted" style="margin-top:-6px">Régime alimentaire</p>
-        <div class="chips" id="diets">${[['halal', 'Halal'], ['vegetarien', 'Végétarien'], ['sanslactose', 'Sans lactose']].map(([id, l]) => `
-          <button type="button" class="chip" data-diet="${id}" aria-pressed="${(p.regimes || []).includes(id)}">${l}</button>`).join('')}</div>
-        <p class="small muted">Allergies (pour le scanner)</p>
-        <div class="chips" id="allergies" style="flex-wrap:wrap">${ALLERGENS.map((a) => `
-          <button type="button" class="chip" data-allergy="${a.tag}" aria-pressed="${(p.allergies || []).includes(a.tag)}">${a.label}</button>`).join('')}</div>
-        <p class="small muted">Ton magasin habituel</p>
-        <div class="chips" id="stores">${DATA.magasins.map((m) => `
-          <button type="button" class="chip" data-store="${m.id}" aria-pressed="${p.magasin === m.id}">${m.nom}</button>`).join('')}</div>
-        <details style="margin-top:14px">
-          <summary class="small" style="cursor:pointer;color:var(--mint)">+ Mes mensurations (plus précis)</summary>
-          <p class="small muted">Avec un mètre ruban : tour de taille au niveau du nombril, tour de cou sous la pomme d'Adam${p.sexe === 'f' ? ', tour de hanches au plus large' : ''}.</p>
-          <div class="grid3">
-            ${num('tourTaille', 'Taille', 'cm', 'min="40" max="200"')}
-            ${num('tourCou', 'Cou', 'cm', 'min="20" max="70"')}
-            ${num('tourHanches', 'Hanches', 'cm', 'min="50" max="200"')}
-          </div>
-        </details>
-      </section>
-
-      <p id="err" class="notice stop" hidden></p>
-      <button class="btn block" type="submit">${profile ? 'Enregistrer' : 'Calculer mon plan ⚡'}</button>
-      ${profile ? '<button class="btn ghost block" type="button" id="reset">Tout effacer</button>' : ''}
-      <p class="footer-note">Tes données restent sur ton téléphone. Affûté ne remplace pas l'avis d'un médecin ou d'un diététicien.</p>
-    </form>`;
-
-  const form = document.getElementById('pf');
-  const drawBodies = () => {
-    const sexe = form.sexe.value || 'h';
-    document.querySelectorAll('[data-body]').forEach((el) => {
-      const b = BODIES.find((x) => x.id === el.dataset.body);
-      el.innerHTML = bodySVG({ sexe, bf: sexe === 'h' ? b.h : b.f, size: 90, label: b.label });
-    });
-    document.getElementById('preg-wrap').style.display = sexe === 'f' ? '' : 'none';
-  };
-  drawBodies();
-  form.addEventListener('change', (e) => { if (e.target.name === 'sexe') drawBodies(); });
-
-  const diets = new Set(p.regimes || []);
-  const allergies = new Set(p.allergies || []);
-  document.getElementById('allergies').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-allergy]'); if (!b) return;
-    const id = b.dataset.allergy;
-    allergies.has(id) ? allergies.delete(id) : allergies.add(id);
-    b.setAttribute('aria-pressed', allergies.has(id));
-  });
-  let shop = p.magasin || 'leclerc';
-  document.getElementById('diets').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-diet]'); if (!b) return;
-    const id = b.dataset.diet;
-    diets.has(id) ? diets.delete(id) : diets.add(id);
-    b.setAttribute('aria-pressed', diets.has(id));
-  });
-  document.getElementById('stores').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-store]'); if (!b) return;
-    shop = b.dataset.store;
-    document.querySelectorAll('[data-store]').forEach((x) => x.setAttribute('aria-pressed', x === b));
-  });
-  document.getElementById('reset')?.addEventListener('click', () => {
-    if (!confirm('Effacer ton profil, ton suivi de poids et tes choix de repas ? (Les photos restent.)')) return;
-    ['profil', 'poids', 'semaine'].forEach((k) => localStorage.removeItem(`affute.${k}`));
-    profile = null; location.hash = '#/profil'; route();
-  });
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const f = new FormData(form);
-    const n = (k) => { const v = parseFloat(String(f.get(k) || '').replace(',', '.')); return Number.isFinite(v) ? v : null; };
+  const finish = () => {
     const np = {
-      sexe: f.get('sexe') || 'h', age: n('age'), taille: n('taille'), poids: n('poids'),
-      activite: f.get('activite') || 'leger', corps: f.get('corps') || 'athletique', rythme: f.get('rythme') || 'normale',
-      poidsCible: n('poidsCible'), regimes: [...diets], allergies: [...allergies], magasin: shop,
-      tourTaille: n('tourTaille'), tourCou: n('tourCou'), tourHanches: n('tourHanches'),
-      enceinte: f.get('sexe') === 'f' && f.get('enceinte') === 'on',
-      depart: profile?.depart || { date: Date.now(), poids: n('poids') },
+      ...d,
+      sexe: d.sexe || 'h', activite: d.activite || 'leger', corps: d.corps || 'athletique', rythme: d.rythme || 'normale',
+      magasin: d.magasin || 'leclerc', regimes: d.regimes || [], allergies: d.allergies || [],
+      enceinte: d.sexe === 'f' && Boolean(d.enceinte),
+      depart: profile?.depart || { date: Date.now(), poids: d.poids },
     };
-    const err = document.getElementById('err');
-    const problems = [];
-    if (!np.age || np.age < 12 || np.age > 99) problems.push('ton âge');
-    if (!np.taille || np.taille < 120 || np.taille > 230) problems.push('ta taille en cm (ex. 175)');
-    if (!np.poids || np.poids < 30 || np.poids > 300) problems.push('ton poids en kg (ex. 80)');
-    if (problems.length) { err.hidden = false; err.textContent = `Vérifie ${problems.join(', ')}.`; err.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    if (!np.age || !np.taille || !np.poids) {
+      wizard.step = steps.findIndex((s) => ['age', 'taille', 'poids'].includes(s.id) && !d[s.id]);
+      viewProfil(); return;
+    }
     if (np.poidsCible && np.poidsCible >= np.poids) np.poidsCible = null;
     profile = np;
     store.set('profil', profile);
-    // Premier poids du suivi
-    const log = store.get('poids', []);
-    if (!log.length) store.set('poids', [{ d: Date.now(), kg: np.poids }]);
+    if (!store.get('poids', []).length) store.set('poids', [{ d: Date.now(), kg: np.poids }]);
+    wizard = null;
     location.hash = '#/plan';
+  };
+  const next = () => {
+    wizard.seen.add(st.id);
+    if (last) { finish(); return; }
+    wizard.step += 1;
+    viewProfil();
+    window.scrollTo(0, 0);
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const problem = st.read(new FormData(form));
+    if (problem) { err.hidden = false; err.textContent = problem; return; }
+    next();
+  });
+  // Choix unique : on coche, puis « Valider ». Un double appui valide directement.
+  form.addEventListener('dblclick', (e) => { if (e.target.closest('.choice') && form.querySelector('input[type=radio]:checked')) form.requestSubmit(); });
+  document.getElementById('skip')?.addEventListener('click', () => {
+    form.querySelectorAll('input').forEach((i) => { if (i.type === 'checkbox') i.checked = false; if (i.type === 'text') i.value = ''; });
+    st.read(new FormData(form)); next();
+  });
+  document.getElementById('prev')?.addEventListener('click', () => { wizard.step -= 1; viewProfil(); });
+  document.getElementById('save-now')?.addEventListener('click', () => { const problem = st.read(new FormData(form)); if (problem) { err.hidden = false; err.textContent = problem; return; } finish(); });
+  document.getElementById('reset')?.addEventListener('click', () => {
+    if (!confirm('Effacer ton profil, ton suivi de poids et tes choix de repas ? (Les photos restent.)')) return;
+    ['profil', 'poids', 'semaine'].forEach((k) => localStorage.removeItem(`affute.${k}`));
+    profile = null; wizard = null; location.hash = '#/profil'; viewProfil('reset');
   });
 }
 
@@ -261,6 +291,7 @@ function viewPlan() {
       ${plan.nbWeeks > 0 ? `
       <label class="field" style="margin-top:12px"><span id="wk-label">Fais glisser pour voir ton corps semaine après semaine</span>
         <input type="range" id="wk" min="0" max="${plan.nbWeeks}" value="${plan.nbWeeks}"></label>` : ''}
+      <div class="row skin-row"><span class="small muted">Teinte</span>${SKINS.map((c) => `<button type="button" class="skin-dot" data-skin="${c}" style="background:${c}" aria-label="Choisir cette teinte de peau"></button>`).join('')}</div>
       <p class="small muted" style="margin:6px 0 0">${plan.bfMesure ? 'Taux de gras calculé avec tes mensurations (formule de la Marine américaine).' : 'Taux de gras estimé à partir de ton IMC. Ajoute tes mensurations dans ton profil pour plus de précision.'}</p>
     </section>
 
@@ -312,7 +343,8 @@ function viewPlan() {
 
   const now = document.getElementById('fig-now');
   const goal = document.getElementById('fig-goal');
-  now.innerHTML = bodySVG({ sexe: p.sexe, bf: plan.bfNow, size: 150, label: 'Toi aujourd\'hui' });
+  const drawNow = () => { now.innerHTML = bodySVG({ sexe: p.sexe, bf: plan.bfNow, size: 150, label: 'Toi aujourd\'hui' }); };
+  drawNow();
   const drawGoal = (w) => {
     const kg = plan.weeks[w];
     const bf = plan.bfAt(kg);
@@ -323,6 +355,11 @@ function viewPlan() {
   drawGoal(plan.nbWeeks);
   const slider = document.getElementById('wk');
   slider?.addEventListener('input', () => drawGoal(Number(slider.value)));
+  const markSkin = () => { const cur = store.get('peau', SKINS[1]); $app.querySelectorAll('[data-skin]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.skin === cur)); };
+  markSkin();
+  $app.querySelectorAll('[data-skin]').forEach((b) => b.addEventListener('click', () => {
+    store.set('peau', b.dataset.skin); markSkin(); drawNow(); drawGoal(slider ? Number(slider.value) : plan.nbWeeks);
+  }));
 }
 
 // ---------- Semaine ----------
@@ -630,7 +667,7 @@ async function viewCorps() {
     <section class="card">
       <h2>⚖️ Mon poids</h2>
       <form id="wf" class="row">
-        <div class="unit-input" style="flex:1"><input class="input" id="wkg" type="number" inputmode="decimal" step="0.1" min="30" max="300" placeholder="Poids de ce matin" aria-label="Poids de ce matin en kg"><em>kg</em></div>
+        <div class="unit-input" style="flex:1"><input class="input" id="wkg" type="text" inputmode="decimal" step="0.1" min="30" max="300" placeholder="Poids de ce matin" aria-label="Poids de ce matin en kg"><em>kg</em></div>
         <button class="btn" type="submit">OK</button>
       </form>
       <div class="grid2" style="margin-top:12px">
@@ -700,16 +737,18 @@ async function openSim(id) {
   const plan = computePlan(profile);
   const sim = document.getElementById('sim');
   const img = await blobToImage(ph.blob);
-  const center = { cx: 0.5, cy: 0.55 };
+  const center = { cx: 0.5, cy: 0.55, rx: 0.2 };
+  let tapStep = 0; // 0 = nombril, 1 = bord de la taille
   const older = photos.filter((p) => p.id !== id).at(-1);
 
   sim.innerHTML = `
     <section class="card">
       <h2>✨ Simulation de ton objectif</h2>
-      <p class="small muted" style="margin-top:-6px">1. Touche ton nombril sur la photo. 2. Fais glisser pour choisir la semaine.</p>
-      <div class="target-pick" id="pick"><img src="${img.src}" alt="Ta photo"><div class="dot" id="dot" style="left:50%;top:55%"></div></div>
+      <p class="notice info" id="tap-help" style="margin:0 0 10px">👆 <b>Étape 1 :</b> touche ton <b>nombril</b> sur la photo.</p>
+      <div class="target-pick" id="pick"><img src="${img.src}" alt="Ta photo"><div class="dot" id="dot" style="left:50%;top:55%"></div><div class="dot side" id="dot2" style="left:70%;top:55%"></div></div>
       <label class="field" style="margin-top:12px"><span id="sim-label"></span>
         <input type="range" id="sim-wk" min="1" max="${Math.max(1, plan.nbWeeks)}" value="${Math.max(1, plan.nbWeeks)}"></label>
+      <div class="chips" id="cmp-mode" style="margin-top:10px"><button class="chip" data-mode="cote" aria-pressed="true">Côte à côte</button><button class="chip" data-mode="glisser" aria-pressed="false">Glisser pour comparer</button></div>
       <div class="compare" id="cmp" style="margin-top:10px"></div>
       <div class="notice warn" style="margin:12px 0 0">Simulation approximative : Affûté affine la silhouette sur ta photo selon le poids prévu. Ce n'est pas une prédiction exacte. La vraie transformation dépend de ton entraînement, de ton sommeil et de ta génétique.</div>
       <div class="row" style="margin-top:12px">
@@ -723,7 +762,19 @@ async function openSim(id) {
   const slider = document.getElementById('sim-wk');
   const cmp = document.getElementById('cmp');
 
+  let mode = 'cote';
+  let last = null;
   const renderCompare = (beforeEl, afterCanvas, leftLabel, rightLabel) => {
+    last = [beforeEl, afterCanvas, leftLabel, rightLabel];
+    if (mode === 'cote') {
+      cmp.className = 'side-by-side';
+      cmp.innerHTML = `<figure><div class="ph"></div><figcaption>${leftLabel}</figcaption></figure><figure class="after-fig"><div class="ph"></div><figcaption>${rightLabel}</figcaption></figure>`;
+      const [a, b] = cmp.querySelectorAll('.ph');
+      a.appendChild(beforeEl); b.appendChild(afterCanvas);
+      cmp.onpointerdown = null; cmp.onpointermove = null;
+      return;
+    }
+    cmp.className = 'compare';
     cmp.innerHTML = `<div class="b"></div><div class="after"></div><div class="handle"></div><span class="tag l">${leftLabel}</span><span class="tag r">${rightLabel}</span>`;
     cmp.querySelector('.b').appendChild(beforeEl);
     cmp.querySelector('.after').appendChild(afterCanvas);
@@ -736,25 +787,47 @@ async function openSim(id) {
     cmp.onpointerdown = (e) => { cmp.setPointerCapture(e.pointerId); setPos(e.clientX); };
     cmp.onpointermove = (e) => { if (e.buttons || e.pointerType === 'touch') setPos(e.clientX); };
   };
+  document.getElementById('cmp-mode').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-mode]'); if (!b || !last) return;
+    mode = b.dataset.mode;
+    document.querySelectorAll('#cmp-mode [data-mode]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    renderCompare(...last);
+  });
 
   const update = () => {
     const w = Number(slider.value);
     const kg = plan.weeks[Math.min(w, plan.weeks.length - 1)] ?? ph.kg;
-    const lostFrac = Math.max(0, (ph.kg - kg) / ph.kg);
-    const squeeze = Math.max(0.78, 1 - lostFrac * 1.15);
+    // Tour de taille : environ 1 cm de moins par kilo perdu. La largeur du ventre suit le même rapport.
+    const waist = profile.tourTaille || profile.taille * 0.5;
+    const lostKg = Math.max(0, ph.kg - kg);
+    const squeeze = Math.max(0.7, 1 - (lostKg * 1.6) / waist);
     document.getElementById('sim-label').textContent = plan.nbWeeks
       ? `Dans ${w} semaine${w > 1 ? 's' : ''} : environ ${fmt(kg, 1)} kg (−${fmt(Math.max(0, ph.kg - kg), 1)} kg)`
       : 'Tu es déjà à ton objectif : la simulation montre peu de changement.';
     const before = new Image(); before.src = img.src; before.alt = 'Avant';
-    const after = simulate(img, { ...center, squeeze, definition: Math.min(1, lostFrac * 8) });
+    const after = simulate(img, { ...center, squeeze });
     renderCompare(before, after, 'Maintenant', `Semaine ${w}`);
   };
 
-  pick.addEventListener('click', (e) => {
+  const dot2 = document.getElementById('dot2');
+  const help = document.getElementById('tap-help');
+  // « pointerup » marche partout, y compris dans Safari sur iPhone (où « click » est parfois ignoré).
+  pick.addEventListener('pointerup', (e) => {
     const r = pick.getBoundingClientRect();
-    center.cx = (e.clientX - r.left) / r.width; center.cy = (e.clientY - r.top) / r.height;
-    dot.style.left = `${center.cx * 100}%`; dot.style.top = `${center.cy * 100}%`;
-    update();
+    const x = (e.clientX - r.left) / r.width; const y = (e.clientY - r.top) / r.height;
+    if (tapStep === 0) {
+      center.cx = x; center.cy = y;
+      dot.style.left = `${x * 100}%`; dot.style.top = `${y * 100}%`;
+      dot2.style.top = `${y * 100}%`;
+      tapStep = 1;
+      help.innerHTML = '👆 <b>Étape 2 :</b> touche le <b>bord de ta taille</b> (là où ton ventre s\'arrête, à gauche ou à droite).';
+    } else {
+      center.rx = Math.abs(x - center.cx);
+      dot2.style.left = `${x * 100}%`;
+      tapStep = 0;
+      help.innerHTML = '✅ C\'est réglé ! Fais glisser le curseur et la barre verte pour comparer. Pour recommencer, touche à nouveau ton nombril.';
+      update();
+    }
   });
   let t; slider.addEventListener('input', () => { clearTimeout(t); t = setTimeout(update, 60); });
   document.getElementById('del').onclick = async () => {

@@ -61,7 +61,7 @@ export function blobToImage(blob) {
  * cx, cy : centre du ventre (0 à 1). squeeze : 0,85 = taille 15 % plus fine.
  * C'est une déformation d'image (comme un filtre « liquify »), pas une prédiction médicale.
  */
-export function simulate(img, { cx = 0.5, cy = 0.5, squeeze = 0.9, definition = 0 } = {}) {
+export function simulate(img, { cx = 0.5, cy = 0.5, rx = 0.22, squeeze = 0.9, definition = 0 } = {}) {
   const w = img.naturalWidth || img.width;
   const h = img.naturalHeight || img.height;
   const src = document.createElement('canvas');
@@ -73,9 +73,9 @@ export function simulate(img, { cx = 0.5, cy = 0.5, squeeze = 0.9, definition = 
   const ix = input.data; const ox = out.data;
 
   const X = cx * w; const Y = cy * h;
-  const R = 0.24 * w; // demi-largeur approximative du corps
-  const R2 = 0.42 * w; // au-delà, l'image n'est pas modifiée
-  const top = Y - 0.3 * h; const bottom = Y + 0.28 * h; // de la poitrine aux cuisses
+  const R = Math.max(0.06, rx) * w * 1.08; // demi-largeur du corps (indiquée par la personne)
+  const R2 = Math.min(R * 2, R + 0.3 * w); // au-delà, l'image n'est pas modifiée
+  const top = Math.max(0, Y - 2.6 * R); const bottom = Math.min(h, Y + 2.2 * R); // de la poitrine au haut des cuisses
   const smoothstep = (t) => t * t * (3 - 2 * t);
 
   for (let y = 0; y < h; y++) {
