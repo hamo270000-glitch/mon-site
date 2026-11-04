@@ -2,7 +2,7 @@ import { ACTIVITY, PACES, BODIES, SLOTS, computePlan, safetyCheck, bmi } from '.
 import {
   loadData, loadFoods, norm, mealNutrition, mealPrice, mealPricesByStore, dietCheck, portionFactor, displayQty, ingredientPrice,
 } from './data.js';
-import { bodySVG } from './body.js';
+import { bodySVG, SKINS } from './body.js';
 import { savePhoto, listPhotos, deletePhoto, loadImage, blobToImage, simulate } from './photo.js';
 import { viewScan, viewScanProduct, stopScan, ALLERGENS } from './scan.js';
 
@@ -157,9 +157,8 @@ function viewProfil(goTo) {
 
   $app.innerHTML = `
     <div class="wiz-top">
-      <div class="row between small"><b>Question ${wizard.step + 1} / ${total}</b><span class="wiz-pct">${pct} %</span></div>
-      <div class="wiz-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Progression du questionnaire"><i style="width:${pct}%"></i></div>
-      <div class="wiz-dots">${steps.map((s, i) => `<button type="button" class="wiz-dot ${wizard.seen.has(s.id) ? 'done' : ''} ${i === wizard.step ? 'cur' : ''}" data-go="${i}" ${wizard.seen.has(s.id) || i <= wizard.step ? '' : 'disabled'} aria-label="Question ${i + 1}${wizard.seen.has(s.id) ? ' (faite)' : ''}">${wizard.seen.has(s.id) ? '✓' : i + 1}</button>`).join('')}</div>
+      <div class="wiz-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Questions effectuées : ${pct} %"><i style="width:${pct}%"></i></div>
+      <span class="wiz-pct">${pct} %</span>
     </div>
     ${!profile && wizard.step === 0 ? '<p class="lead center" style="margin:6px 0 0">Ta sèche sur mesure en <b style="color:var(--text)">1 minute</b>. Tes réponses restent sur ton téléphone.</p>' : ''}
     <form id="wf" class="wiz-card card slide-in" novalidate>
@@ -224,7 +223,6 @@ function viewProfil(goTo) {
   });
   document.getElementById('prev')?.addEventListener('click', () => { wizard.step -= 1; viewProfil(); });
   document.getElementById('save-now')?.addEventListener('click', () => { const problem = st.read(new FormData(form)); if (problem) { err.hidden = false; err.textContent = problem; return; } finish(); });
-  $app.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => { wizard.step = Number(b.dataset.go); viewProfil(); }));
   document.getElementById('reset')?.addEventListener('click', () => {
     if (!confirm('Effacer ton profil, ton suivi de poids et tes choix de repas ? (Les photos restent.)')) return;
     ['profil', 'poids', 'semaine'].forEach((k) => localStorage.removeItem(`affute.${k}`));
@@ -293,6 +291,7 @@ function viewPlan() {
       ${plan.nbWeeks > 0 ? `
       <label class="field" style="margin-top:12px"><span id="wk-label">Fais glisser pour voir ton corps semaine après semaine</span>
         <input type="range" id="wk" min="0" max="${plan.nbWeeks}" value="${plan.nbWeeks}"></label>` : ''}
+      <div class="row skin-row"><span class="small muted">Teinte</span>${SKINS.map((c) => `<button type="button" class="skin-dot" data-skin="${c}" style="background:${c}" aria-label="Choisir cette teinte de peau"></button>`).join('')}</div>
       <p class="small muted" style="margin:6px 0 0">${plan.bfMesure ? 'Taux de gras calculé avec tes mensurations (formule de la Marine américaine).' : 'Taux de gras estimé à partir de ton IMC. Ajoute tes mensurations dans ton profil pour plus de précision.'}</p>
     </section>
 
@@ -344,7 +343,8 @@ function viewPlan() {
 
   const now = document.getElementById('fig-now');
   const goal = document.getElementById('fig-goal');
-  now.innerHTML = bodySVG({ sexe: p.sexe, bf: plan.bfNow, size: 150, label: 'Toi aujourd\'hui' });
+  const drawNow = () => { now.innerHTML = bodySVG({ sexe: p.sexe, bf: plan.bfNow, size: 150, label: 'Toi aujourd\'hui' }); };
+  drawNow();
   const drawGoal = (w) => {
     const kg = plan.weeks[w];
     const bf = plan.bfAt(kg);
@@ -355,6 +355,11 @@ function viewPlan() {
   drawGoal(plan.nbWeeks);
   const slider = document.getElementById('wk');
   slider?.addEventListener('input', () => drawGoal(Number(slider.value)));
+  const markSkin = () => { const cur = store.get('peau', SKINS[1]); $app.querySelectorAll('[data-skin]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.skin === cur)); };
+  markSkin();
+  $app.querySelectorAll('[data-skin]').forEach((b) => b.addEventListener('click', () => {
+    store.set('peau', b.dataset.skin); markSkin(); drawNow(); drawGoal(slider ? Number(slider.value) : plan.nbWeeks);
+  }));
 }
 
 // ---------- Semaine ----------
@@ -732,16 +737,18 @@ async function openSim(id) {
   const plan = computePlan(profile);
   const sim = document.getElementById('sim');
   const img = await blobToImage(ph.blob);
-  const center = { cx: 0.5, cy: 0.55 };
+  const center = { cx: 0.5, cy: 0.55, rx: 0.2 };
+  let tapStep = 0; // 0 = nombril, 1 = bord de la taille
   const older = photos.filter((p) => p.id !== id).at(-1);
 
   sim.innerHTML = `
     <section class="card">
       <h2>✨ Simulation de ton objectif</h2>
-      <p class="small muted" style="margin-top:-6px">1. Touche ton nombril sur la photo. 2. Fais glisser pour choisir la semaine.</p>
-      <div class="target-pick" id="pick"><img src="${img.src}" alt="Ta photo"><div class="dot" id="dot" style="left:50%;top:55%"></div></div>
+      <p class="notice info" id="tap-help" style="margin:0 0 10px">👆 <b>Étape 1 :</b> touche ton <b>nombril</b> sur la photo.</p>
+      <div class="target-pick" id="pick"><img src="${img.src}" alt="Ta photo"><div class="dot" id="dot" style="left:50%;top:55%"></div><div class="dot side" id="dot2" style="left:70%;top:55%"></div></div>
       <label class="field" style="margin-top:12px"><span id="sim-label"></span>
         <input type="range" id="sim-wk" min="1" max="${Math.max(1, plan.nbWeeks)}" value="${Math.max(1, plan.nbWeeks)}"></label>
+      <div class="chips" id="cmp-mode" style="margin-top:10px"><button class="chip" data-mode="cote" aria-pressed="true">Côte à côte</button><button class="chip" data-mode="glisser" aria-pressed="false">Glisser pour comparer</button></div>
       <div class="compare" id="cmp" style="margin-top:10px"></div>
       <div class="notice warn" style="margin:12px 0 0">Simulation approximative : Affûté affine la silhouette sur ta photo selon le poids prévu. Ce n'est pas une prédiction exacte. La vraie transformation dépend de ton entraînement, de ton sommeil et de ta génétique.</div>
       <div class="row" style="margin-top:12px">
@@ -755,7 +762,19 @@ async function openSim(id) {
   const slider = document.getElementById('sim-wk');
   const cmp = document.getElementById('cmp');
 
+  let mode = 'cote';
+  let last = null;
   const renderCompare = (beforeEl, afterCanvas, leftLabel, rightLabel) => {
+    last = [beforeEl, afterCanvas, leftLabel, rightLabel];
+    if (mode === 'cote') {
+      cmp.className = 'side-by-side';
+      cmp.innerHTML = `<figure><div class="ph"></div><figcaption>${leftLabel}</figcaption></figure><figure class="after-fig"><div class="ph"></div><figcaption>${rightLabel}</figcaption></figure>`;
+      const [a, b] = cmp.querySelectorAll('.ph');
+      a.appendChild(beforeEl); b.appendChild(afterCanvas);
+      cmp.onpointerdown = null; cmp.onpointermove = null;
+      return;
+    }
+    cmp.className = 'compare';
     cmp.innerHTML = `<div class="b"></div><div class="after"></div><div class="handle"></div><span class="tag l">${leftLabel}</span><span class="tag r">${rightLabel}</span>`;
     cmp.querySelector('.b').appendChild(beforeEl);
     cmp.querySelector('.after').appendChild(afterCanvas);
@@ -768,25 +787,46 @@ async function openSim(id) {
     cmp.onpointerdown = (e) => { cmp.setPointerCapture(e.pointerId); setPos(e.clientX); };
     cmp.onpointermove = (e) => { if (e.buttons || e.pointerType === 'touch') setPos(e.clientX); };
   };
+  document.getElementById('cmp-mode').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-mode]'); if (!b || !last) return;
+    mode = b.dataset.mode;
+    document.querySelectorAll('#cmp-mode [data-mode]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    renderCompare(...last);
+  });
 
   const update = () => {
     const w = Number(slider.value);
     const kg = plan.weeks[Math.min(w, plan.weeks.length - 1)] ?? ph.kg;
-    const lostFrac = Math.max(0, (ph.kg - kg) / ph.kg);
-    const squeeze = Math.max(0.78, 1 - lostFrac * 1.15);
+    // Tour de taille : environ 1 cm de moins par kilo perdu. La largeur du ventre suit le même rapport.
+    const waist = profile.tourTaille || profile.taille * 0.5;
+    const lostKg = Math.max(0, ph.kg - kg);
+    const squeeze = Math.max(0.7, 1 - (lostKg * 1.6) / waist);
     document.getElementById('sim-label').textContent = plan.nbWeeks
       ? `Dans ${w} semaine${w > 1 ? 's' : ''} : environ ${fmt(kg, 1)} kg (−${fmt(Math.max(0, ph.kg - kg), 1)} kg)`
       : 'Tu es déjà à ton objectif : la simulation montre peu de changement.';
     const before = new Image(); before.src = img.src; before.alt = 'Avant';
-    const after = simulate(img, { ...center, squeeze, definition: Math.min(1, lostFrac * 8) });
+    const after = simulate(img, { ...center, squeeze });
     renderCompare(before, after, 'Maintenant', `Semaine ${w}`);
   };
 
+  const dot2 = document.getElementById('dot2');
+  const help = document.getElementById('tap-help');
   pick.addEventListener('click', (e) => {
     const r = pick.getBoundingClientRect();
-    center.cx = (e.clientX - r.left) / r.width; center.cy = (e.clientY - r.top) / r.height;
-    dot.style.left = `${center.cx * 100}%`; dot.style.top = `${center.cy * 100}%`;
-    update();
+    const x = (e.clientX - r.left) / r.width; const y = (e.clientY - r.top) / r.height;
+    if (tapStep === 0) {
+      center.cx = x; center.cy = y;
+      dot.style.left = `${x * 100}%`; dot.style.top = `${y * 100}%`;
+      dot2.style.top = `${y * 100}%`;
+      tapStep = 1;
+      help.innerHTML = '👆 <b>Étape 2 :</b> touche le <b>bord de ta taille</b> (là où ton ventre s\'arrête, à gauche ou à droite).';
+    } else {
+      center.rx = Math.abs(x - center.cx);
+      dot2.style.left = `${x * 100}%`;
+      tapStep = 0;
+      help.innerHTML = '✅ C\'est réglé ! Fais glisser le curseur et la barre verte pour comparer. Pour recommencer, touche à nouveau ton nombril.';
+      update();
+    }
   });
   let t; slider.addEventListener('input', () => { clearTimeout(t); t = setTimeout(update, 60); });
   document.getElementById('del').onclick = async () => {
