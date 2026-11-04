@@ -61,6 +61,9 @@ python3 tools/build_prix.py      # met à jour les prix (≈ 5 minutes)
 python3 tools/build_ciqual.py <dossier Ciqual> data/aliments.json   # nouvelle version de la table Ciqual
 ```
 
+## Logo
+Un « A » géométrique taillé comme une lame (facette ombrée), dont le creux a la forme d'une pousse, sur un dégradé vert émeraude (`icons/logo.svg`, icônes PNG 180, 192 et 512 px).
+
 ## Organisation
 - `index.html`, `css/app.css` : page et design.
 - `js/app.js` : écrans (profil, plan, semaine, repas, aliments, corps).
