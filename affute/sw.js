@@ -1,8 +1,8 @@
 // Fonctionne hors ligne : on garde une copie de l'appli et des données.
-const CACHE = 'affute-v24';
+const CACHE = 'affute-v25';
 const ASSETS = [
   './', 'index.html', 'css/app.css', 'js/app.js', 'js/calc.js', 'js/data.js', 'js/body.js', 'js/photo.js', 'js/scan.js', 'js/journal.js', 'js/fx.js', 'js/sport.js', 'js/sport-data.js', 'js/muscles.js',
-  '../js/api.js', '../js/score.js', '../js/data.js', '../vendor/html5-qrcode.min.js',
+  '../js/api.js', '../js/score.js', '../js/data.js', '../vendor/html5-qrcode.min.js', '../vendor/gsap.min.js', '../vendor/lenis.min.js', '../vendor/lenis.css', '../js/motion.js',
   'data/ingredients.json', 'data/repas.json', 'data/photos.json', 'data/aliments.json', 'manifest.webmanifest',
   'icons/logo.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-180.png',
 ];

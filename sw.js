@@ -1,8 +1,8 @@
 // Garde l'application disponible hors connexion (les données produits, elles, demandent internet).
-const CACHE = 'clair-v2';
+const CACHE = 'clair-v3';
 const ASSETS = [
   './', 'index.html', 'css/app.css', 'js/app.js', 'js/api.js', 'js/score.js', 'js/data.js',
-  'vendor/html5-qrcode.min.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
+  'vendor/html5-qrcode.min.js', 'vendor/gsap.min.js', 'vendor/lenis.min.js', 'vendor/lenis.css', 'js/motion.js', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
 ];
 
 self.addEventListener('install', (e) => {

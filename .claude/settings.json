@@ -1,0 +1,10 @@
+{
+  "extraKnownMarketplaces": {
+    "gsap-skills": {
+      "source": { "source": "github", "repo": "greensock/gsap-skills" }
+    }
+  },
+  "enabledPlugins": {
+    "gsap-skills@gsap-skills": true
+  }
+}
