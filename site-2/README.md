@@ -1,6 +1,6 @@
-# Site 2
+# Site 2 : Rosée
 
-Site web animé, en ligne sur https://hamo270000-glitch.github.io/mon-site/site-2/
+Boutique de soins de la peau (marque Rosée), animée, en ligne sur https://hamo270000-glitch.github.io/mon-site/site-2/
 
 ## Outils
 - **React** + **Vite** + **Tailwind CSS**
@@ -9,6 +9,8 @@ Site web animé, en ligne sur https://hamo270000-glitch.github.io/mon-site/site-
 - **Lenis** : défilement doux, relié à GSAP dans `source/src/SmoothScroll.tsx`
 
 ## Organisation
+- `source/src/data/products.ts` : la liste des produits (nom, prix, couleur, description…). Pour ajouter un produit, copier un bloc.
+- `source/src/shop/` : dessins des produits, panier, panneaux.
 - `source/` : le code à modifier (page principale : `source/src/App.tsx`).
 - `index.html` et `assets/` : le site construit, publié par GitHub Pages. **Ne pas modifier à la main.**
 
@@ -24,3 +26,6 @@ Puis commit des deux : `source/` et le site construit.
 Prendre la version « TS + Tailwind » du composant dans le dépôt react-bits
 (`src/ts-tailwind/...`), la copier dans `source/src/components/reactbits/`,
 installer ses dépendances avec npm si besoin, puis l'utiliser dans `App.tsx`.
+
+## Commandes
+Le panier fonctionne (enregistré sur l’appareil), mais aucun paiement n’est branché : le bouton « Commander » affiche que les commandes ne sont pas encore ouvertes.
