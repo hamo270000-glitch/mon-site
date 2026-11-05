@@ -21,7 +21,7 @@
             {%- assign base = block.settings.image_asset | remove: '.webp' -%}
             {%- if block.settings.image_asset contains '.webp' -%}
               <picture>
-                <source media="(max-width: 899px)" srcset="{{ base | append: '-750.webp' | asset_url }}" width="750" height="1000">
+                <source media="(max-width: 899px)" srcset="{{ base | append: '-750.webp' | asset_url }}" width="750" height="750">
                 <img src="{{ block.settings.image_asset | asset_url }}" alt="" width="2400" height="1000" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
               </picture>
             {%- else -%}
