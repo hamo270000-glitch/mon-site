@@ -1,4 +1,4 @@
-<section class="section section--bubbles{% if section.settings.dark %} bg-aubergine{% elsif section.settings.cream %} bg-cream{% endif %}">
+<section class="section{% if section.settings.dark %} bg-aubergine{% elsif section.settings.cream %} bg-cream{% endif %}">
   <div class="page-width">
     <div class="section-head reveal">
       {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
@@ -8,9 +8,9 @@
     <div class="ingredients" style="--cols: {{ section.blocks.size | at_most: 4 }}">
       {%- for block in section.blocks -%}
         <div class="ingredient reveal" {{ block.shopify_attributes }}>
-          <div class="ingredient__bubble" data-parallax="{% cycle '0.04', '0.07', '0.05', '0.08' %}">
+          <div class="ingredient__bubble">
             <div class="ingredient__img">
-              {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}{%- else -%}<span class="glyph">{{ block.settings.title | slice: 0, 2 }}</span>{%- endif -%}
+              {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}{%- else -%}<span class="glyph">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>{%- endif -%}
             </div>
             <span class="ingredient__floor" aria-hidden="true"></span>
           </div>

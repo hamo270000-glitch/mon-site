@@ -183,7 +183,7 @@
             "date": "Hier",
             "title": "Titre de l'avis",
             "text": "Exemple de mise en page : collez ici un avis client réel.",
-            "photo_asset": "brosse-geste-rond.jpg",
+            "photo_asset": "brosse-geste-rond.webp",
             "verified": false,
             "is_example": true
           }
@@ -196,7 +196,7 @@
             "date": "Avant-hier",
             "title": "Titre de l'avis",
             "text": "Exemple de mise en page : remplacez par un avis réel.",
-            "photo_asset": "brosse-lymphatique-2.jpg",
+            "photo_asset": "brosse-lymphatique-2.webp",
             "verified": false,
             "is_example": true
           }
@@ -222,7 +222,7 @@
             "date": "Il y a 5 jours",
             "title": "Titre de l'avis",
             "text": "Exemple de mise en page : remplacez par un avis réel.",
-            "photo_asset": "huile-visage-2.jpg",
+            "photo_asset": "huile-visage.webp",
             "verified": false,
             "is_example": true
           }
@@ -254,7 +254,7 @@
       "settings": {
         "eyebrow": "Le geste",
         "heading": "3 minutes, 3 mouvements",
-        "image_asset": "brosse-geste-rond.jpg",
+        "image_asset": "brosse-geste-rond.webp",
         "cream": true,
         "required_tag": "drainage"
       },

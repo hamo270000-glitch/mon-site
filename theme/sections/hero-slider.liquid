@@ -18,7 +18,12 @@
             {%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}
             {{ block.settings.image | image_url: width: 1800 | image_tag: loading: ld, widths: '600, 900, 1200, 1500, 1800', sizes: '(min-width: 990px) 58vw, 100vw', alt: '' }}
           {%- elsif block.settings.image_asset != blank -%}
-            <img src="{{ block.settings.image_asset | asset_url }}" alt="" width="1500" height="1250" {% unless forloop.first %}loading="lazy"{% endunless %}>
+            {%- assign base = block.settings.image_asset | remove: '.webp' -%}
+            {%- if block.settings.image_asset contains '.webp' -%}
+              <img src="{{ block.settings.image_asset | asset_url }}" srcset="{{ base | append: '-750.webp' | asset_url }} 750w, {{ block.settings.image_asset | asset_url }} 1500w" sizes="(min-width: 900px) 58vw, 100vw" alt="" width="1500" height="1250" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            {%- else -%}
+              <img src="{{ block.settings.image_asset | asset_url }}" alt="" width="1500" height="1250" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            {%- endif -%}
           {%- endif -%}
         </a>
         <div class="hs__band">
@@ -82,8 +87,8 @@
     { "type": "text", "id": "title", "label": "Suite du titre", "default": "immédiat" },
     { "type": "text", "id": "button", "label": "Bouton", "default": "Découvrir" },
     { "type": "url", "id": "link", "label": "Lien (vide = produit)" },
-    { "type": "color", "id": "band", "label": "Couleur du bandeau", "default": "#E3F1EE" },
-    { "type": "color", "id": "accent", "label": "Couleur du mot en couleur", "default": "#0E7C7B" }
+    { "type": "color", "id": "band", "label": "Couleur du bandeau", "default": "#E8ECE3" },
+    { "type": "color", "id": "accent", "label": "Couleur du mot en couleur", "default": "#4B5D51" }
   ] }],
   "presets": [{ "name": "Carrousel d'accueil", "blocks": [{ "type": "slide" }, { "type": "slide" }] }]
 }

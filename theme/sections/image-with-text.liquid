@@ -19,7 +19,7 @@
       <div class="rte" style="color:var(--c-muted)">{{ section.settings.text }}</div>
       {%- assign bullets = section.blocks | where: 'type', 'bullet' -%}
       {%- if bullets.size > 0 -%}
-        <ul class="iwt__list">{%- for block in bullets -%}<li {{ block.shopify_attributes }}><span><strong>{{ block.settings.title }}</strong>{% if block.settings.text != blank %} — {{ block.settings.text }}{% endif %}</span></li>{%- endfor -%}</ul>
+        <ul class="iwt__list">{%- for block in bullets -%}<li {{ block.shopify_attributes }}><span><strong>{{ block.settings.title }}</strong>{% if block.settings.text != blank %}. {{ block.settings.text }}{% endif %}</span></li>{%- endfor -%}</ul>
       {%- endif -%}
       {%- assign stats = section.blocks | where: 'type', 'stat' -%}
       {%- if stats.size > 0 -%}

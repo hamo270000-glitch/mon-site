@@ -24,7 +24,7 @@
           {%- when 'review' -%}
             {%- assign pct = block.settings.rating | times: 20 -%}
             <article class="review reveal" {{ block.shopify_attributes }}>
-              {%- if block.settings.is_example -%}<span class="review__example">Exemple — à remplacer par un avis réel</span>{%- endif -%}
+              {%- if block.settings.is_example -%}<span class="review__example">Exemple à remplacer par un avis réel</span>{%- endif -%}
               <span class="stars__icons" style="--pct: {{ pct }}%"></span>
               <h3 class="review__title">{{ block.settings.title }}</h3>
               <p class="review__body">{{ block.settings.text }}</p>

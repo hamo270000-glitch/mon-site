@@ -3,7 +3,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "fallback_asset": "hero-collection.jpg",
+        "fallback_asset": "hero-collection.webp",
         "eyebrow": "Notre histoire",
         "heading": "Née à Paris, pensée pour votre peau",
         "text": "<p>Biovela Paris réunit des outils de massage inspirés de rituels ancestraux et des soins aux formules courtes.</p>",
@@ -23,7 +23,7 @@
     "iwt": {
       "type": "image-with-text",
       "settings": {
-        "image_asset": "brosse-lymphatique-3.jpg",
+        "image_asset": "brosse-lymphatique-3.webp",
         "reverse": true,
         "bg": "soft",
         "eyebrow": "Nos engagements",

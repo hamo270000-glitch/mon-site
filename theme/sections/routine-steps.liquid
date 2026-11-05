@@ -18,7 +18,7 @@
           {%- endif -%}
           <h3>{{ block.settings.title }}</h3>
           <p>{{ block.settings.text }}</p>
-          {%- if p != blank -%}<p style="margin-top:14px"><a class="link-underline" href="{{ p.url }}">{{ p.title }} — {{ p.price | money }}</a></p>{%- endif -%}
+          {%- if p != blank -%}<p style="margin-top:14px"><a class="link-underline" href="{{ p.url }}">{{ p.title }}, {{ p.price | money }}</a></p>{%- endif -%}
         </div>
       {%- endfor -%}
     </div>

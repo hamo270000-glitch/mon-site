@@ -58,7 +58,7 @@
         {%- for b in cards -%}
           {%- assign pct = b.settings.rating | times: 20 -%}
           <article class="rv__card" data-rating="{{ b.settings.rating }}"{% if b.settings.photo != blank or b.settings.photo_asset != blank %} data-photo{% endif %}{% if forloop.index > section.settings.visible %} hidden{% endif %} {{ b.shopify_attributes }}>
-            {%- if b.settings.is_example -%}<span class="rv__example">Exemple — à remplacer</span>{%- endif -%}
+            {%- if b.settings.is_example -%}<span class="rv__example">Exemple à remplacer</span>{%- endif -%}
             <div class="rv__who"><span class="rv__initial">{{ b.settings.name | slice: 0 | upcase }}</span><span class="rv__name">{{ b.settings.name }}</span></div>
             <div class="rv__meta"><span class="stars__icons" style="--pct: {{ pct }}%"></span><span>{{ b.settings.date }}</span>{%- if b.settings.verified -%}<span>· Achat vérifié</span>{%- endif -%}</div>
             <p class="rv__about">À propos du produit : <a href="{{ product.url }}">{{ product.title }}</a></p>

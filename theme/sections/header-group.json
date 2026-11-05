@@ -41,7 +41,7 @@
           "type": "feature",
           "settings": {
             "menu_item": "Soins visage",
-            "image_asset": "serum-vitamine-c.jpg",
+            "image_asset": "serum-vitamine-c.webp",
             "badge": "Best-seller",
             "title": "Sérum Éclat Vitamine C 15 %",
             "text": "Le shot d'éclat quotidien",
@@ -52,7 +52,7 @@
           "type": "feature",
           "settings": {
             "menu_item": "Soins visage",
-            "image_asset": "creme-hydratante.jpg",
+            "image_asset": "creme-hydratante.webp",
             "badge": "",
             "title": "Crème Hydratante",
             "text": "Hydratation repulpante 24 h",
@@ -63,7 +63,7 @@
           "type": "feature",
           "settings": {
             "menu_item": "Outils",
-            "image_asset": "brosse-lymphatique-2.jpg",
+            "image_asset": "brosse-lymphatique-2.webp",
             "badge": "-30 %",
             "title": "Brosse Lymphatique",
             "text": "Le rituel drainant",
@@ -74,7 +74,7 @@
           "type": "feature",
           "settings": {
             "menu_item": "Outils",
-            "image_asset": "gua-sha.jpg",
+            "image_asset": "gua-sha.webp",
             "badge": "",
             "title": "Gua Sha Quartz Rose",
             "text": "Le geste sculptant",
@@ -85,7 +85,7 @@
           "type": "feature",
           "settings": {
             "menu_item": "Rituels",
-            "image_asset": "coffret-routine.jpg",
+            "image_asset": "coffret-routine.webp",
             "badge": "Coffret",
             "title": "Coffret Routine Lymphatique",
             "text": "Brosse + Huile + Sérum",
@@ -96,7 +96,7 @@
           "type": "feature",
           "settings": {
             "menu_item": "Rituels",
-            "image_asset": "hero-collection.jpg",
+            "image_asset": "hero-collection.webp",
             "badge": "",
             "title": "Composer ma routine",
             "text": "Faites le diagnostic de peau",

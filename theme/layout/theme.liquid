@@ -20,12 +20,18 @@
 
     {% render 'meta-tags' %}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    {{ 'dmsans-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'cormorant-500.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    <style>
+      @font-face { font-family: "Cormorant Garamond"; font-weight: 500; font-style: normal; font-display: swap; src: url("{{ 'cormorant-500.woff2' | asset_url }}") format("woff2"); }
+      @font-face { font-family: "Cormorant Garamond"; font-weight: 600; font-style: normal; font-display: swap; src: url("{{ 'cormorant-600.woff2' | asset_url }}") format("woff2"); }
+      @font-face { font-family: "DM Sans"; font-weight: 400; font-style: normal; font-display: swap; src: url("{{ 'dmsans-400.woff2' | asset_url }}") format("woff2"); }
+      @font-face { font-family: "DM Sans"; font-weight: 500; font-style: normal; font-display: swap; src: url("{{ 'dmsans-500.woff2' | asset_url }}") format("woff2"); }
+    </style>
 
     {{ content_for_header }}
 
+    {{ 'base.css' | asset_url | stylesheet_tag }}
     <style>
       :root {
         --c-primary: {{ settings.color_primary }};
@@ -35,11 +41,8 @@
         --c-cream: {{ settings.color_cream }};
         --c-accent: {{ settings.color_accent }};
         --c-sale: {{ settings.color_sale }};
-        --radius: {{ settings.radius }}px;
       }
     </style>
-    {{ 'base.css' | asset_url | stylesheet_tag }}
-    {{ 'premium.css' | asset_url | stylesheet_tag }}
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
   </head>

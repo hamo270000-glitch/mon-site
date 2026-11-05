@@ -22,7 +22,7 @@
     "quantity": "Quantité",
     "taxes": "TVA incluse. Frais de livraison calculés à la commande.",
     "installments": "Ou",
-    "in_stock": "En stock — expédié sous 24 h",
+    "in_stock": "En stock, expédié sous 24 h",
     "low_stock": "Plus que {{ count }} en stock",
     "preorder": "Disponible en précommande",
     "delivery_estimate": "Livraison estimée entre le",

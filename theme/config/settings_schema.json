@@ -14,43 +14,43 @@
         "type": "color",
         "id": "color_primary",
         "label": "Violet lilas (principale)",
-        "default": "#0E7C7B"
+        "default": "#5F7366"
       },
       {
         "type": "color",
         "id": "color_primary_soft",
         "label": "Lavande poudrée",
-        "default": "#E7F4F2"
+        "default": "#E8ECE3"
       },
       {
         "type": "color",
         "id": "color_ink",
         "label": "Texte / aubergine",
-        "default": "#0F2B3A"
+        "default": "#1A1F2E"
       },
       {
         "type": "color",
         "id": "color_bg",
         "label": "Fond",
-        "default": "#FFFFFF"
+        "default": "#F8F7F4"
       },
       {
         "type": "color",
         "id": "color_cream",
         "label": "Crème pêche",
-        "default": "#F4F8F7"
+        "default": "#F1EFE9"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Abricot doré (étoiles, reflets)",
-        "default": "#D9A35B"
+        "default": "#A8844E"
       },
       {
         "type": "color",
         "id": "color_sale",
         "label": "Promotion (framboise)",
-        "default": "#B4473C"
+        "default": "#9E3B2F"
       }
     ]
   },
@@ -58,19 +58,15 @@
     "name": "Style",
     "settings": [
       {
-        "type": "range",
-        "id": "radius",
-        "label": "Arrondi des angles",
-        "min": 0,
-        "max": 28,
-        "step": 2,
-        "unit": "px",
-        "default": 14
-      },
-      {
         "type": "image_picker",
         "id": "favicon",
         "label": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Image de partage (réseaux sociaux)",
+        "info": "1200 × 630 px conseillé."
       }
     ]
   },

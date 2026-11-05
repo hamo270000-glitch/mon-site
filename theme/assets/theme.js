@@ -11,11 +11,7 @@
     return fmt.replace(/\{\{\s*(\w+)\s*\}\}/, (m, k) => (k.indexOf('comma') > -1 ? comma : v));
   };
 
-  /* Apparition au scroll */
-  const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
-  }, { rootMargin: '0px 0px -8% 0px' }) : null;
-  $$('.reveal').forEach((el) => (io ? io.observe(el) : el.classList.add('is-in')));
+
 
   /* Menu mobile */
   const nav = $('#MobileNav');
@@ -50,36 +46,53 @@
     });
   };
 
-  const refreshCart = () => fetch((T.routes.root || '/') + '?section_id=cart-drawer-content')
-    .then((r) => r.text())
-    .then((html) => {
+  const SECTION = 'cart-drawer-content';
+  const applyCart = (cart, html) => {
+    if (html) {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const fresh = doc.querySelector('[data-cart-content]');
       const cur = $('[data-cart-content]');
       if (fresh && cur) cur.innerHTML = fresh.innerHTML;
-      return fetch((T.routes.cart_url || '/cart') + '.js').then((r) => r.json());
-    })
-    .then((cart) => {
+    }
+    if (cart) {
       $$('[data-cart-count]').forEach((c) => { c.textContent = cart.item_count; c.dataset.count = cart.item_count; });
       renderShipping(cart.total_price);
-      bindLineItems();
-      return cart;
-    })
-    .catch(() => {});
+    }
+    bindLineItems();
+    return cart;
+  };
+  const withTimeout = (url, opts = {}, ms = 8000) => {
+    const ctrl = 'AbortController' in window ? new AbortController() : null;
+    const timer = ctrl ? setTimeout(() => ctrl.abort(), ms) : null;
+    return fetch(url, Object.assign({}, opts, ctrl ? { signal: ctrl.signal } : {})).finally(() => timer && clearTimeout(timer));
+  };
+  const root = (T.routes.root || '/').replace(/\/$/, '');
+  const refreshCart = () => Promise.all([
+    withTimeout(root + '/?section_id=' + SECTION).then((r) => r.text()),
+    withTimeout((T.routes.cart_url || '/cart') + '.js').then((r) => r.json())
+  ]).then(([html, cart]) => applyCart(cart, html)).catch(() => {});
 
-  const changeLine = (key, quantity) => fetch((T.routes.cart_change_url || '/cart/change') + '.js', {
-    method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ id: key, quantity })
-  }).then(refreshCart).then(() => { if (document.body.classList.contains('template-cart')) location.reload(); });
+  const changeLine = (key, quantity, row) => {
+    if (row) row.classList.add('is-pending');
+    return withTimeout((T.routes.cart_change_url || '/cart/change') + '.js', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ id: key, quantity, sections: SECTION })
+    }).then((r) => r.json().then((d) => { if (!r.ok) throw d; return d; }))
+      .then((cart) => {
+        applyCart(cart, cart.sections && cart.sections[SECTION]);
+        if (document.body.classList.contains('template-cart')) location.reload();
+      })
+      .catch(() => { if (row) row.classList.remove('is-pending'); toast('Une erreur est survenue, réessayez.'); });
+  };
 
   function bindLineItems() {
     $$('[data-line-key]').forEach((row) => {
       if (row._bound) return; row._bound = true;
       const key = row.dataset.lineKey;
       const q = +row.dataset.qty;
-      $$('[data-line-minus]', row).forEach((b) => b.addEventListener('click', () => changeLine(key, q - 1)));
-      $$('[data-line-plus]', row).forEach((b) => b.addEventListener('click', () => changeLine(key, q + 1)));
-      $$('[data-line-remove]', row).forEach((b) => b.addEventListener('click', () => changeLine(key, 0)));
+      $$('[data-line-minus]', row).forEach((b) => b.addEventListener('click', () => changeLine(key, q - 1, row)));
+      $$('[data-line-plus]', row).forEach((b) => b.addEventListener('click', () => changeLine(key, q + 1, row)));
+      $$('[data-line-remove]', row).forEach((b) => b.addEventListener('click', () => changeLine(key, 0, row)));
     });
   }
   bindLineItems();
@@ -90,13 +103,16 @@
 
   const addToCart = (items, btn) => {
     if (btn) { btn.disabled = true; btn.dataset.label = btn.dataset.label || btn.innerHTML; btn.innerHTML = '…'; }
-    return fetch((T.routes.cart_add_url || '/cart/add') + '.js', {
+    return withTimeout((T.routes.cart_add_url || '/cart/add') + '.js', {
       method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ items })
+      body: JSON.stringify({ items, sections: SECTION })
     }).then((r) => r.json().then((d) => { if (!r.ok) throw d; return d; }))
-      .then(() => refreshCart())
+      .then((d) => {
+        const html = d.sections && d.sections[SECTION];
+        return withTimeout((T.routes.cart_url || '/cart') + '.js').then((r) => r.json()).then((cart) => applyCart(cart, html));
+      })
       .then(() => { drawer ? openDrawer() : toast(T.strings.added || 'Ajouté au panier'); })
-      .catch((err) => toast((err && (err.description || err.message)) || 'Erreur'))
+      .catch((err) => toast((err && (err.description || err.message)) || 'Une erreur est survenue, réessayez.'))
       .finally(() => { if (btn) { btn.disabled = false; btn.innerHTML = btn.dataset.label; } });
   };
 
@@ -170,7 +186,7 @@
   /* Barre d'achat collante */
   const sticky = $('[data-sticky-atc]');
   const mainAtc = $('[data-main-atc]');
-  if (sticky && mainAtc && io) {
+  if (sticky && mainAtc && 'IntersectionObserver' in window) {
     new IntersectionObserver(([e]) => sticky.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0)).observe(mainAtc);
     $('button', sticky).addEventListener('click', () => { const f = $('form[data-product-form]'); f && f.requestSubmit(); });
   }
@@ -207,87 +223,6 @@
   $$('[data-filters-toggle]').forEach((b) => b.addEventListener('click', () => $('.filters') && $('.filters').classList.toggle('is-open')));
   $$('[data-filter-form]').forEach((f) => f.addEventListener('change', () => f.submit()));
   $$('[data-sort]').forEach((s) => s.addEventListener('change', () => { const u = new URL(location.href); u.searchParams.set('sort_by', s.value); location.href = u; }));
-})();
-
-/* Effets 3D — apparitions en cascade, inclinaison des cartes, parallaxe douce */
-(function () {
-  var mq = function (q) { return window.matchMedia ? window.matchMedia(q).matches : false; };
-  var reduce = mq('(prefers-reduced-motion: reduce)');
-  var finePointer = mq('(hover: hover) and (pointer: fine)');
-
-  /* Apparitions en cascade : léger décalage entre éléments frères */
-  if (!reduce) {
-    var parents = [];
-    Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function (el) {
-      var p = el.parentElement;
-      if (p && parents.indexOf(p) === -1) parents.push(p);
-    });
-    parents.forEach(function (p) {
-      var kids = Array.prototype.filter.call(p.children, function (c) { return c.classList.contains('reveal'); });
-      if (kids.length < 2) return;
-      kids.forEach(function (el, i) {
-        el.style.transitionDelay = Math.min(i, 5) * 90 + 'ms';
-        el.addEventListener('transitionend', function clear() { el.style.transitionDelay = ''; el.removeEventListener('transitionend', clear); });
-      });
-    });
-  }
-
-  if (reduce || !finePointer) return;
-
-  /* Inclinaison 3D au survol (souris uniquement) + reflet qui suit le curseur */
-  var current = null, rect = null, px = 0.5, py = 0.5, frame = 0;
-  var render = function () {
-    frame = 0;
-    if (!current) return;
-    var max = parseFloat(current.getAttribute('data-tilt')) || 6;
-    current.style.transform = 'perspective(1000px) rotateX(' + ((0.5 - py) * max).toFixed(2) + 'deg) rotateY(' + ((px - 0.5) * max).toFixed(2) + 'deg) translate3d(0,-4px,0)';
-    current.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
-    current.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
-  };
-  var release = function () {
-    if (!current) return;
-    current.classList.remove('is-tilting');
-    current.style.transform = '';
-    current = null; rect = null;
-  };
-  document.addEventListener('mousemove', function (e) {
-    var el = e.target.closest ? e.target.closest('[data-tilt]') : null;
-    if (el !== current) { release(); if (!el) return; current = el; rect = el.getBoundingClientRect(); el.classList.add('is-tilting'); }
-    if (!rect) return;
-    px = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
-    py = Math.min(1, Math.max(0, (e.clientY - rect.top) / rect.height));
-    if (!frame) frame = requestAnimationFrame(render);
-  }, { passive: true });
-  document.addEventListener('mouseleave', release);
-  window.addEventListener('scroll', function () { if (current) rect = current.getBoundingClientRect(); }, { passive: true });
-
-  /* Parallaxe douce des visuels marqués [data-parallax] (scroll + souris) */
-  var layers = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
-  if (!layers.length) return;
-  var mx = 0, my = 0, pframe = 0;
-  var visible = layers.map(function () { return !('IntersectionObserver' in window); });
-  if ('IntersectionObserver' in window) {
-    var pio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { visible[layers.indexOf(en.target)] = en.isIntersecting; });
-      queue();
-    });
-    layers.forEach(function (l) { pio.observe(l); });
-  }
-  var paint = function () {
-    pframe = 0;
-    var vh = window.innerHeight;
-    layers.forEach(function (l, i) {
-      if (!visible[i]) return;
-      var depth = parseFloat(l.getAttribute('data-parallax')) || 0.08;
-      var r = l.getBoundingClientRect();
-      var offset = Math.max(-48, Math.min(48, (r.top + r.height / 2 - vh / 2) * -depth));
-      l.style.transform = 'translate3d(' + (mx * 14).toFixed(1) + 'px,' + (offset + my * 10).toFixed(1) + 'px,0) rotateY(' + (mx * 4).toFixed(2) + 'deg) rotateX(' + (-my * 3).toFixed(2) + 'deg)';
-    });
-  };
-  var queue = function () { if (!pframe) pframe = requestAnimationFrame(paint); };
-  window.addEventListener('scroll', queue, { passive: true });
-  window.addEventListener('mousemove', function (e) { mx = e.clientX / window.innerWidth - 0.5; my = e.clientY / window.innerHeight - 0.5; queue(); }, { passive: true });
-  queue();
 })();
 
 /* Fiche produit : « Voir plus », photo suivante (mobile), avis */
