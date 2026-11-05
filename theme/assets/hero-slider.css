@@ -12,8 +12,8 @@
 .hs__eyebrow { margin: 0 0 14px; font-size: 1.05rem; font-weight: 500; color: var(--hs-accent); }
 .hs__title { margin: 0 0 30px; font-family: var(--f-serif); font-weight: 500; font-size: clamp(2rem, 3.8vw, 3.3rem); line-height: 1.12; letter-spacing: -.02em; color: var(--c-ink); }
 .hs__hl { color: var(--hs-accent); }
-.hs__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 34px; border-radius: var(--r-sm); background: var(--c-ink); border: 1px solid var(--c-ink); color: #fff; font-size: .95rem; font-weight: 500; transition: background var(--t); }
-.hs__btn:hover { background: #2c3346; }
+.hs__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 34px; border-radius: var(--r-sm); background: var(--c-ink); border: 1px solid var(--c-ink); color: #fff; font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; transition: background var(--t); }
+.hs__btn:hover { background: #3a322b; }
 .hs__dots { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; justify-content: center; gap: 12px; pointer-events: none; }
 .hs__dot { pointer-events: auto; width: 28px; height: 3px; border-radius: 0; border: 0; padding: 0; background: rgba(26,31,46,.2); cursor: pointer; transition: background var(--t); }
 .hs__dot.is-active { background: var(--c-ink); }

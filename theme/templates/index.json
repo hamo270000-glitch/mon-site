@@ -19,7 +19,7 @@
             "button": "Découvrir",
             "link": "",
             "band": "#EAE5DC",
-            "accent": "#4B5D51"
+            "accent": "#8A6A45"
           }
         },
         "slide_2": {
@@ -32,8 +32,8 @@
             "title": "dès le matin",
             "button": "Découvrir",
             "link": "",
-            "band": "#F3EAE0",
-            "accent": "#8A5A2E"
+            "band": "#F0E6D9",
+            "accent": "#8A6A45"
           }
         },
         "slide_3": {
@@ -46,8 +46,8 @@
             "title": "et peau repulpée",
             "button": "Découvrir",
             "link": "",
-            "band": "#E7EBF0",
-            "accent": "#44586E"
+            "band": "#E8E5E1",
+            "accent": "#8A6A45"
           }
         },
         "slide_4": {
@@ -61,7 +61,7 @@
             "button": "Découvrir",
             "link": "",
             "band": "#EEEAF1",
-            "accent": "#5E4D74"
+            "accent": "#8A6A45"
           }
         }
       },

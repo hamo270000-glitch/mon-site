@@ -1,23 +1,23 @@
 /* Biovela Paris, feuille de style du thème.
-   Palette sauge sur blanc cassé, typographie Cormorant Garamond + DM Sans.
+   Style « Atelier » : ivoire, espresso et bronze, typographie Cormorant Garamond + DM Sans.
    Une échelle d'espacement, deux rayons, des surfaces plates. */
 
 :root {
-  --c-bg: #f8f7f4;
+  --c-bg: #f7f3ee;
   --c-surface: #ffffff;
-  --c-cream: #f1efe9;
-  --c-ink: #1a1f2e;
-  --c-muted: #5c6370;
-  --c-line: #e3e0d9;
-  --c-primary: #5f7366;
-  --c-primary-dark: #4b5d51;
-  --c-primary-soft: #e8ece3;
-  --c-accent: #a8844e;
+  --c-cream: #eee7dd;
+  --c-ink: #231e1a;
+  --c-muted: #6b6259;
+  --c-line: #e2d8cc;
+  --c-primary: #8a6a45;
+  --c-primary-dark: #6f5435;
+  --c-primary-soft: #f1e9de;
+  --c-accent: #b08d57;
   --c-sale: #9e3b2f;
   --f-serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --f-sans: "DM Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
-  --r-sm: 4px;
-  --radius: 8px;
+  --r-sm: 0px;
+  --radius: 2px;
   --page: 1280px;
   --gutter: clamp(16px, 4vw, 40px);
   --space: clamp(56px, 7vw, 96px);
@@ -53,7 +53,7 @@ p { margin: 0 0 1em; }
 .bg-ink, .bg-aubergine { background: var(--c-ink); color: #f3f1ec; }
 .bg-ink h2, .bg-aubergine h2, .bg-ink h3, .bg-aubergine h3 { color: #fff; }
 .eyebrow { display: block; margin-bottom: 12px; font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--c-primary); }
-.bg-ink .eyebrow, .bg-aubergine .eyebrow { color: #c7d2c0; }
+.bg-ink .eyebrow, .bg-aubergine .eyebrow { color: #cdb592; }
 .section-head { max-width: 640px; margin: 0 0 40px; }
 .section-head--center { text-align: center; margin-left: auto; margin-right: auto; }
 .section-head h2 { margin-bottom: .25em; }
@@ -63,7 +63,7 @@ p { margin: 0 0 1em; }
 
 /* Boutons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 28px; border-radius: var(--r-sm); border: 1px solid var(--c-ink); background: var(--c-ink); color: #fff; font-size: .9rem; font-weight: 500; letter-spacing: .02em; transition: background var(--t), color var(--t), border-color var(--t); }
-.btn:hover { background: #2c3346; border-color: #2c3346; }
+.btn:hover { background: #3a322b; border-color: #3a322b; }
 .btn--primary { background: var(--c-primary); border-color: var(--c-primary); }
 .btn--primary:hover { background: var(--c-primary-dark); border-color: var(--c-primary-dark); }
 .btn--outline { background: transparent; color: var(--c-ink); border-color: var(--c-ink); }
@@ -108,7 +108,7 @@ p { margin: 0 0 1em; }
 .logo__name { font-family: var(--f-serif); font-size: 1.7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; line-height: .85; }
 .logo__city { font-size: .55rem; font-weight: 500; letter-spacing: .5em; text-transform: uppercase; color: var(--c-primary); }
 .logo--light { color: #fff; }
-.logo--light .logo__city { color: #c7d2c0; }
+.logo--light .logo__city { color: #cdb592; }
 @media (max-width: 989px) { .logo__mark { width: 30px; height: 30px; } .logo__name { font-size: 1.35rem; } }
 
 /* Menu mobile */
@@ -235,7 +235,7 @@ p { margin: 0 0 1em; }
 .bg-ink .ingredients, .bg-aubergine .ingredients, .bg-ink .ingredient, .bg-aubergine .ingredient { border-color: rgba(255,255,255,.18); }
 .ingredient__bubble { display: contents; }
 .ingredient__img { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--c-primary-soft); color: var(--c-primary); overflow: hidden; }
-.bg-ink .ingredient__img, .bg-aubergine .ingredient__img { background: rgba(255,255,255,.08); color: #c7d2c0; }
+.bg-ink .ingredient__img, .bg-aubergine .ingredient__img { background: rgba(255,255,255,.08); color: #cdb592; }
 .ingredient__img img { width: 100%; height: 100%; object-fit: cover; }
 .ingredient__img .glyph { font-family: var(--f-serif); font-size: 1.25rem; }
 .ingredient__floor { display: none; }
@@ -479,3 +479,48 @@ p { margin: 0 0 1em; }
 .ingredient__img { grid-row: span 2; }
 .ingredient h3, .ingredient p { grid-column: 2; }
 @media (max-width: 749px) { .tile__label { flex-direction: column; gap: 2px; } .tile__label strong { font-size: 1.25rem; } }
+
+/* ===== Style « Atelier » : formes et finitions ===== */
+h1, h2 { letter-spacing: -.02em; }
+h2 { font-size: clamp(2.1rem, 3.8vw, 3.2rem); }
+h2 em, h1 em { font-style: italic; color: var(--c-primary); }
+.eyebrow { font-size: .72rem; letter-spacing: .2em; color: var(--c-primary); }
+.bg-ink .eyebrow, .bg-aubergine .eyebrow { color: #cdb592; }
+.bg-ink, .bg-aubergine { color: #efe8de; }
+.btn { min-height: 52px; padding: 0 32px; font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.btn--primary { background: var(--c-ink); border-color: var(--c-ink); }
+.btn--primary:hover { background: #3a322b; border-color: #3a322b; }
+.announcement { background: var(--c-ink); color: #efe8de; font-size: .74rem; letter-spacing: .08em; }
+.header { background: rgba(247,243,238,.97); }
+/* Cartes produit : fond sable, sans bordure, ajout discret */
+.card__media { background: var(--c-cream); border-radius: 0; }
+.card__info { padding-top: 16px; gap: 4px; }
+.card__title { font-size: 1.3rem; }
+.card__subtitle { font-size: .82rem; }
+.badge { border-radius: 0; background: var(--c-bg); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; padding: 5px 9px; }
+.badge--best, .badge--new { color: var(--c-ink); }
+.card__quick .btn { min-height: 44px; font-size: .72rem; border-color: var(--c-ink); }
+/* Univers */
+.tile__media { border-radius: 0; background: var(--c-cream); }
+.tile__label strong { font-size: 1.6rem; }
+.tile__label span { text-transform: uppercase; letter-spacing: .14em; font-size: .7rem; color: var(--c-ink); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+/* Sections */
+.bg-soft { background: var(--c-cream); }
+.section-head { margin-bottom: 48px; }
+.trust { border-top: 1px solid var(--c-line); }
+@media (max-width: 749px) {
+  .btn { min-height: 50px; padding: 0 24px; }
+  .card__title { font-size: 1.12rem; }
+}
+.iwt__media { aspect-ratio: 4 / 5; background: var(--c-cream); border-radius: 0; }
+.iwt { grid-template-columns: 1fr 1fr; }
+@media (max-width: 749px) {
+  .iwt { grid-template-columns: 1fr; }
+  .tile__label { padding-top: 10px; }
+  .tile__label strong { font-size: 1.25rem; }
+  .tile__label span { font-size: .62rem; }
+  .card__quick .btn { min-height: 40px; font-size: .64rem; letter-spacing: .1em; }
+  .card__info { padding-top: 12px; }
+}
+.trust { background: var(--c-bg); }
+.howto__visual { background: var(--c-cream); border: 0; border-radius: 0; }

@@ -1,11 +1,11 @@
 {
   "current": {
-    "color_primary": "#5F7366",
-    "color_primary_soft": "#E8ECE3",
-    "color_ink": "#1A1F2E",
-    "color_bg": "#F8F7F4",
-    "color_cream": "#F1EFE9",
-    "color_accent": "#A8844E",
+    "color_primary": "#8A6A45",
+    "color_primary_soft": "#F1E9DE",
+    "color_ink": "#231E1A",
+    "color_bg": "#F7F3EE",
+    "color_cream": "#EEE7DD",
+    "color_accent": "#B08D57",
     "color_sale": "#9E3B2F",
     "radius": 16,
     "cart_type": "drawer",

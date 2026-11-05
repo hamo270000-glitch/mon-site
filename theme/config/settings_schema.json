@@ -14,37 +14,37 @@
         "type": "color",
         "id": "color_primary",
         "label": "Violet lilas (principale)",
-        "default": "#5F7366"
+        "default": "#8A6A45"
       },
       {
         "type": "color",
         "id": "color_primary_soft",
         "label": "Lavande poudrée",
-        "default": "#E8ECE3"
+        "default": "#F1E9DE"
       },
       {
         "type": "color",
         "id": "color_ink",
         "label": "Texte / aubergine",
-        "default": "#1A1F2E"
+        "default": "#231E1A"
       },
       {
         "type": "color",
         "id": "color_bg",
         "label": "Fond",
-        "default": "#F8F7F4"
+        "default": "#F7F3EE"
       },
       {
         "type": "color",
         "id": "color_cream",
         "label": "Crème pêche",
-        "default": "#F1EFE9"
+        "default": "#EEE7DD"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Abricot doré (étoiles, reflets)",
-        "default": "#A8844E"
+        "default": "#B08D57"
       },
       {
         "type": "color",
