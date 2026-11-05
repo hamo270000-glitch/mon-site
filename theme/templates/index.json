@@ -505,7 +505,8 @@
         "reel_3",
         "reel_4",
         "reel_5"
-      ]
+      ],
+      "disabled": true
     },
     "tiles": {
       "type": "collection-tiles",
@@ -548,6 +549,15 @@
         "t2",
         "t3"
       ]
+    },
+    "ba_reviews": {
+      "type": "before-after-reviews",
+      "settings": {
+        "eyebrow": "Vos résultats",
+        "heading": "Elles ont adopté le rituel",
+        "text": "Photos et avis envoyés par nos clientes.",
+        "disclaimer": "Résultats individuels, variables selon les personnes. Photos publiées avec l'accord des clientes, sans retouche."
+      }
     }
   },
   "order": [
@@ -558,6 +568,7 @@
     "howto",
     "hero_product",
     "reels",
+    "ba_reviews",
     "ingredients",
     "quiz",
     "faq",

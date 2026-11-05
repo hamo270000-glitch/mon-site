@@ -1,0 +1,89 @@
+{%- liquid
+  assign has_content = false
+  for block in section.blocks
+    if block.type == '@app' or block.settings.after != blank or block.settings.quote != blank
+      assign has_content = true
+    endif
+  endfor
+-%}
+{%- if has_content or request.design_mode -%}
+{{ 'before-after-reviews.css' | asset_url | stylesheet_tag }}
+<section class="section ba">
+  <div class="page-width">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+
+    {%- unless has_content -%}
+      <p class="ba__empty">Cette section reste cachée sur la boutique tant qu'aucun avis n'est ajouté. Ajoutez un bloc « Avis avant / après » avec les photos et le texte d'une vraie cliente (avec son accord écrit), ou le bloc de votre application d'avis.</p>
+    {%- endunless -%}
+
+    <div class="ba__track" tabindex="0" aria-label="{{ section.settings.heading | escape }}">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            <div class="ba__app">{% render block %}</div>
+          {%- when 'review' -%}
+            {%- if block.settings.after != blank or block.settings.quote != blank -%}
+            <article class="ba__card" {{ block.shopify_attributes }}>
+              {%- if block.settings.after != blank -%}
+                <div class="ba__media{% if block.settings.before != blank %} ba__media--duo{% endif %}">
+                  {%- if block.settings.before != blank -%}
+                    <span class="ba__tag">Avant · Après</span>
+                    {{ block.settings.before | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 180px, 45vw', alt: 'Avant' }}
+                  {%- endif -%}
+                  {{ block.settings.after | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 180px, 45vw', alt: 'Après' }}
+                </div>
+              {%- endif -%}
+              <div class="ba__body">
+                {%- if block.settings.verified -%}
+                  <p class="ba__verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>Achat vérifié</p>
+                {%- endif -%}
+                <p class="ba__stars" aria-label="{{ block.settings.rating }} sur 5">
+                  {%- for i in (1..5) -%}<span{% if i > block.settings.rating %} class="is-off"{% endif %}>★</span>{%- endfor -%}
+                </p>
+                <h3 class="ba__name">{{ block.settings.name }}</h3>
+                {%- if block.settings.quote != blank -%}<blockquote class="ba__quote">« {{ block.settings.quote }} »</blockquote>{%- endif -%}
+                {%- assign tags = block.settings.tags | split: ',' -%}
+                {%- if tags.size > 0 -%}
+                  <ul class="ba__chips">{%- for t in tags -%}{%- assign tt = t | strip -%}{%- if tt != blank -%}<li>{{ tt }}</li>{%- endif -%}{%- endfor -%}</ul>
+                {%- endif -%}
+                {%- if block.settings.incentive -%}<p class="ba__note">Avis publié en échange d'un code de réduction.</p>{%- endif -%}
+              </div>
+            </article>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.disclaimer != blank -%}<p class="ba__disclaimer">{{ section.settings.disclaimer }}</p>{%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Avis avant / après",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Vos résultats" },
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Elles ont adopté le rituel" },
+    { "type": "text", "id": "text", "label": "Texte", "default": "Photos et avis envoyés par nos clientes." },
+    { "type": "text", "id": "disclaimer", "label": "Mention sous les avis", "default": "Résultats individuels, variables selon les personnes. Photos publiées avec l'accord des clientes, sans retouche." }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    { "type": "review", "name": "Avis avant / après", "settings": [
+      { "type": "paragraph", "content": "Uniquement de vrais avis de vraies clientes, avec leur accord écrit pour les photos. Les faux avis sont interdits (Code de la consommation)." },
+      { "type": "image_picker", "id": "before", "label": "Photo avant (facultatif)" },
+      { "type": "image_picker", "id": "after", "label": "Photo après (ou photo seule)" },
+      { "type": "text", "id": "name", "label": "Prénom + initiale", "default": "Prénom N." },
+      { "type": "range", "id": "rating", "label": "Note", "min": 1, "max": 5, "step": 1, "default": 5 },
+      { "type": "textarea", "id": "quote", "label": "Avis (copié tel quel)" },
+      { "type": "text", "id": "tags", "label": "Étiquettes (séparées par des virgules)", "info": "Ex. : 4 semaines, Peau sensible" },
+      { "type": "checkbox", "id": "verified", "label": "Achat vérifié (commande retrouvée)", "default": false },
+      { "type": "checkbox", "id": "incentive", "label": "Avis obtenu contre une réduction", "info": "Obligatoire à indiquer si la cliente a reçu un avantage.", "default": false }
+    ] }
+  ],
+  "presets": [{ "name": "Avis avant / après" }]
+}
+{% endschema %}

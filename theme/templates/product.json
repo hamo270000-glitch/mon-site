@@ -164,7 +164,8 @@
         "reel_3",
         "reel_4",
         "reel_5"
-      ]
+      ],
+      "disabled": true
     },
     "reviews": {
       "type": "product-reviews",
@@ -286,12 +287,22 @@
         "step_2",
         "step_3"
       ]
+    },
+    "ba_reviews": {
+      "type": "before-after-reviews",
+      "settings": {
+        "eyebrow": "Vos résultats",
+        "heading": "Elles ont adopté le rituel",
+        "text": "Photos et avis envoyés par nos clientes.",
+        "disclaimer": "Résultats individuels, variables selon les personnes. Photos publiées avec l'accord des clientes, sans retouche."
+      }
     }
   },
   "order": [
     "main",
     "howto",
     "reels",
+    "ba_reviews",
     "reviews",
     "reco"
   ]
