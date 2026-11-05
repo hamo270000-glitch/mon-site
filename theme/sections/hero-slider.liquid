@@ -16,11 +16,14 @@
         <a class="hs__media" href="{{ url }}" tabindex="-1" aria-hidden="true">
           {%- if block.settings.image != blank -%}
             {%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}
-            {{ block.settings.image | image_url: width: 1800 | image_tag: loading: ld, widths: '600, 900, 1200, 1500, 1800', sizes: '(min-width: 990px) 58vw, 100vw', alt: '' }}
+            {{ block.settings.image | image_url: width: 1800 | image_tag: loading: ld, widths: '600, 900, 1200, 1500, 1800', sizes: '100vw', alt: '' }}
           {%- elsif block.settings.image_asset != blank -%}
             {%- assign base = block.settings.image_asset | remove: '.webp' -%}
             {%- if block.settings.image_asset contains '.webp' -%}
-              <img src="{{ block.settings.image_asset | asset_url }}" srcset="{{ base | append: '-750.webp' | asset_url }} 750w, {{ block.settings.image_asset | asset_url }} 1500w" sizes="(min-width: 900px) 58vw, 100vw" alt="" width="1500" height="1250" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+              <picture>
+                <source media="(max-width: 899px)" srcset="{{ base | append: '-750.webp' | asset_url }}" width="750" height="1000">
+                <img src="{{ block.settings.image_asset | asset_url }}" alt="" width="2400" height="1000" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+              </picture>
             {%- else -%}
               <img src="{{ block.settings.image_asset | asset_url }}" alt="" width="1500" height="1250" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
             {%- endif -%}
@@ -55,7 +58,7 @@
     var slides = track.children, dots = root.querySelectorAll('[data-hs-dot]');
     var i = 0, timer, delay = {{ section.settings.speed | times: 1000 }};
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function go(n, smooth) { if (!slides.length) return; i = (n + slides.length) % slides.length; track.scrollTo({ left: slides[i].offsetLeft, behavior: smooth === false ? 'auto' : 'smooth' }); }
+    function go(n, smooth) { if (!slides.length) return; i = (n + slides.length) % slides.length; for (var d = 0; d < dots.length; d++) dots[d].classList.toggle("is-active", d === i); track.scrollTo({ left: slides[i].offsetLeft, behavior: smooth === false ? 'auto' : 'smooth' }); }
     function mark() { var w = track.clientWidth || 1; var n = Math.round(track.scrollLeft / w); i = n; for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('is-active', k === n); }
     function play() { if (reduce || !{{ section.settings.autoplay | json }}) return; stop(); timer = setInterval(function () { go(i + 1); }, delay); }
     function stop() { clearInterval(timer); }
@@ -79,7 +82,7 @@
   ],
   "max_blocks": 6,
   "blocks": [{ "type": "slide", "name": "Diapositive", "settings": [
-    { "type": "image_picker", "id": "image", "label": "Image (idéalement une personne qui applique le produit)" },
+    { "type": "image_picker", "id": "image", "label": "Image (format large 2400 × 1000, sujet à droite)", "info": "Le texte se place à gauche de l'image." },
     { "type": "text", "id": "image_asset", "label": "Ou image du thème (fichier assets)" },
     { "type": "product", "id": "product", "label": "Produit" },
     { "type": "text", "id": "eyebrow", "label": "Petit titre", "default": "Nouveau" },

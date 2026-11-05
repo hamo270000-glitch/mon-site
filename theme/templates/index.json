@@ -11,14 +11,14 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image_asset": "slide-brosse.webp",
+            "image_asset": "slide-geste.webp",
             "product": "brosse-lymphatique-visage",
             "eyebrow": "Brosse lymphatique visage",
             "highlight": "3 minutes",
             "title": "pour un visage reposé",
             "button": "Découvrir",
             "link": "",
-            "band": "#E8ECE3",
+            "band": "#EAE5DC",
             "accent": "#4B5D51"
           }
         },
