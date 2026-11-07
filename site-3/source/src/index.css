@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+/* Couleurs et polices du site : à changer quand on choisira le thème. */
+@theme {
+  --color-fond: #f4f6fb;
+  --color-texte: #1d2433;
+  --color-accent: #3b5bdb;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+html { background: var(--color-fond); color: var(--color-texte); -webkit-text-size-adjust: 100%; }
+body { margin: 0; min-height: 100dvh; font-family: var(--font-sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
