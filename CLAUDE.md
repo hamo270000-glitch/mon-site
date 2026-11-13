@@ -9,6 +9,13 @@
 2. Ouvre une pull request.
 3. **Fusionne toi-même la pull request** une fois les tests réussis (autorisation permanente donnée par l'utilisateur le 4 novembre 2026). Il n'a plus besoin d'appuyer sur « Merge ».
 4. Vérifie ensuite que le site en ligne (GitHub Pages, branche `main`) a bien la nouvelle version, et dis-lui de fermer puis rouvrir Safari.
+5. **Tout ce qu'il demande doit rester en place dans toutes les sessions, actuelles et futures** (demande de l'utilisateur du 13 novembre 2026). Ne laisse jamais une installation ou un réglage seulement dans la session en cours :
+   - skills, agents, consignes et réglages → dans le dépôt (`.claude/`, `CLAUDE.md`), puis commit, pull request et fusion ;
+   - programmes à installer (ex. graphify) → dans le script de démarrage de l'environnement cloud, en proposant le changement avec l'outil d'environnement (il valide sur son téléphone) ;
+   - s'il faut aussi faire quelque chose sur son ordinateur, donne-lui les étapes.
+
+## Outils installés partout
+- **graphify** : commande `/graphify` (skill dans `.claude/skills/graphify/`). Le programme s'installe tout seul au démarrage des sessions cloud (script de l'environnement « Default »). Sur l'ordinateur : `pipx install graphifyy` une seule fois.
 
 ## Les projets
 - `affute/` : Affûté, l'appli de sèche et de prise de masse (voir `affute/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/affute/
