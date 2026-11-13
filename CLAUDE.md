@@ -15,7 +15,8 @@
    - s'il faut aussi faire quelque chose sur son ordinateur, donne-lui les étapes.
 
 ## Outils installés partout
-- **graphify** : commande `/graphify` (skill dans `.claude/skills/graphify/`). Le programme s'installe tout seul au démarrage des sessions cloud (script de l'environnement « Default »). Sur l'ordinateur : `pipx install graphifyy` une seule fois.
+- **graphify** : commande `/graphify` (skill dans `.claude/skills/graphify/`). Le programme s'installe tout seul au démarrage des sessions cloud (script de l'environnement « Default »). Sur l'ordinateur : `uv tool install graphifyy` une seule fois.
+- La carte (`graphify-out/`) n'est pas enregistrée dans le dépôt : elle est reconstruite au démarrage de chaque session cloud et après chaque commit (hooks git installés par `graphify hook install`). Si `graphify-out/graph.json` manque, lance `graphify hook install` puis `graphify update .` (3 secondes, gratuit).
 
 ## Les projets
 - `affute/` : Affûté, l'appli de sèche et de prise de masse (voir `affute/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/affute/
