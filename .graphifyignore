@@ -1,0 +1,9 @@
+# Fichiers construits ou externes : pas besoin dans la carte
+site-2/assets/
+site-3/assets/
+site-2/index.html
+site-3/index.html
+vendor/
+node_modules/
+.claude/
+graphify-out/
