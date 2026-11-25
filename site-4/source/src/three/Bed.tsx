@@ -14,9 +14,8 @@ const H_SOLE = 0.03;
 const H_SUPPORT = 0.26;
 const H_MEMORY = 0.18;
 const H_CUSHION = 0.1;
-const SEG_X = 96;
-const SEG_Z = 72;
-const TUFTS: [number, number][] = [[-0.45, -0.35], [0, -0.35], [0.45, -0.35], [-0.45, 0.35], [0, 0.35], [0.45, 0.35]];
+const SEG_X = 72;
+const SEG_Z = 56;
 
 function noiseTexture(kind: 'weave' | 'pores', base: string) {
   const c = document.createElement('canvas');
@@ -69,53 +68,6 @@ function bolsterCurve() {
   return new THREE.CatmullRomCurve3(pts, false, 'centripetal', 0.5);
 }
 
-
-// Traversin matelassé : le tube se gonfle entre les coutures, comme un vrai coussin rembourré.
-function quiltedBolster(curve: THREE.CatmullRomCurve3) {
-  const TS = 260;
-  const RS = 36;
-  const g = new THREE.TubeGeometry(curve, TS, R, RS, false);
-  const pos = g.attributes.position as THREE.BufferAttribute;
-  const len = curve.getLength();
-  const baffles = Math.round(len / 0.34);
-  const c = new THREE.Vector3();
-  const v = new THREE.Vector3();
-  for (let i = 0; i <= TS; i++) {
-    const u = i / TS;
-    curve.getPointAt(u, c);
-    const puff = 0.86 + 0.16 * Math.pow(Math.abs(Math.sin(Math.PI * u * baffles)), 0.55);
-    for (let j = 0; j <= RS; j++) {
-      const k = i * (RS + 1) + j;
-      v.fromBufferAttribute(pos, k).sub(c);
-      v.multiplyScalar(puff);
-      if (v.y < 0) v.y *= 0.72; // posé sur la base : le dessous s'écrase un peu
-      v.add(c);
-      pos.setXYZ(k, v.x, v.y, v.z);
-    }
-  }
-  g.computeVertexNormals();
-  return g;
-}
-
-// Liseré (passepoil) autour du haut de la housse.
-function pipingCurve(w: number, d: number, r: number) {
-  const pts: THREE.Vector3[] = [];
-  const hw = w / 2 - r;
-  const hd = d / 2 - r;
-  const corners: [number, number, number][] = [[hw, hd, 0], [-hw, hd, Math.PI / 2], [-hw, -hd, Math.PI], [hw, -hd, (3 * Math.PI) / 2]];
-  for (const [cx, cz, a0] of corners) {
-    for (let i = 0; i <= 8; i++) {
-      const a = a0 + (i / 8) * (Math.PI / 2);
-      pts.push(new THREE.Vector3(cx + Math.cos(a) * r, 0, cz + Math.sin(a) * r));
-    }
-  }
-  return new THREE.CatmullRomCurve3(pts, true);
-}
-
-function lighten(hex: string, amt: number) {
-  return '#' + new THREE.Color(hex).lerp(new THREE.Color('#ffffff'), amt).getHexString();
-}
-
 export interface BedProps {
   cover: string;
   bolster: string;
@@ -138,11 +90,6 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
   const weave = useMemo(() => noiseTexture('weave', '#808080'), []);
   const pores = useMemo(() => noiseTexture('pores', '#ffffff'), []);
   const curve = useMemo(bolsterCurve, []);
-  const bolsterGeo = useMemo(() => quiltedBolster(curve), [curve]);
-  const piping = useMemo(() => pipingCurve(L + 0.03, W + 0.03, 0.07), []);
-  const sleeveMat = useRef<THREE.MeshPhysicalMaterial>(null);
-  const pipeMat = useRef<THREE.MeshPhysicalMaterial>(null);
-  const sleeve = useRef<THREE.Group>(null);
 
   // Housse intérieure : une boîte très découpée dont on déforme la face du dessus.
   const cushionGeo = useMemo(() => {
@@ -154,7 +101,7 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
   const halfX = (L - 2 * R * 1.55) / 2;
   const halfZ = (W - R * 2.1) / 2;
 
-  useEffect(() => () => { weave.dispose(); pores.dispose(); cushionGeo.dispose(); bolsterGeo.dispose(); }, [weave, pores, cushionGeo, bolsterGeo]);
+  useEffect(() => () => { weave.dispose(); pores.dispose(); cushionGeo.dispose(); }, [weave, pores, cushionGeo]);
 
   useFrame((state, dt) => {
     const t = state.clock.elapsedTime;
@@ -166,12 +113,6 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
     const offs = [0.95, 0.55, 0.25, 0];
     const baseY = [H_SOLE + H_SUPPORT + H_MEMORY, H_SOLE + H_SUPPORT, H_SOLE, 0];
     layers.current.forEach((o, i) => { if (o) o.position.y = baseY[i] + offs[i] * e * 1.6; });
-    // La housse extérieure recouvre les mousses ; elle s'efface quand on ouvre le panier.
-    const show = Math.max(0, 1 - e * 3);
-    if (sleeve.current) sleeve.current.visible = show > 0.01;
-    for (const m of [sleeveMat.current, pipeMat.current]) {
-      if (m) { m.opacity = show; m.transparent = show < 0.999; m.depthWrite = show > 0.5; }
-    }
 
     // Déformation de la mousse.
     const pos = cushionGeo.attributes.position as THREE.BufferAttribute;
@@ -194,11 +135,7 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
       // Descend vite, remonte lentement : c'est le comportement d'une mousse à mémoire de forme.
       const rate = target < depth[i] ? 9 : 0.9;
       depth[i] += (target - depth[i]) * Math.min(1, k * rate);
-      const nx = x / halfX;
-      const nz = z / halfZ;
-      let rest = 0.055 * (1 - nx ** 4) * (1 - nz ** 4); // coussin bombé
-      for (const [tx, tz] of TUFTS) rest -= 0.018 * Math.exp(-((nx - tx) ** 2 + (nz - tz) ** 2) / 0.006); // capitons
-      arr[i * 3 + 1] = y0 + depth[i] + Math.max(0, edge) * rest;
+      arr[i * 3 + 1] = y0 + depth[i] + Math.max(0, edge) * 0.012;
     }
     pos.needsUpdate = true;
     cushionGeo.computeVertexNormals();
@@ -240,28 +177,16 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
           onPointerOver={interactive ? () => { document.body.style.cursor = 'grab'; } : undefined}
           onPointerOut={interactive ? () => { document.body.style.cursor = ''; } : undefined}
         >
-          <meshPhysicalMaterial color={cover} roughness={1} sheen={1} sheenRoughness={0.5} sheenColor={lighten(cover, 0.55)} bumpMap={weave} bumpScale={0.35} transparent={dim(0) < 1} opacity={dim(0)} />
+          <meshStandardMaterial color={cover} roughness={0.92} bumpMap={weave} bumpScale={0.6} transparent opacity={dim(0)} />
         </mesh>
-        <mesh position={[0, R * 0.9, 0]} geometry={bolsterGeo} castShadow receiveShadow>
-          <meshPhysicalMaterial color={bolster} roughness={1} sheen={1} sheenRoughness={0.45} sheenColor={lighten(bolster, 0.6)} bumpMap={weave} bumpScale={0.35} transparent={dim(0) < 1} opacity={dim(0)} />
+        <mesh position={[0, R * 0.9, 0]} castShadow receiveShadow>
+          <tubeGeometry args={[curve, 160, R, 28, false]} />
+          <meshStandardMaterial color={bolster} roughness={0.9} bumpMap={weave} bumpScale={0.6} transparent opacity={dim(0)} />
         </mesh>
         {[-1, 1].map((s) => (
           <mesh key={s} position={[s * (L / 2 - R), R * 0.9, W / 2 - R * 0.6]} castShadow>
-            <sphereGeometry args={[R * 0.9, 32, 24]} />
-            <meshPhysicalMaterial color={bolster} roughness={1} sheen={1} sheenRoughness={0.45} sheenColor={lighten(bolster, 0.6)} bumpMap={weave} bumpScale={0.35} transparent={dim(0) < 1} opacity={dim(0)} />
-          </mesh>
-        ))}
-      </group>
-
-      {/* Housse extérieure : elle habille les mousses quand le panier est fermé */}
-      <group ref={sleeve}>
-        <RoundedBox args={[L + 0.03, H_MEMORY + H_SUPPORT + 0.012, W + 0.03]} radius={0.07} smoothness={5} position={[0, H_SOLE + (H_MEMORY + H_SUPPORT) / 2, 0]} castShadow receiveShadow>
-          <meshPhysicalMaterial ref={sleeveMat} color={bolster} roughness={1} sheen={1} sheenRoughness={0.5} sheenColor={lighten(bolster, 0.5)} bumpMap={weave} bumpScale={0.35} />
-        </RoundedBox>
-        {[H_SOLE + H_MEMORY + H_SUPPORT - 0.005, H_SOLE + 0.02].map((y) => (
-          <mesh key={y} position={[0, y, 0]}>
-            <tubeGeometry args={[piping, 220, 0.016, 10, true]} />
-            <meshPhysicalMaterial ref={y > 0.1 ? pipeMat : undefined} color={lighten(bolster, -0.0)} roughness={0.8} sheen={0.6} sheenColor={lighten(bolster, 0.4)} />
+            <sphereGeometry args={[R, 28, 20]} />
+            <meshStandardMaterial color={bolster} roughness={0.9} bumpMap={weave} bumpScale={0.6} transparent opacity={dim(0)} />
           </mesh>
         ))}
       </group>
