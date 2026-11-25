@@ -2,9 +2,9 @@
 
 /* L'ambiance suit la couleur du panier choisi : Beige et Gris perle en clair, Chocolat et Noir en foncé.
    Les variables --t-* sont posées sur <html> par src/theme.tsx et glissent d'une ambiance à l'autre. */
-@property --t-bg { syntax: '<color>'; inherits: true; initial-value: #f7f1e7; }
-@property --t-bg2 { syntax: '<color>'; inherits: true; initial-value: #efe5d4; }
-@property --t-text { syntax: '<color>'; inherits: true; initial-value: #2a2118; }
+@property --t-bg { syntax: '<color>'; inherits: true; initial-value: #ffd9b6; }
+@property --t-bg2 { syntax: '<color>'; inherits: true; initial-value: #ffc895; }
+@property --t-text { syntax: '<color>'; inherits: true; initial-value: #3b1d0c; }
 @property --t-muted { syntax: '<color>'; inherits: true; initial-value: #6e5f4e; }
 @property --t-accent { syntax: '<color>'; inherits: true; initial-value: #b4582a; }
 @property --t-accent-2 { syntax: '<color>'; inherits: true; initial-value: #9c4a20; }
@@ -27,7 +27,7 @@
   --color-glow: var(--glow);
 }
 @theme {
-  --font-display: 'Bricolage Grotesque Variable', 'Figtree Variable', ui-sans-serif, sans-serif;
+  --font-display: 'Anton', 'Figtree Variable', ui-sans-serif, sans-serif;
   --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --ease-sortie: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -56,7 +56,7 @@ body {
 ::selection { background: var(--color-lichen); color: var(--color-sur-lichen); }
 :focus-visible { outline: 2px solid var(--color-lichen); outline-offset: 3px; border-radius: 6px; }
 input { caret-color: var(--color-lichen); }
-h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.03em; line-height: 1.02; font-weight: 700; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: 0.005em; line-height: 0.92; font-weight: 400; text-transform: uppercase; }
 p { text-wrap: pretty; }
 a { text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
 .chiffres { font-variant-numeric: tabular-nums; }
@@ -88,10 +88,10 @@ input[type='range']::-moz-range-thumb { width: 22px; height: 22px; border-radius
 /* Le mot géant derrière le panier. */
 .mot-geant {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 400;
   line-height: 0.95;
   padding-top: 0.06em;
-  letter-spacing: -0.06em;
+  letter-spacing: 0;
   color: transparent;
   background: linear-gradient(180deg, color-mix(in oklab, var(--t-accent) 85%, var(--t-text)) 0%, color-mix(in oklab, var(--glow, #ff5a1f) 55%, var(--t-bg)) 70%, var(--t-bg) 100%);
   -webkit-background-clip: text;
@@ -100,3 +100,16 @@ input[type='range']::-moz-range-thumb { width: 22px; height: 22px; border-radius
 }
 .mot-contour { color: transparent; -webkit-text-stroke: 1.5px color-mix(in oklab, var(--t-text) 22%, transparent); }
 .halo { background: radial-gradient(closest-side, color-mix(in oklab, var(--glow, #ff5a1f) 70%, transparent), transparent); filter: blur(30px); }
+
+/* Bandeau qui défile, légèrement penché, comme un ruban d'emballage. */
+@keyframes defile { to { transform: translateX(-50%); } }
+.ruban { animation: defile 28s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .ruban { animation: none; } }
+
+/* Pastille ronde qui tourne lentement. */
+@keyframes tourne { to { transform: rotate(360deg); } }
+.pastille-texte { animation: tourne 18s linear infinite; transform-origin: 50% 50%; }
+@media (prefers-reduced-motion: reduce) { .pastille-texte { animation: none; } }
+
+/* Les lignes découpées par SplitText sont masquées : on laisse de la place aux accents (É, À). */
+.ligne-split { padding-top: 0.14em; margin-top: -0.14em; }

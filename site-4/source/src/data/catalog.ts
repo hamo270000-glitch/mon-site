@@ -47,20 +47,20 @@ export interface Color {
 // Coloris clairs → site clair ; coloris foncés → site foncé.
 export const COLORS: Color[] = [
   {
-    id: 'beige', label: 'Beige', cover: '#d8c3a0', bolster: '#c2a77d', glow: '#e9b67a',
-    theme: { dark: false, bg: '#f7f1e7', bg2: '#efe5d4', text: '#2a2118', muted: '#6e5f4e', accent: '#b4582a', accent2: '#9c4a20', onAccent: '#fffaf3', glow: '#e9b67a', lines: '#b48e62' },
+    id: 'beige', label: 'Beige', cover: '#d8c3a0', bolster: '#c2a77d', glow: '#ffb070',
+    theme: { dark: false, bg: '#ffd9b6', bg2: '#ffc895', text: '#3b1d0c', muted: '#7a4526', accent: '#e2452c', accent2: '#c93a22', onAccent: '#fff7f0', glow: '#ffb070', lines: '#e3925a' },
   },
   {
-    id: 'gris', label: 'Gris perle', cover: '#b9bdc4', bolster: '#9ea3ab', glow: '#a9bce0',
-    theme: { dark: false, bg: '#f1f3f6', bg2: '#e4e8ee', text: '#1c222b', muted: '#58616d', accent: '#3355cc', accent2: '#2945a8', onAccent: '#ffffff', glow: '#a9bce0', lines: '#8d9bb2' },
+    id: 'gris', label: 'Gris perle', cover: '#b9bdc4', bolster: '#9ea3ab', glow: '#a3b9ff',
+    theme: { dark: false, bg: '#d3dfff', bg2: '#bccdff', text: '#131d48', muted: '#3d4c85', accent: '#ff4b88', accent2: '#e63a75', onAccent: '#ffffff', glow: '#a3b9ff', lines: '#7f98ee' },
   },
   {
-    id: 'chocolat', label: 'Chocolat', cover: '#6a4630', bolster: '#553624', glow: '#e08a3c',
-    theme: { dark: true, bg: '#22170f', bg2: '#2d1f15', text: '#f6ece1', muted: '#c9b29b', accent: '#f0a35e', accent2: '#f6b97f', onAccent: '#2a1508', glow: '#e08a3c', lines: '#9b7250' },
+    id: 'chocolat', label: 'Chocolat', cover: '#6a4630', bolster: '#553624', glow: '#ff8a3c',
+    theme: { dark: true, bg: '#4a2315', bg2: '#5b2d1b', text: '#ffe2c8', muted: '#e6ab84', accent: '#ffb33c', accent2: '#ffc464', onAccent: '#3a1906', glow: '#ff8a3c', lines: '#a35a38' },
   },
   {
-    id: 'noir', label: 'Noir', cover: '#2c2c31', bolster: '#1f1f23', glow: '#ff6a2b',
-    theme: { dark: true, bg: '#09090b', bg2: '#131316', text: '#f4f4f6', muted: '#9c9ca5', accent: '#ff6a2b', accent2: '#ff8450', onAccent: '#1a0802', glow: '#ff5a1f', lines: '#56565f' },
+    id: 'noir', label: 'Noir', cover: '#2c2c31', bolster: '#1f1f23', glow: '#ff4b88',
+    theme: { dark: true, bg: '#141015', bg2: '#1f1a21', text: '#ffe8f1', muted: '#bda7b5', accent: '#ff4b88', accent2: '#ff6f9f', onAccent: '#1a0610', glow: '#ff4b88', lines: '#53404d' },
   },
 ];
 
