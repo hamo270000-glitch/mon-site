@@ -2,7 +2,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ContactShadows, Environment, Lightformer } from '@react-three/drei';
-import Bed, { type BedProps } from './Bed';
+import Bed, { val, type BedProps, type Val } from './Bed';
 import Dog, { DOG_DENTS } from './Dog';
 
 function LookAt({ y }: { y: number }) {
@@ -12,7 +12,7 @@ function LookAt({ y }: { y: number }) {
 }
 
 // Flaque de lumière ambrée au sol, comme sous une lampe de chevet.
-function LampPool({ strength = 1 }: { strength?: number }) {
+function LampPool({ strength = 1 }: { strength?: Val }) {
   const tex = useMemo(() => {
     const c = document.createElement('canvas');
     c.width = c.height = 256;
@@ -26,7 +26,7 @@ function LampPool({ strength = 1 }: { strength?: number }) {
     return new THREE.CanvasTexture(c);
   }, []);
   const mat = useRef<THREE.MeshBasicMaterial>(null);
-  useFrame((_, dt) => { if (mat.current) mat.current.opacity += (0.55 * strength - mat.current.opacity) * Math.min(1, dt * 3); });
+  useFrame((_, dt) => { if (mat.current) mat.current.opacity += (0.55 * val(strength) - mat.current.opacity) * Math.min(1, dt * 3); });
   useEffect(() => () => tex.dispose(), [tex]);
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-0.3, -0.335, 0.2]}>
@@ -37,7 +37,7 @@ function LampPool({ strength = 1 }: { strength?: number }) {
 }
 
 // Le carrelage froid sous le chien : il s'efface quand la mousse prend sa place.
-function Tiles({ fade }: { fade: number }) {
+function Tiles({ fade }: { fade: Val }) {
   const tex = useMemo(() => {
     const c = document.createElement('canvas');
     c.width = c.height = 256;
@@ -67,7 +67,7 @@ function Tiles({ fade }: { fade: number }) {
   }, []);
   useEffect(() => () => fadeTex.dispose(), [fadeTex]);
   const mat = useRef<THREE.MeshStandardMaterial>(null);
-  useFrame((_, dt) => { if (mat.current) mat.current.opacity += ((1 - fade) * 0.8 - mat.current.opacity) * Math.min(1, dt * 4); });
+  useFrame((_, dt) => { if (mat.current) mat.current.opacity += ((1 - val(fade)) * 0.8 - mat.current.opacity) * Math.min(1, dt * 4); });
   useEffect(() => () => tex.dispose(), [tex]);
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.325, 0]} receiveShadow>
@@ -77,6 +77,9 @@ function Tiles({ fade }: { fade: number }) {
   );
 }
 
+// Téléphone : moins de pixels et pas d'ombres calculées, pour garder le défilement fluide.
+const PHONE = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+
 type Props = BedProps & {
   className?: string;
   scale?: number;
@@ -85,8 +88,8 @@ type Props = BedProps & {
   label: string;
   /** affiche le chien en radiographie ; relief 0 → 1 */
   dog?: boolean;
-  relief?: number;
-  lamp?: number;
+  relief?: Val;
+  lamp?: Val;
 };
 
 // Scène 3D réutilisée sur toutes les pages : lampe ambrée à gauche, clair de lune bleuté à droite.
@@ -106,8 +109,8 @@ export default function BedCanvas({ className = '', scale = 1, lookY = 0, camera
   return (
     <div ref={setEl} className={className} role="img" aria-label={label}>
       {seen && <Canvas
-        shadows
-        dpr={[1, 1.75]}
+        shadows={!PHONE}
+        dpr={PHONE ? [1, 1.25] : [1, 1.6]}
         frameloop={visible ? 'always' : 'never'}
         camera={{ position: camera, fov: 32 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -119,16 +122,16 @@ export default function BedCanvas({ className = '', scale = 1, lookY = 0, camera
           {/* Lumière d'appoint douce, côté spectateur, pour garder les volumes lisibles. */}
           <directionalLight position={[1.5, 2, 4]} intensity={0.55} color="#f3e6d2" />
           {/* La lampe de chevet : chaude, elle porte l'ombre. */}
-          <pointLight position={[-2.4, 2.6, 1.6]} intensity={22} distance={9} decay={1.7} color="#ffc27a" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} />
+          <pointLight position={[-2.4, 2.6, 1.6]} intensity={22} distance={9} decay={1.7} color="#ffc27a" castShadow={!PHONE} shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} />
           {/* Le clair de lune : froid, en contre-jour. */}
           <directionalLight position={[3, 3, -3]} intensity={1.1} color="#8fb4d9" />
-          <Environment resolution={128}>
+          <Environment resolution={PHONE ? 64 : 128}>
             <Lightformer form="circle" intensity={1.4} position={[-4, 3, 2]} scale={3} color="#ffcf8f" />
             <Lightformer form="rect" intensity={0.5} position={[4, 2, -3]} scale={[4, 2, 1]} color="#7d9cc0" />
             <Lightformer form="circle" intensity={0.3} position={[0, -3, 0]} scale={4} color="#0b1418" />
           </Environment>
           <group scale={scale}>
-            <Bed {...bed} dents={dog ? DOG_DENTS.map((d) => ({ ...d, d: d.d * relief })) : bed.dents}>
+            <Bed {...bed} dents={dog ? DOG_DENTS : bed.dents} dentScale={dog ? relief : 1}>
               {dog && <Dog relief={relief} />}
             </Bed>
           </group>

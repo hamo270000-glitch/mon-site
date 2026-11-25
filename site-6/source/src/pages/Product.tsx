@@ -49,12 +49,12 @@ export default function Product({ initialSize, withDog = false }: { initialSize?
               interactive={!xray}
             />
             <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3">
-              <div className="legende chiffres rounded-xl bg-ciel/80 px-3 py-2 backdrop-blur-md">
+              <div className="legende chiffres rounded-xl bg-ciel/95 px-3 py-2">
                 <span className="block text-creme">{s.outer[0]} × {s.outer[1]} cm</span>
                 couchage {s.sleep[0]} × {s.sleep[1]} cm
               </div>
               <button type="button" onClick={() => setXray((v) => !v)} aria-pressed={xray}
-                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-creme/20 bg-ciel/80 px-4 text-[0.9rem] backdrop-blur-md transition-colors hover:border-ambre aria-pressed:border-repos aria-pressed:text-repos">
+                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-creme/20 bg-ciel/95 px-4 text-[0.9rem] transition-colors hover:border-ambre aria-pressed:border-repos aria-pressed:text-repos">
                 <span className="h-2 w-2 rounded-full bg-current" aria-hidden="true" />{xray ? 'Masquer le chien' : 'Voir avec un chien'}
               </button>
             </div>
@@ -87,7 +87,7 @@ export default function Product({ initialSize, withDog = false }: { initialSize?
             <div className="mt-3"><ColorPicker id="coloris-produit" /></div>
           </fieldset>
 
-          <div className="sticky bottom-0 z-10 -mx-4 mt-9 border-t border-creme/10 bg-ciel/92 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md sm:-mx-8 sm:px-8 md:static md:mx-0 md:border-0 md:bg-transparent md:p-0">
+          <div className="sticky bottom-0 z-10 -mx-4 mt-9 border-t border-creme/10 bg-ciel/95 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:-mx-8 sm:px-8 md:static md:mx-0 md:border-0 md:bg-transparent md:p-0">
             <button ref={btn} type="button" onClick={onAdd} className="bouton w-full text-lg">
               {added ? 'Ajouté, on ouvre ton panier' : <>Ajouter au panier · <span className="chiffres">{euros(s.price)}</span></>}
             </button>

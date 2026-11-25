@@ -44,7 +44,7 @@ export function Header({ route }: { route: Route }) {
   }, [count]);
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-40 border-b pt-[env(safe-area-inset-top)] transition-[background-color,border-color] duration-500 ${scrolled || menu ? 'border-creme/10 bg-ciel/85 backdrop-blur-md' : 'border-transparent'}`}>
+    <header className={`fixed inset-x-0 top-0 z-40 border-b pt-[env(safe-area-inset-top)] transition-[background-color,border-color] duration-500 ${scrolled || menu ? 'border-creme/10 bg-ciel/95' : 'border-transparent'}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
         <a href={href.accueil} aria-label="Museau Gris, accueil" className="rounded text-creme"><Logo /></a>
         <nav aria-label="Navigation principale" className="hidden items-center gap-8 md:flex">

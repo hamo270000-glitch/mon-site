@@ -16,8 +16,8 @@ const H_SOLE = 0.03;
 const H_SUPPORT = 0.26;
 const H_MEMORY = 0.18;
 const H_CUSHION = 0.1;
-const SEG_X = 72;
-const SEG_Z = 56;
+const SEG_X = 48;
+const SEG_Z = 36;
 
 function noiseTexture(kind: 'weave' | 'pores', base: string) {
   const c = document.createElement('canvas');
@@ -76,22 +76,30 @@ export interface BedProps {
   explode?: number;
   highlight?: number | null; // index de couche mise en avant (0 = housse … 3 = semelle)
   interactive?: boolean;
-  breathe?: boolean;
   onPress?: () => void;
   /** rotation imposée (pilotée par le défilement) ; sinon le panier tourne doucement tout seul */
   rotY?: { current: number } | null;
-  rise?: number;
+  /** nombre fixe, ou valeur lue à chaque image (pilotée par le défilement sans re-rendu React) */
+  rise?: Val;
   dents?: { x: number; z: number; d: number }[];
+  /** profondeur des creux du chien (0 → 1) */
+  dentScale?: Val;
   /** objets posés sur la housse (le chien), qui montent avec la mousse */
   children?: ReactNode;
 }
 
+export type Val = number | { readonly current: number };
+export const val = (v: Val) => (typeof v === 'number' ? v : v.current);
+
 export const BED_TOP = H_SOLE + H_SUPPORT + H_MEMORY + H_CUSHION;
 
-export default function Bed({ cover, bolster, explode = 0, highlight = null, interactive = true, breathe = true, onPress, rotY = null, rise = 1, dents = [], children }: BedProps) {
+export default function Bed({ cover, bolster, explode = 0, highlight = null, interactive = true, onPress, rotY = null, rise = 1, dents = [], dentScale = 1, children }: BedProps) {
   const body = useRef<THREE.Group>(null);
   const top = useRef<THREE.Group>(null);
-  const riseNow = useRef(rise);
+  const riseNow = useRef(val(rise));
+  // La mousse n'est recalculée que si elle bouge (appui, remontée lente, creux du chien qui changent).
+  const dirty = useRef(true);
+  const lastDent = useRef(-1);
   const cushion = useRef<THREE.Mesh>(null);
   const group = useRef<THREE.Group>(null);
   const layers = useRef<(THREE.Object3D | null)[]>([]);
@@ -121,7 +129,7 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
     // Écartement des couches, adouci.
     explodeNow.current += (explode - explodeNow.current) * Math.min(1, k * 6);
     const e = explodeNow.current;
-    riseNow.current += (rise - riseNow.current) * Math.min(1, k * 5);
+    riseNow.current += (val(rise) - riseNow.current) * Math.min(1, k * 5);
     const r = Math.max(0.025, riseNow.current);
     if (body.current) { body.current.scale.y = r; body.current.visible = riseNow.current > 0.04; }
     if (top.current) top.current.position.y = BED_TOP * riseNow.current - 0.035 * riseNow.current;
@@ -130,35 +138,42 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
     layers.current.forEach((o, i) => { if (o) o.position.y = baseY[i] + offs[i] * e * 1.6; });
 
     // Déformation de la mousse.
-    const pos = cushionGeo.attributes.position as THREE.BufferAttribute;
-    const arr = pos.array as Float32Array;
     const p = press.current;
-    const breath = breathe ? 0.012 + 0.01 * Math.sin(t * 1.3) : 0;
-    for (let i = 0; i < pos.count; i++) {
-      const y0 = base[i * 3 + 1];
-      if (y0 <= 0) continue; // seulement la face du dessus
-      const x = base[i * 3];
-      const z = base[i * 3 + 2];
-      const edge = Math.min(1, (halfX - Math.abs(x)) / 0.12, (halfZ - Math.abs(z)) / 0.12);
-      let target = -breath * Math.exp(-(x * x) / 0.35 - (z * z) / 0.2);
-      for (const dn of dents) {
-        const dx = x - dn.x;
-        const dz = z - dn.z;
-        target -= dn.d * Math.exp(-(dx * dx) / 0.09 - (dz * dz) / 0.05);
+    const ds = val(dentScale);
+    if (Math.abs(ds - lastDent.current) > 0.002) { lastDent.current = ds; dirty.current = true; }
+    if (p.down || dirty.current) {
+      const pos = cushionGeo.attributes.position as THREE.BufferAttribute;
+      const arr = pos.array as Float32Array;
+      let moving = 0;
+      for (let i = 0; i < pos.count; i++) {
+        const y0 = base[i * 3 + 1];
+        if (y0 <= 0) continue; // seulement la face du dessus
+        const x = base[i * 3];
+        const z = base[i * 3 + 2];
+        const edge = Math.min(1, (halfX - Math.abs(x)) / 0.12, (halfZ - Math.abs(z)) / 0.12);
+        let target = 0;
+        for (const dn of dents) {
+          const dx = x - dn.x;
+          const dz = z - dn.z;
+          target -= dn.d * ds * Math.exp(-(dx * dx) / 0.09 - (dz * dz) / 0.05);
+        }
+        if (p.down) {
+          const dx = x - p.x;
+          const dz = z - p.z;
+          target -= 0.085 * Math.exp(-(dx * dx + dz * dz) / 0.07);
+        }
+        target *= Math.max(0, edge);
+        // Descend vite, remonte lentement : c'est le comportement d'une mousse à mémoire de forme.
+        const rate = target < depth[i] ? 9 : 0.9;
+        const step = (target - depth[i]) * Math.min(1, k * rate);
+        depth[i] += step;
+        moving = Math.max(moving, Math.abs(target - depth[i]));
+        arr[i * 3 + 1] = y0 + depth[i] + Math.max(0, edge) * 0.012;
       }
-      if (p.down) {
-        const dx = x - p.x;
-        const dz = z - p.z;
-        target -= 0.085 * Math.exp(-(dx * dx + dz * dz) / 0.07);
-      }
-      target *= Math.max(0, edge);
-      // Descend vite, remonte lentement : c'est le comportement d'une mousse à mémoire de forme.
-      const rate = target < depth[i] ? 9 : 0.9;
-      depth[i] += (target - depth[i]) * Math.min(1, k * rate);
-      arr[i * 3 + 1] = y0 + depth[i] + Math.max(0, edge) * 0.012;
+      pos.needsUpdate = true;
+      cushionGeo.computeVertexNormals();
+      dirty.current = p.down || moving > 0.0004;
     }
-    pos.needsUpdate = true;
-    cushionGeo.computeVertexNormals();
 
     if (group.current) {
       const g = group.current;
@@ -194,8 +209,8 @@ export default function Bed({ cover, bolster, explode = 0, highlight = null, int
           receiveShadow
           onPointerDown={interactive ? (ev) => { ev.stopPropagation(); (ev.target as Element | null)?.setPointerCapture?.(ev.pointerId); press.current.down = true; toLocal(ev); onPress?.(); } : undefined}
           onPointerMove={interactive ? (ev) => { if (press.current.down) toLocal(ev); } : undefined}
-          onPointerUp={interactive ? () => { press.current.down = false; } : undefined}
-          onPointerLeave={interactive ? () => { press.current.down = false; } : undefined}
+          onPointerUp={interactive ? () => { press.current.down = false; dirty.current = true; } : undefined}
+          onPointerLeave={interactive ? () => { if (press.current.down) dirty.current = true; press.current.down = false; } : undefined}
           onPointerOver={interactive ? () => { document.body.style.cursor = 'grab'; } : undefined}
           onPointerOut={interactive ? () => { document.body.style.cursor = ''; } : undefined}
         >
