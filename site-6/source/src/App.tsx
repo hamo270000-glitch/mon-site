@@ -46,7 +46,6 @@ export default function App() {
     <CoverProvider>
     <CartProvider>
       <Sky />
-      <div className="grain">
       <SmoothScroll>
         <ScrollReset route={route} />
         <button type="button" onClick={() => document.getElementById('contenu')?.focus()} className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ambre focus:px-4 focus:py-2 focus:text-sur-ambre">Aller au contenu</button>
@@ -65,7 +64,6 @@ export default function App() {
         <CartDrawer />
         <NightfallTransition route={route} />
       </SmoothScroll>
-      </div>
     </CartProvider>
     </CoverProvider>
   );

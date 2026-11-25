@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -20,8 +20,19 @@ const smooth = (a: number, b: number, x: number) => { const t = Math.min(1, Math
 export default function XRayStory({ id = 'radio', title = 'Ce que voit <em>son corps</em> la nuit.' }: { id?: string; title?: string }) {
   const root = useRef<HTMLElement>(null);
   const { color } = useCover();
-  const [p, setP] = useState(0);
+  // La progression du défilement vit dans une « ref » : la 3D la lit à chaque image, sans re-rendu React.
+  const prog = useRef(0);
+  const [step, setStep] = useState(0);
+  const [calm, setCalm] = useState(false);
   const [reduced, setReduced] = useState(false);
+  const rise = useMemo(() => ({ get current() { return smooth(0.18, 0.5, prog.current); } }), []);
+  const relief = useMemo(() => ({ get current() { return smooth(0.4, 0.78, prog.current); } }), []);
+  const lamp = useMemo(() => ({ get current() { return 0.4 + smooth(0.18, 0.5, prog.current) * 0.6; } }), []);
+  const setP = (v: number) => {
+    prog.current = v;
+    setStep(v < 0.3 ? 0 : v < 0.62 ? 1 : 2);
+    setCalm(smooth(0.4, 0.78, v) > 0.5);
+  };
 
   useGSAP(() => {
     const mm = gsap.matchMedia();
@@ -40,9 +51,6 @@ export default function XRayStory({ id = 'radio', title = 'Ce que voit <em>son c
     return () => mm.revert();
   }, { scope: root });
 
-  const rise = smooth(0.18, 0.5, p);
-  const relief = smooth(0.4, 0.78, p);
-  const step = p < 0.3 ? 0 : p < 0.62 ? 1 : 2;
 
   return (
     <section ref={root} id={id} aria-labelledby={`${id}-titre`} className="relative isolate">
@@ -64,15 +72,15 @@ export default function XRayStory({ id = 'radio', title = 'Ce que voit <em>son c
           <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1" aria-label="Points d’appui">
             {PRESSURE.map((pt) => (
               <li key={pt.id} className="legende inline-flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full transition-colors duration-700" style={{ background: relief > 0.5 ? 'var(--color-repos)' : 'var(--color-douleur)', boxShadow: `0 0 10px ${relief > 0.5 ? 'var(--color-repos)' : 'var(--color-douleur)'}` }} aria-hidden="true" />
+                <span className="h-2.5 w-2.5 rounded-full transition-colors duration-700" style={{ background: calm ? 'var(--color-repos)' : 'var(--color-douleur)', boxShadow: `0 0 10px ${calm ? 'var(--color-repos)' : 'var(--color-douleur)'}` }} aria-hidden="true" />
                 {pt.label}
               </li>
             ))}
           </ul>
           {reduced && (
             <div className="mt-5 flex gap-2" role="group" aria-label="Comparer">
-              <button type="button" onClick={() => setP(0)} aria-pressed={p === 0} className="min-h-11 cursor-pointer rounded-full border border-creme/20 px-4 aria-pressed:border-ambre aria-pressed:text-ambre-clair">Sur le carrelage</button>
-              <button type="button" onClick={() => setP(1)} aria-pressed={p === 1} className="min-h-11 cursor-pointer rounded-full border border-creme/20 px-4 aria-pressed:border-ambre aria-pressed:text-ambre-clair">Sur Le Doyen</button>
+              <button type="button" onClick={() => setP(0)} aria-pressed={!calm} className="min-h-11 cursor-pointer rounded-full border border-creme/20 px-4 aria-pressed:border-ambre aria-pressed:text-ambre-clair">Sur le carrelage</button>
+              <button type="button" onClick={() => setP(1)} aria-pressed={calm} className="min-h-11 cursor-pointer rounded-full border border-creme/20 px-4 aria-pressed:border-ambre aria-pressed:text-ambre-clair">Sur Le Doyen</button>
             </div>
           )}
           <p className="legende mt-4">Illustration pour comprendre, pas une mesure médicale.</p>
@@ -85,11 +93,10 @@ export default function XRayStory({ id = 'radio', title = 'Ce que voit <em>son c
           dog
           rise={rise}
           relief={relief}
-          lamp={0.4 + rise * 0.6}
+          lamp={lamp}
           scale={0.9}
           lookY={0}
           camera={[1.3, 3.7, 4.3]}
-          breathe={false}
           interactive={false}
           rotY={{ current: -0.15 }}
         />

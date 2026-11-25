@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, type ThreeElements } from '@react-three/fiber';
 import * as THREE from 'three';
+import { val, type Val } from './Bed';
 
 // Un vieux chien couché sur le flanc, vu « en radiographie » : silhouette translucide, colonne visible,
 // et ses quatre points d'appui (épaule, coude, hanche, genou).
@@ -46,11 +47,11 @@ function Ghost({ children, ...props }: ThreeElements['mesh']) {
   );
 }
 
-export default function Dog({ relief = 1 }: { relief?: number }) {
+export default function Dog({ relief = 1 }: { relief?: Val }) {
   const breath = useRef<THREE.Group>(null);
   const cores = useRef<(THREE.Mesh | null)[]>([]);
   const halos = useRef<(THREE.Sprite | null)[]>([]);
-  const reliefNow = useRef(relief);
+  const reliefNow = useRef(val(relief));
   const tex = useMemo(haloTexture, []);
   const tmp = useMemo(() => new THREE.Color(), []);
   const reduce = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
@@ -59,7 +60,7 @@ export default function Dog({ relief = 1 }: { relief?: number }) {
   useFrame((state, dt) => {
     const t = state.clock.elapsedTime;
     const k = Math.min(dt, 1 / 20);
-    reliefNow.current += (relief - reliefNow.current) * Math.min(1, k * 4);
+    reliefNow.current += (val(relief) - reliefNow.current) * Math.min(1, k * 4);
     const r = reliefNow.current;
     tmp.copy(HOT).lerp(COOL, r);
     // Respiration lente d'un vieux chien qui dort.

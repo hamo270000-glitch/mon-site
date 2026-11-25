@@ -11,24 +11,23 @@ gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 // Une seule courbe (power3.out), des durées longues, rien qui sautille.
 gsap.defaults({ ease: 'power3.out', duration: 1.2 });
 
-const CREPUSCULE = '#2a3f48';
-const NUIT = '#0d171b';
 
 /** Animations au défilement de la page affichée. Relancées à chaque changement de page. */
 export function useScrollMotion(route: Route) {
   useGSAP(() => {
-    const root = document.documentElement;
     const mm = gsap.matchMedia();
 
-    // 0. Du crépuscule à la nuit : le ciel fonce et les étoiles s'allument au fil de la page.
-    gsap.set(root, { '--ciel': CREPUSCULE, '--etoiles': 0.12 });
-    mm.add('(prefers-reduced-motion: reduce)', () => { gsap.set(root, { '--ciel': '#16262d', '--etoiles': 0.6 }); });
+    // 0. Du crépuscule à la nuit : le calque « nuit » et les étoiles apparaissent (opacité seulement, très léger).
+    gsap.set('#ciel-nuit', { opacity: 0 });
+    gsap.set('#ciel-etoiles', { opacity: 0.15 });
+    mm.add('(prefers-reduced-motion: reduce)', () => { gsap.set('#ciel-nuit', { opacity: 0.6 }); gsap.set('#ciel-etoiles', { opacity: 0.6 }); });
 
     mm.add('(prefers-reduced-motion: no-preference)', () => {
       const main = document.getElementById('contenu');
       if (!main) return;
 
-      gsap.to(root, { '--ciel': NUIT, '--etoiles': 1, ease: 'none', scrollTrigger: { trigger: main, start: 'top top', end: 'bottom bottom', scrub: 1.2 } });
+      const nuit = gsap.timeline({ scrollTrigger: { trigger: main, start: 'top top', end: 'bottom bottom', scrub: 1.2 } });
+      nuit.to('#ciel-nuit', { opacity: 1, ease: 'none' }, 0).to('#ciel-etoiles', { opacity: 1, ease: 'none' }, 0);
 
       // 1. Titres : chaque ligne se lève doucement de derrière un masque, mot par mot.
       main.querySelectorAll<HTMLElement>('h1, h2:not(.sr-only)').forEach((el) => {
@@ -62,9 +61,6 @@ export function useScrollMotion(route: Route) {
         tl.to('[data-hero-bed]', { yPercent: -10, scale: 0.94, ease: 'none' }, 0)
           .to('[data-hero-copy]', { yPercent: 16, autoAlpha: 0.1, ease: 'none' }, 0);
       }
-
-      // 4. Les lampes respirent, très lentement.
-      gsap.to(main.querySelectorAll('[data-lampe]'), { scale: 1.1, autoAlpha: 0.7, duration: 4.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
     });
 
     // Les sections épinglées sont créées par les pages (avant ce hook) : on remet tout dans l'ordre.

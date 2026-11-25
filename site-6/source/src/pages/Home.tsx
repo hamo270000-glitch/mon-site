@@ -151,12 +151,14 @@ export default function Home() {
             <p className="mt-4 max-w-sm text-lg text-brume">{c.note}.</p>
             <div className="mt-8"><ColorPicker id="coloris-accueil" big /></div>
           </div>
+{!mobile && (
           <BedCanvas
-            className="relative h-[46svh] min-h-[300px] w-full md:h-[64svh]"
+            className="relative h-[64svh] min-h-[300px] w-full"
             label={`${PRODUCT.name} en 3D, coloris ${c.label}. Appuie sur la housse pour la voir s’enfoncer.`}
             cover={c.cover}
             bolster={c.bolster}
           />
+          )}
         </div>
       </section>
 
