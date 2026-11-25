@@ -34,5 +34,8 @@
         ]
       }
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "firecrawl"
+  ]
 }
