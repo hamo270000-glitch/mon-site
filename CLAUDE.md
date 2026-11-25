@@ -18,6 +18,8 @@
 - **graphify** : commande `/graphify` (skill dans `.claude/skills/graphify/`). Le programme s'installe tout seul au démarrage des sessions cloud (script de l'environnement « Default »). Sur l'ordinateur : `uv tool install graphifyy` une seule fois.
 - La carte (`graphify-out/`) n'est pas enregistrée dans le dépôt : elle est reconstruite au démarrage de chaque session cloud et après chaque commit (hooks git installés par `graphify hook install`). Si `graphify-out/graph.json` manque, lance `graphify hook install` puis `graphify update .` (3 secondes, gratuit).
 
+- **Firecrawl** (ajouté le 25 novembre 2026) : lit et récupère le contenu des sites web (boutiques concurrentes, pages fournisseurs, AliExpress…). Serveur MCP déclaré dans `.mcp.json` (paquet `firecrawl-mcp`). Dans le cloud, la clé est ajoutée automatiquement par le proxy (secret réseau pour `api.firecrawl.dev`). Sur l'ordinateur : mettre la clé dans la variable `FIRECRAWL_API_KEY`.
+
 ## Les projets
 - `affute/` : Affûté, l'appli de sèche et de prise de masse (voir `affute/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/affute/
 - Racine (`index.html`, `js/`, `css/`) : Clair, le scanner alimentaire (voir `README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/
