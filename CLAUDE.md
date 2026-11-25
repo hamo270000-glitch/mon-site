@@ -27,6 +27,10 @@
   - Code dans `site-3/source/`, puis `npm run build` dans ce dossier avant le commit.
 - `.claude/agents/` : agents de The Agency.
 - `.claude/skills/` : skills installés (GSAP, frontend-design, react-best-practices, web-design-guidelines, composition-patterns, find-skills). Utilise-les pour le Site 2 et le Site 3.
+- Skills de designers (ajoutés le 25 novembre 2026, copiés depuis leurs dépôts officiels) :
+  - `impeccable` (pbakaus/impeccable) : repère et corrige le style « fait par IA ». Commandes : `/impeccable critique …`, `/impeccable polish …`, `/impeccable init`. Ses agents sont dans `.claude/agents/impeccable-*.md`. Son hook automatique n'est pas installé.
+  - `stageshow` (benjitaylor/skills) : démos animées de produit en React.
+  - `dimensional-drawing` et `dimensional-drawing-motion` (enesozturk/dimensional-drawing) : planches techniques des composants, façon Apple, et leur animation.
 
 ## graphify
 
