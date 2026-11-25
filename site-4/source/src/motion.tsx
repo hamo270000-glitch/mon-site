@@ -26,6 +26,7 @@ export function useScrollMotion(route: Route) {
         SplitText.create(el, {
           type: 'lines,words',
           mask: 'lines',
+          linesClass: 'ligne-split',
           autoSplit: true,
           aria: 'auto',
           onSplit: (self) => gsap.from(self.words, {
