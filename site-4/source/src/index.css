@@ -1,0 +1,102 @@
+@import 'tailwindcss';
+
+/* L'ambiance suit la couleur du panier choisi : Beige et Gris perle en clair, Chocolat et Noir en foncé.
+   Les variables --t-* sont posées sur <html> par src/theme.tsx et glissent d'une ambiance à l'autre. */
+@property --t-bg { syntax: '<color>'; inherits: true; initial-value: #f7f1e7; }
+@property --t-bg2 { syntax: '<color>'; inherits: true; initial-value: #efe5d4; }
+@property --t-text { syntax: '<color>'; inherits: true; initial-value: #2a2118; }
+@property --t-muted { syntax: '<color>'; inherits: true; initial-value: #6e5f4e; }
+@property --t-accent { syntax: '<color>'; inherits: true; initial-value: #b4582a; }
+@property --t-accent-2 { syntax: '<color>'; inherits: true; initial-value: #9c4a20; }
+@property --t-on-accent { syntax: '<color>'; inherits: true; initial-value: #fffaf3; }
+@property --glow { syntax: '<color>'; inherits: true; initial-value: #e9b67a; }
+@property --t-lines { syntax: '<color>'; inherits: true; initial-value: #b48e62; }
+
+@theme inline {
+  --color-basalte: var(--t-bg);
+  --color-basalte-2: var(--t-bg2);
+  --color-mousse: var(--t-bg2);
+  --color-schiste: var(--t-muted);
+  --color-calcaire: var(--t-bg2);
+  --color-calcaire-2: var(--t-bg2);
+  --color-texte: var(--t-text);
+  --color-doux: var(--t-muted);
+  --color-lichen: var(--t-accent);
+  --color-lichen-fonce: var(--t-accent-2);
+  --color-sur-lichen: var(--t-on-accent);
+  --color-glow: var(--glow);
+}
+@theme {
+  --font-display: 'Bricolage Grotesque Variable', 'Figtree Variable', ui-sans-serif, sans-serif;
+  --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ease-sortie: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  transition: --t-bg 0.9s var(--ease-sortie), --t-bg2 0.9s var(--ease-sortie), --t-text 0.9s var(--ease-sortie), --t-muted 0.9s var(--ease-sortie),
+    --t-accent 0.9s var(--ease-sortie), --t-accent-2 0.9s var(--ease-sortie), --t-on-accent 0.9s var(--ease-sortie), --glow 0.9s var(--ease-sortie), --t-lines 0.9s var(--ease-sortie);
+}
+
+html {
+  background: var(--color-basalte);
+  color: var(--color-texte);
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--color-schiste) var(--color-basalte);
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+::selection { background: var(--color-lichen); color: var(--color-sur-lichen); }
+:focus-visible { outline: 2px solid var(--color-lichen); outline-offset: 3px; border-radius: 6px; }
+input { caret-color: var(--color-lichen); }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.03em; line-height: 1.02; font-weight: 700; }
+p { text-wrap: pretty; }
+a { text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+.chiffres { font-variant-numeric: tabular-nums; }
+
+/* Repères de carte : légende, échelle. */
+.legende { font-size: 0.8125rem; letter-spacing: 0.02em; color: var(--color-doux); }
+.echelle {
+  height: 6px;
+  background:
+    linear-gradient(90deg, var(--color-texte) 0 25%, transparent 25% 50%, var(--color-texte) 50% 75%, transparent 75%) top / 100% 3px no-repeat;
+  border: 1px solid var(--color-texte);
+}
+
+.calcaire { background: color-mix(in oklab, var(--t-bg2) 78%, transparent); }
+
+/* Champ « glisser » (taille, poids). */
+input[type='range'] { appearance: none; width: 100%; height: 44px; background: transparent; cursor: pointer; }
+input[type='range']::-webkit-slider-runnable-track { height: 2px; background: currentColor; opacity: 0.5; }
+input[type='range']::-moz-range-track { height: 2px; background: currentColor; opacity: 0.5; }
+input[type='range']::-webkit-slider-thumb { appearance: none; width: 26px; height: 26px; margin-top: -12px; border-radius: 50%; background: var(--color-lichen); border: 3px solid var(--color-sur-lichen); box-shadow: 0 4px 12px rgb(0 0 0 / 0.25); }
+input[type='range']::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--color-lichen); border: 3px solid var(--color-sur-lichen); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+.ocre { background: transparent; }
+
+/* Le mot géant derrière le panier. */
+.mot-geant {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.95;
+  padding-top: 0.06em;
+  letter-spacing: -0.06em;
+  color: transparent;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--t-accent) 85%, var(--t-text)) 0%, color-mix(in oklab, var(--glow, #ff5a1f) 55%, var(--t-bg)) 70%, var(--t-bg) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+}
+.mot-contour { color: transparent; -webkit-text-stroke: 1.5px color-mix(in oklab, var(--t-text) 22%, transparent); }
+.halo { background: radial-gradient(closest-side, color-mix(in oklab, var(--glow, #ff5a1f) 70%, transparent), transparent); filter: blur(30px); }
