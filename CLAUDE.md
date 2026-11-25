@@ -28,8 +28,6 @@
   - On modifie le code dans `site-2/source/`, puis on lance `npm run build` dans ce dossier avant le commit (le site construit est publié tel quel).
 - `site-3/` : Site 3, nouveau projet (contenu à choisir), même base que le Site 2 (voir `site-3/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-3/
   - Code dans `site-3/source/`, puis `npm run build` dans ce dossier avant le commit.
-- `site-6/` : Site 6, boutique « Museau Gris » (paniers orthopédiques pour chiens âgés, produit « Le Doyen »), même base que le Site 4 : React + Vite + GSAP + 3D (voir `site-6/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-6/
-  - Code dans `site-6/source/`, puis `npm run build` dans ce dossier avant le commit. Marque distincte de Lové (Site 4) : bleu nuit + ambre, polices Fraunces et Instrument Sans.
 - `.claude/agents/` : agents de The Agency.
 - `.claude/skills/` : skills installés (GSAP, frontend-design, react-best-practices, web-design-guidelines, composition-patterns, find-skills). Utilise-les pour le Site 2 et le Site 3.
 - Skills de designers (ajoutés le 25 novembre 2026, copiés depuis leurs dépôts officiels) :
