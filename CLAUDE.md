@@ -19,6 +19,7 @@
 - La carte (`graphify-out/`) n'est pas enregistrée dans le dépôt : elle est reconstruite au démarrage de chaque session cloud et après chaque commit (hooks git installés par `graphify hook install`). Si `graphify-out/graph.json` manque, lance `graphify hook install` puis `graphify update .` (3 secondes, gratuit).
 
 - **Firecrawl** (25 novembre 2026) : lit et récupère le contenu des sites web (boutiques concurrentes, prix fournisseurs Alibaba, pages produits…). Branché comme **connecteur** sur le compte Claude de l'utilisateur : disponible dans toutes les sessions, sans clé ni installation dans le dépôt.
+- **Crawl4AI** (25 novembre 2026), skill `lire-le-web` : alternative **gratuite** à Firecrawl pour lire des pages web (concurrents, boutiques Shopify, fournisseurs). Installé au démarrage des sessions cloud. À utiliser en premier ; Firecrawl seulement si le site bloque (Alibaba, Amazon…).
 
 ## Les projets
 - `affute/` : Affûté, l'appli de sèche et de prise de masse (voir `affute/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/affute/
