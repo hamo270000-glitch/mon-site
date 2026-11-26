@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0f0d0b" />
-<meta name="description" content="Maison Grain : site de démonstration d'une boutique de café de spécialité, design généré avec ui-ux-pro-max." />
-<title>Maison Grain · Café de spécialité (démo)</title>
+<meta name="description" content="Maison Sieste : site de démonstration d'une boutique de paniers orthopédiques pour chien, design généré avec ui-ux-pro-max." />
+<title>Maison Sieste · Paniers orthopédiques pour chien (démo)</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f0d0b'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='%23c9a35b' transform='rotate(-30 16 16)'/%3E%3Cpath d='M12 9c4 4 4 10 8 14' stroke='%230f0d0b' stroke-width='1.6' fill='none'/%3E%3C/svg%3E" />
 <link rel="preload" href="fonts/cormorant-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin />
 <style>
@@ -13,7 +13,7 @@
 @font-face { font-family: 'Cormorant'; src: url(fonts/cormorant-latin-wght-italic.woff2) format('woff2'); font-weight: 300 700; font-style: italic; font-display: swap; }
 @font-face { font-family: 'Montserrat'; src: url(fonts/montserrat-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; font-display: swap; }
 
-/* Design system ui-ux-pro-max « Maison Grain » : sombre premium + or, Cormorant / Montserrat, verre liquide. */
+/* Design system ui-ux-pro-max « Maison Sieste » : sombre premium + or, Cormorant / Montserrat, verre liquide. */
 :root {
   --nuit: #0f0d0b; --nuit-2: #1c1917; --nuit-3: #292524; --pierre: #44403c;
   --creme: #f6f1e8; --creme-2: #e9e1d3; --doux: #b8afa3; --doux-sombre: #57534e;
@@ -202,20 +202,63 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 .tiroir-total { display: flex; justify-content: space-between; align-items: baseline; padding: 1rem 0; border-top: 1px solid rgb(255 255 255 / .1); }
 
 /* Grain volant vers le panier */
-.vol { position: fixed; z-index: 95; width: 22px; height: 30px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #8a5a34, #3b2414); pointer-events: none; }
-.vol::after { content: ''; position: absolute; left: 50%; top: 10%; bottom: 10%; width: 2px; margin-left: -1px; border-radius: 2px; background: #1c1008; transform: rotate(12deg); }
+.vol { position: fixed; left: 0; top: 0; z-index: 95; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+/* ——— Maison Sieste : ajustements pour les paniers ——— */
+.logo b, .logo i { font-size: 1.55rem; }
+.heros.clair { background: var(--creme); color: var(--nuit); align-items: center; }
+.heros.clair::after { display: none; }
+.heros.clair .heros-img { display: none; }
+.heros-grille { display: grid; gap: 2rem; align-items: center; padding: 130px 0 60px; }
+@media (min-width: 960px) { .heros-grille { grid-template-columns: 1fr 1.05fr; gap: 3rem; } }
+.heros.clair h1 { font-size: clamp(3.2rem, 9vw, 7.6rem); max-width: 10ch; }
+.heros.clair .or { color: var(--or-fonce); }
+.heros.clair .sur-titre { color: var(--or-fonce); }
+.heros.clair p.chapo { color: var(--doux-sombre); }
+.heros-photo { position: relative; border-radius: 32px; background: #fff; aspect-ratio: 1.15; display: grid; place-items: center; overflow: hidden; box-shadow: 0 40px 80px -50px rgb(28 25 23 / .45); }
+.heros-photo img { width: 96%; height: auto; }
+.heros-photo .bulle { position: absolute; border-radius: 16px; padding: .7rem 1rem; font-size: .82rem; font-weight: 600; color: var(--nuit); background: rgb(255 255 255 / .7); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .9), 0 14px 30px -14px rgb(28 25 23 / .4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.heros-photo .bulle b { display: block; font-family: 'Cormorant', serif; font-size: 1.5rem; color: var(--or-fonce); line-height: 1; }
+.heros.clair .chiffre { background: #fff; box-shadow: 0 1px 0 rgb(0 0 0 / .04), inset 0 0 0 1px var(--creme-2); backdrop-filter: none; }
+.heros.clair .chiffre strong { color: var(--or-fonce); }
+.heros.clair .chiffre span { color: var(--doux-sombre); }
+.heros.clair .btn-verre { color: var(--nuit); background: rgb(28 25 23 / .06); box-shadow: inset 0 0 0 1px rgb(28 25 23 / .15); }
+.nav .verre { background: linear-gradient(135deg, rgb(28 25 23 / .82), rgb(28 25 23 / .7)); }
+.cafe-img { background: #fff; display: grid; place-items: center; }
+.cafe-img img { width: 92%; height: auto; max-height: 92%; object-fit: contain; }
+.cafe:hover .cafe-img img { transform: scale(1.05); }
+.tailles { display: grid; grid-template-columns: repeat(4, 1fr); padding: 4px; border-radius: 999px; background: rgb(255 255 255 / .06); position: relative; }
+.tailles button { position: relative; z-index: 1; min-height: 38px; border: 0; background: none; border-radius: 999px; font-size: .82rem; font-weight: 700; cursor: pointer; color: var(--doux); transition: color .3s; }
+.tailles button[aria-pressed='true'] { color: var(--sur-or); }
+.tailles .pastille { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(25% - 2px); border-radius: 999px; background: var(--creme); transition: transform .45s var(--ease); }
+.dim { font-size: .78rem; color: var(--doux); min-height: 1.2em; }
+.etape-img { background: #fff; display: grid; place-items: center; }
+.etape-img img { object-fit: contain; width: 94%; height: 94%; }
+.etape-img.plein img { object-fit: cover; width: 100%; height: 100%; }
+.abo-photo { background: #fff; display: grid; place-items: center; }
+.abo-photo img { width: 94%; height: auto; object-fit: contain; }
+.curseur { width: 100%; accent-color: var(--or); height: 44px; cursor: pointer; }
+.valeur { font-family: 'Cormorant', serif; font-size: 2.4rem; color: var(--creme); line-height: 1; }
+.resultat { margin-top: 2rem; border-radius: 22px; padding: 1.4rem; }
+.resultat .serif { font-size: 3.6rem; color: var(--or); }
+.fin { background: var(--creme); color: var(--nuit); }
+.fin::after { display: none; }
+.fin img { position: static; width: min(640px, 100%); height: auto; margin: 2rem auto 0; opacity: 1; border-radius: 24px; }
+.fin .or { color: var(--or-fonce); } .fin .sur-titre { color: var(--or-fonce); }
+.fin .btn-verre { color: var(--nuit); background: rgb(28 25 23 / .06); box-shadow: inset 0 0 0 1px rgb(28 25 23 / .15); }
+.ligne img { object-fit: contain; background: #fff; }
 </style>
 </head>
 <body>
-<p class="demo">Site de démonstration : marque, produits, prix et avis inventés pour montrer le rendu.</p>
+<p class="demo">Site de démonstration : marque, prix et avis inventés pour montrer le rendu. Photos : fournisseur du panier.</p>
 
 <header class="nav wrap">
   <div class="nav-in verre">
-    <a class="logo" href="#haut" aria-label="Maison Grain, accueil"><b>Maison</b><i>Grain</i></a>
+    <a class="logo" href="#haut" aria-label="Maison Sieste, accueil"><b>Maison</b><i>Sieste</i></a>
     <nav class="liens" aria-label="Navigation principale">
-      <a href="#cafes">Nos cafés</a><a href="#histoire">L’atelier</a><a href="#abonnement">Abonnement</a><a href="#avis">Avis</a>
+      <a href="#paniers">Nos paniers</a><a href="#histoire">Les 4 couches</a><a href="#taille">Sa taille</a><a href="#avis">Avis</a>
     </nav>
     <button class="panier-btn" id="ouvrir-panier" type="button" aria-label="Ouvrir le panier, 0 article">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
@@ -225,37 +268,43 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 </header>
 
 <main id="haut">
-  <section class="heros" aria-labelledby="titre">
-    <div class="heros-img" data-parallaxe><img src="img/hero.jpg" alt="" fetchpriority="high" /></div>
-    <div class="wrap heros-in">
-      <p class="sur-titre" data-entre>Torréfacteur · Lyon · depuis 2019</p>
-      <h1 id="titre" class="serif" data-titre>Le café, <span class="it or">à la seconde</span> près.</h1>
-      <p class="chapo" data-entre>Six origines choisies au domaine, torréfiées en petits lots chaque mardi et vendredi. Expédiées dans les 48 heures, pour une tasse au sommet de ses arômes.</p>
-      <div class="actions" data-entre>
-        <a class="btn btn-or" href="#cafes">Découvrir nos cafés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn-verre" href="#abonnement">S’abonner</a>
+  <section class="heros clair" aria-labelledby="titre">
+    <div class="heros-img" data-parallaxe></div>
+    <div class="wrap heros-grille">
+      <div>
+        <p class="sur-titre" data-entre>Paniers orthopédiques · conçus en France</p>
+        <h1 id="titre" class="serif" data-titre>Il mérite <span class="it or">un vrai lit.</span></h1>
+        <p class="chapo" data-entre>Mousse à mémoire de forme, rebords pour poser la tête, housse lavable. Pour qu’il dorme mieux et se relève sans peine, à tout âge.</p>
+        <div class="actions" data-entre>
+          <a class="btn btn-or" href="#paniers">Choisir son panier <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-verre" href="#taille">Trouver sa taille</a>
+        </div>
+        <div class="chiffres">
+          <div class="chiffre" data-entre><strong data-compte="10">0</strong><span>cm de mousse sous lui</span></div>
+          <div class="chiffre" data-entre><strong data-compte="30">0</strong><span>°C : la housse passe en machine</span></div>
+          <div class="chiffre" data-entre><strong data-compte="4">0</strong><span>tailles, du teckel au dogue</span></div>
+        </div>
       </div>
-      <div class="chiffres">
-        <div class="chiffre verre" data-entre><strong data-compte="48">0</strong><span>heures max. entre torréfaction et envoi</span></div>
-        <div class="chiffre verre" data-entre><strong data-compte="6">0</strong><span>origines en direct des fermes</span></div>
-        <div class="chiffre verre" data-entre><strong data-compte="86">0</strong><span>points SCA minimum par lot</span></div>
+      <div class="heros-photo" data-entre data-flotte>
+        <img src="img/chien-panier.jpg" alt="Un golden retriever allongé sur un panier orthopédique beige à rebords" fetchpriority="high" />
+        <span class="bulle" style="left:5%;top:7%"><b>Mémoire</b>de forme</span>
+        <span class="bulle" style="right:5%;bottom:9%"><b>Rebords</b>appui-tête</span>
       </div>
     </div>
-    <p class="defile-txt" aria-hidden="true">Défiler</p>
   </section>
 
   <div class="origines" aria-hidden="true">
     <div class="origines-piste" id="piste-origines">
-      <span>Éthiopie <em>●</em> Colombie <em>●</em> Kenya <em>●</em> Guatemala <em>●</em> Brésil <em>●</em> Sumatra <em>●</em></span>
-      <span>Éthiopie <em>●</em> Colombie <em>●</em> Kenya <em>●</em> Guatemala <em>●</em> Brésil <em>●</em> Sumatra <em>●</em></span>
+      <span>Mémoire de forme <em>●</em> Housse lavable <em>●</em> Rebords appui-tête <em>●</em> Dessous antidérapant <em>●</em> Entrée basse <em>●</em></span>
+      <span>Mémoire de forme <em>●</em> Housse lavable <em>●</em> Rebords appui-tête <em>●</em> Dessous antidérapant <em>●</em> Entrée basse <em>●</em></span>
     </div>
   </div>
 
-  <section id="cafes" aria-labelledby="titre-cafes">
+  <section id="paniers" aria-labelledby="titre-paniers">
     <div class="wrap">
       <div class="tete">
-        <div><p class="sur-titre">La sélection du moment</p><h2 id="titre-cafes" class="serif" data-mots>Quatre cafés, <span class="it">quatre voyages.</span></h2></div>
-        <p>Chaque café est décrit par ses notes de dégustation et son intensité. Choisis en grains ou moulu pour ta méthode.</p>
+        <div><p class="sur-titre">La collection</p><h2 id="titre-paniers" class="serif" data-mots>Quatre paniers, <span class="it">un seul confort.</span></h2></div>
+        <p>Choisis la taille directement sur la carte : le prix et les dimensions se mettent à jour.</p>
       </div>
       <div class="grille" id="grille"></div>
     </div>
@@ -263,40 +312,29 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 
   <section class="histoire" id="histoire" aria-labelledby="titre-histoire">
     <div class="histoire-in" id="histoire-in">
-      <div class="wrap"><p class="sur-titre">De la cerise à la tasse</p><h2 id="titre-histoire" class="serif" data-mots>Quatre gestes, <span class="it">zéro raccourci.</span></h2></div>
+      <div class="wrap"><p class="sur-titre">Ce qu’il y a dedans</p><h2 id="titre-histoire" class="serif" data-mots>Quatre couches, <span class="it">zéro compromis.</span></h2></div>
       <div class="piste" id="piste">
-        <article class="etape"><div class="etape-img"><img src="img/surface.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">01</p><h3>La récolte</h3><p>Seules les cerises bien mûres sont cueillies, à la main, en plusieurs passages.</p></div></article>
-        <article class="etape"><div class="etape-img"><img src="img/portrait.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">02</p><h3>Le séchage</h3><p>Trois semaines au soleil sur lits surélevés, retournées chaque heure.</p></div></article>
-        <article class="etape"><div class="etape-img"><img src="img/texture.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">03</p><h3>La torréfaction</h3><p>Des lots de 12 kg, une courbe réglée pour chaque origine, à la seconde près.</p></div></article>
-        <article class="etape"><div class="etape-img"><img src="img/bol-fin.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">04</p><h3>La dégustation</h3><p>Chaque lot est goûté avant de partir. S’il ne passe pas la barre, il ne part pas.</p></div></article>
+        <article class="etape"><div class="etape-img"><img src="img/rebord.jpg" alt="Gros plan sur le rebord matelassé" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">01</p><h3>La housse douce</h3><p>Tissu matelassé, fermeture éclair. Elle s’enlève et passe en machine à 30 °C.</p></div></article>
+        <article class="etape"><div class="etape-img"><img src="img/large.jpg" alt="Le panier vu de face" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">02</p><h3>La mémoire de forme</h3><p>Elle épouse son corps et répartit son poids : moins de pression sur les articulations.</p></div></article>
+        <article class="etape"><div class="etape-img plein"><img src="img/salon.jpg" alt="Le panier dans un salon" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">03</p><h3>La mousse de soutien</h3><p>Une base ferme qui garde sa forme, nuit après nuit, sans s’aplatir.</p></div></article>
+        <article class="etape"><div class="etape-img"><img src="img/grand.jpg" alt="Le panier avec son dessous" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">04</p><h3>Le dessous antidérapant</h3><p>Le panier reste en place sur le carrelage ou le parquet, même quand il s’y jette.</p></div></article>
       </div>
     </div>
   </section>
 
-  <section id="abonnement" aria-labelledby="titre-abo">
+  <section id="taille" aria-labelledby="titre-taille">
     <div class="wrap abo">
-      <div class="abo-photo"><img src="img/hero.jpg" alt="" loading="lazy" data-glisse />
-        <div class="abo-carte verre"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a35b" stroke-width="1.8" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg><div><strong>Livré tous les mois</strong><p style="font-size:.8rem;color:var(--creme-2)">Pause ou arrêt en un clic</p></div></div>
+      <div class="abo-photo"><img src="img/original.jpg" alt="Un golden retriever couché sur le panier" loading="lazy" data-glisse />
+        <div class="abo-carte verre"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a35b" stroke-width="1.8" aria-hidden="true"><path d="M3 12h18M3 12l4-4M3 12l4 4M21 12l-4-4M21 12l-4 4"/></svg><div><strong>Mesure-le couché</strong><p style="font-size:.8rem;color:var(--creme-2)">Du nez à la base de la queue</p></div></div>
       </div>
       <div>
-        <p class="sur-titre">L’abonnement</p>
-        <h2 id="titre-abo" class="serif" data-mots>Ne tombe <span class="it">plus jamais</span> à court.</h2>
-        <p>Un nouveau café chaque mois ou ton préféré en boucle, torréfié juste avant l’envoi.</p>
-        <form class="choix" id="abo-form">
-          <fieldset><legend>Quantité</legend><div class="options">
-            <label><input type="radio" name="qte" value="1" checked /><span>250 g</span></label>
-            <label><input type="radio" name="qte" value="2" /><span>500 g</span></label>
-            <label><input type="radio" name="qte" value="4" /><span>1 kg</span></label>
-          </div></fieldset>
-          <fieldset><legend>Fréquence</legend><div class="options">
-            <label><input type="radio" name="freq" value="1" checked /><span>Tous les mois</span></label>
-            <label><input type="radio" name="freq" value="0.5" /><span>Toutes les 2 semaines</span></label>
-          </div></fieldset>
-          <fieldset><legend>Formule</legend><div class="options">
-            <label><input type="radio" name="formule" value="decouverte" checked /><span>Découverte</span></label>
-            <label><input type="radio" name="formule" value="fidele" /><span>Mon préféré</span></label>
-          </div></fieldset>
-          <div class="total"><div><small>Par livraison · livraison offerte</small><p class="serif" id="total-abo" aria-live="polite">14 €</p></div><button class="btn btn-or" type="button" id="abo-btn">Je m’abonne</button></div>
+        <p class="sur-titre">Le guide des tailles</p>
+        <h2 id="titre-taille" class="serif" data-mots>Trouve <span class="it">sa taille</span> en 10 secondes.</h2>
+        <p>Indique son poids et sa longueur couché. On te dit quel panier choisir.</p>
+        <form class="choix" id="taille-form" onsubmit="return false">
+          <fieldset><legend>Son poids</legend><p class="valeur"><span id="v-poids">20</span> kg</p><label class="sr" for="poids">Poids en kilos</label><input class="curseur" id="poids" type="range" min="2" max="70" value="20" /></fieldset>
+          <fieldset><legend>Sa longueur couché</legend><p class="valeur"><span id="v-long">70</span> cm</p><label class="sr" for="long">Longueur en centimètres</label><input class="curseur" id="long" type="range" min="30" max="120" value="70" /></fieldset>
+          <div class="resultat verre"><small style="color:var(--doux)">Notre conseil</small><p class="serif" id="conseil" aria-live="polite">Taille M</p><p id="conseil-detail" style="color:var(--creme-2)">80 × 60 cm · jusqu’à 25 kg</p><button class="btn btn-or" type="button" id="ajout-conseil" style="margin-top:1rem">Ajouter ce panier</button></div>
         </form>
       </div>
     </div>
@@ -304,11 +342,11 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 
   <section id="avis" aria-labelledby="titre-avis" style="padding-top:0">
     <div class="wrap">
-      <div class="tete"><div><p class="sur-titre">Ils en parlent</p><h2 id="titre-avis" class="serif" data-mots>Une tasse, <span class="it">et c’est adopté.</span></h2></div><p>Avis inventés pour la démonstration.</p></div>
+      <div class="tete"><div><p class="sur-titre">Ils en parlent</p><h2 id="titre-avis" class="serif" data-mots>Une nuit, <span class="it">et il ne le quitte plus.</span></h2></div><p>Avis inventés pour la démonstration.</p></div>
       <div class="avis-grille">
-        <figure class="avis" data-carte><p class="etoiles" aria-label="5 étoiles sur 5">★★★★★</p><blockquote>« Le Yirgacheffe sent le jasmin dès l’ouverture du sachet. Je ne reviens pas en arrière. »</blockquote><figcaption>Camille · abonnée depuis 8 mois</figcaption></figure>
-        <figure class="avis" data-carte><p class="etoiles" aria-label="5 étoiles sur 5">★★★★★</p><blockquote>« Reçu deux jours après la torréfaction, c’est indiqué sur le paquet. Ça change tout en filtre. »</blockquote><figcaption>Julien · méthode V60</figcaption></figure>
-        <figure class="avis" data-carte><p class="etoiles" aria-label="4 étoiles sur 5">★★★★☆</p><blockquote>« Le Brésil est parfait en espresso, rond et chocolaté. J’aimerais juste un format 2 kg. »</blockquote><figcaption>Sofia · machine à espresso</figcaption></figure>
+        <figure class="avis" data-carte><p class="etoiles" aria-label="5 étoiles sur 5">★★★★★</p><blockquote>« Notre labrador de 11 ans se relève beaucoup plus facilement le matin. »</blockquote><figcaption>Nathalie · taille L, coloris Taupe</figcaption></figure>
+        <figure class="avis" data-carte><p class="etoiles" aria-label="5 étoiles sur 5">★★★★★</p><blockquote>« La housse est passée trois fois en machine, elle est comme neuve. »</blockquote><figcaption>Karim · taille M</figcaption></figure>
+        <figure class="avis" data-carte><p class="etoiles" aria-label="4 étoiles sur 5">★★★★☆</p><blockquote>« Très confortable, il pose sa tête sur le rebord. J’aurais aimé plus de couleurs. »</blockquote><figcaption>Élodie · taille S</figcaption></figure>
       </div>
     </div>
   </section>
@@ -316,10 +354,10 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
   <section style="padding-top:0" aria-labelledby="titre-fin">
     <div class="wrap">
       <div class="fin" data-carte>
-        <img src="img/texture.jpg" alt="" loading="lazy" />
-        <p class="sur-titre">Première commande</p>
-        <h2 id="titre-fin" class="serif">Ton prochain café préféré <span class="it or">t’attend.</span></h2>
-        <div class="actions"><a class="btn btn-or" href="#cafes">Choisir mon café</a><a class="btn btn-verre" href="#abonnement">Voir l’abonnement</a></div>
+        <p class="sur-titre">Livraison suivie · 14 jours pour changer d’avis</p>
+        <h2 id="titre-fin" class="serif">Ses meilleures siestes <span class="it or">commencent ici.</span></h2>
+        <div class="actions"><a class="btn btn-or" href="#paniers">Choisir son panier</a><a class="btn btn-verre" href="#taille">Trouver sa taille</a></div>
+        <img src="img/salon.jpg" alt="Le panier orthopédique dans un salon lumineux" loading="lazy" />
       </div>
     </div>
   </section>
@@ -328,11 +366,11 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 <footer>
   <div class="wrap">
     <div class="pied">
-      <div><a class="logo" href="#haut"><b>Maison</b><i>Grain</i></a><p style="margin-top:.8rem;max-width:22rem">Torréfacteur de cafés de spécialité. Marque fictive créée pour montrer le rendu du skill ui-ux-pro-max.</p></div>
-      <div><h4>Boutique</h4><ul><li><a href="#cafes">Nos cafés</a></li><li><a href="#abonnement">Abonnement</a></li><li><a href="#histoire">L’atelier</a></li></ul></div>
+      <div><a class="logo" href="#haut"><b>Maison</b><i>Sieste</i></a><p style="margin-top:.8rem;max-width:22rem">Paniers orthopédiques pour chien. Marque fictive créée pour montrer le rendu du skill ui-ux-pro-max.</p></div>
+      <div><h4>Boutique</h4><ul><li><a href="#paniers">Nos paniers</a></li><li><a href="#taille">Guide des tailles</a></li><li><a href="#histoire">Les 4 couches</a></li></ul></div>
       <div><h4>Aide</h4><ul><li><a href="#haut">Livraison</a></li><li><a href="#haut">Retours</a></li><li><a href="#haut">Contact</a></li></ul></div>
     </div>
-    <p class="credits" id="credits">Photos (Wikimedia Commons, recadrées) : <a href="https://commons.wikimedia.org/wiki/File:Coffee_beans_roasted.jpg">Coffee beans roasted</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Roasted_coffee_beans.jpg">Roasted coffee beans</a> (domaine public), <a href="https://commons.wikimedia.org/wiki/File:Roasted_coffee_beans_on_the_surface._01.jpg">Roasted coffee beans on the surface</a> (CC BY-SA 4.0). Les recadrages sont partagés sous la même licence.</p>
+    <p class="credits">Photos : fournisseur du panier (Alibaba), recadrées. Site de démonstration, aucune vente possible.</p>
   </div>
 </footer>
 
@@ -351,35 +389,47 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
 <script>
-const CAFES = [
-  { id: 'yirga', nom: 'Yirgacheffe', origine: 'Éthiopie · Gedeo', notes: ['Jasmin', 'Pêche', 'Bergamote'], intensite: 35, prix: 16, img: 'img/bol-grains.jpg', etiquette: ['Nouveau lot', '#6e8b5e'] },
-  { id: 'huila', nom: 'Huila', origine: 'Colombie · La Plata', notes: ['Caramel', 'Pomme rouge', 'Cacao'], intensite: 55, prix: 14, img: 'img/bol-gros.jpg', etiquette: ['Meilleure vente', '#a16207'] },
-  { id: 'nyeri', nom: 'Nyeri AA', origine: 'Kenya · Nyeri', notes: ['Cassis', 'Pamplemousse', 'Tomate'], intensite: 45, prix: 18, img: 'img/bol-fin.jpg' },
-  { id: 'cerrado', nom: 'Cerrado', origine: 'Brésil · Minas Gerais', notes: ['Chocolat noir', 'Noisette', 'Miel'], intensite: 80, prix: 12, img: 'img/portrait.jpg', etiquette: ['Spécial espresso', '#44403c'] },
+const TAILLES = { S: ['60 × 45 cm', 10], M: ['80 × 60 cm', 25], L: ['100 × 75 cm', 40], XL: ['120 × 90 cm', 60] };
+const PANIERS = [
+  { id: 'original', nom: 'L’Original', sous: 'Orthopédique · rebords 3 côtés', notes: ['Mémoire de forme', 'Taupe'], prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/original.jpg', etiquette: ['Meilleure vente', '#a16207'] },
+  { id: 'salon', nom: 'Le Salon', sous: 'Orthopédique · housse matelassée', notes: ['Mémoire de forme', 'Lin'], prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/large.jpg', etiquette: ['Nouveau', '#6e8b5e'] },
+  { id: 'compact', nom: 'Le Compact', sous: 'Pour petits chiens et chiots', notes: ['Mousse de soutien', 'Taupe'], prix: { S: 69, M: 79, L: 89, XL: 99 }, img: 'img/compact.jpg' },
+  { id: 'grand', nom: 'Le Grand Repos', sous: 'Extra-épais pour grands chiens', notes: ['12 cm de mousse', 'Taupe'], prix: { S: 119, M: 139, L: 159, XL: 189 }, img: 'img/grand.jpg', etiquette: ['Chiens âgés', '#44403c'] },
 ];
-const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2, minimumFractionDigits: 0 });
+const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 const grille = document.getElementById('grille');
 const plus = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
 const coche = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
-grille.innerHTML = CAFES.map((c) => `
-  <article class="cafe" data-carte>
-    <div class="cafe-img"><img src="${c.img}" alt="Café ${c.nom}" loading="lazy" />${c.etiquette ? `<span class="etiquette" style="background:${c.etiquette[1]}">${c.etiquette[0]}</span>` : ''}</div>
+grille.innerHTML = PANIERS.map((c) => `
+  <article class="cafe" data-carte data-id="${c.id}" data-taille="M">
+    <div class="cafe-img"><img src="${c.img}" alt="Panier ${c.nom}" loading="lazy" />${c.etiquette ? `<span class="etiquette" style="background:${c.etiquette[1]}">${c.etiquette[0]}</span>` : ''}</div>
     <div class="cafe-corps">
-      <p class="origine">${c.origine}</p>
+      <p class="origine">${c.sous}</p>
       <h3>${c.nom}</h3>
       <p class="notes">${c.notes.map((n) => `<span>${n}</span>`).join('')}</p>
-      <p class="jauge">Intensité <i><b style="--v:${c.intensite}%"></b></i></p>
-      <div class="mouture" role="group" aria-label="Mouture" data-choix="grains"><span class="pastille" aria-hidden="true"></span><button type="button" aria-pressed="true" data-m="grains">En grains</button><button type="button" aria-pressed="false" data-m="moulu">Moulu</button></div>
-      <div class="cafe-bas"><p class="prix">${euros(c.prix)}<small>250 g</small></p><button class="ajout" type="button" data-id="${c.id}" aria-label="Ajouter ${c.nom} au panier">${plus}</button></div>
+      <div class="tailles" role="group" aria-label="Taille"><span class="pastille" aria-hidden="true"></span>${Object.keys(TAILLES).map((t) => `<button type="button" aria-pressed="${t === 'M'}" data-t="${t}">${t}</button>`).join('')}</div>
+      <p class="dim">${TAILLES.M[0]} · jusqu’à ${TAILLES.M[1]} kg</p>
+      <div class="cafe-bas"><p class="prix" aria-live="polite">${euros(c.prix.M)}</p><button class="ajout" type="button" aria-label="Ajouter ${c.nom} au panier">${plus}</button></div>
     </div>
   </article>`).join('');
+document.querySelectorAll('.tailles').forEach((g) => { g.querySelector('.pastille').style.transform = 'translateX(100%)'; });
 
-// Mouture : la pastille glisse d'un choix à l'autre.
+// Choix de la taille : la pastille glisse, le prix compte jusqu'au nouveau montant.
 grille.addEventListener('click', (e) => {
-  const b = e.target.closest('.mouture button');
-  if (b) { const g = b.parentElement; g.dataset.choix = b.dataset.m; g.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); return; }
+  const b = e.target.closest('.tailles button');
+  if (b) {
+    const carte = b.closest('.cafe'); const c = PANIERS.find((x) => x.id === carte.dataset.id); const t = b.dataset.t; const i = Object.keys(TAILLES).indexOf(t);
+    const ancien = c.prix[carte.dataset.taille]; carte.dataset.taille = t;
+    b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    b.parentElement.querySelector('.pastille').style.transform = `translateX(${i * 100}%)`;
+    carte.querySelector('.dim').textContent = `${TAILLES[t][0]} · jusqu’à ${TAILLES[t][1]} kg`;
+    const prix = carte.querySelector('.prix'); const o = { v: ancien };
+    gsap.to(o, { v: c.prix[t], duration: .45, ease: 'power2.out', onUpdate: () => { prix.textContent = euros(Math.round(o.v)); } });
+    gsap.fromTo(carte.querySelector('.cafe-img img'), { scale: .9 + i * .02 }, { scale: .9 + i * .04, duration: .6, ease: 'elastic.out(1,.5)' });
+    return;
+  }
   const a = e.target.closest('.ajout');
-  if (a) ajouter(a);
+  if (a) { const carte = a.closest('.cafe'); ajouter(carte.dataset.id, carte.dataset.taille, a); }
 });
 
 // Panier
@@ -391,30 +441,27 @@ function rendre() {
   const n = panier.reduce((s, l) => s + l.qte, 0);
   compte.textContent = n; compte.hidden = n === 0;
   ouvrir.setAttribute('aria-label', `Ouvrir le panier, ${n} article${n > 1 ? 's' : ''}`);
-  document.getElementById('lignes').innerHTML = panier.length ? panier.map((l) => `<li class="ligne"><img src="${l.c.img}" alt="" /><div><strong>${l.c.nom}</strong><p>${l.mouture === 'moulu' ? 'Moulu' : 'En grains'} · 250 g · × ${l.qte}</p></div><span>${euros(l.qte * l.c.prix)}</span></li>`).join('') : '<li class="vide">Ton panier est vide pour l’instant.</li>';
-  document.getElementById('total').textContent = euros(panier.reduce((s, l) => s + l.qte * l.c.prix, 0));
+  document.getElementById('lignes').innerHTML = panier.length ? panier.map((l) => `<li class="ligne"><img src="${l.c.img}" alt="" /><div><strong>${l.c.nom}</strong><p>Taille ${l.t} · ${TAILLES[l.t][0]} · × ${l.qte}</p></div><span>${euros(l.qte * l.c.prix[l.t])}</span></li>`).join('') : '<li class="vide">Ton panier est vide pour l’instant.</li>';
+  document.getElementById('total').textContent = euros(panier.reduce((s, l) => s + l.qte * l.c.prix[l.t], 0));
 }
-function ajouter(btn) {
-  const c = CAFES.find((x) => x.id === btn.dataset.id);
-  const mouture = btn.closest('.cafe').querySelector('.mouture').dataset.choix;
-  const l = panier.find((x) => x.c.id === c.id && x.mouture === mouture);
-  l ? l.qte++ : panier.push({ c, mouture, qte: 1 });
-  btn.classList.add('ok'); btn.innerHTML = coche;
-  setTimeout(() => { btn.classList.remove('ok'); btn.innerHTML = plus; }, 1400);
+function ajouter(id, t, btn) {
+  const c = PANIERS.find((x) => x.id === id);
+  const l = panier.find((x) => x.c.id === id && x.t === t);
+  l ? l.qte++ : panier.push({ c, t, qte: 1 });
+  if (btn.classList.contains('ajout')) { btn.classList.add('ok'); btn.innerHTML = coche; setTimeout(() => { btn.classList.remove('ok'); btn.innerHTML = plus; }, 1400); }
   voler(btn);
 }
-// Un grain de café vole en arc jusqu'au panier.
+// Une patte vole en arc jusqu'au panier.
 function voler(btn) {
-  const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduit) { rendre(); return; }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { rendre(); return; }
   const a = btn.getBoundingClientRect(), b = ouvrir.getBoundingClientRect();
   const g = document.createElement('span'); g.className = 'vol'; document.body.appendChild(g);
-  const x0 = a.left + a.width / 2 - 11, y0 = a.top + a.height / 2 - 15, x1 = b.left + b.width / 2 - 11, y1 = b.top + b.height / 2 - 15;
+  g.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="#c9a35b" aria-hidden="true"><ellipse cx="7" cy="9" rx="2.2" ry="2.8"/><ellipse cx="12" cy="6.5" rx="2.2" ry="2.8"/><ellipse cx="17" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z"/></svg>';
+  const x0 = a.left + a.width / 2 - 13, y0 = a.top + a.height / 2 - 13, x1 = b.left + b.width / 2 - 13, y1 = b.top + b.height / 2 - 13;
   const o = { t: 0 };
   gsap.to(o, { t: 1, duration: .8, ease: 'power2.in', onUpdate() {
     const t = o.t, cx = (x0 + x1) / 2, cy = Math.min(y0, y1) - 140;
-    const x = (1 - t) ** 2 * x0 + 2 * (1 - t) * t * cx + t * t * x1, y = (1 - t) ** 2 * y0 + 2 * (1 - t) * t * cy + t * t * y1;
-    gsap.set(g, { x, y, rotation: t * 540, scale: 1 - t * .45 });
+    gsap.set(g, { x: (1 - t) ** 2 * x0 + 2 * (1 - t) * t * cx + t * t * x1, y: (1 - t) ** 2 * y0 + 2 * (1 - t) * t * cy + t * t * y1, rotation: t * 360, scale: 1.2 - t * .5 });
   }, onComplete() { g.remove(); rendre(); gsap.fromTo(ouvrir, { scale: 1.25 }, { scale: 1, duration: .7, ease: 'elastic.out(1.1,.4)' }); gsap.fromTo(compte, { scale: 1.8 }, { scale: 1, duration: .5, ease: 'back.out(3)' }); } });
 }
 function bascule(ouvert) {
@@ -427,49 +474,44 @@ document.getElementById('fond').addEventListener('click', () => bascule(false));
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && tiroir.classList.contains('ouvert')) bascule(false); });
 rendre();
 
-// Abonnement : prix recalculé en direct.
-const form = document.getElementById('abo-form');
-const totalAbo = document.getElementById('total-abo');
-let affiche = 14;
-function calcul() {
-  const f = new FormData(form);
-  const base = { 1: 14, 2: 26, 4: 48 }[f.get('qte')];
-  const prix = Math.round(base * (f.get('formule') === 'fidele' ? 0.92 : 1));
-  const o = { v: affiche };
-  gsap.to(o, { v: prix, duration: .5, ease: 'power2.out', onUpdate: () => { totalAbo.textContent = euros(Math.round(o.v)); } });
-  affiche = prix;
+// Guide des tailles : conseil en direct selon le poids et la longueur.
+const poids = document.getElementById('poids'), long = document.getElementById('long');
+let conseil = 'M';
+function guide() {
+  const p = +poids.value, l = +long.value;
+  document.getElementById('v-poids').textContent = p; document.getElementById('v-long').textContent = l;
+  const besoin = l + 15;
+  const t = Object.keys(TAILLES).find((k) => TAILLES[k][1] >= p && parseInt(TAILLES[k][0]) >= besoin) || 'XL';
+  if (t !== conseil) { conseil = t; gsap.fromTo('#conseil', { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .45, ease: 'back.out(2)' }); }
+  document.getElementById('conseil').textContent = `Taille ${t}`;
+  document.getElementById('conseil-detail').textContent = `${TAILLES[t][0]} · jusqu’à ${TAILLES[t][1]} kg · L’Original à ${euros(PANIERS[0].prix[t])}`;
 }
-form.addEventListener('change', calcul);
-document.getElementById('abo-btn').addEventListener('click', (e) => { e.currentTarget.textContent = 'Bientôt disponible'; });
+poids.addEventListener('input', guide); long.addEventListener('input', guide); guide();
+document.getElementById('ajout-conseil').addEventListener('click', (e) => ajouter('original', conseil, e.currentTarget));
 
 // ——— Animations GSAP ———
 gsap.registerPlugin(ScrollTrigger, SplitText);
-const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (!reduit) {
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const lenis = new Lenis({ lerp: 0.1, anchors: true });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
-
   document.fonts.ready.then(() => {
     const s = SplitText.create('[data-titre]', { type: 'lines,words', mask: 'lines' });
-    gsap.from(s.words, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .06, delay: .15 });
-    gsap.from('[data-entre]', { y: 30, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, delay: .5 });
+    gsap.from(s.words, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .07, delay: .15 });
+    gsap.from('[data-entre]', { y: 30, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, delay: .45 });
     document.querySelectorAll('[data-mots]').forEach((el) => {
       const m = SplitText.create(el, { type: 'lines,words', mask: 'lines' });
       gsap.from(m.words, { yPercent: 105, duration: .9, ease: 'expo.out', stagger: .04, scrollTrigger: { trigger: el, start: 'top 85%' } });
     });
     ScrollTrigger.refresh();
   });
-  document.querySelectorAll('[data-compte]').forEach((el) => {
-    const o = { v: 0 };
-    gsap.to(o, { v: +el.dataset.compte, duration: 2, ease: 'power3.out', delay: .9, onUpdate: () => { el.textContent = Math.round(o.v); } });
-  });
-  gsap.to('[data-parallaxe]', { yPercent: 18, scale: 1.08, ease: 'none', scrollTrigger: { trigger: '.heros', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('#piste-origines', { xPercent: -50, ease: 'none', duration: 30, repeat: -1 });
+  document.querySelectorAll('[data-compte]').forEach((el) => { const o = { v: 0 }; gsap.to(o, { v: +el.dataset.compte, duration: 2, ease: 'power3.out', delay: .9, onUpdate: () => { el.textContent = Math.round(o.v); } }); });
+  gsap.to('[data-flotte] img', { y: -10, duration: 2.6, ease: 'sine.inOut', repeat: -1, yoyo: true });
+  gsap.from('.bulle', { scale: 0, opacity: 0, duration: .8, ease: 'back.out(2)', stagger: .15, delay: 1.1 });
+  gsap.to('[data-flotte]', { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.heros', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('#piste-origines', { xPercent: -50, ease: 'none', duration: 34, repeat: -1 });
   ScrollTrigger.batch('[data-carte]', { start: 'top 88%', once: true, onEnter: (els) => gsap.from(els, { y: 50, opacity: 0, scale: .96, duration: .8, ease: 'back.out(1.3)', stagger: .08 }) });
-  ScrollTrigger.create({ trigger: '#grille', start: 'top 75%', once: true, onEnter: () => gsap.from('.jauge b', { scaleX: 0, duration: 1.2, ease: 'power3.out', stagger: .1 }) });
-  gsap.to('[data-glisse]', { yPercent: -12, ease: 'none', scrollTrigger: { trigger: '#abonnement', start: 'top bottom', end: 'bottom top', scrub: true } });
-  // Défilement horizontal des 4 étapes, épinglé sur grand écran.
+  gsap.from('[data-glisse]', { scale: 1.08, ease: 'none', scrollTrigger: { trigger: '#taille', start: 'top bottom', end: 'bottom top', scrub: true } });
   gsap.matchMedia().add('(min-width: 860px)', () => {
     const piste = document.getElementById('piste');
     const dist = () => piste.scrollWidth - innerWidth + Math.max(16, (innerWidth - 1240) / 2);

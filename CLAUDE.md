@@ -34,7 +34,7 @@
   - Code dans `site-5/source/`, puis `npm run build` dans ce dossier avant le commit.
 - `site-6/` : Site 6, boutique « Veilleuse » (panier orthopédique pour chien âgé), thème « luxe sombre et or » issu de ui-ux-pro-max (Cormorant + Montserrat, #1C1917 / or #A16207). Logo et textes dans `site-6/brand/` (MARQUE.md contient le message pour le fournisseur), photos du fournisseur C (Tongxiang Yangyang, Alibaba) recadrées dans `site-6/source/public/vues/`. Voir `site-6/README.md`. En ligne sur https://hamo270000-glitch.github.io/mon-site/site-6/
   - Code dans `site-6/source/`, puis `npm run build` dans ce dossier avant le commit. Vitrine seulement : pas de paiement (GitHub Pages ne peut pas encaisser) ; pour vendre, passer par Shopify. Leçon retenue : la 3D en direct ramait sur iPhone et faisait « maquette » ; l'utilisateur ne veut pas de vidéos créées par Claude.
-- `site-7/` : Site 7, démo « Maison Grain » (café de spécialité inventé) pour voir le rendu de `ui-ux-pro-max` : une seule page `site-7/index.html`, sans construction (voir `site-7/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-7/
+- `site-7/` : Site 7, démo « Maison Sieste » (paniers orthopédiques pour chien, marque inventée) pour voir le rendu de `ui-ux-pro-max` : une seule page `site-7/index.html`, sans construction (voir `site-7/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-7/
 - `.claude/agents/` : agents de The Agency.
 - `.claude/skills/` : skills installés (GSAP, frontend-design, react-best-practices, web-design-guidelines, composition-patterns, find-skills). Utilise-les pour le Site 2 et le Site 3.
 - Skills de designers (ajoutés le 25 novembre 2026, copiés depuis leurs dépôts officiels) :
