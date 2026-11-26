@@ -219,8 +219,9 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 .heros.clair p.chapo { color: var(--doux-sombre); }
 .heros-photo { position: relative; border-radius: 32px; background: #fff; aspect-ratio: 1.15; display: grid; place-items: center; overflow: hidden; box-shadow: 0 40px 80px -50px rgb(28 25 23 / .45); }
 .heros-photo img { width: 96%; height: auto; }
-.heros-photo .bulle { position: absolute; border-radius: 16px; padding: .7rem 1rem; font-size: .82rem; font-weight: 600; color: var(--nuit); background: rgb(255 255 255 / .7); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .9), 0 14px 30px -14px rgb(28 25 23 / .4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-.heros-photo .bulle b { display: block; font-family: 'Cormorant', serif; font-size: 1.5rem; color: var(--or-fonce); line-height: 1; }
+.diapo .bulle { z-index: 3; }
+.diapo .bulle, .heros-photo .bulle { position: absolute; border-radius: 16px; padding: .7rem 1rem; font-size: .82rem; font-weight: 600; color: var(--nuit); background: rgb(255 255 255 / .7); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .9), 0 14px 30px -14px rgb(28 25 23 / .4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.diapo .bulle b, .heros-photo .bulle b { display: block; font-family: 'Cormorant', serif; font-size: 1.5rem; color: var(--or-fonce); line-height: 1; }
 .heros.clair .chiffre { background: #fff; box-shadow: 0 1px 0 rgb(0 0 0 / .04), inset 0 0 0 1px var(--creme-2); backdrop-filter: none; }
 .heros.clair .chiffre strong { color: var(--or-fonce); }
 .heros.clair .chiffre span { color: var(--doux-sombre); }
@@ -249,10 +250,29 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 .fin .or { color: var(--or-fonce); } .fin .sur-titre { color: var(--or-fonce); }
 .fin .btn-verre { color: var(--nuit); background: rgb(28 25 23 / .06); box-shadow: inset 0 0 0 1px rgb(28 25 23 / .15); }
 .ligne img { object-fit: contain; background: #fff; }
+
+/* Héros : grande image, 3 photos qui défilent toutes seules */
+.heros.clair { min-height: auto; }
+.heros-bloc { padding: 96px 0 40px; }
+.diapo { position: relative; height: min(62svh, 560px); border-radius: 30px; overflow: hidden; background: #fff; box-shadow: 0 40px 80px -50px rgb(28 25 23 / .5); }
+@media (min-width: 960px) { .diapo { height: min(74svh, 680px); } }
+.vue { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; opacity: 0; visibility: hidden; }
+.vue.actif { opacity: 1; visibility: visible; }
+.vue img { width: 100%; height: 100%; object-fit: contain; padding: 4% 3% 12%; }
+.vue.plein img { object-fit: cover; padding: 0; }
+.points { z-index: 3; position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; gap: 8px; padding: 8px 10px; border-radius: 999px; background: rgb(28 25 23 / .55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.points button { width: 44px; height: 20px; border: 0; background: none; padding: 0; cursor: pointer; display: grid; align-items: center; }
+.points i { display: block; height: 4px; border-radius: 4px; background: rgb(255 255 255 / .35); overflow: hidden; position: relative; }
+.points i::after { content: ''; position: absolute; inset: 0; background: #fff; transform: scaleX(var(--p, 0)); transform-origin: left; }
+.heros-texte { display: grid; gap: 1rem; margin-top: 2rem; align-items: end; }
+@media (min-width: 960px) { .heros-texte { grid-template-columns: 1.1fr 1fr; gap: 3rem; margin-top: 3rem; } }
+.heros.clair .heros-texte h1 { font-size: clamp(3rem, 8vw, 6.4rem); max-width: 12ch; margin-top: .6rem; }
+.heros.clair .heros-texte p.chapo { margin-top: 0; }
+.heros-bloc .chiffres { max-width: none; }
 </style>
 </head>
 <body>
-<p class="demo">Site de démonstration : marque, prix et avis inventés pour montrer le rendu. Photos : fournisseur du panier.</p>
+<p class="demo">Démo : marque, prix et avis inventés.</p>
 
 <header class="nav wrap">
   <div class="nav-in verre">
@@ -269,26 +289,36 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 
 <main id="haut">
   <section class="heros clair" aria-labelledby="titre">
-    <div class="heros-img" data-parallaxe></div>
-    <div class="wrap heros-grille">
-      <div>
-        <p class="sur-titre" data-entre>Paniers orthopédiques · conçus en France</p>
-        <h1 id="titre" class="serif" data-titre>Il mérite <span class="it or">un vrai lit.</span></h1>
-        <p class="chapo" data-entre>Mousse à mémoire de forme, rebords pour poser la tête, housse lavable. Pour qu’il dorme mieux et se relève sans peine, à tout âge.</p>
-        <div class="actions" data-entre>
-          <a class="btn btn-or" href="#paniers">Choisir son panier <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn-verre" href="#taille">Trouver sa taille</a>
-        </div>
-        <div class="chiffres">
-          <div class="chiffre" data-entre><strong data-compte="10">0</strong><span>cm de mousse sous lui</span></div>
-          <div class="chiffre" data-entre><strong data-compte="30">0</strong><span>°C : la housse passe en machine</span></div>
-          <div class="chiffre" data-entre><strong data-compte="4">0</strong><span>tailles, du teckel au dogue</span></div>
+    <div class="wrap heros-bloc">
+      <div class="diapo" id="diapo" aria-roledescription="carrousel" aria-label="Photos du panier">
+        <figure class="vue actif"><img src="img/chien-panier.jpg" alt="Un golden retriever allongé sur le panier orthopédique beige" fetchpriority="high" /></figure>
+        <figure class="vue plein"><img src="img/salon.jpg" alt="Le panier orthopédique dans un salon lumineux" /></figure>
+        <figure class="vue"><img src="img/original.jpg" alt="Un golden retriever couché sur le panier, rebords sur trois côtés" /></figure>
+        <span class="bulle" style="left:4%;top:6%"><b>Mémoire</b>de forme</span>
+        <span class="bulle" style="right:4%;top:6%"><b>Housse</b>lavable 30 °C</span>
+        <div class="points" role="tablist" aria-label="Choisir une photo">
+          <button type="button" role="tab" aria-selected="true" aria-label="Photo 1"><i></i></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Photo 2"><i></i></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Photo 3"><i></i></button>
         </div>
       </div>
-      <div class="heros-photo" data-entre data-flotte>
-        <img src="img/chien-panier.jpg" alt="Un golden retriever allongé sur un panier orthopédique beige à rebords" fetchpriority="high" />
-        <span class="bulle" style="left:5%;top:7%"><b>Mémoire</b>de forme</span>
-        <span class="bulle" style="right:5%;bottom:9%"><b>Rebords</b>appui-tête</span>
+      <div class="heros-texte">
+        <div>
+          <p class="sur-titre" data-entre>Paniers orthopédiques · conçus en France</p>
+          <h1 id="titre" class="serif" data-titre>Il mérite <span class="it or">un vrai lit.</span></h1>
+        </div>
+        <div>
+          <p class="chapo" data-entre>Mousse à mémoire de forme, rebords pour poser la tête, housse lavable. Pour qu’il dorme mieux et se relève sans peine, à tout âge.</p>
+          <div class="actions" data-entre>
+            <a class="btn btn-or" href="#paniers">Choisir son panier <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn-verre" href="#taille">Trouver sa taille</a>
+          </div>
+        </div>
+      </div>
+      <div class="chiffres">
+        <div class="chiffre" data-entre><strong data-compte="10">0</strong><span>cm de mousse sous lui</span></div>
+        <div class="chiffre" data-entre><strong data-compte="30">0</strong><span>°C : la housse passe en machine</span></div>
+        <div class="chiffre" data-entre><strong data-compte="4">0</strong><span>tailles, du teckel au dogue</span></div>
       </div>
     </div>
   </section>
@@ -489,6 +519,40 @@ function guide() {
 poids.addEventListener('input', guide); long.addEventListener('input', guide); guide();
 document.getElementById('ajout-conseil').addEventListener('click', (e) => ajouter('original', conseil, e.currentTarget));
 
+
+// Grande image : 3 photos qui défilent toutes seules (fondu + léger zoom), barre de progression sous chaque point.
+(function () {
+  const vues = [...document.querySelectorAll('#diapo .vue')];
+  const pts = [...document.querySelectorAll('#diapo .points button')];
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DUREE = 4.5;
+  let i = 0, barre;
+  function aller(n) {
+    const avant = vues[i]; i = (n + vues.length) % vues.length; const apres = vues[i];
+    pts.forEach((p, k) => { p.setAttribute('aria-selected', String(k === i)); p.querySelector('i').style.setProperty('--p', k < i ? 1 : 0); });
+    if (avant !== apres) {
+      if (reduit) { avant.classList.remove('actif'); apres.classList.add('actif'); }
+      else {
+        gsap.set(apres, { autoAlpha: 0, zIndex: 2 }); gsap.set(avant, { zIndex: 1 });
+        gsap.to(apres, { autoAlpha: 1, duration: 1, ease: 'power2.out', onComplete: () => { avant.classList.remove('actif'); gsap.set(avant, { autoAlpha: 0 }); } });
+        apres.classList.add('actif');
+      }
+    }
+    if (!reduit) gsap.fromTo(apres.querySelector('img'), { scale: 1.08 }, { scale: 1, duration: DUREE + 1, ease: 'none', overwrite: true });
+    barre?.kill();
+    const fill = pts[i].querySelector('i');
+    barre = gsap.fromTo(fill, { '--p': 0 }, { '--p': 1, duration: DUREE, ease: 'none', onComplete: () => aller(i + 1) });
+  }
+  pts.forEach((p, k) => p.addEventListener('click', () => aller(k)));
+  // Glisser du doigt pour changer de photo.
+  let x0 = null;
+  const d = document.getElementById('diapo');
+  d.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+  d.addEventListener('touchend', (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) aller(i + (dx < 0 ? 1 : -1)); x0 = null; });
+  gsap.set(vues.slice(1), { autoAlpha: 0 });
+  aller(0);
+})();
+
 // ——— Animations GSAP ———
 gsap.registerPlugin(ScrollTrigger, SplitText);
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -506,9 +570,8 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     ScrollTrigger.refresh();
   });
   document.querySelectorAll('[data-compte]').forEach((el) => { const o = { v: 0 }; gsap.to(o, { v: +el.dataset.compte, duration: 2, ease: 'power3.out', delay: .9, onUpdate: () => { el.textContent = Math.round(o.v); } }); });
-  gsap.to('[data-flotte] img', { y: -10, duration: 2.6, ease: 'sine.inOut', repeat: -1, yoyo: true });
   gsap.from('.bulle', { scale: 0, opacity: 0, duration: .8, ease: 'back.out(2)', stagger: .15, delay: 1.1 });
-  gsap.to('[data-flotte]', { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.heros', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.from('#diapo', { y: 40, opacity: 0, scale: .97, duration: 1.1, ease: 'expo.out' });
   gsap.to('#piste-origines', { xPercent: -50, ease: 'none', duration: 34, repeat: -1 });
   ScrollTrigger.batch('[data-carte]', { start: 'top 88%', once: true, onEnter: (els) => gsap.from(els, { y: 50, opacity: 0, scale: .96, duration: .8, ease: 'back.out(1.3)', stagger: .08 }) });
   gsap.from('[data-glisse]', { scale: 1.08, ease: 'none', scrollTrigger: { trigger: '#taille', start: 'top bottom', end: 'bottom top', scrub: true } });
