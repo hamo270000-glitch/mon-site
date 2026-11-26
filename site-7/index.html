@@ -233,6 +233,27 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
 .vol { position: fixed; left: 0; top: 0; z-index: 95; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+/* iPhone : un panier par ligne, photo à gauche, infos à droite (comme Amazon) */
+@media (max-width: 899px) {
+  .grille { grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--ligne); }
+  .carte { flex-direction: row; border: 0; border-bottom: 1px solid var(--ligne); border-radius: 0; padding: 14px 0; gap: 12px; }
+  .carte:hover { transform: none; box-shadow: none; }
+  .carte-img { width: 42%; flex-shrink: 0; aspect-ratio: 1; border-radius: 10px; background: var(--fond-2); align-self: flex-start; }
+  .carte-img img { mix-blend-mode: multiply; }
+  .carte-img.plein img { mix-blend-mode: normal; }
+  .pastille { top: 8px; left: 8px; font-size: .6rem; }
+  .carte-corps { padding: 0; gap: .2rem; min-width: 0; }
+  .carte h3 { font-size: 1rem; line-height: 1.3; order: -1; }
+  .carte .note { font-size: .78rem; }
+  .carte .details { font-size: .76rem; }
+  .carte .prix { font-size: 1.35rem; margin: .1rem 0 .3rem; }
+  .tailles { gap: 3px; margin-top: .25rem; }
+  .tailles button { min-height: 32px; font-size: .7rem; border-radius: 6px; }
+  .carte .btn { min-height: 42px; border-radius: 999px; background: var(--orange); font-size: .78rem; letter-spacing: .03em; }
+  .carte .btn:hover { background: var(--orange-2); }
+  .carte .btn.ok { background: var(--ok); }
+}
 </style>
 </head>
 <body>
