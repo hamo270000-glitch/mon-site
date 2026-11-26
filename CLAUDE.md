@@ -32,8 +32,8 @@
   - Code dans `site-3/source/`, puis `npm run build` dans ce dossier avant le commit.
 - `site-5/` : Site 5, boutique animalière « Truffe » (produits pour chien, star : panier orthopédique Nuage), faite avec `ui-ux-pro-max` et des pièces de 21st.dev (voir `site-5/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-5/
   - Code dans `site-5/source/`, puis `npm run build` dans ce dossier avant le commit.
-- `site-6/` : Site 6, boutique « Veilleuse » (panier orthopédique pour chien âgé) construite autour d'une vidéo 3D au défilement : 120 images calculées à l'avance (`site-6/film/`, scène dans `site-6/source/render/`), fluide sur iPhone (voir `site-6/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-6/
-  - Code dans `site-6/source/`, puis `npm run build` dans ce dossier avant le commit. Leçon retenue : la 3D calculée en direct (React Three Fiber) ramait sur iPhone et faisait « maquette » ; préférer des images pré-calculées.
+- `site-6/` : Site 6, boutique « Veilleuse » (panier orthopédique pour chien âgé), thème « luxe sombre et or » issu de ui-ux-pro-max (Cormorant + Montserrat, #1C1917 / or #A16207). Logo et textes dans `site-6/brand/` (MARQUE.md contient le message pour le fournisseur), photos du fournisseur C (Tongxiang Yangyang, Alibaba) recadrées dans `site-6/source/public/vues/`. Voir `site-6/README.md`. En ligne sur https://hamo270000-glitch.github.io/mon-site/site-6/
+  - Code dans `site-6/source/`, puis `npm run build` dans ce dossier avant le commit. Vitrine seulement : pas de paiement (GitHub Pages ne peut pas encaisser) ; pour vendre, passer par Shopify. Leçon retenue : la 3D en direct ramait sur iPhone et faisait « maquette » ; l'utilisateur ne veut pas de vidéos créées par Claude.
 - `.claude/agents/` : agents de The Agency.
 - `.claude/skills/` : skills installés (GSAP, frontend-design, react-best-practices, web-design-guidelines, composition-patterns, find-skills). Utilise-les pour le Site 2 et le Site 3.
 - Skills de designers (ajoutés le 25 novembre 2026, copiés depuis leurs dépôts officiels) :
