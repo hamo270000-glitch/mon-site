@@ -45,8 +45,8 @@ export function voler(source: HTMLElement | null, cible: HTMLElement | null) {
 
 type Phase = 'pret' | 'ajout' | 'ajoute';
 
-export default function Ajouter({ id, variante, coloris, image, prix, large = false, label = 'Ajouter au panier' }: {
-  id: string; variante: string; coloris: string; image: RefObject<HTMLElement | null>; prix?: string; large?: boolean; label?: string;
+export default function Ajouter({ id, variante, coloris, image, prix, large = false, label = 'Ajouter au panier', qty = 1 }: {
+  id: string; variante: string; coloris: string; image: RefObject<HTMLElement | null>; prix?: string; large?: boolean; label?: string; qty?: number;
 }) {
   const { add, cible } = useCart();
   const [phase, setPhase] = useState<Phase>('pret');
@@ -58,7 +58,7 @@ export default function Ajouter({ id, variante, coloris, image, prix, large = fa
     setPhase('ajout');
     voler(image.current, cible.current);
     timers.current.push(
-      window.setTimeout(() => { add(id, variante, coloris); setPhase('ajoute'); }, 650),
+      window.setTimeout(() => { add(id, variante, coloris, qty); setPhase('ajoute'); }, 650),
       window.setTimeout(() => setPhase('pret'), 2200),
     );
   };
@@ -67,11 +67,11 @@ export default function Ajouter({ id, variante, coloris, image, prix, large = fa
     ? 'bg-foret text-creme'
     : phase === 'ajout'
       ? 'bg-abricot-2 text-sur-abricot translate-y-[2px] shadow-[inset_0_3px_8px_rgb(0_0_0/0.25)]'
-      : 'bg-abricot text-sur-abricot shadow-[0_2px_0_#b8461a,0_10px_24px_-8px_rgb(240_106_40/0.6)] hover:-translate-y-0.5 hover:bg-[#f47a3c] active:translate-y-[2px] active:shadow-[inset_0_3px_8px_rgb(0_0_0/0.25)]';
+      : 'bg-abricot text-sur-abricot shadow-[0_2px_0_#b8461a] hover:bg-abricot-2 active:translate-y-[2px] active:shadow-[inset_0_3px_8px_rgb(0_0_0/0.25)]';
 
   return (
     <button type="button" onClick={onClick} aria-disabled={phase !== 'pret' || undefined}
-      className={`relative inline-flex items-center justify-center gap-2 rounded-full font-bold transition-[transform,background-color,box-shadow,color] duration-300 ease-[cubic-bezier(.32,.72,0,1)] ${large ? 'min-h-14 w-full px-7 text-lg' : 'min-h-12 px-5'} ${phase === 'pret' ? 'cursor-pointer' : 'cursor-default'} ${fond}`}>
+      className={`relative inline-flex items-center justify-center gap-2 rounded-full font-bold transition-[transform,background-color,box-shadow,color] duration-300 ease-[cubic-bezier(.32,.72,0,1)] ${large ? 'min-h-14 w-full px-7 text-lg' : 'min-h-11 px-5'} ${phase === 'pret' ? 'cursor-pointer' : 'cursor-default'} ${fond}`}>
       <span className="sr-only" aria-live="polite">{phase === 'ajoute' ? 'Ajouté au panier' : ''}</span>
       <span className="relative grid size-5 place-items-center" aria-hidden="true">
         <span className={`absolute transition-opacity duration-200 ${phase === 'pret' ? 'opacity-100 delay-150' : 'opacity-0'}`}><IconSac /></span>
@@ -80,8 +80,8 @@ export default function Ajouter({ id, variante, coloris, image, prix, large = fa
       </span>
       <span className="grid">
         <span className={`col-start-1 row-start-1 transition-opacity duration-200 ${phase === 'pret' ? 'opacity-100 delay-150' : 'opacity-0'}`}>{label}{prix && <span className="chiffres"> · {prix}</span>}</span>
-        <span aria-hidden="true" className={`col-start-1 row-start-1 transition-opacity duration-200 ${phase === 'ajout' ? 'opacity-100 delay-150' : 'opacity-0'}`}>Ça arrive…</span>
-        <span aria-hidden="true" className={`col-start-1 row-start-1 transition-opacity duration-200 ${phase === 'ajoute' ? 'opacity-100 delay-150' : 'opacity-0'}`}>Dans le panier !</span>
+        <span aria-hidden="true" className={`col-start-1 row-start-1 transition-opacity duration-200 ${phase === 'ajout' ? 'opacity-100 delay-150' : 'opacity-0'}`}>Ajout…</span>
+        <span aria-hidden="true" className={`col-start-1 row-start-1 transition-opacity duration-200 ${phase === 'ajoute' ? 'opacity-100 delay-150' : 'opacity-0'}`}>Ajouté au panier</span>
       </span>
     </button>
   );

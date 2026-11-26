@@ -11,7 +11,7 @@ interface Cart {
   lignes: Ligne[];
   count: number;
   total: number;
-  add: (id: string, variante: string, coloris: string) => void;
+  add: (id: string, variante: string, coloris: string, n?: number) => void;
   setQty: (key: string, qty: number) => void;
   open: boolean;
   setOpen: (v: boolean) => void;
@@ -38,11 +38,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       lignes,
       count: lignes.reduce((n, l) => n + l.qty, 0),
       total: lignes.reduce((n, l) => n + l.qty * l.variante.price, 0),
-      add: (id, variante, coloris) => {
+      add: (id, variante, coloris, n = 1) => {
         const key = `${id}·${variante}·${coloris}`;
         setItems((st) => (st.some((i) => i.key === key)
-          ? st.map((i) => (i.key === key ? { ...i, qty: Math.min(9, i.qty + 1) } : i))
-          : [...st, { key, id, variante, coloris, qty: 1 }]));
+          ? st.map((i) => (i.key === key ? { ...i, qty: Math.min(9, i.qty + n) } : i))
+          : [...st, { key, id, variante, coloris, qty: Math.min(9, n) }]));
         setSecousse((n) => n + 1);
       },
       setQty: (key, qty) => setItems((st) => st.map((i) => (i.key === key ? { ...i, qty: Math.max(0, Math.min(9, qty)) } : i)).filter((i) => i.qty > 0)),
