@@ -3,233 +3,246 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#f5f1e8" />
-<meta name="description" content="Sieste : site de démonstration d'une boutique de paniers orthopédiques pour chien, inspiré des meilleurs designs Dribbble." />
-<title>sieste · Paniers orthopédiques pour chien (démo)</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%232d5a54'/%3E%3Cpath d='M9 26V14a7 7 0 0 1 14 0v12Z' fill='%23cdc6ef'/%3E%3C/svg%3E" />
-<link rel="preload" href="fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin />
+<meta name="theme-color" content="#ffffff" />
+<meta name="description" content="Sieste : site de démonstration d'une boutique de paniers orthopédiques pour chien, sur le modèle du design Dribbble « Barkzen » choisi par l'utilisateur." />
+<title>Sieste · Paniers orthopédiques pour chien (démo)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f26a21'/%3E%3Cpath d='M7 16 16 8l9 8v9H7z' fill='%23fff'/%3E%3C/svg%3E" />
+<link rel="preload" href="fonts/poppins-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
 <style>
-@font-face { font-family: 'Fraunces'; src: url(fonts/fraunces-latin-full-normal.woff2) format('woff2'); font-weight: 100 900; font-display: swap; }
-@font-face { font-family: 'Fraunces'; src: url(fonts/fraunces-latin-full-italic.woff2) format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
-@font-face { font-family: 'DM Sans'; src: url(fonts/dm-sans-latin-wght-normal.woff2) format('woff2'); font-weight: 100 1000; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-400-normal.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-700-normal.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-800-normal.woff2) format('woff2'); font-weight: 800; font-display: swap; }
 
-/* Direction inspirée des designs pet store les plus aimés de Dribbble (tubik, Nixtio) :
-   cadres en arche, serif éditoriale, sapin + lavande + citron, beaucoup d'air. */
+/* Sur le modèle du design Dribbble « Barkzen » (Sohanur Rahman) choisi par l'utilisateur :
+   blanc et propre, orange comme seule couleur d'accent, Poppins, boutons noirs « Acheter ». */
 :root {
-  --creme: #f5f1e8; --creme-2: #ebe4d6; --papier: #fbf9f4;
-  --sapin: #2d5a54; --sapin-2: #22463f; --sapin-3: #3b6c65;
-  --lavande: #cdc6ef; --lavande-2: #bdb4e8; --lavande-3: #e3dff7;
-  --citron: #d9f27e; --citron-2: #cbe864; --peche: #f3d9c6; --sauge: #d5e3d3;
-  --encre: #14231f; --doux: #4d5b56; --doux-clair: #c4d3cf; --or: #c3a15c;
+  --orange: #f26a21; --orange-2: #db5810; --orange-clair: #fff1e8;
+  --noir: #17181c; --texte: #2a2b30; --gris: #6b6e76; --gris-2: #9a9da4;
+  --fond: #ffffff; --fond-2: #f6f6f7; --ligne: #e8e8eb; --beige: #efe6da;
+  --ok: #1fa363; --non: #e5484d;
   --ease: cubic-bezier(.22,1,.36,1);
 }
 * { box-sizing: border-box; margin: 0; }
-html { background: var(--creme); color: var(--encre); -webkit-text-size-adjust: 100%; }
-body { font-family: 'DM Sans', system-ui, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+html { background: var(--fond); color: var(--texte); -webkit-text-size-adjust: 100%; }
+body { font-family: 'Poppins', system-ui, sans-serif; font-size: 15px; line-height: 1.6; overflow-x: hidden; }
 img { display: block; max-width: 100%; }
 a { color: inherit; } button { font: inherit; color: inherit; }
-.wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
-.serif { font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-variation-settings: 'SOFT' 100, 'WONK' 0; letter-spacing: -0.02em; line-height: 1; }
-.it { font-style: italic; font-variation-settings: 'SOFT' 100, 'WONK' 1; }
-.petit { font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
-:focus-visible { outline: 2px solid var(--sapin); outline-offset: 3px; border-radius: 10px; }
+h1, h2, h3 { color: var(--noir); line-height: 1.2; letter-spacing: -0.01em; }
+.wrap { width: min(1200px, 100% - 32px); margin-inline: auto; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 6px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.etoiles { color: var(--orange); letter-spacing: 2px; font-size: .85rem; }
 
 /* Boutons */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 54px; padding: 0 1.7rem; border-radius: 999px; border: 0; font-weight: 600; font-size: .95rem; text-decoration: none; cursor: pointer; transition: transform .35s var(--ease), background-color .3s, color .3s; }
-.btn svg { width: 18px; height: 18px; transition: transform .35s var(--ease); }
-.btn:hover svg { transform: translateX(4px); }
-.btn-citron { background: var(--citron); color: var(--encre); }
-.btn-citron:hover { background: var(--citron-2); transform: translateY(-2px); }
-.btn-ligne { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
-.btn-ligne:hover { background: var(--encre); color: var(--creme); box-shadow: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 46px; padding: 0 1.5rem; border-radius: 6px; border: 0; font-weight: 600; font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color .25s, color .25s, transform .25s var(--ease), box-shadow .25s; }
+.btn-orange { background: var(--orange); color: #fff; }
+.btn-orange:hover { background: var(--orange-2); transform: translateY(-2px); box-shadow: 0 10px 24px -12px rgb(242 106 33 / .8); }
+.btn-noir { background: var(--noir); color: #fff; width: 100%; }
+.btn-noir:hover { background: #000; }
+.btn-noir.ok { background: var(--ok); }
+.btn-contour { background: #fff; color: var(--noir); box-shadow: inset 0 0 0 1.5px var(--noir); }
+.btn-contour:hover { background: var(--noir); color: #fff; }
 
-.demo { background: var(--sapin); color: var(--creme); text-align: center; font-size: .75rem; padding: .4rem 1rem; letter-spacing: .03em; }
+.demo { background: var(--noir); color: #fff; text-align: center; font-size: .72rem; padding: .4rem 1rem; }
 
-/* En-tête : menu à gauche, logo au centre, panier à droite */
-.tete-site { position: sticky; top: 0; z-index: 50; transition: background-color .4s, box-shadow .4s; }
-.tete-site.fond { background: rgb(245 241 232 / .88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgb(20 35 31 / .08); }
-.tete-in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 68px; }
-.rond { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 999px; border: 0; cursor: pointer; background: var(--sapin); color: var(--creme); position: relative; transition: transform .35s var(--ease); }
-.rond:hover { transform: scale(1.06); }
-.rond svg { width: 20px; height: 20px; }
-.logo { font-family: 'Fraunces', serif; font-style: italic; font-size: 1.9rem; font-variation-settings: 'SOFT' 100, 'WONK' 1; text-decoration: none; letter-spacing: -.02em; }
-.droite { justify-self: end; display: flex; gap: 1.4rem; align-items: center; }
-.nav-bureau { display: none; gap: 1.6rem; font-size: .9rem; }
-.nav-bureau a { text-decoration: none; position: relative; }
-.nav-bureau a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .4s var(--ease); }
-.nav-bureau a:hover::after { transform: scaleX(1); transform-origin: left; }
-@media (min-width: 900px) { .nav-bureau { display: flex; } .menu-btn { display: none; } }
-.compte { position: absolute; top: -3px; right: -3px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border-radius: 999px; background: var(--citron); color: var(--encre); font-size: .7rem; font-weight: 700; }
+/* En-tête */
+.tete { position: sticky; top: 0; z-index: 50; background: rgb(255 255 255 / .96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+.tete.ombre { border-color: var(--ligne); box-shadow: 0 6px 20px -14px rgb(0 0 0 / .25); }
+.tete-in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 70px; }
+.logo { display: flex; flex-direction: column; align-items: center; text-decoration: none; line-height: 1; }
+.logo svg { width: 30px; height: 26px; color: var(--orange); }
+.logo span { font-weight: 700; font-size: .95rem; color: var(--noir); margin-top: 2px; }
+.liens { display: none; gap: 2rem; font-size: .88rem; font-weight: 500; }
+.liens a { text-decoration: none; color: var(--texte); transition: color .2s; }
+.liens a:hover { color: var(--orange); }
+.actions-tete { display: flex; align-items: center; gap: .6rem; }
+.icone { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 0; background: none; cursor: pointer; position: relative; color: var(--noir); }
+.icone:hover { background: var(--fond-2); }
+.icone svg { width: 22px; height: 22px; }
+.compte { position: absolute; top: 4px; right: 2px; min-width: 18px; height: 18px; padding: 0 4px; display: grid; place-items: center; border-radius: 999px; background: var(--orange); color: #fff; font-size: .65rem; font-weight: 700; }
 .compte[hidden] { display: none; }
+.boutique-btn { display: none; min-height: 40px; }
+@media (min-width: 900px) { .liens, .boutique-btn { display: inline-flex; } .menu-btn { display: none; } }
 
-/* Menu plein écran (mobile) */
-.menu { position: fixed; inset: 0; z-index: 80; background: var(--sapin); color: var(--creme); display: flex; flex-direction: column; padding: 18px 16px 32px; clip-path: circle(0 at 39px 39px); transition: clip-path .7s var(--ease), visibility 0s .7s; visibility: hidden; }
-.menu.ouvert { clip-path: circle(150% at 39px 39px); visibility: visible; transition: clip-path .7s var(--ease); }
-.menu nav { display: grid; gap: .4rem; margin-top: 3rem; }
-.menu nav a { font-family: 'Fraunces', serif; font-size: 2.6rem; text-decoration: none; line-height: 1.15; }
-.menu .rond { background: var(--creme); color: var(--sapin); }
+/* Menu mobile */
+.menu { position: fixed; inset: 0; z-index: 80; visibility: hidden; }
+.menu.ouvert { visibility: visible; }
+.menu-fond { position: absolute; inset: 0; width: 100%; border: 0; background: rgb(0 0 0 / .4); opacity: 0; transition: opacity .3s; }
+.menu.ouvert .menu-fond { opacity: 1; }
+.menu-panneau { position: absolute; top: 0; left: 0; bottom: 0; width: min(320px, 85%); background: #fff; padding: 1.2rem; transform: translateX(-100%); transition: transform .45s var(--ease); }
+.menu.ouvert .menu-panneau { transform: none; }
+.menu nav { display: grid; margin-top: 1.4rem; }
+.menu nav a { padding: .9rem .4rem; border-bottom: 1px solid var(--ligne); text-decoration: none; font-weight: 600; color: var(--noir); }
 
-/* Héros */
-.heros { padding: 18px 0 70px; }
-.heros-grille { display: grid; gap: 2.2rem; align-items: center; }
-@media (min-width: 960px) { .heros-grille { grid-template-columns: 1fr 1fr; gap: 4rem; padding-top: 30px; } }
-.heros h1 { font-size: clamp(3.3rem, 10.5vw, 7.2rem); line-height: .92; }
-.heros h1 .it { color: var(--sapin); }
-.heros .chapo { margin-top: 1.4rem; max-width: 30rem; color: var(--doux); font-size: 1.05rem; }
-.heros .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; margin-top: 2rem; }
-.des { font-size: .9rem; color: var(--doux); }
-.des strong { font-family: 'Fraunces', serif; font-size: 1.6rem; color: var(--encre); font-weight: 500; }
+/* Héros : grande photo, texte blanc à gauche, 3 photos qui défilent */
+.heros { padding: 16px 0 0; }
+.heros-cadre { position: relative; height: min(78svh, 620px); min-height: 460px; border-radius: 14px; overflow: hidden; background: var(--beige); }
+.vue { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
+.vue.actif { opacity: 1; visibility: visible; }
+.vue img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vue.detoure { background: radial-gradient(90% 90% at 75% 55%, #f7f1e8, #e7dccd); }
+.vue.detoure img { object-fit: contain; width: 78%; left: auto; right: -4%; mix-blend-mode: multiply; filter: brightness(1.06) contrast(1.06); }
+@media (max-width: 760px) { .vue.detoure img { width: 120%; right: -24%; top: 12%; } }
+.heros-cadre::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(23 18 12 / .78) 0%, rgb(23 18 12 / .45) 38%, rgb(23 18 12 / 0) 65%); pointer-events: none; }
+@media (max-width: 760px) { .heros-cadre::after { background: linear-gradient(0deg, rgb(23 18 12 / .82) 0%, rgb(23 18 12 / .5) 42%, rgb(23 18 12 / 0) 70%); } }
+.heros-texte { position: absolute; z-index: 2; left: clamp(20px, 5vw, 56px); bottom: clamp(28px, 9vw, 96px); max-width: 30rem; color: #fff; padding-right: 20px; }
+.heros-texte .avis-ligne { display: flex; align-items: center; gap: .6rem; font-size: .78rem; font-weight: 500; }
+.heros h1 { color: #fff; font-size: clamp(2.1rem, 5.4vw, 3.6rem); font-weight: 700; margin-top: .7rem; line-height: 1.1; }
+.heros p.chapo { margin-top: .9rem; font-size: .95rem; color: rgb(255 255 255 / .88); max-width: 26rem; }
+.heros .btn { margin-top: 1.4rem; }
+.points { position: absolute; z-index: 3; right: 20px; bottom: 20px; display: flex; gap: 6px; }
+.points button { width: 30px; height: 20px; border: 0; padding: 0; background: none; cursor: pointer; display: grid; align-items: center; }
+.points i { display: block; height: 3px; border-radius: 3px; background: rgb(255 255 255 / .35); position: relative; overflow: hidden; }
+.points i::after { content: ''; position: absolute; inset: 0; background: #fff; transform: scaleX(var(--p, 0)); transform-origin: left; }
 
-.scene { position: relative; justify-self: center; width: min(100%, 520px); padding: 0 6% 0 0; }
-.arche { position: relative; aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; background: var(--lavande); }
-.arche .vue { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; visibility: hidden; }
-.arche .vue.actif { opacity: 1; visibility: visible; }
-.arche .vue img { width: 118%; max-width: none; mix-blend-mode: multiply; transform-origin: 50% 70%; }
-.arche .vue.plein img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
-.contour { position: absolute; inset: -14px 0 -14px 18px; border: 1.5px solid var(--or); border-radius: 999px 999px 34px 34px; pointer-events: none; z-index: -1; }
-.trait { position: absolute; left: -30%; top: 30%; width: 160%; height: auto; pointer-events: none; z-index: -1; overflow: visible; }
-.badge-rond { position: absolute; right: -2%; top: 8%; width: 118px; height: 118px; display: grid; place-items: center; border-radius: 999px; background: var(--creme); text-decoration: none; box-shadow: 0 20px 40px -24px rgb(20 35 31 / .5); }
-.badge-rond svg.texte { position: absolute; inset: 0; width: 100%; height: 100%; }
-.badge-rond .fleche { width: 40px; height: 40px; border-radius: 999px; background: var(--sapin); color: var(--creme); display: grid; place-items: center; transition: transform .4s var(--ease); }
-.badge-rond:hover .fleche { transform: rotate(-45deg); }
-.pilule-taille { position: absolute; left: -4%; bottom: 14%; width: 64px; padding: 14px 0; border-radius: 999px; background: var(--citron); text-align: center; box-shadow: 0 16px 30px -18px rgb(20 35 31 / .5); }
-.pilule-taille b { display: block; font-size: .62rem; letter-spacing: .14em; }
-.pilule-taille hr { width: 26px; margin: 6px auto; border: 0; border-top: 1px solid var(--encre); }
-.pilule-taille span { font-family: 'Fraunces', serif; font-size: 1rem; }
-.points { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; gap: 6px; z-index: 3; }
-.points button { width: 34px; height: 22px; border: 0; padding: 0; background: none; cursor: pointer; display: grid; align-items: center; }
-.points i { display: block; height: 3px; border-radius: 3px; background: rgb(20 35 31 / .2); overflow: hidden; position: relative; }
-.points i::after { content: ''; position: absolute; inset: 0; background: var(--encre); transform: scaleX(var(--p, 0)); transform-origin: left; }
+/* Bande de réassurance */
+.reassurance { border-bottom: 1px solid var(--ligne); }
+.reassurance ul { list-style: none; padding: 1.4rem 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+@media (min-width: 860px) { .reassurance ul { grid-template-columns: repeat(4, 1fr); } }
+.reassurance li { display: flex; align-items: center; gap: .7rem; font-size: .82rem; }
+.reassurance li svg { width: 34px; height: 34px; padding: 7px; border-radius: 999px; background: var(--orange-clair); color: var(--orange); flex-shrink: 0; }
+.reassurance strong { display: block; color: var(--noir); font-weight: 600; }
+.reassurance span { color: var(--gris); }
 
-/* Bandeau défilant */
-.ruban { background: var(--sapin); color: var(--creme); overflow: hidden; padding: 1.1rem 0; }
-.ruban-piste { display: flex; width: max-content; gap: 2.4rem; font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(1.4rem, 3.4vw, 2.2rem); white-space: nowrap; }
-.ruban-piste span { display: flex; gap: 2.4rem; align-items: center; }
-.ruban-piste svg { width: 18px; height: 18px; color: var(--citron); }
+section { padding: clamp(56px, 8vw, 96px) 0; }
+.titre-section { text-align: center; max-width: 34rem; margin: 0 auto 2.6rem; }
+.etiquette { display: inline-flex; align-items: center; gap: .35rem; font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.etiquette svg { width: 14px; height: 14px; }
+.titre-section h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-weight: 600; margin-top: .4rem; }
+.titre-section p { color: var(--gris); margin-top: .5rem; font-size: .9rem; }
 
-section { padding: clamp(70px, 11vw, 140px) 0; }
-.tete-section { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.2rem; margin-bottom: 2.6rem; }
-.tete-section h2 { font-size: clamp(2.5rem, 6.4vw, 4.8rem); }
+/* Produits */
+.grille { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 900px) { .grille { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+.carte { display: flex; flex-direction: column; border: 1px solid var(--ligne); border-radius: 10px; overflow: hidden; background: #fff; transition: box-shadow .35s, transform .35s var(--ease); }
+.carte:hover { box-shadow: 0 18px 40px -24px rgb(0 0 0 / .35); transform: translateY(-4px); }
+.carte-img { position: relative; aspect-ratio: 1; background: var(--fond-2); display: grid; place-items: center; overflow: hidden; }
+.carte-img img { width: 92%; mix-blend-mode: multiply; filter: brightness(1.04); transition: transform .6s var(--ease); }
+.carte:hover .carte-img img { transform: scale(1.07); }
+.pastille { position: absolute; top: 10px; left: 10px; padding: .2rem .55rem; border-radius: 4px; background: var(--orange); color: #fff; font-size: .65rem; font-weight: 600; letter-spacing: .04em; }
+.carte-corps { padding: 12px 12px 14px; display: flex; flex-direction: column; gap: .3rem; flex: 1; }
+.carte .note { display: flex; align-items: center; gap: .4rem; font-size: .72rem; color: var(--gris-2); }
+.carte h3 { font-size: .95rem; font-weight: 600; }
+.carte .details { font-size: .72rem; color: var(--gris); }
+.tailles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: .3rem; }
+.tailles button { min-width: 0; min-height: 34px; padding: 0; border-radius: 6px; border: 1px solid var(--ligne); background: #fff; font-size: .72rem; font-weight: 600; cursor: pointer; transition: border-color .2s, background-color .2s, color .2s; }
+.tailles button[aria-pressed='true'] { border-color: var(--noir); background: var(--noir); color: #fff; }
+.carte .prix { font-size: 1.05rem; font-weight: 700; color: var(--orange); margin: .2rem 0 .5rem; }
+.carte .btn { margin-top: auto; min-height: 42px; font-size: .74rem; }
+.centre { text-align: center; margin-top: 2rem; }
 
-/* Best-sellers en arches (façon tubik) */
-.ventes { background: var(--lavande); }
-.rangee { display: grid; grid-auto-flow: column; grid-auto-columns: min(74vw, 300px); gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
-@media (min-width: 1000px) { .rangee { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); overflow: visible; margin: 0; padding: 0; } }
-.produit { scroll-snap-align: start; text-align: center; }
-.produit-arche { position: relative; aspect-ratio: 3 / 4; border-radius: 999px 999px 24px 24px; overflow: hidden; display: grid; place-items: center; transition: transform .6s var(--ease), border-radius .6s var(--ease); }
-.produit:hover .produit-arche { transform: translateY(-8px); border-radius: 24px; }
-.produit-arche img { width: 112%; max-width: none; mix-blend-mode: multiply; transition: transform .8s var(--ease); }
-.produit:hover .produit-arche img { transform: scale(1.06) rotate(-2deg); }
-.produit h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.6rem; margin-top: 1rem; letter-spacing: -.01em; }
-.produit .sous { font-size: .85rem; color: var(--doux); }
-.produit .prix { font-family: 'Fraunces', serif; font-size: 1.2rem; margin-top: .3rem; }
-.tailles { display: inline-flex; gap: 4px; margin-top: .8rem; padding: 4px; border-radius: 999px; background: rgb(255 255 255 / .55); }
-.tailles button { min-width: 40px; min-height: 36px; border: 0; border-radius: 999px; background: none; font-size: .8rem; font-weight: 600; cursor: pointer; transition: background-color .3s, color .3s; }
-.tailles button[aria-pressed='true'] { background: var(--encre); color: var(--creme); }
-.ajout { position: absolute; right: 12px; bottom: 12px; width: 50px; height: 50px; border-radius: 999px; border: 0; cursor: pointer; background: var(--citron); color: var(--encre); display: grid; place-items: center; transition: transform .4s var(--ease); }
-.ajout:hover { transform: scale(1.08) rotate(90deg); }
-.ajout.ok { background: var(--encre); color: var(--citron); transform: none; }
-.ajout svg { width: 20px; height: 20px; }
+/* Pourquoi : icônes autour d'une photo */
+.atouts { background: var(--fond-2); }
+.atouts-grille { display: grid; gap: 1.6rem; align-items: center; }
+@media (min-width: 900px) { .atouts-grille { grid-template-columns: 1fr 1.1fr 1fr; gap: 2rem; } }
+.atouts ul { list-style: none; padding: 0; display: grid; gap: 1.2rem; }
+.atout { display: flex; gap: .9rem; align-items: flex-start; background: #fff; border-radius: 10px; padding: 1rem; border: 1px solid var(--ligne); }
+.atout svg { width: 40px; height: 40px; padding: 9px; border-radius: 10px; background: var(--orange-clair); color: var(--orange); flex-shrink: 0; }
+.atout strong { display: block; color: var(--noir); font-size: .92rem; }
+.atout span { font-size: .8rem; color: var(--gris); }
+.atouts-photo { border-radius: 14px; overflow: hidden; background: #fff; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid var(--ligne); }
+.atouts-photo img { width: 96%; mix-blend-mode: multiply; }
 
-/* Phrase éditoriale */
-.phrase { background: var(--sapin); color: var(--creme); }
-.phrase-grille { display: grid; gap: 2.5rem; align-items: center; }
-@media (min-width: 960px) { .phrase-grille { grid-template-columns: 1.6fr 1fr; gap: 5rem; } }
-.phrase p.serif { font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.08; }
-.phrase .mot { opacity: .22; }
-.phrase .arche { background: var(--lavande); max-width: 360px; justify-self: center; width: 100%; }
-.phrase .arche img { width: 100%; height: 100%; object-fit: cover; }
-.phrase .petit { color: var(--citron); display: block; margin-bottom: 1.4rem; }
+/* Pourquoi nous choisir : 3 cartes photo */
+.choisir { display: grid; gap: 14px; }
+@media (min-width: 860px) { .choisir { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+.choix-carte { border-radius: 10px; overflow: hidden; border: 1px solid var(--ligne); background: #fff; }
+.choix-carte .ph { aspect-ratio: 4 / 3; background: var(--beige); overflow: hidden; display: grid; place-items: center; }
+.choix-carte .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.choix-carte .ph.detoure img { object-fit: contain; width: 96%; mix-blend-mode: multiply; }
+.choix-carte:hover .ph img { transform: scale(1.06); }
+.choix-carte div.t { padding: 1rem; text-align: center; }
+.choix-carte h3 { font-size: .95rem; font-weight: 600; }
+.choix-carte p { font-size: .8rem; color: var(--gris); margin-top: .3rem; }
 
-/* Les 4 couches */
-.couches-in { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding: 80px 0 60px; }
-.piste { display: flex; gap: 1.2rem; margin-top: 2.6rem; padding-left: max(16px, calc((100vw - 1240px) / 2)); width: max-content; }
-.couche { width: min(76vw, 380px); flex-shrink: 0; }
-.couche .arche { aspect-ratio: 1 / 1.05; display: grid; place-items: center; }
-.couche .arche img { width: 120%; max-width: none; mix-blend-mode: multiply; }
-.couche-num { font-family: 'Fraunces', serif; font-style: italic; color: var(--sapin); font-size: 1.1rem; margin-top: 1.1rem; }
-.couche h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.9rem; letter-spacing: -.01em; margin-top: .2rem; }
-.couche p { color: var(--doux); margin-top: .4rem; }
-@media (max-width: 899px) { .piste { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-right: 16px; scrollbar-width: none; } .couche { scroll-snap-align: start; } }
-
-/* Guide des tailles */
-.guide { background: var(--papier); }
-.guide-carte { display: grid; gap: 2rem; border-radius: 36px; background: var(--lavande-3); padding: clamp(24px, 5vw, 60px); }
-@media (min-width: 960px) { .guide-carte { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; } }
-.guide h2 { font-size: clamp(2.4rem, 5.6vw, 4.2rem); }
-.guide .intro { color: var(--doux); margin-top: 1rem; max-width: 26rem; }
-.reglage { margin-top: 1.6rem; }
-.reglage label { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; }
-.reglage output { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 400; }
-input[type=range] { width: 100%; height: 44px; accent-color: var(--sapin); cursor: pointer; }
-.verdict { border-radius: 999px 999px 28px 28px; background: var(--sapin); color: var(--creme); padding: 56px 28px 32px; text-align: center; }
-.verdict .petit { color: var(--citron); }
-.verdict .serif { font-size: clamp(4rem, 12vw, 7rem); margin: .6rem 0 .2rem; }
-.verdict p { color: var(--doux-clair); }
-.verdict .btn { margin-top: 1.4rem; }
+/* Comparaison */
+.tableau { max-width: 760px; margin: 0 auto; border: 1px solid var(--ligne); border-radius: 12px; overflow: hidden; background: #fff; }
+.tableau table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.tableau th, .tableau td { padding: .95rem 1rem; text-align: center; border-bottom: 1px solid var(--ligne); }
+.tableau th:first-child, .tableau td:first-child { text-align: left; }
+.tableau thead th { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--gris); background: var(--fond-2); }
+.tableau thead th.nous { background: var(--orange); color: #fff; }
+.tableau td.nous { background: var(--orange-clair); }
+.tableau tr:last-child td { border-bottom: 0; }
+.oui, .no { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 999px; }
+.oui { background: rgb(31 163 99 / .14); color: var(--ok); }
+.no { background: rgb(229 72 77 / .12); color: var(--non); }
+.oui svg, .no svg { width: 14px; height: 14px; }
 
 /* Avis */
-.avis { text-align: center; }
-.citation { max-width: 920px; margin-inline: auto; min-height: 15rem; display: grid; align-content: center; }
-.citation blockquote { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4.6vw, 3.2rem); line-height: 1.12; letter-spacing: -.015em; }
-.citation figcaption { margin-top: 1.4rem; color: var(--doux); }
-.avis-nav { display: flex; justify-content: center; gap: .6rem; margin-top: 2rem; }
-.avis-nav .rond { background: transparent; color: var(--encre); box-shadow: inset 0 0 0 1.5px var(--encre); }
-.avis-nav .rond:hover { background: var(--encre); color: var(--creme); }
-.note-demo { font-size: .8rem; color: var(--doux); margin-top: 1rem; }
+.avis { background: var(--fond-2); }
+.avis-grille { display: grid; gap: 14px; }
+@media (min-width: 860px) { .avis-grille { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+.avis-carte { background: #fff; border: 1px solid var(--ligne); border-radius: 10px; overflow: hidden; }
+.avis-carte .ph { aspect-ratio: 16 / 10; background: var(--beige); overflow: hidden; display: grid; place-items: center; }
+.avis-carte .ph img { width: 100%; height: 100%; object-fit: cover; }
+.avis-carte .ph.detoure img { object-fit: contain; width: 90%; mix-blend-mode: multiply; }
+.avis-carte .t { padding: 1rem 1.1rem 1.2rem; }
+.avis-carte blockquote { font-size: .85rem; color: var(--texte); margin-top: .5rem; }
+.auteur { display: flex; align-items: center; gap: .6rem; margin-top: .9rem; font-size: .8rem; }
+.avatar { width: 34px; height: 34px; border-radius: 999px; display: grid; place-items: center; background: var(--orange-clair); color: var(--orange); font-weight: 700; }
+.auteur small { display: flex; align-items: center; gap: .25rem; color: var(--ok); font-size: .7rem; }
+.note-demo { text-align: center; font-size: .75rem; color: var(--gris-2); margin-top: 1.4rem; }
 
-/* Fin + pied */
-.fin { background: var(--sapin); color: var(--creme); text-align: center; overflow: hidden; }
-.fin h2 { font-size: clamp(3rem, 10vw, 8rem); line-height: .95; }
-.fin h2 .it { color: var(--lavande); }
-.fin .btn { margin-top: 2.2rem; }
-footer { background: var(--sapin-2); color: var(--doux-clair); padding: 56px 0 36px; font-size: .9rem; }
+/* Bandeau final */
+.final { padding: 0 0 clamp(56px, 8vw, 96px); }
+.final-cadre { position: relative; border-radius: 14px; overflow: hidden; background: var(--orange); color: #fff; padding: clamp(28px, 6vw, 64px); display: grid; gap: 1.4rem; align-items: center; }
+@media (min-width: 860px) { .final-cadre { grid-template-columns: 1.2fr 1fr; } }
+.final h2 { color: #fff; font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 700; }
+.final p { color: rgb(255 255 255 / .9); margin-top: .6rem; }
+.final .btn { margin-top: 1.2rem; background: #fff; color: var(--noir); }
+.final .btn:hover { background: var(--noir); color: #fff; }
+.final-ph { border-radius: 12px; background: #fff; overflow: hidden; display: grid; place-items: center; aspect-ratio: 16 / 10; }
+.final-ph img { width: 94%; mix-blend-mode: multiply; }
+
+footer { background: var(--noir); color: #b9bbc2; padding: 54px 0 30px; font-size: .85rem; }
 .pied { display: grid; gap: 2rem; }
-@media (min-width: 860px) { .pied { grid-template-columns: 1.5fr 1fr 1fr; } }
-footer .logo { color: var(--creme); }
-footer h4 { color: var(--creme); font-weight: 600; margin-bottom: .6rem; }
-footer ul { list-style: none; padding: 0; display: grid; gap: .3rem; }
-footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
-.credits { margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1px solid rgb(255 255 255 / .1); font-size: .78rem; }
+@media (min-width: 860px) { .pied { grid-template-columns: 1.5fr 1fr 1fr 1fr; } }
+footer .logo { align-items: flex-start; }
+footer .logo span { color: #fff; }
+footer h4 { color: #fff; font-weight: 600; margin-bottom: .7rem; font-size: .9rem; }
+footer ul { list-style: none; padding: 0; display: grid; gap: .4rem; }
+footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
+.bas { margin-top: 2.4rem; padding-top: 1.2rem; border-top: 1px solid rgb(255 255 255 / .1); font-size: .75rem; }
 
 /* Tiroir panier */
 .tiroir { position: fixed; inset: 0; z-index: 90; visibility: hidden; }
 .tiroir.ouvert { visibility: visible; }
-.tiroir-fond { position: absolute; inset: 0; border: 0; width: 100%; background: rgb(20 35 31 / .45); opacity: 0; transition: opacity .4s; cursor: pointer; }
+.tiroir-fond { position: absolute; inset: 0; border: 0; width: 100%; background: rgb(0 0 0 / .4); opacity: 0; transition: opacity .3s; cursor: pointer; }
 .tiroir.ouvert .tiroir-fond { opacity: 1; }
-.tiroir-panneau { position: absolute; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--creme); padding: 1.4rem; padding-bottom: max(1.4rem, env(safe-area-inset-bottom)); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .55s var(--ease); }
+.tiroir-panneau { position: absolute; top: 0; right: 0; bottom: 0; width: min(400px, 100%); background: #fff; padding: 1.2rem; padding-bottom: max(1.2rem, env(safe-area-inset-bottom)); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .45s var(--ease); }
 .tiroir.ouvert .tiroir-panneau { transform: none; }
-.tiroir h2 { font-size: 2.4rem; }
-.tiroir-tete { display: flex; justify-content: space-between; align-items: center; }
-.lignes { list-style: none; padding: 0; margin-top: 1.2rem; flex: 1; overflow-y: auto; display: grid; align-content: start; gap: .8rem; }
-.ligne { display: flex; gap: .9rem; align-items: center; padding: .7rem; border-radius: 20px; background: var(--papier); }
-.ligne .mini { width: 60px; height: 60px; border-radius: 999px 999px 12px 12px; background: var(--lavande); overflow: hidden; display: grid; place-items: center; flex-shrink: 0; }
-.ligne .mini img { width: 150%; max-width: none; mix-blend-mode: multiply; }
-.ligne div { flex: 1; } .ligne p { font-size: .8rem; color: var(--doux); }
-.vide { color: var(--doux); margin-top: 2rem; }
-.tiroir-total { display: flex; justify-content: space-between; align-items: baseline; padding: 1rem 0; border-top: 1px solid rgb(20 35 31 / .1); }
+.tiroir-tete { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--ligne); }
+.tiroir h2 { font-size: 1.2rem; font-weight: 600; }
+.lignes { list-style: none; padding: 0; margin-top: 1rem; flex: 1; overflow-y: auto; display: grid; align-content: start; gap: .8rem; }
+.ligne { display: flex; gap: .8rem; align-items: center; }
+.ligne .mini { width: 64px; height: 64px; border-radius: 8px; background: var(--fond-2); display: grid; place-items: center; overflow: hidden; flex-shrink: 0; }
+.ligne .mini img { width: 92%; mix-blend-mode: multiply; }
+.ligne div { flex: 1; } .ligne strong { font-size: .88rem; } .ligne p { font-size: .75rem; color: var(--gris); }
+.ligne .p { font-weight: 700; color: var(--orange); }
+.vide { color: var(--gris); margin-top: 1.4rem; }
+.tiroir-total { display: flex; justify-content: space-between; padding: 1rem 0; border-top: 1px solid var(--ligne); font-weight: 600; }
 .vol { position: fixed; left: 0; top: 0; z-index: 95; pointer-events: none; }
 
-/* Le fond gris clair des photos fournisseur devient blanc, puis se fond dans la couleur de l’arche. */
-.arche .vue:not(.plein) img, .produit-arche img, .couche .arche img, .ligne .mini img { filter: brightness(1.1) contrast(1.12); }
-
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } .phrase .mot { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 </style>
 </head>
 <body>
 <p class="demo">Démo : marque, prix et avis inventés.</p>
 
-<header class="tete-site" id="tete">
+<header class="tete" id="tete">
   <div class="wrap tete-in">
-    <div>
-      <button class="rond menu-btn" type="button" id="ouvrir-menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 9h14M5 15h9"/></svg></button>
-      <nav class="nav-bureau" aria-label="Navigation principale"><a href="#ventes">Best-sellers</a><a href="#couches">Les 4 couches</a><a href="#guide">Sa taille</a></nav>
-    </div>
-    <a class="logo" href="#haut" aria-label="sieste, accueil">sieste</a>
-    <div class="droite">
-      <nav class="nav-bureau" aria-label="Aide"><a href="#avis">Avis</a></nav>
-      <button class="rond" id="ouvrir-panier" type="button" aria-label="Ouvrir le panier, 0 article">
+    <button class="icone menu-btn" type="button" id="ouvrir-menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a class="logo" href="#haut" aria-label="Sieste, accueil">
+      <svg viewBox="0 0 30 26" fill="none" aria-hidden="true"><path d="M3 12 15 2l12 10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 11v12h16V11" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M11 19c1.2-2.4 6.8-2.4 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12.6" cy="14.6" r="1.2" fill="currentColor"/><circle cx="17.4" cy="14.6" r="1.2" fill="currentColor"/></svg>
+      <span>Sieste</span>
+    </a>
+    <nav class="liens" aria-label="Navigation principale"><a href="#haut">Accueil</a><a href="#produits">Nos paniers</a><a href="#pourquoi">Pourquoi Sieste</a><a href="#avis">Avis</a></nav>
+    <div class="actions-tete">
+      <a class="btn btn-contour boutique-btn" href="#produits">Boutique</a>
+      <button class="icone" id="ouvrir-panier" type="button" aria-label="Ouvrir le panier, 0 article">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
         <span class="compte" id="compte" hidden>0</span>
       </button>
@@ -238,120 +251,136 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 </header>
 
 <div class="menu" id="menu" aria-hidden="true">
-  <button class="rond" type="button" id="fermer-menu" aria-label="Fermer le menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-  <nav aria-label="Menu"><a href="#ventes">Best-sellers</a><a href="#couches">Les 4 couches</a><a href="#guide">Trouver sa taille</a><a href="#avis">Avis</a></nav>
+  <button class="menu-fond" type="button" aria-label="Fermer le menu" id="menu-fond"></button>
+  <div class="menu-panneau" role="dialog" aria-modal="true" aria-label="Menu">
+    <button class="icone" type="button" id="fermer-menu" aria-label="Fermer le menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <nav aria-label="Menu"><a href="#haut">Accueil</a><a href="#produits">Nos paniers</a><a href="#pourquoi">Pourquoi Sieste</a><a href="#comparaison">La différence</a><a href="#avis">Avis</a></nav>
+  </div>
 </div>
 
 <main id="haut">
-  <section class="heros" aria-labelledby="titre">
-    <div class="wrap heros-grille">
-      <div>
-        <p class="petit" data-entre>Paniers orthopédiques · conçus en France</p>
-        <h1 id="titre" class="serif" data-titre style="margin-top:1rem">Le lit qu’il <span class="it">mérite.</span></h1>
-        <p class="chapo" data-entre>Mousse à mémoire de forme, rebords pour poser la tête, housse qui passe en machine. Pour qu’il dorme mieux et se relève sans peine, à tout âge.</p>
-        <div class="actions" data-entre>
-          <a class="btn btn-citron" href="#ventes">Voir les paniers <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <p class="des">dès <strong>89 €</strong></p>
+  <section class="heros" style="padding-bottom:0" aria-labelledby="titre">
+    <div class="wrap">
+      <div class="heros-cadre" id="diapo" aria-roledescription="carrousel" aria-label="Photos du panier">
+        <figure class="vue actif"><img src="img/salon.jpg" alt="Le panier orthopédique dans un salon lumineux" fetchpriority="high" /></figure>
+        <figure class="vue detoure"><img src="img/chien-panier.jpg" alt="Un golden retriever allongé sur le panier orthopédique" /></figure>
+        <figure class="vue detoure"><img src="img/original.jpg" alt="Le golden retriever couché sur le panier, rebords sur trois côtés" /></figure>
+        <div class="heros-texte">
+          <p class="avis-ligne" data-entre><span class="etoiles" aria-hidden="true">★★★★★</span> 1 200 avis</p>
+          <h1 id="titre" data-entre>Des paniers orthopédiques de qualité</h1>
+          <p class="chapo" data-entre>Mousse à mémoire de forme, rebords pour poser la tête, housse lavable : tout pour qu’il dorme mieux et se relève sans peine.</p>
+          <a class="btn btn-orange" href="#produits" data-entre>Acheter</a>
         </div>
-      </div>
-
-      <div class="scene" data-entre>
-        <svg class="trait" viewBox="0 0 600 300" fill="none" aria-hidden="true"><path id="trait" d="M0 210 C 120 60, 260 300, 360 150 S 540 40, 600 120" stroke="#c3a15c" stroke-width="1.5"/></svg>
-        <span class="contour" aria-hidden="true"></span>
-        <div class="arche" id="diapo" aria-roledescription="carrousel" aria-label="Photos du panier">
-          <figure class="vue actif"><img src="img/chien-panier.jpg" alt="Un golden retriever allongé sur le panier orthopédique" fetchpriority="high" /></figure>
-          <figure class="vue"><img src="img/original.jpg" alt="Le golden retriever couché sur le panier, rebords sur trois côtés" /></figure>
-          <figure class="vue plein"><img src="img/salon.jpg" alt="Le panier dans un salon lumineux" /></figure>
-          <div class="points" role="tablist" aria-label="Choisir une photo">
-            <button type="button" role="tab" aria-selected="true" aria-label="Photo 1"><i></i></button>
-            <button type="button" role="tab" aria-selected="false" aria-label="Photo 2"><i></i></button>
-            <button type="button" role="tab" aria-selected="false" aria-label="Photo 3"><i></i></button>
-          </div>
+        <div class="points" role="tablist" aria-label="Choisir une photo">
+          <button type="button" role="tab" aria-selected="true" aria-label="Photo 1"><i></i></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Photo 2"><i></i></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Photo 3"><i></i></button>
         </div>
-        <a class="badge-rond" href="#ventes" aria-label="Voir la nouvelle collection">
-          <svg class="texte" id="texte-rond" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="cercle" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0"/></defs><text font-size="10.4" letter-spacing="2.6" font-weight="600" fill="#14231f"><textPath href="#cercle">NOUVELLE COLLECTION · NOUVELLE COLLECTION ·</textPath></text></svg>
-          <span class="fleche"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-        </a>
-        <div class="pilule-taille" aria-hidden="true"><b>TAILLE</b><hr /><span>S—XL</span></div>
       </div>
     </div>
   </section>
 
-  <div class="ruban" aria-hidden="true">
-    <div class="ruban-piste" id="ruban">
-      <span>Mémoire de forme <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg> Housse lavable <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg> Rebords appui-tête <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg> Dessous antidérapant <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg></span>
-      <span>Mémoire de forme <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg> Housse lavable <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg> Rebords appui-tête <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg> Dessous antidérapant <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.2 5.8 21.7l2.4-7.6L2 9.6h7.6z"/></svg></span>
-    </div>
+  <div class="reassurance">
+    <ul class="wrap" data-apparait>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><strong>Livraison suivie</strong><span>Partout en France</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg><div><strong>Retours 14 jours</strong><span>Pour changer d’avis</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><div><strong>Paiement sécurisé</strong><span>Carte bancaire chiffrée</span></div></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5L3 7Z"/><path d="M7 12c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0"/></svg><div><strong>Housse lavable</strong><span>En machine à 30 °C</span></div></li>
+    </ul>
   </div>
 
-  <section class="ventes" id="ventes" aria-labelledby="titre-ventes">
+  <section id="produits" aria-labelledby="titre-produits">
     <div class="wrap">
-      <div class="tete-section">
-        <h2 id="titre-ventes" class="serif" data-mots>Nos <span class="it">best-sellers</span></h2>
-        <a class="btn btn-ligne" href="#guide">Trouver sa taille</a>
+      <div class="titre-section" data-apparait>
+        <p class="etiquette"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="7" cy="9" rx="2.2" ry="2.8"/><ellipse cx="12" cy="6.5" rx="2.2" ry="2.8"/><ellipse cx="17" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z"/></svg> Nos produits</p>
+        <h2 id="titre-produits">Découvrez nos paniers</h2>
+        <p>Des paniers orthopédiques pensés pour le confort, la santé et le sommeil de votre chien.</p>
       </div>
-      <div class="rangee" id="rangee"></div>
+      <div class="grille" id="grille"></div>
+      <p class="centre"><a class="btn btn-contour" href="#comparaison">Voir la comparaison</a></p>
     </div>
   </section>
 
-  <section class="phrase" aria-label="Pourquoi un panier orthopédique">
-    <div class="wrap phrase-grille">
-      <div>
-        <span class="petit">Pourquoi c’est important</span>
-        <p class="serif" id="phrase">Un chien dort entre douze et quatorze heures par jour. Autant que ce soit sur un vrai matelas, pas sur un coussin qui s’aplatit en un mois.</p>
-      </div>
-      <div class="arche"><img src="img/salon.jpg" alt="Le panier dans un salon" loading="lazy" /></div>
-    </div>
-  </section>
-
-  <section id="couches" style="padding:0" aria-labelledby="titre-couches">
-    <div class="couches-in" id="couches-in">
-      <div class="wrap"><p class="petit">Ce qu’il y a dedans</p><h2 id="titre-couches" class="serif" data-mots style="font-size:clamp(2.5rem,6.4vw,4.8rem);margin-top:.8rem">Quatre couches, <span class="it">zéro compromis.</span></h2></div>
-      <div class="piste" id="piste">
-        <article class="couche"><div class="arche" style="background:var(--peche)"><img src="img/rebord.jpg" alt="Gros plan sur le rebord matelassé" loading="lazy" /></div><p class="couche-num">n°1</p><h3>La housse douce</h3><p>Tissu matelassé, fermeture éclair. Elle s’enlève et passe en machine à 30 °C.</p></article>
-        <article class="couche"><div class="arche" style="background:var(--lavande)"><img src="img/large.jpg" alt="Le panier vu de face" loading="lazy" /></div><p class="couche-num">n°2</p><h3>La mémoire de forme</h3><p>Elle épouse son corps et répartit son poids : moins de pression sur les articulations.</p></article>
-        <article class="couche"><div class="arche" style="background:var(--sauge)"><img src="img/compact.jpg" alt="Le panier, mousse de soutien" loading="lazy" /></div><p class="couche-num">n°3</p><h3>La mousse de soutien</h3><p>Une base ferme qui garde sa forme, nuit après nuit, sans s’aplatir.</p></article>
-        <article class="couche"><div class="arche" style="background:var(--creme-2)"><img src="img/grand.jpg" alt="Le panier et son dessous" loading="lazy" /></div><p class="couche-num">n°4</p><h3>Le dessous antidérapant</h3><p>Le panier reste en place sur le carrelage ou le parquet, même quand il s’y jette.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="guide" id="guide" aria-labelledby="titre-guide">
+  <section class="atouts" id="pourquoi" aria-labelledby="titre-atouts">
     <div class="wrap">
-      <div class="guide-carte">
-        <div>
-          <p class="petit">Le guide des tailles</p>
-          <h2 id="titre-guide" class="serif" data-mots style="margin-top:.8rem">Sa taille, <span class="it">en dix secondes.</span></h2>
-          <p class="intro">Indique son poids et sa longueur couché, du bout du nez à la base de la queue.</p>
-          <div class="reglage"><label for="poids">Son poids <output id="v-poids">20 kg</output></label><input id="poids" type="range" min="2" max="70" value="20" /></div>
-          <div class="reglage"><label for="long">Sa longueur couché <output id="v-long">70 cm</output></label><input id="long" type="range" min="30" max="120" value="70" /></div>
-        </div>
-        <div class="verdict">
-          <p class="petit">Notre conseil</p>
-          <p class="serif" id="conseil" aria-live="polite">M</p>
-          <p id="conseil-detail">80 × 60 cm · jusqu’à 25 kg</p>
-          <button class="btn btn-citron" type="button" id="ajout-conseil">Ajouter l’Original · <span id="conseil-prix">109 €</span></button>
-        </div>
+      <div class="titre-section" data-apparait>
+        <p class="etiquette">Nos engagements</p>
+        <h2 id="titre-atouts">Pensé pour son confort</h2>
+        <p>Chaque détail du panier a une raison d’être.</p>
+      </div>
+      <div class="atouts-grille">
+        <ul data-apparait>
+          <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 15c3-4 6-4 9 0s6 4 9 0"/><path d="M3 10c3-4 6-4 9 0s6 4 9 0"/></svg><div><strong>Mémoire de forme</strong><span>Épouse son corps et soulage les articulations.</span></div></li>
+          <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 18V9a4 4 0 0 1 8 0v9M12 18V9a4 4 0 0 1 8 0v9M2 18h20"/></svg><div><strong>Rebords appui-tête</strong><span>Sur trois côtés, pour poser la tête.</span></div></li>
+          <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg><div><strong>Matières sûres</strong><span>Tissus doux, sans odeur forte.</span></div></li>
+        </ul>
+        <div class="atouts-photo" data-apparait><img src="img/chien-panier.jpg" alt="Un golden retriever sur le panier Sieste" loading="lazy" /></div>
+        <ul data-apparait>
+          <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5L3 7Z"/><path d="M7 12c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0"/></svg><div><strong>Housse lavable</strong><span>Fermeture éclair, machine à 30 °C.</span></div></li>
+          <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20h16M6 16h12M8 12h8"/></svg><div><strong>Dessous antidérapant</strong><span>Reste en place sur le carrelage.</span></div></li>
+          <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 19V9l7-5 7 5v10"/><path d="M9 19v-5h6v5"/></svg><div><strong>Design moderne</strong><span>S’intègre dans votre salon.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="titre-choisir">
+    <div class="wrap">
+      <div class="titre-section" data-apparait>
+        <p class="etiquette">Pourquoi nous choisir</p>
+        <h2 id="titre-choisir">Pourquoi choisir Sieste</h2>
+        <p>Des paniers sélectionnés pour durer, testés avant l’envoi.</p>
+      </div>
+      <div class="choisir">
+        <article class="choix-carte" data-apparait><div class="ph"><img src="img/salon.jpg" alt="Le panier dans un salon" loading="lazy" /></div><div class="t"><h3>Produits sélectionnés</h3><p>Chaque modèle est choisi pour son confort et sa solidité.</p></div></article>
+        <article class="choix-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/rebord.jpg" alt="Le rebord matelassé en gros plan" loading="lazy" /></div><div class="t"><h3>Finitions soignées</h3><p>Tissu matelassé, coutures renforcées, fermeture solide.</p></div></article>
+        <article class="choix-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/original.jpg" alt="Un chien sur le panier" loading="lazy" /></div><div class="t"><h3>Adoré par les chiens</h3><p>Du chiot au senior, pour toutes les tailles.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="comparaison" style="padding-top:0" aria-labelledby="titre-comparaison">
+    <div class="wrap">
+      <div class="titre-section" data-apparait>
+        <p class="etiquette">Comparaison</p>
+        <h2 id="titre-comparaison">La différence est claire</h2>
+        <p>Panier orthopédique Sieste ou coussin classique ?</p>
+      </div>
+      <div class="tableau" data-apparait>
+        <table>
+          <thead><tr><th scope="col">Critère</th><th scope="col" class="nous">Sieste</th><th scope="col">Coussin classique</th></tr></thead>
+          <tbody id="tableau"></tbody>
+        </table>
       </div>
     </div>
   </section>
 
   <section class="avis" id="avis" aria-labelledby="titre-avis">
     <div class="wrap">
-      <p class="petit" id="titre-avis">Ils en parlent</p>
-      <figure class="citation" aria-live="polite"><blockquote id="citation-texte">« Notre labrador de onze ans se relève bien plus facilement le matin. »</blockquote><figcaption id="citation-auteur">Nathalie · taille L</figcaption></figure>
-      <div class="avis-nav">
-        <button class="rond" type="button" id="avis-prec" aria-label="Avis précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
-        <button class="rond" type="button" id="avis-suiv" aria-label="Avis suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      <div class="titre-section" data-apparait>
+        <p class="etiquette">Témoignages</p>
+        <h2 id="titre-avis">Ils nous font confiance</h2>
+        <p>Ce que nos clients disent de leur panier.</p>
+      </div>
+      <div class="avis-grille">
+        <figure class="avis-carte" data-apparait><div class="ph"><img src="img/salon.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="5 sur 5">★★★★★</span><blockquote>« Notre labrador de onze ans se relève bien plus facilement le matin. Il ne quitte plus son panier. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">N</span><span>Nathalie D.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
+        <figure class="avis-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/large.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="5 sur 5">★★★★★</span><blockquote>« La housse est passée trois fois en machine, elle est comme neuve. Très bonne qualité. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">K</span><span>Karim B.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
+        <figure class="avis-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/chien-panier.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="4 sur 5">★★★★☆</span><blockquote>« Très confortable, il pose sa tête sur le rebord. J’aimerais juste plus de couleurs. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">É</span><span>Élodie M.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
       </div>
       <p class="note-demo">Avis inventés pour la démonstration.</p>
     </div>
   </section>
 
-  <section class="fin" aria-labelledby="titre-fin">
+  <section class="final" style="padding-top:clamp(56px,8vw,96px)" aria-labelledby="titre-final">
     <div class="wrap">
-      <h2 id="titre-fin" class="serif" data-mots>Bonne <span class="it">sieste.</span></h2>
-      <a class="btn btn-citron" href="#ventes">Choisir son panier <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div class="final-cadre" data-apparait>
+        <div>
+          <h2 id="titre-final">Offrez-lui enfin un vrai lit</h2>
+          <p>Choisissez sa taille, on s’occupe du reste. Livraison suivie et 14 jours pour changer d’avis.</p>
+          <a class="btn" href="#produits">Voir les paniers</a>
+        </div>
+        <div class="final-ph"><img src="img/chien-panier.jpg" alt="Un chien sur le panier Sieste" loading="lazy" /></div>
+      </div>
     </div>
   </section>
 </main>
@@ -359,66 +388,74 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 <footer>
   <div class="wrap">
     <div class="pied">
-      <div><a class="logo" href="#haut">sieste</a><p style="margin-top:.8rem;max-width:22rem">Paniers orthopédiques pour chien. Marque fictive, démo de design inspirée des meilleurs projets Dribbble.</p></div>
-      <div><h4>Boutique</h4><ul><li><a href="#ventes">Best-sellers</a></li><li><a href="#guide">Guide des tailles</a></li><li><a href="#couches">Les 4 couches</a></li></ul></div>
-      <div><h4>Aide</h4><ul><li><a href="#haut">Livraison suivie</a></li><li><a href="#haut">14 jours pour changer d’avis</a></li><li><a href="#haut">Contact</a></li></ul></div>
+      <div><a class="logo" href="#haut"><svg viewBox="0 0 30 26" fill="none" aria-hidden="true"><path d="M3 12 15 2l12 10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 11v12h16V11" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg><span>Sieste</span></a><p style="margin-top:.8rem;max-width:20rem">Paniers orthopédiques pour chien. Marque fictive, démo de design sur le modèle choisi par l’utilisateur.</p></div>
+      <div><h4>Boutique</h4><ul><li><a href="#produits">Nos paniers</a></li><li><a href="#pourquoi">Pourquoi Sieste</a></li><li><a href="#comparaison">La différence</a></li></ul></div>
+      <div><h4>Aide</h4><ul><li><a href="#haut">Livraison</a></li><li><a href="#haut">Retours</a></li><li><a href="#haut">Contact</a></li></ul></div>
+      <div><h4>Infos</h4><ul><li><a href="#haut">CGV</a></li><li><a href="#haut">Mentions légales</a></li><li><a href="#haut">Confidentialité</a></li></ul></div>
     </div>
-    <p class="credits">Photos : fournisseur du panier. Site de démonstration, aucune vente possible.</p>
+    <p class="bas">© 2026 Sieste · Site de démonstration, aucune vente possible. Photos : fournisseur du panier.</p>
   </div>
 </footer>
 
 <div class="tiroir" id="tiroir" aria-hidden="true">
   <button class="tiroir-fond" type="button" aria-label="Fermer le panier" id="fond"></button>
   <div class="tiroir-panneau" role="dialog" aria-modal="true" aria-labelledby="titre-tiroir">
-    <div class="tiroir-tete"><h2 id="titre-tiroir" class="serif">Ton <span class="it">panier</span></h2><button class="rond" type="button" id="fermer" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="tiroir-tete"><h2 id="titre-tiroir">Mon panier</h2><button class="icone" type="button" id="fermer" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <ul class="lignes" id="lignes"></ul>
-    <div class="tiroir-total"><span>Total</span><span class="serif" style="font-size:2rem" id="total">0 €</span></div>
-    <button class="btn btn-citron" type="button" disabled style="opacity:.6;cursor:not-allowed">Paiement désactivé (démo)</button>
+    <div class="tiroir-total"><span>Total</span><span id="total">0 €</span></div>
+    <button class="btn btn-noir" type="button" disabled style="opacity:.5;cursor:not-allowed">Paiement désactivé (démo)</button>
   </div>
 </div>
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
-<script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
 <script>
 const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TAILLES = { S: ['60 × 45 cm', 10], M: ['80 × 60 cm', 25], L: ['100 × 75 cm', 40], XL: ['120 × 90 cm', 60] };
 const PANIERS = [
-  { id: 'original', nom: 'L’Original', sous: 'Rebords sur 3 côtés', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/original.jpg', fond: 'var(--papier)' },
-  { id: 'salon', nom: 'Le Salon', sous: 'Housse matelassée', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/large.jpg', fond: 'var(--peche)' },
-  { id: 'compact', nom: 'Le Compact', sous: 'Petits chiens et chiots', prix: { S: 69, M: 79, L: 89, XL: 99 }, img: 'img/compact.jpg', fond: 'var(--sauge)' },
-  { id: 'grand', nom: 'Le Grand Repos', sous: 'Extra-épais, chiens âgés', prix: { S: 119, M: 139, L: 159, XL: 189 }, img: 'img/grand.jpg', fond: 'var(--creme-2)' },
+  { id: 'original', nom: 'Panier Sieste Original', details: 'Rebords 3 côtés · Mémoire de forme', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/original.jpg', note: 312, pastille: 'Meilleure vente' },
+  { id: 'salon', nom: 'Panier Sieste Salon', details: 'Housse matelassée · Déhoussable', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/large.jpg', note: 208 },
+  { id: 'compact', nom: 'Panier Sieste Compact', details: 'Petits chiens · Chiots', prix: { S: 69, M: 79, L: 89, XL: 99 }, img: 'img/compact.jpg', note: 164, pastille: 'Nouveau' },
+  { id: 'grand', nom: 'Panier Grand Repos', details: 'Extra-épais · Chiens âgés', prix: { S: 119, M: 139, L: 159, XL: 189 }, img: 'img/grand.jpg', note: 127 },
 ];
 const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
-const plus = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
-const coche = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
 
-// Best-sellers en arches
-const rangee = document.getElementById('rangee');
-rangee.innerHTML = PANIERS.map((p) => `
-  <article class="produit" data-id="${p.id}" data-taille="M" data-carte>
-    <div class="produit-arche" style="background:${p.fond}"><img src="${p.img}" alt="Panier ${p.nom}" loading="lazy" /><button class="ajout" type="button" aria-label="Ajouter ${p.nom} au panier">${plus}</button></div>
-    <h3>${p.nom}</h3>
-    <p class="sous">${p.sous}</p>
-    <p class="prix" aria-live="polite">${euros(p.prix.M)}</p>
-    <div class="tailles" role="group" aria-label="Taille">${Object.keys(TAILLES).map((t) => `<button type="button" aria-pressed="${t === 'M'}" data-t="${t}">${t}</button>`).join('')}</div>
+// Cartes produits
+const grille = document.getElementById('grille');
+grille.innerHTML = PANIERS.map((p) => `
+  <article class="carte" data-id="${p.id}" data-taille="M" data-apparait>
+    <div class="carte-img">${p.pastille ? `<span class="pastille">${p.pastille}</span>` : ''}<img src="${p.img}" alt="${p.nom}" loading="lazy" /></div>
+    <div class="carte-corps">
+      <p class="note"><span class="etoiles" aria-hidden="true">★★★★★</span>(${p.note})</p>
+      <h3>${p.nom}</h3>
+      <p class="details">${p.details}</p>
+      <div class="tailles" role="group" aria-label="Taille">${Object.keys(TAILLES).map((t) => `<button type="button" aria-pressed="${t === 'M'}" data-t="${t}">${t}</button>`).join('')}</div>
+      <p class="prix" aria-live="polite">${euros(p.prix.M)}</p>
+      <button class="btn btn-noir ajout" type="button">Acheter</button>
+    </div>
   </article>`).join('');
-rangee.addEventListener('click', (e) => {
-  const b = e.target.closest('.tailles button');
-  const carte = e.target.closest('.produit');
-  if (!carte) return;
+grille.addEventListener('click', (e) => {
+  const carte = e.target.closest('.carte'); if (!carte) return;
   const p = PANIERS.find((x) => x.id === carte.dataset.id);
+  const b = e.target.closest('.tailles button');
   if (b) {
     const avant = p.prix[carte.dataset.taille]; carte.dataset.taille = b.dataset.t;
     b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     const el = carte.querySelector('.prix'); const o = { v: avant };
-    gsap.to(o, { v: p.prix[b.dataset.t], duration: .45, ease: 'power2.out', onUpdate: () => { el.textContent = euros(Math.round(o.v)); } });
+    gsap.to(o, { v: p.prix[b.dataset.t], duration: .4, ease: 'power2.out', onUpdate: () => { el.textContent = euros(Math.round(o.v)); } });
     return;
   }
   const a = e.target.closest('.ajout');
-  if (a) ajouter(p.id, carte.dataset.taille, a);
+  if (a) ajouter(p, carte.dataset.taille, a);
 });
+
+// Tableau de comparaison
+const CRITERES = ['Mousse à mémoire de forme', 'Rebords appui-tête', 'Housse déhoussable et lavable', 'Garde sa forme dans le temps', 'Dessous antidérapant', 'Guide des tailles'];
+const SIESTE = [1, 1, 1, 1, 1, 1], AUTRE = [0, 0, 1, 0, 0, 0];
+const oui = '<span class="oui" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>';
+const non = '<span class="no" aria-label="Non"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></span>';
+document.getElementById('tableau').innerHTML = CRITERES.map((c, i) => `<tr><td>${c}</td><td class="nous">${SIESTE[i] ? oui : non}</td><td>${AUTRE[i] ? oui : non}</td></tr>`).join('');
 
 // Panier
 const panier = [];
@@ -427,59 +464,59 @@ function rendre() {
   const n = panier.reduce((s, l) => s + l.qte, 0);
   compte.textContent = n; compte.hidden = n === 0;
   ouvrir.setAttribute('aria-label', `Ouvrir le panier, ${n} article${n > 1 ? 's' : ''}`);
-  document.getElementById('lignes').innerHTML = panier.length ? panier.map((l) => `<li class="ligne"><span class="mini"><img src="${l.p.img}" alt="" /></span><div><strong>${l.p.nom}</strong><p>Taille ${l.t} · ${TAILLES[l.t][0]} · × ${l.qte}</p></div><span>${euros(l.qte * l.p.prix[l.t])}</span></li>`).join('') : '<li class="vide">Ton panier est vide pour l’instant.</li>';
+  document.getElementById('lignes').innerHTML = panier.length ? panier.map((l) => `<li class="ligne"><span class="mini"><img src="${l.p.img}" alt="" /></span><div><strong>${l.p.nom}</strong><p>Taille ${l.t} · ${TAILLES[l.t][0]} · × ${l.qte}</p></div><span class="p">${euros(l.qte * l.p.prix[l.t])}</span></li>`).join('') : '<li class="vide">Votre panier est vide.</li>';
   document.getElementById('total').textContent = euros(panier.reduce((s, l) => s + l.qte * l.p.prix[l.t], 0));
 }
-function ajouter(id, t, btn) {
-  const p = PANIERS.find((x) => x.id === id);
-  const l = panier.find((x) => x.p.id === id && x.t === t);
+function ajouter(p, t, btn) {
+  const l = panier.find((x) => x.p.id === p.id && x.t === t);
   l ? l.qte++ : panier.push({ p, t, qte: 1 });
-  if (btn.classList.contains('ajout')) { btn.classList.add('ok'); btn.innerHTML = coche; setTimeout(() => { btn.classList.remove('ok'); btn.innerHTML = plus; }, 1400); }
+  const txt = btn.textContent; btn.classList.add('ok'); btn.textContent = 'Ajouté ✓';
+  setTimeout(() => { btn.classList.remove('ok'); btn.textContent = txt; }, 1400);
   voler(btn);
 }
 function voler(btn) {
   if (reduit) { rendre(); return; }
   const a = btn.getBoundingClientRect(), b = ouvrir.getBoundingClientRect();
   const g = document.createElement('span'); g.className = 'vol'; document.body.appendChild(g);
-  g.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="#2d5a54" aria-hidden="true"><ellipse cx="7" cy="9" rx="2.2" ry="2.8"/><ellipse cx="12" cy="6.5" rx="2.2" ry="2.8"/><ellipse cx="17" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z"/></svg>';
-  const x0 = a.left + a.width / 2 - 13, y0 = a.top + a.height / 2 - 13, x1 = b.left + b.width / 2 - 13, y1 = b.top + b.height / 2 - 13;
+  g.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="#f26a21" aria-hidden="true"><ellipse cx="7" cy="9" rx="2.2" ry="2.8"/><ellipse cx="12" cy="6.5" rx="2.2" ry="2.8"/><ellipse cx="17" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z"/></svg>';
+  const x0 = a.left + a.width / 2 - 12, y0 = a.top + a.height / 2 - 12, x1 = b.left + b.width / 2 - 12, y1 = b.top + b.height / 2 - 12;
   const o = { t: 0 };
-  gsap.to(o, { t: 1, duration: .8, ease: 'power2.in', onUpdate() {
-    const t = o.t, cx = (x0 + x1) / 2, cy = Math.min(y0, y1) - 140;
+  gsap.to(o, { t: 1, duration: .75, ease: 'power2.in', onUpdate() {
+    const t = o.t, cx = (x0 + x1) / 2, cy = Math.min(y0, y1) - 120;
     gsap.set(g, { x: (1 - t) ** 2 * x0 + 2 * (1 - t) * t * cx + t * t * x1, y: (1 - t) ** 2 * y0 + 2 * (1 - t) * t * cy + t * t * y1, rotation: t * 360, scale: 1.2 - t * .5 });
-  }, onComplete() { g.remove(); rendre(); gsap.fromTo(ouvrir, { scale: 1.25 }, { scale: 1, duration: .7, ease: 'elastic.out(1.1,.4)' }); } });
+  }, onComplete() { g.remove(); rendre(); gsap.fromTo(ouvrir, { scale: 1.25 }, { scale: 1, duration: .6, ease: 'elastic.out(1.1,.4)' }); } });
 }
 const ouvreTiroir = (o) => { tiroir.classList.toggle('ouvert', o); tiroir.setAttribute('aria-hidden', String(!o)); (o ? document.getElementById('fermer') : ouvrir).focus(); };
 ouvrir.addEventListener('click', () => ouvreTiroir(true));
 document.getElementById('fermer').addEventListener('click', () => ouvreTiroir(false));
 document.getElementById('fond').addEventListener('click', () => ouvreTiroir(false));
 
-// Menu plein écran
+// Menu mobile
 const menu = document.getElementById('menu'), om = document.getElementById('ouvrir-menu');
 const ouvreMenu = (o) => { menu.classList.toggle('ouvert', o); menu.setAttribute('aria-hidden', String(!o)); om.setAttribute('aria-expanded', String(o)); (o ? document.getElementById('fermer-menu') : om).focus(); };
 om.addEventListener('click', () => ouvreMenu(true));
 document.getElementById('fermer-menu').addEventListener('click', () => ouvreMenu(false));
+document.getElementById('menu-fond').addEventListener('click', () => ouvreMenu(false));
 menu.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', () => ouvreMenu(false)));
 addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (tiroir.classList.contains('ouvert')) ouvreTiroir(false); if (menu.classList.contains('ouvert')) ouvreMenu(false); } });
 rendre();
 
-// En-tête : fond qui apparaît au défilement
 const tete = document.getElementById('tete');
-addEventListener('scroll', () => tete.classList.toggle('fond', scrollY > 20), { passive: true });
+addEventListener('scroll', () => tete.classList.toggle('ombre', scrollY > 10), { passive: true });
 
-// Grande arche : 3 photos qui défilent toutes seules
+// Héros : 3 photos qui défilent toutes seules
 (function () {
   const vues = [...document.querySelectorAll('#diapo .vue')], pts = [...document.querySelectorAll('#diapo .points button')];
-  const DUREE = 4.5; let i = 0, barre;
+  const DUREE = 5; let i = 0, barre;
   function aller(n) {
     const avant = vues[i]; i = (n + vues.length) % vues.length; const apres = vues[i];
     pts.forEach((p, k) => { p.setAttribute('aria-selected', String(k === i)); p.querySelector('i').style.setProperty('--p', k < i ? 1 : 0); });
     if (avant !== apres) {
       apres.classList.add('actif');
-      if (reduit) { avant.classList.remove('actif'); }
-      else { gsap.set(apres, { autoAlpha: 0, zIndex: 2 }); gsap.set(avant, { zIndex: 1 }); gsap.to(apres, { autoAlpha: 1, duration: 1, ease: 'power2.out', onComplete: () => { avant.classList.remove('actif'); gsap.set(avant, { autoAlpha: 0 }); } }); }
+      if (reduit) avant.classList.remove('actif');
+      else { gsap.set(apres, { autoAlpha: 0, zIndex: 1 }); gsap.set(avant, { zIndex: 0 }); gsap.to(apres, { autoAlpha: 1, duration: 1, ease: 'power2.out', onComplete: () => { avant.classList.remove('actif'); gsap.set(avant, { autoAlpha: 0 }); } }); }
     }
-    if (!reduit) gsap.fromTo(apres.querySelector('img'), { scale: 1.1 }, { scale: 1, duration: DUREE + 1, ease: 'none', overwrite: true });
+    if (!reduit) gsap.fromTo(apres.querySelector('img'), { scale: 1.08 }, { scale: 1, duration: DUREE + 1, ease: 'none', overwrite: true });
     barre?.kill();
     barre = gsap.fromTo(pts[i].querySelector('i'), { '--p': 0 }, { '--p': 1, duration: DUREE, ease: 'none', onComplete: () => aller(i + 1) });
   }
@@ -491,76 +528,14 @@ addEventListener('scroll', () => tete.classList.toggle('fond', scrollY > 20), { 
   aller(0);
 })();
 
-// Guide des tailles
-const poids = document.getElementById('poids'), long = document.getElementById('long');
-let conseil = 'M';
-function guide() {
-  const p = +poids.value, l = +long.value;
-  document.getElementById('v-poids').textContent = `${p} kg`; document.getElementById('v-long').textContent = `${l} cm`;
-  const t = Object.keys(TAILLES).find((k) => TAILLES[k][1] >= p && parseInt(TAILLES[k][0]) >= l + 15) || 'XL';
-  if (t !== conseil && !reduit) gsap.fromTo('#conseil', { yPercent: 30, opacity: 0, rotate: -6 }, { yPercent: 0, opacity: 1, rotate: 0, duration: .5, ease: 'back.out(2)' });
-  conseil = t;
-  document.getElementById('conseil').textContent = t;
-  document.getElementById('conseil-detail').textContent = `${TAILLES[t][0]} · jusqu’à ${TAILLES[t][1]} kg`;
-  document.getElementById('conseil-prix').textContent = euros(PANIERS[0].prix[t]);
-}
-poids.addEventListener('input', guide); long.addEventListener('input', guide); guide();
-document.getElementById('ajout-conseil').addEventListener('click', (e) => ajouter('original', conseil, e.currentTarget));
-
-// Avis, un par un
-const AVIS = [
-  ['« Notre labrador de onze ans se relève bien plus facilement le matin. »', 'Nathalie · taille L'],
-  ['« La housse est passée trois fois en machine, elle est comme neuve. »', 'Karim · taille M'],
-  ['« Il pose sa tête sur le rebord et ne bouge plus de la nuit. »', 'Élodie · taille S'],
-];
-let ia = 0;
-function avis(n) {
-  ia = (n + AVIS.length) % AVIS.length;
-  const q = document.getElementById('citation-texte'), a = document.getElementById('citation-auteur');
-  const swap = () => { q.textContent = AVIS[ia][0]; a.textContent = AVIS[ia][1]; };
-  if (reduit) return swap();
-  gsap.to([q, a], { opacity: 0, y: -16, duration: .3, ease: 'power2.in', onComplete: () => { swap(); gsap.fromTo([q, a], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .6, ease: 'expo.out', stagger: .08 }); } });
-}
-document.getElementById('avis-prec').addEventListener('click', () => avis(ia - 1));
-document.getElementById('avis-suiv').addEventListener('click', () => avis(ia + 1));
-
-// ——— Animations GSAP ———
-gsap.registerPlugin(ScrollTrigger, SplitText);
+// Animations : apparitions douces, comme sur le design d'origine.
+gsap.registerPlugin(ScrollTrigger);
 if (!reduit) {
-  const lenis = new Lenis({ lerp: 0.1, anchors: true });
+  const lenis = new Lenis({ lerp: 0.12, anchors: { offset: -80 } });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
-
-  document.fonts.ready.then(() => {
-    const s = SplitText.create('[data-titre]', { type: 'lines,words', mask: 'lines' });
-    gsap.from(s.words, { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: .08, delay: .1 });
-    gsap.from('[data-entre]', { y: 34, opacity: 0, duration: 1, ease: 'power3.out', stagger: .12, delay: .35 });
-    document.querySelectorAll('[data-mots]').forEach((el) => {
-      const m = SplitText.create(el, { type: 'lines,words', mask: 'lines' });
-      gsap.from(m.words, { yPercent: 105, duration: 1, ease: 'expo.out', stagger: .05, scrollTrigger: { trigger: el, start: 'top 85%' } });
-    });
-    // La phrase s'allume mot par mot au défilement.
-    const ph = SplitText.create('#phrase', { type: 'words', wordsClass: 'mot' });
-    gsap.to(ph.words, { opacity: 1, stagger: .1, ease: 'none', scrollTrigger: { trigger: '#phrase', start: 'top 80%', end: 'bottom 45%', scrub: true } });
-    ScrollTrigger.refresh();
-  });
-
-  // Le trait doré se dessine, le badge tourne.
-  const trait = document.getElementById('trait'); const L = trait.getTotalLength();
-  gsap.fromTo(trait, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 2.4, ease: 'power2.inOut', delay: .6 });
-  gsap.to('#texte-rond', { rotation: 360, duration: 18, ease: 'none', repeat: -1, transformOrigin: '50% 50%' });
-  gsap.from('.pilule-taille', { y: 30, opacity: 0, duration: .9, ease: 'back.out(1.8)', delay: 1.2 });
-  gsap.from('.badge-rond', { scale: 0, rotation: -90, duration: 1, ease: 'back.out(1.6)', delay: 1 });
-  gsap.to('.scene', { yPercent: -6, ease: 'none', scrollTrigger: { trigger: '.heros', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('#ruban', { xPercent: -50, ease: 'none', duration: 30, repeat: -1 });
-  ScrollTrigger.batch('[data-carte]', { start: 'top 90%', once: true, onEnter: (els) => gsap.from(els, { y: 60, opacity: 0, duration: 1, ease: 'expo.out', stagger: .1 }) });
-  gsap.from('.phrase .arche', { clipPath: 'inset(100% 0 0 0 round 999px 999px 28px 28px)', duration: 1.4, ease: 'expo.inOut', scrollTrigger: { trigger: '.phrase', start: 'top 70%' } });
-  gsap.from('.verdict', { y: 60, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.guide-carte', start: 'top 75%' } });
-  gsap.matchMedia().add('(min-width: 900px)', () => {
-    const piste = document.getElementById('piste');
-    const dist = () => piste.scrollWidth - innerWidth + Math.max(16, (innerWidth - 1240) / 2);
-    gsap.to(piste, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '#couches-in', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: .6, invalidateOnRefresh: true } });
-  });
+  gsap.from('[data-entre]', { y: 28, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, delay: .2 });
+  ScrollTrigger.batch('[data-apparait]', { start: 'top 90%', once: true, onEnter: (els) => gsap.from(els, { y: 36, opacity: 0, duration: .8, ease: 'power3.out', stagger: .08 }) });
 }
 </script>
 </body>
