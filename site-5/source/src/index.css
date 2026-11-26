@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+/* Truffe : crème chaude, vert forêt, abricot. Contrastes vérifiés (texte ≥ 4.5:1). */
+@theme {
+  --color-creme: #fff6ea;
+  --color-creme-2: #fbe8cf;
+  --color-foret: #134e3a;
+  --color-foret-2: #0d3a2b;
+  --color-encre: #1c2b22;
+  --color-doux: #4f5d54;
+  --color-abricot: #f06a28;
+  --color-abricot-2: #d9561a;
+  --color-sur-abricot: #1c1208;
+  --color-menthe: #c6ead4;
+  --color-ciel: #d4e6f8;
+  --color-rose: #f9d3c9;
+  --color-sable: #f3dcb0;
+  --font-titre: 'Rubik Variable', system-ui, sans-serif;
+  --font-texte: 'Nunito Sans Variable', system-ui, sans-serif;
+}
+
+html { background: var(--color-creme); color: var(--color-encre); -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font-texte); font-size: 1.0625rem; line-height: 1.55; overflow-x: hidden; }
+h1, h2, h3 { font-family: var(--font-titre); line-height: 1.02; letter-spacing: -0.025em; font-weight: 700; text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--color-abricot); outline-offset: 3px; border-radius: 10px; }
+::selection { background: var(--color-abricot); color: var(--color-sur-abricot); }
+.chiffres { font-variant-numeric: tabular-nums; }
+
+/* Bandeau qui défile */
+@keyframes defile { to { transform: translateX(-50%); } }
+.defile { animation: defile 28s linear infinite; }
+
+/* Petites pastilles qui flottent */
+@keyframes flotte { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
+.flotte { animation: flotte 4.5s ease-in-out infinite; }
+
+/* Grain léger pour éviter l'aplat « numérique » */
+.grain::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .18; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"); }
+
+@media (prefers-reduced-motion: reduce) {
+  .defile, .flotte { animation: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
