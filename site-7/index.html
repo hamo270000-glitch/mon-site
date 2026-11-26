@@ -129,6 +129,7 @@ section { padding: clamp(56px, 8vw, 96px) 0; }
 .tailles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: .3rem; }
 .tailles button { min-width: 0; min-height: 34px; padding: 0; border-radius: 6px; border: 1px solid var(--ligne); background: #fff; font-size: .72rem; font-weight: 600; cursor: pointer; transition: border-color .2s, background-color .2s, color .2s; }
 .tailles button[aria-pressed='true'] { border-color: var(--noir); background: var(--noir); color: #fff; }
+.carte .dim { font-size: .7rem; color: var(--gris); margin-top: .15rem; }
 .carte .prix { font-size: 1.05rem; font-weight: 700; color: var(--orange); margin: .2rem 0 .5rem; }
 .carte .btn { margin-top: auto; min-height: 42px; font-size: .74rem; }
 .centre { text-align: center; margin-top: 2rem; }
@@ -236,7 +237,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
   <div class="wrap tete-in">
     <button class="icone menu-btn" type="button" id="ouvrir-menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <a class="logo" href="#haut" aria-label="Sieste, accueil">
-      <svg viewBox="0 0 30 26" fill="none" aria-hidden="true"><path d="M3 12 15 2l12 10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 11v12h16V11" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M11 19c1.2-2.4 6.8-2.4 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12.6" cy="14.6" r="1.2" fill="currentColor"/><circle cx="17.4" cy="14.6" r="1.2" fill="currentColor"/></svg>
+      <svg viewBox="0 0 30 26" fill="none" aria-hidden="true"><path d="M3 12 15 2l12 10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 11v12h16V11" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M11 17.6c1.2 2.4 6.8 2.4 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12.6" cy="14.6" r="1.2" fill="currentColor"/><circle cx="17.4" cy="14.6" r="1.2" fill="currentColor"/></svg>
       <span>Sieste</span>
     </a>
     <nav class="liens" aria-label="Navigation principale"><a href="#haut">Accueil</a><a href="#produits">Nos paniers</a><a href="#pourquoi">Pourquoi Sieste</a><a href="#avis">Avis</a></nav>
@@ -412,17 +413,17 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
 <script src="vendor/lenis.min.js"></script>
 <script>
 const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const TAILLES = { S: ['60 × 45 cm', 10], M: ['80 × 60 cm', 25], L: ['100 × 75 cm', 40], XL: ['120 × 90 cm', 60] };
+const TAILLES = { M: ['80 × 60 cm', 25], L: ['100 × 75 cm', 40], XL: ['120 × 90 cm', 60], XXL: ['140 × 105 cm', 80] };
 const PANIERS = [
-  { id: 'classique', nom: 'Sieste Classique', couleur: 'Brun chocolat', details: 'Rebords 3 côtés · Passepoil orange', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/gamme/brun-classique.jpg', note: 312, pastille: 'Meilleure vente' },
-  { id: 'fraicheur', nom: 'Sieste Fraîcheur', couleur: 'Bleu ciel', details: 'Housse matelassée respirante', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/gamme/bleu-ciel.jpg', note: 186, pastille: 'Nouveau' },
-  { id: 'cocon', nom: 'Sieste Cocon', couleur: 'Crème arctique', details: 'Fausse fourrure ultra-douce', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/gamme/creme-arctique.jpg', note: 241 },
-  { id: 'ovale', nom: 'Sieste Ovale', couleur: 'Camel', details: 'Pour les chiens qui dorment en boule', prix: { S: 79, M: 95, L: 115, XL: 135 }, img: 'img/gamme/ovale-camel.jpg', note: 158 },
-  { id: 'grand', nom: 'Sieste Grand Repos', couleur: 'Gris foncé', details: 'Grand format · Rebords tout autour', prix: { S: 109, M: 129, L: 149, XL: 179 }, img: 'img/gamme/gris-fonce.jpg', note: 204 },
-  { id: 'tweed', nom: 'Sieste Tweed', couleur: 'Brun naturel', details: 'Tissu tweed · Passepoil crème', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/gamme/brun-naturel.jpg', note: 133 },
-  { id: 'peluche', nom: 'Sieste Peluche', couleur: 'Beige chaud', details: 'Peluche douce · Chiens frileux', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/gamme/beige-chaud.jpg', note: 176 },
-  { id: 'urbain', nom: 'Sieste Urbain', couleur: 'Charbon', details: 'Velours gris · Couchage chiné', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/gamme/charbon.jpg', note: 121 },
-  { id: 'marine', nom: 'Sieste Marine', couleur: 'Bleu marine', details: 'Matelassé bicolore · Housse lavable', prix: { S: 95, M: 115, L: 135, XL: 155 }, img: 'img/gamme/bleu-marine.jpg', note: 167, pastille: 'Nouveau' },
+  { id: 'classique', nom: 'Sieste Classique', couleur: 'Brun chocolat', details: 'Rebords 3 côtés · Passepoil orange', prix: { M: 109, L: 129, XL: 149, XXL: 179 }, img: 'img/gamme/brun-classique.jpg', note: 312, pastille: 'Meilleure vente' },
+  { id: 'fraicheur', nom: 'Sieste Fraîcheur', couleur: 'Bleu ciel', details: 'Housse matelassée respirante', prix: { M: 119, L: 139, XL: 159, XXL: 189 }, img: 'img/gamme/bleu-ciel.jpg', note: 186, pastille: 'Nouveau' },
+  { id: 'cocon', nom: 'Sieste Cocon', couleur: 'Crème arctique', details: 'Fausse fourrure ultra-douce', prix: { M: 119, L: 139, XL: 159, XXL: 189 }, img: 'img/gamme/creme-arctique.jpg', note: 241 },
+  { id: 'ovale', nom: 'Sieste Ovale', couleur: 'Camel', details: 'Pour les chiens qui dorment en boule', prix: { M: 95, L: 115, XL: 135, XXL: 159 }, img: 'img/gamme/ovale-camel.jpg', note: 158 },
+  { id: 'grand', nom: 'Sieste Grand Repos', couleur: 'Gris foncé', details: 'Grand format · Rebords tout autour', prix: { M: 129, L: 149, XL: 179, XXL: 209 }, img: 'img/gamme/gris-fonce.jpg', note: 204 },
+  { id: 'tweed', nom: 'Sieste Tweed', couleur: 'Brun naturel', details: 'Tissu tweed · Passepoil crème', prix: { M: 119, L: 139, XL: 159, XXL: 189 }, img: 'img/gamme/brun-naturel.jpg', note: 133 },
+  { id: 'peluche', nom: 'Sieste Peluche', couleur: 'Beige chaud', details: 'Peluche douce · Chiens frileux', prix: { M: 109, L: 129, XL: 149, XXL: 179 }, img: 'img/gamme/beige-chaud.jpg', note: 176 },
+  { id: 'urbain', nom: 'Sieste Urbain', couleur: 'Charbon', details: 'Velours gris · Couchage chiné', prix: { M: 109, L: 129, XL: 149, XXL: 179 }, img: 'img/gamme/charbon.jpg', note: 121 },
+  { id: 'marine', nom: 'Sieste Marine', couleur: 'Bleu marine', details: 'Matelassé bicolore · Housse lavable', prix: { M: 115, L: 135, XL: 155, XXL: 185 }, img: 'img/gamme/bleu-marine.jpg', note: 167, pastille: 'Nouveau' },
 ];
 const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 
@@ -436,6 +437,7 @@ grille.innerHTML = PANIERS.map((p) => `
       <h3>${p.nom}</h3>
       <p class="details">${p.couleur} · ${p.details}</p>
       <div class="tailles" role="group" aria-label="Taille">${Object.keys(TAILLES).map((t) => `<button type="button" aria-pressed="${t === 'M'}" data-t="${t}">${t}</button>`).join('')}</div>
+      <p class="dim">${TAILLES.M[0]} · jusqu’à ${TAILLES.M[1]} kg</p>
       <p class="prix" aria-live="polite">${euros(p.prix.M)}</p>
       <button class="btn btn-noir ajout" type="button">Acheter</button>
     </div>
@@ -447,6 +449,7 @@ grille.addEventListener('click', (e) => {
   if (b) {
     const avant = p.prix[carte.dataset.taille]; carte.dataset.taille = b.dataset.t;
     b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    carte.querySelector('.dim').textContent = `${TAILLES[b.dataset.t][0]} · jusqu’à ${TAILLES[b.dataset.t][1]} kg`;
     const el = carte.querySelector('.prix'); const o = { v: avant };
     gsap.to(o, { v: p.prix[b.dataset.t], duration: .4, ease: 'power2.out', onUpdate: () => { el.textContent = euros(Math.round(o.v)); } });
     return;
