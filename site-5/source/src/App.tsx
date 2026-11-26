@@ -4,28 +4,31 @@ import { useRoute } from './router';
 import SmoothScroll from './SmoothScroll';
 import { Header, Tiroir, Footer } from './ui/Chrome';
 import Accueil from './pages/Accueil';
-import Boutique from './pages/Boutique';
+import Collection from './pages/Collection';
 import Produit from './pages/Produit';
 import PagePanier from './pages/Panier';
-import { trouve } from './data';
+import Aide from './pages/Aide';
+import { trouve, RAYONS } from './data';
 
 export default function App() {
   const route = useRoute();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (route.page !== 'aide' || !route.section) window.scrollTo(0, 0);
     const p = route.page === 'produit' ? trouve(route.id) : undefined;
-    document.title = p ? `${p.nom} · Truffe` : route.page === 'boutique' ? 'La boutique · Truffe' : route.page === 'panier' ? 'Ton panier · Truffe' : 'Truffe · Boutique pour chiens';
+    const r = route.page === 'collection' ? RAYONS.find((x) => x.id === route.rayon) : undefined;
+    document.title = p ? `${p.nom} · Truffe` : r ? `${r.label} · Truffe` : route.page === 'collection' ? 'La boutique · Truffe' : route.page === 'panier' ? 'Ton panier · Truffe' : route.page === 'aide' ? 'Aide · Truffe' : 'Truffe · Boutique pour chiens';
   }, [route]);
-  const cle = route.page === 'produit' ? `p-${route.id}` : route.page;
+  const cle = route.page === 'produit' ? `p-${route.id}` : route.page === 'collection' ? `c-${route.rayon ?? ''}-${route.q ?? ''}` : route.page;
   return (
     <CartProvider>
       <SmoothScroll>
         <Header route={route} />
-        <main id="contenu" key={cle}>
+        <main id="contenu" key={cle} className="min-h-[60svh]">
           {route.page === 'accueil' && <Accueil />}
-          {route.page === 'boutique' && <Boutique rayon={route.rayon} />}
+          {route.page === 'collection' && <Collection rayon={route.rayon} q={route.q} />}
           {route.page === 'produit' && <Produit id={route.id} />}
           {route.page === 'panier' && <PagePanier />}
+          {route.page === 'aide' && <Aide section={route.section} />}
         </main>
         <Footer />
         <Tiroir />

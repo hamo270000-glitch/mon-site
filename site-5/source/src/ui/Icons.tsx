@@ -17,3 +17,11 @@ export const IconPatte = () => (
     <path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z" />
   </svg>
 );
+export const IconPhoto = () => <svg {...P} width={26} height={26} strokeWidth={1.6}><rect x="3" y="5" width="18" height="14" rx="2" /><circle cx="9" cy="10" r="2" /><path d="m21 16-5-5-8 8" /></svg>;
+export const IconLoupe = () => <svg {...P}><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>;
+export const IconCadenas = () => <svg {...P}><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>;
+export const IconBulle = () => <svg {...P}><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" /></svg>;
+export const IconChevron = () => <svg {...P}><path d="m6 9 6 6 6-6" /></svg>;
+export const IconGauche = () => <svg {...P}><path d="m15 6-6 6 6 6" /></svg>;
+export const IconDroite = () => <svg {...P}><path d="m9 6 6 6-6 6" /></svg>;
+export const IconFiltre = () => <svg {...P}><path d="M4 6h16M7 12h10M10 18h4" /></svg>;

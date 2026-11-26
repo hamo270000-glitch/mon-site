@@ -1,6 +1,8 @@
 # Site 5 · Truffe, boutique pour chiens
 
-Boutique animalière « vivante » : paniers orthopédiques (produit star « panier Nuage », 89 à 149 €), tapis de voyage, gamelle anti-glouton, harnais, balle à friandises, plaid.
+Vraie boutique e-commerce pour chiens : 10 produits en 4 rayons (Dormir, Repas, Balade, Jeux), produit phare le panier orthopédique « Nuage » (89 à 149 €).
+
+Pages : accueil (carrousel, rayons, favoris, produit phare, réassurance, FAQ, inscription), collection avec filtres et tri, recherche, fiche produit (galerie, tailles, coloris, quantité, onglets), panier, aide et pages légales (à compléter).
 
 En ligne : https://hamo270000-glitch.github.io/mon-site/site-5/
 
@@ -8,12 +10,13 @@ En ligne : https://hamo270000-glitch.github.io/mon-site/site-5/
 - React + Vite + Tailwind 4, GSAP (ScrollTrigger, SplitText), Lenis, Motion.
 - Design choisi avec le skill `ui-ux-pro-max` (style « Vibrant & Block-based », vert forêt + abricot, polices Rubik + Nunito Sans).
 - Deux pièces adaptées de **21st.dev** : le vol du produit vers le panier (« Add to basket », exemples Motion) et le bouton qui s'enfonce puis passe au vert (« Add to Cart Button »). Voir `source/src/ui/Ajouter.tsx`.
-- Pas de 3D calculée en direct (leçon du Site 6) : tout est en SVG animé, léger sur iPhone.
-- Biscuit, la mascotte (`source/src/ui/Mascotte.tsx`) : respire, cligne, remue la queue, suit le doigt du regard.
+- Style sobre et pro (l'utilisateur a refusé la première version « dessin animé » avec mascotte).
+- Photos : emplacements « Photo à venir » (`source/src/ui/Visuel.tsx`). Pour mettre une vraie photo, donner `src` au composant `Visuel`, ou ajouter les chemins dans `data.ts`.
 - Concurrents regardés : Zooplus (coussin orthopédique ~199 €), Maison Moulin (panier classique ~71 €). Positionnement : orthopédique de qualité, entre les deux.
 
 ## À faire avant d'ouvrir
-- Remplacer les illustrations par les vraies photos (échantillon fournisseur).
+- Ajouter les vraies photos (l'utilisateur les fera plus tard).
+- Compléter les pages légales (CGV, mentions légales, confidentialité) et le contact.
 - Confirmer prix, délais et frais de livraison avec le fournisseur.
 - Brancher le paiement (bouton désactivé pour l'instant).
 
