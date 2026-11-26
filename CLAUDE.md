@@ -28,6 +28,8 @@
   - On modifie le code dans `site-2/source/`, puis on lance `npm run build` dans ce dossier avant le commit (le site construit est publié tel quel).
 - `site-3/` : Site 3, nouveau projet (contenu à choisir), même base que le Site 2 (voir `site-3/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-3/
   - Code dans `site-3/source/`, puis `npm run build` dans ce dossier avant le commit.
+- `site-6/` : Site 6, boutique « Veilleuse » (panier orthopédique pour chien âgé) construite autour d'une vidéo 3D au défilement : 120 images calculées à l'avance (`site-6/film/`, scène dans `site-6/source/render/`), fluide sur iPhone (voir `site-6/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/site-6/
+  - Code dans `site-6/source/`, puis `npm run build` dans ce dossier avant le commit. Leçon retenue : la 3D calculée en direct (React Three Fiber) ramait sur iPhone et faisait « maquette » ; préférer des images pré-calculées.
 - `.claude/agents/` : agents de The Agency.
 - `.claude/skills/` : skills installés (GSAP, frontend-design, react-best-practices, web-design-guidelines, composition-patterns, find-skills). Utilise-les pour le Site 2 et le Site 3.
 - Skills de designers (ajoutés le 25 novembre 2026, copiés depuis leurs dépôts officiels) :

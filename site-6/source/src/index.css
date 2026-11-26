@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+
+/* Veilleuse : la nuit (la vidéo) puis le matin (le produit). Une seule couleur vive : l'ambre de la lampe. */
+@theme {
+  --color-nuit: #0b1317;
+  --color-nuit-2: #142026;
+  --color-lin: #f4efe6;
+  --color-lin-2: #ebe3d6;
+  --color-encre: #1d2326;
+  --color-gris: #5d6468;
+  --color-brume: #b3bcbd;
+  --color-ambre: #f0b35e;
+  --color-ambre-fonce: #9a5d1c;
+  --color-sauge: #6f8b7b;
+  --font-serif: 'Fraunces Variable', ui-serif, Georgia, serif;
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ease-doux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html { background: var(--color-nuit); color: var(--color-lin); -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font-family: var(--font-sans); font-size: 1.0625rem; line-height: 1.6; overflow-x: clip; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+  ::selection { background: var(--color-ambre); color: var(--color-encre); }
+  :focus-visible { outline: 2px solid var(--color-ambre); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3 { font-family: var(--font-serif); font-optical-sizing: auto; font-weight: 360; letter-spacing: -0.02em; line-height: 1.02; text-wrap: balance; }
+  h1 em, h2 em { font-style: italic; font-weight: 300; }
+  p { text-wrap: pretty; }
+}
+
+@layer components {
+  .serif { font-family: var(--font-serif); font-optical-sizing: auto; font-weight: 360; letter-spacing: -0.015em; }
+  .chiffres { font-variant-numeric: tabular-nums lining-nums; }
+  .surtitre { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
+  .bouton {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0 1.75rem;
+    border-radius: 999px; font-weight: 600; cursor: pointer; transition: background-color 250ms var(--ease-doux), transform 250ms var(--ease-doux);
+  }
+  .bouton:active { transform: scale(0.98); }
+  .bouton-ambre { background: var(--color-ambre); color: var(--color-encre); }
+  .bouton-ambre:hover { background: #f6c47c; }
+  .bouton-encre { background: var(--color-encre); color: var(--color-lin); }
+  .bouton-encre:hover { background: #33393c; }
+}
+
+input[type='range'] { appearance: none; width: 100%; height: 44px; background: transparent; cursor: pointer; }
+input[type='range']::-webkit-slider-runnable-track { height: 2px; background: currentColor; opacity: 0.35; }
+input[type='range']::-moz-range-track { height: 2px; background: currentColor; opacity: 0.35; }
+input[type='range']::-webkit-slider-thumb { appearance: none; width: 26px; height: 26px; margin-top: -12px; border-radius: 50%; background: var(--color-encre); border: 3px solid var(--color-lin); box-shadow: 0 2px 8px rgb(0 0 0 / 0.25); }
+input[type='range']::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--color-encre); border: 3px solid var(--color-lin); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
