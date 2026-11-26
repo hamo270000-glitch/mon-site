@@ -12,6 +12,7 @@ Reproduit le design Dribbble n°10 **choisi par l'utilisateur** : « PetCare –
 - **Catalogue réel** (tableau de prix de l'utilisateur) : Canapé à rebords, Canapé bas, Canapé 3 rebords, Canapé carré (L/XL/XXL), Lit taille humaine (taille unique 219,90 €), Panier ovale (M→XXL), Panier rectangle (M→XXL), Panier rafraîchissant, Panier chenille. Prix de vente : S 109,90 € · M 139,90 € · L 169,90 € · XL 199,90 € · XXL 239,90 €. Dimensions propres à chaque produit (voir `PANIERS` dans `index.html`). Les coûts usine ne sont pas affichés sur le site.
 - Photos produit (fond blanc) dans `img/produits/`, découpées depuis le tableau de l'utilisateur sans les noms de couleur ; photos d'ambiance dans `img/gamme/` (affichées au survol sur ordinateur et dans les autres sections).
 - Héros : grande photo, texte blanc à gauche, étoiles + nombre d'avis, bouton orange « Acheter » ; 3 photos qui défilent toutes seules.
+- Sur iPhone, les produits s’affichent un par ligne comme sur Amazon (photo à gauche, nom, étoiles, tailles, prix et bouton orange à droite) ; sur ordinateur, grille de 3.
 - Bande de réassurance, « Découvrez nos paniers » (cartes gris clair, étoiles, choix de taille, prix orange, bouton noir « Acheter »), engagements autour d'une photo, « Pourquoi choisir Sieste » (3 cartes photo), tableau « La différence est claire », témoignages, bandeau final orange.
 - Refusé avant : noir et or, vert et terracotta, arches façon tubik.
 
