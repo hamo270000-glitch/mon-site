@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0f0d0b" />
+<meta name="description" content="Maison Grain : site de démonstration d'une boutique de café de spécialité, design généré avec ui-ux-pro-max." />
+<title>Maison Grain · Café de spécialité (démo)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f0d0b'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='%23c9a35b' transform='rotate(-30 16 16)'/%3E%3Cpath d='M12 9c4 4 4 10 8 14' stroke='%230f0d0b' stroke-width='1.6' fill='none'/%3E%3C/svg%3E" />
+<link rel="preload" href="fonts/cormorant-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin />
+<style>
+@font-face { font-family: 'Cormorant'; src: url(fonts/cormorant-latin-wght-normal.woff2) format('woff2'); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: 'Cormorant'; src: url(fonts/cormorant-latin-wght-italic.woff2) format('woff2'); font-weight: 300 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url(fonts/montserrat-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; font-display: swap; }
+
+/* Design system ui-ux-pro-max « Maison Grain » : sombre premium + or, Cormorant / Montserrat, verre liquide. */
+:root {
+  --nuit: #0f0d0b; --nuit-2: #1c1917; --nuit-3: #292524; --pierre: #44403c;
+  --creme: #f6f1e8; --creme-2: #e9e1d3; --doux: #b8afa3; --doux-sombre: #57534e;
+  --or: #c9a35b; --or-fonce: #a16207; --sur-or: #1c1308;
+  --verre: rgb(255 255 255 / .07); --verre-bord: rgb(255 255 255 / .14);
+  --rayon: 22px; --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--nuit); color: var(--creme); -webkit-text-size-adjust: 100%; }
+body { font-family: 'Montserrat', system-ui, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+.serif { font-family: 'Cormorant', Georgia, serif; font-weight: 500; letter-spacing: -0.01em; line-height: .95; }
+.it { font-style: italic; }
+.or { color: var(--or); }
+.sur-titre { font-size: .75rem; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--or); }
+.wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
+:focus-visible { outline: 2px solid var(--or); outline-offset: 3px; border-radius: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Boutons */
+.btn { display: inline-flex; align-items: center; gap: .6rem; min-height: 52px; padding: 0 1.6rem; border-radius: 999px; font-weight: 600; font-size: .95rem; letter-spacing: .02em; text-decoration: none; border: 0; cursor: pointer; transition: transform .3s var(--ease), background-color .3s, color .3s, box-shadow .3s; }
+.btn-or { background: var(--or); color: var(--sur-or); box-shadow: 0 10px 30px -12px rgb(201 163 91 / .7); }
+.btn-or:hover { background: #d8b46d; transform: translateY(-2px); }
+.btn-verre { background: var(--verre); color: var(--creme); box-shadow: inset 0 0 0 1px var(--verre-bord); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
+.btn-verre:hover { background: rgb(255 255 255 / .13); }
+.btn svg { width: 18px; height: 18px; }
+
+/* Verre liquide */
+.verre { background: linear-gradient(135deg, rgb(255 255 255 / .11), rgb(255 255 255 / .03)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), inset 0 0 0 1px var(--verre-bord), 0 20px 50px -20px rgb(0 0 0 / .6); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); }
+
+/* Bandeau démo */
+.demo { background: var(--or); color: var(--sur-or); text-align: center; font-size: .78rem; font-weight: 600; padding: .45rem 1rem; letter-spacing: .04em; }
+
+/* Navigation */
+.nav { position: sticky; top: 12px; z-index: 50; margin-top: 12px; }
+.nav-in { display: flex; align-items: center; gap: 1rem; height: 64px; padding: 0 .6rem 0 1.2rem; border-radius: 999px; }
+.logo { display: flex; align-items: center; gap: .55rem; text-decoration: none; }
+.logo b { font-family: 'Cormorant', serif; font-size: 1.6rem; font-weight: 600; letter-spacing: .01em; }
+.logo i { font-family: 'Cormorant', serif; font-size: 1.6rem; color: var(--or); }
+.liens { display: none; gap: .3rem; margin-left: auto; }
+.liens a { padding: .55rem 1rem; border-radius: 999px; text-decoration: none; font-size: .9rem; font-weight: 500; color: var(--creme-2); transition: background-color .25s, color .25s; }
+.liens a:hover { background: rgb(255 255 255 / .08); color: #fff; }
+.panier-btn { position: relative; margin-left: auto; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px; border: 0; cursor: pointer; background: var(--creme); color: var(--nuit); transition: transform .3s var(--ease); }
+.panier-btn:hover { transform: scale(1.06); }
+.panier-btn svg { width: 20px; height: 20px; }
+.compte { position: absolute; top: -4px; right: -4px; min-width: 22px; height: 22px; padding: 0 5px; display: grid; place-items: center; border-radius: 999px; background: var(--or); color: var(--sur-or); font-size: .72rem; font-weight: 800; box-shadow: 0 0 0 3px var(--nuit); }
+.compte[hidden] { display: none; }
+@media (min-width: 860px) { .liens { display: flex; } .panier-btn { margin-left: .4rem; } }
+
+/* Héros */
+.heros { position: relative; min-height: 100svh; margin-top: -88px; display: grid; align-items: end; overflow: hidden; isolation: isolate; }
+.heros-img { position: absolute; inset: -6% 0 0; z-index: -2; background: radial-gradient(120% 80% at 70% 30%, #3a2a1c, var(--nuit) 70%); }
+.heros-img img { width: 100%; height: 100%; object-fit: cover; opacity: .62; }
+.heros::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(15 13 11 / .55) 0%, rgb(15 13 11 / .15) 35%, rgb(15 13 11 / .85) 78%, var(--nuit) 100%); }
+.heros-in { padding: 140px 0 56px; }
+.heros h1 { font-size: clamp(3.4rem, 11vw, 9.5rem); max-width: 11ch; }
+.heros p.chapo { max-width: 34rem; margin-top: 1.4rem; font-size: 1.08rem; color: var(--creme-2); }
+.heros .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+.chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: 3rem; max-width: 40rem; }
+.chiffre { border-radius: 18px; padding: 1rem 1.1rem; }
+.chiffre strong { display: block; font-family: 'Cormorant', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 600; line-height: 1; color: var(--or); }
+.chiffre span { font-size: .78rem; color: var(--creme-2); }
+.defile-txt { position: absolute; right: 16px; bottom: 56px; writing-mode: vertical-rl; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--doux); display: none; }
+@media (min-width: 860px) { .defile-txt { display: block; } }
+
+/* Bandeau des origines */
+.origines { border-block: 1px solid rgb(255 255 255 / .08); overflow: hidden; padding: 1.4rem 0; }
+.origines-piste { display: flex; gap: 3rem; width: max-content; font-family: 'Cormorant', serif; font-style: italic; font-size: clamp(2rem, 5vw, 3.6rem); color: var(--creme-2); white-space: nowrap; }
+.origines-piste span { display: flex; align-items: center; gap: 3rem; }
+.origines-piste em { font-style: normal; color: var(--or); font-size: .5em; }
+
+/* Sections */
+section { padding: clamp(80px, 12vw, 150px) 0; }
+.tete { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; margin-bottom: 3rem; }
+.tete h2 { font-size: clamp(2.6rem, 6.5vw, 5.2rem); max-width: 14ch; margin-top: .8rem; }
+.tete p { max-width: 26rem; color: var(--doux); }
+
+/* Cafés */
+.grille { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .grille { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) { .grille { grid-template-columns: repeat(4, 1fr); } }
+.cafe { position: relative; display: flex; flex-direction: column; border-radius: var(--rayon); background: var(--nuit-2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .07); overflow: hidden; transition: transform .5s var(--ease), box-shadow .5s; }
+.cafe:hover { transform: translateY(-6px); box-shadow: inset 0 0 0 1px rgb(201 163 91 / .45), 0 30px 60px -30px rgb(0 0 0 / .8); }
+.cafe-img { position: relative; aspect-ratio: 1; overflow: hidden; background: radial-gradient(circle at 50% 45%, #f3ede3, #d9cfbf); }
+.cafe-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.cafe:hover .cafe-img img { transform: scale(1.07) rotate(-2deg); }
+.etiquette { position: absolute; top: 12px; left: 12px; padding: .3rem .7rem; border-radius: 999px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--creme); }
+.cafe-corps { display: flex; flex-direction: column; gap: .7rem; padding: 1.2rem 1.2rem 1.3rem; flex: 1; }
+.cafe h3 { font-family: 'Cormorant', serif; font-size: 1.9rem; font-weight: 600; line-height: 1; }
+.origine { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--or); }
+.notes { display: flex; flex-wrap: wrap; gap: .35rem; }
+.notes span { padding: .25rem .6rem; border-radius: 999px; font-size: .75rem; background: rgb(255 255 255 / .06); color: var(--creme-2); }
+.jauge { display: flex; align-items: center; gap: .6rem; font-size: .75rem; color: var(--doux); }
+.jauge i { flex: 1; height: 4px; border-radius: 4px; background: rgb(255 255 255 / .1); overflow: hidden; }
+.jauge i b { display: block; height: 100%; width: var(--v); background: linear-gradient(90deg, var(--or-fonce), var(--or)); border-radius: 4px; transform-origin: left; }
+.mouture { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: 999px; background: rgb(255 255 255 / .06); position: relative; }
+.mouture button { position: relative; z-index: 1; min-height: 38px; border: 0; background: none; border-radius: 999px; font-size: .8rem; font-weight: 600; cursor: pointer; color: var(--doux); transition: color .3s; }
+.mouture button[aria-pressed='true'] { color: var(--sur-or); }
+.mouture .pastille { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px; background: var(--creme); transition: transform .45s var(--ease); }
+.mouture[data-choix='moulu'] .pastille { transform: translateX(100%); }
+.cafe-bas { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: .4rem; }
+.prix { font-family: 'Cormorant', serif; font-size: 1.9rem; font-weight: 600; }
+.prix small { font-family: 'Montserrat', sans-serif; font-size: .75rem; color: var(--doux); font-weight: 500; margin-left: .2rem; }
+.ajout { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px; border: 0; cursor: pointer; background: var(--or); color: var(--sur-or); transition: transform .3s var(--ease), background-color .3s; }
+.ajout:hover { transform: rotate(90deg) scale(1.06); background: #d8b46d; }
+.ajout.ok { background: #6e8b5e; color: #fff; transform: none; }
+.ajout svg { width: 20px; height: 20px; }
+
+/* Histoire : défilement horizontal */
+.histoire { padding: 0; background: var(--creme); color: var(--nuit); }
+.histoire-in { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding: 90px 0 60px; }
+.histoire .sur-titre { color: var(--or-fonce); }
+.histoire h2 { font-size: clamp(2.6rem, 6.5vw, 5.2rem); }
+.piste { display: flex; gap: 1.2rem; margin-top: 3rem; padding-left: max(16px, calc((100vw - 1240px) / 2)); width: max-content; }
+.etape { width: min(78vw, 420px); flex-shrink: 0; border-radius: var(--rayon); overflow: hidden; background: #fff; box-shadow: 0 1px 0 rgb(0 0 0 / .05), 0 30px 60px -40px rgb(28 25 23 / .45); }
+.etape-img { aspect-ratio: 4/3; overflow: hidden; background: var(--nuit-2); }
+.etape-img img { width: 100%; height: 100%; object-fit: cover; }
+.etape-corps { padding: 1.4rem; }
+.etape-num { font-family: 'Cormorant', serif; font-style: italic; font-size: 3.4rem; line-height: .8; color: var(--or-fonce); }
+.etape h3 { font-family: 'Cormorant', serif; font-size: 2rem; font-weight: 600; margin-top: .4rem; }
+.etape p { color: var(--doux-sombre); margin-top: .4rem; }
+@media (max-width: 859px) { .piste { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-right: 16px; scrollbar-width: none; } .etape { scroll-snap-align: start; } }
+
+/* Abonnement */
+.abo { display: grid; gap: 2rem; align-items: center; }
+@media (min-width: 960px) { .abo { grid-template-columns: 1.1fr 1fr; gap: 4rem; } }
+.abo-photo { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 4/5; background: var(--nuit-2); }
+.abo-photo img { width: 100%; height: 115%; object-fit: cover; }
+.abo-carte { position: absolute; left: 16px; right: 16px; bottom: 16px; border-radius: 20px; padding: 1.1rem 1.2rem; display: flex; align-items: center; gap: 1rem; }
+.abo-carte strong { font-family: 'Cormorant', serif; font-size: 1.5rem; }
+.abo h2 { font-size: clamp(2.6rem, 6vw, 4.6rem); margin-top: .8rem; }
+.abo > div > p { color: var(--doux); margin-top: 1rem; max-width: 30rem; }
+.choix { margin-top: 2rem; display: grid; gap: 1.4rem; }
+.choix fieldset { border: 0; padding: 0; min-width: 0; }
+.choix legend { font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--doux); margin-bottom: .7rem; }
+.options { display: flex; flex-wrap: wrap; gap: .5rem; }
+.options label { cursor: pointer; }
+.options input { position: absolute; opacity: 0; pointer-events: none; }
+.options span { display: inline-flex; align-items: center; min-height: 46px; padding: 0 1.1rem; border-radius: 999px; font-weight: 600; font-size: .9rem; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); transition: background-color .25s, color .25s, box-shadow .25s; }
+.options input:checked + span { background: var(--creme); color: var(--nuit); box-shadow: none; }
+.options input:focus-visible + span { outline: 2px solid var(--or); outline-offset: 3px; }
+.total { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgb(255 255 255 / .1); }
+.total .serif { font-size: 3.4rem; color: var(--or); }
+.total small { color: var(--doux); }
+
+/* Avis */
+.avis-grille { display: grid; gap: 1rem; }
+@media (min-width: 860px) { .avis-grille { grid-template-columns: repeat(3, 1fr); } }
+.avis { border-radius: var(--rayon); padding: 1.8rem; background: var(--nuit-2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .07); }
+.avis blockquote { font-family: 'Cormorant', serif; font-style: italic; font-size: 1.7rem; line-height: 1.15; }
+.avis figcaption { margin-top: 1.2rem; font-size: .85rem; color: var(--doux); }
+.etoiles { color: var(--or); letter-spacing: .15em; margin-bottom: .8rem; font-size: .9rem; }
+
+/* Fin */
+.fin { position: relative; overflow: hidden; border-radius: 32px; padding: clamp(40px, 8vw, 90px); text-align: center; isolation: isolate; }
+.fin img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: .45; }
+.fin::after { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(70% 90% at 50% 50%, rgb(15 13 11 / .35), rgb(15 13 11 / .92)); }
+.fin h2 { font-size: clamp(2.8rem, 8vw, 6.4rem); max-width: 14ch; margin: .8rem auto 0; }
+.fin .actions { justify-content: center; display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+
+footer { padding: 70px 0 40px; color: var(--doux); font-size: .85rem; }
+.pied { display: grid; gap: 2rem; }
+@media (min-width: 860px) { .pied { grid-template-columns: 1.4fr 1fr 1fr; } }
+footer h4 { color: var(--creme); font-weight: 600; margin-bottom: .6rem; }
+footer ul { list-style: none; padding: 0; display: grid; gap: .3rem; }
+footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
+.credits { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgb(255 255 255 / .08); font-size: .75rem; line-height: 1.6; }
+
+/* Tiroir panier */
+.tiroir { position: fixed; inset: 0; z-index: 90; visibility: hidden; }
+.tiroir.ouvert { visibility: visible; }
+.tiroir-fond { position: absolute; inset: 0; background: rgb(0 0 0 / .55); opacity: 0; transition: opacity .4s; border: 0; width: 100%; cursor: pointer; }
+.tiroir.ouvert .tiroir-fond { opacity: 1; }
+.tiroir-panneau { position: absolute; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--nuit-2); padding: 1.4rem; display: flex; flex-direction: column; transform: translateX(100%); transition: transform .5s var(--ease); padding-bottom: max(1.4rem, env(safe-area-inset-bottom)); }
+.tiroir.ouvert .tiroir-panneau { transform: none; }
+.tiroir h2 { font-family: 'Cormorant', serif; font-size: 2.2rem; }
+.tiroir-tete { display: flex; justify-content: space-between; align-items: center; }
+.fermer { width: 44px; height: 44px; border-radius: 999px; border: 0; background: rgb(255 255 255 / .08); cursor: pointer; display: grid; place-items: center; }
+.lignes { list-style: none; padding: 0; margin-top: 1.2rem; flex: 1; overflow-y: auto; display: grid; align-content: start; gap: .8rem; }
+.ligne { display: flex; gap: .9rem; align-items: center; padding: .7rem; border-radius: 16px; background: rgb(255 255 255 / .04); }
+.ligne img { width: 58px; height: 58px; border-radius: 12px; object-fit: cover; background: #e9e1d3; }
+.ligne div { flex: 1; } .ligne p { font-size: .8rem; color: var(--doux); }
+.vide { color: var(--doux); margin-top: 2rem; }
+.tiroir-total { display: flex; justify-content: space-between; align-items: baseline; padding: 1rem 0; border-top: 1px solid rgb(255 255 255 / .1); }
+
+/* Grain volant vers le panier */
+.vol { position: fixed; z-index: 95; width: 22px; height: 30px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #8a5a34, #3b2414); pointer-events: none; }
+.vol::after { content: ''; position: absolute; left: 50%; top: 10%; bottom: 10%; width: 2px; margin-left: -1px; border-radius: 2px; background: #1c1008; transform: rotate(12deg); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+<p class="demo">Site de démonstration : marque, produits, prix et avis inventés pour montrer le rendu.</p>
+
+<header class="nav wrap">
+  <div class="nav-in verre">
+    <a class="logo" href="#haut" aria-label="Maison Grain, accueil"><b>Maison</b><i>Grain</i></a>
+    <nav class="liens" aria-label="Navigation principale">
+      <a href="#cafes">Nos cafés</a><a href="#histoire">L’atelier</a><a href="#abonnement">Abonnement</a><a href="#avis">Avis</a>
+    </nav>
+    <button class="panier-btn" id="ouvrir-panier" type="button" aria-label="Ouvrir le panier, 0 article">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span class="compte" id="compte" hidden>0</span>
+    </button>
+  </div>
+</header>
+
+<main id="haut">
+  <section class="heros" aria-labelledby="titre">
+    <div class="heros-img" data-parallaxe><img src="img/hero.jpg" alt="" fetchpriority="high" /></div>
+    <div class="wrap heros-in">
+      <p class="sur-titre" data-entre>Torréfacteur · Lyon · depuis 2019</p>
+      <h1 id="titre" class="serif" data-titre>Le café, <span class="it or">à la seconde</span> près.</h1>
+      <p class="chapo" data-entre>Six origines choisies au domaine, torréfiées en petits lots chaque mardi et vendredi. Expédiées dans les 48 heures, pour une tasse au sommet de ses arômes.</p>
+      <div class="actions" data-entre>
+        <a class="btn btn-or" href="#cafes">Découvrir nos cafés <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-verre" href="#abonnement">S’abonner</a>
+      </div>
+      <div class="chiffres">
+        <div class="chiffre verre" data-entre><strong data-compte="48">0</strong><span>heures max. entre torréfaction et envoi</span></div>
+        <div class="chiffre verre" data-entre><strong data-compte="6">0</strong><span>origines en direct des fermes</span></div>
+        <div class="chiffre verre" data-entre><strong data-compte="86">0</strong><span>points SCA minimum par lot</span></div>
+      </div>
+    </div>
+    <p class="defile-txt" aria-hidden="true">Défiler</p>
+  </section>
+
+  <div class="origines" aria-hidden="true">
+    <div class="origines-piste" id="piste-origines">
+      <span>Éthiopie <em>●</em> Colombie <em>●</em> Kenya <em>●</em> Guatemala <em>●</em> Brésil <em>●</em> Sumatra <em>●</em></span>
+      <span>Éthiopie <em>●</em> Colombie <em>●</em> Kenya <em>●</em> Guatemala <em>●</em> Brésil <em>●</em> Sumatra <em>●</em></span>
+    </div>
+  </div>
+
+  <section id="cafes" aria-labelledby="titre-cafes">
+    <div class="wrap">
+      <div class="tete">
+        <div><p class="sur-titre">La sélection du moment</p><h2 id="titre-cafes" class="serif" data-mots>Quatre cafés, <span class="it">quatre voyages.</span></h2></div>
+        <p>Chaque café est décrit par ses notes de dégustation et son intensité. Choisis en grains ou moulu pour ta méthode.</p>
+      </div>
+      <div class="grille" id="grille"></div>
+    </div>
+  </section>
+
+  <section class="histoire" id="histoire" aria-labelledby="titre-histoire">
+    <div class="histoire-in" id="histoire-in">
+      <div class="wrap"><p class="sur-titre">De la cerise à la tasse</p><h2 id="titre-histoire" class="serif" data-mots>Quatre gestes, <span class="it">zéro raccourci.</span></h2></div>
+      <div class="piste" id="piste">
+        <article class="etape"><div class="etape-img"><img src="img/surface.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">01</p><h3>La récolte</h3><p>Seules les cerises bien mûres sont cueillies, à la main, en plusieurs passages.</p></div></article>
+        <article class="etape"><div class="etape-img"><img src="img/portrait.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">02</p><h3>Le séchage</h3><p>Trois semaines au soleil sur lits surélevés, retournées chaque heure.</p></div></article>
+        <article class="etape"><div class="etape-img"><img src="img/texture.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">03</p><h3>La torréfaction</h3><p>Des lots de 12 kg, une courbe réglée pour chaque origine, à la seconde près.</p></div></article>
+        <article class="etape"><div class="etape-img"><img src="img/bol-fin.jpg" alt="" loading="lazy" /></div><div class="etape-corps"><p class="etape-num">04</p><h3>La dégustation</h3><p>Chaque lot est goûté avant de partir. S’il ne passe pas la barre, il ne part pas.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="abonnement" aria-labelledby="titre-abo">
+    <div class="wrap abo">
+      <div class="abo-photo"><img src="img/hero.jpg" alt="" loading="lazy" data-glisse />
+        <div class="abo-carte verre"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a35b" stroke-width="1.8" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg><div><strong>Livré tous les mois</strong><p style="font-size:.8rem;color:var(--creme-2)">Pause ou arrêt en un clic</p></div></div>
+      </div>
+      <div>
+        <p class="sur-titre">L’abonnement</p>
+        <h2 id="titre-abo" class="serif" data-mots>Ne tombe <span class="it">plus jamais</span> à court.</h2>
+        <p>Un nouveau café chaque mois ou ton préféré en boucle, torréfié juste avant l’envoi.</p>
+        <form class="choix" id="abo-form">
+          <fieldset><legend>Quantité</legend><div class="options">
+            <label><input type="radio" name="qte" value="1" checked /><span>250 g</span></label>
+            <label><input type="radio" name="qte" value="2" /><span>500 g</span></label>
+            <label><input type="radio" name="qte" value="4" /><span>1 kg</span></label>
+          </div></fieldset>
+          <fieldset><legend>Fréquence</legend><div class="options">
+            <label><input type="radio" name="freq" value="1" checked /><span>Tous les mois</span></label>
+            <label><input type="radio" name="freq" value="0.5" /><span>Toutes les 2 semaines</span></label>
+          </div></fieldset>
+          <fieldset><legend>Formule</legend><div class="options">
+            <label><input type="radio" name="formule" value="decouverte" checked /><span>Découverte</span></label>
+            <label><input type="radio" name="formule" value="fidele" /><span>Mon préféré</span></label>
+          </div></fieldset>
+          <div class="total"><div><small>Par livraison · livraison offerte</small><p class="serif" id="total-abo" aria-live="polite">14 €</p></div><button class="btn btn-or" type="button" id="abo-btn">Je m’abonne</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis" aria-labelledby="titre-avis" style="padding-top:0">
+    <div class="wrap">
+      <div class="tete"><div><p class="sur-titre">Ils en parlent</p><h2 id="titre-avis" class="serif" data-mots>Une tasse, <span class="it">et c’est adopté.</span></h2></div><p>Avis inventés pour la démonstration.</p></div>
+      <div class="avis-grille">
+        <figure class="avis" data-carte><p class="etoiles" aria-label="5 étoiles sur 5">★★★★★</p><blockquote>« Le Yirgacheffe sent le jasmin dès l’ouverture du sachet. Je ne reviens pas en arrière. »</blockquote><figcaption>Camille · abonnée depuis 8 mois</figcaption></figure>
+        <figure class="avis" data-carte><p class="etoiles" aria-label="5 étoiles sur 5">★★★★★</p><blockquote>« Reçu deux jours après la torréfaction, c’est indiqué sur le paquet. Ça change tout en filtre. »</blockquote><figcaption>Julien · méthode V60</figcaption></figure>
+        <figure class="avis" data-carte><p class="etoiles" aria-label="4 étoiles sur 5">★★★★☆</p><blockquote>« Le Brésil est parfait en espresso, rond et chocolaté. J’aimerais juste un format 2 kg. »</blockquote><figcaption>Sofia · machine à espresso</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0" aria-labelledby="titre-fin">
+    <div class="wrap">
+      <div class="fin" data-carte>
+        <img src="img/texture.jpg" alt="" loading="lazy" />
+        <p class="sur-titre">Première commande</p>
+        <h2 id="titre-fin" class="serif">Ton prochain café préféré <span class="it or">t’attend.</span></h2>
+        <div class="actions"><a class="btn btn-or" href="#cafes">Choisir mon café</a><a class="btn btn-verre" href="#abonnement">Voir l’abonnement</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="pied">
+      <div><a class="logo" href="#haut"><b>Maison</b><i>Grain</i></a><p style="margin-top:.8rem;max-width:22rem">Torréfacteur de cafés de spécialité. Marque fictive créée pour montrer le rendu du skill ui-ux-pro-max.</p></div>
+      <div><h4>Boutique</h4><ul><li><a href="#cafes">Nos cafés</a></li><li><a href="#abonnement">Abonnement</a></li><li><a href="#histoire">L’atelier</a></li></ul></div>
+      <div><h4>Aide</h4><ul><li><a href="#haut">Livraison</a></li><li><a href="#haut">Retours</a></li><li><a href="#haut">Contact</a></li></ul></div>
+    </div>
+    <p class="credits" id="credits">Photos (Wikimedia Commons, recadrées) : <a href="https://commons.wikimedia.org/wiki/File:Coffee_beans_roasted.jpg">Coffee beans roasted</a> (CC BY-SA 4.0), <a href="https://commons.wikimedia.org/wiki/File:Roasted_coffee_beans.jpg">Roasted coffee beans</a> (domaine public), <a href="https://commons.wikimedia.org/wiki/File:Roasted_coffee_beans_on_the_surface._01.jpg">Roasted coffee beans on the surface</a> (CC BY-SA 4.0). Les recadrages sont partagés sous la même licence.</p>
+  </div>
+</footer>
+
+<div class="tiroir" id="tiroir" aria-hidden="true">
+  <button class="tiroir-fond" type="button" aria-label="Fermer le panier" id="fond"></button>
+  <div class="tiroir-panneau" role="dialog" aria-modal="true" aria-labelledby="titre-tiroir">
+    <div class="tiroir-tete"><h2 id="titre-tiroir">Ton panier</h2><button class="fermer" type="button" id="fermer" aria-label="Fermer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <ul class="lignes" id="lignes"></ul>
+    <div class="tiroir-total"><span>Total</span><span class="serif" style="font-size:2rem" id="total">0 €</span></div>
+    <button class="btn btn-or" type="button" style="justify-content:center" disabled>Paiement désactivé (démo)</button>
+  </div>
+</div>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script>
+const CAFES = [
+  { id: 'yirga', nom: 'Yirgacheffe', origine: 'Éthiopie · Gedeo', notes: ['Jasmin', 'Pêche', 'Bergamote'], intensite: 35, prix: 16, img: 'img/bol-grains.jpg', etiquette: ['Nouveau lot', '#6e8b5e'] },
+  { id: 'huila', nom: 'Huila', origine: 'Colombie · La Plata', notes: ['Caramel', 'Pomme rouge', 'Cacao'], intensite: 55, prix: 14, img: 'img/bol-gros.jpg', etiquette: ['Meilleure vente', '#a16207'] },
+  { id: 'nyeri', nom: 'Nyeri AA', origine: 'Kenya · Nyeri', notes: ['Cassis', 'Pamplemousse', 'Tomate'], intensite: 45, prix: 18, img: 'img/bol-fin.jpg' },
+  { id: 'cerrado', nom: 'Cerrado', origine: 'Brésil · Minas Gerais', notes: ['Chocolat noir', 'Noisette', 'Miel'], intensite: 80, prix: 12, img: 'img/portrait.jpg', etiquette: ['Spécial espresso', '#44403c'] },
+];
+const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2, minimumFractionDigits: 0 });
+const grille = document.getElementById('grille');
+const plus = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+const coche = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+grille.innerHTML = CAFES.map((c) => `
+  <article class="cafe" data-carte>
+    <div class="cafe-img"><img src="${c.img}" alt="Café ${c.nom}" loading="lazy" />${c.etiquette ? `<span class="etiquette" style="background:${c.etiquette[1]}">${c.etiquette[0]}</span>` : ''}</div>
+    <div class="cafe-corps">
+      <p class="origine">${c.origine}</p>
+      <h3>${c.nom}</h3>
+      <p class="notes">${c.notes.map((n) => `<span>${n}</span>`).join('')}</p>
+      <p class="jauge">Intensité <i><b style="--v:${c.intensite}%"></b></i></p>
+      <div class="mouture" role="group" aria-label="Mouture" data-choix="grains"><span class="pastille" aria-hidden="true"></span><button type="button" aria-pressed="true" data-m="grains">En grains</button><button type="button" aria-pressed="false" data-m="moulu">Moulu</button></div>
+      <div class="cafe-bas"><p class="prix">${euros(c.prix)}<small>250 g</small></p><button class="ajout" type="button" data-id="${c.id}" aria-label="Ajouter ${c.nom} au panier">${plus}</button></div>
+    </div>
+  </article>`).join('');
+
+// Mouture : la pastille glisse d'un choix à l'autre.
+grille.addEventListener('click', (e) => {
+  const b = e.target.closest('.mouture button');
+  if (b) { const g = b.parentElement; g.dataset.choix = b.dataset.m; g.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); return; }
+  const a = e.target.closest('.ajout');
+  if (a) ajouter(a);
+});
+
+// Panier
+const panier = [];
+const compte = document.getElementById('compte');
+const ouvrir = document.getElementById('ouvrir-panier');
+const tiroir = document.getElementById('tiroir');
+function rendre() {
+  const n = panier.reduce((s, l) => s + l.qte, 0);
+  compte.textContent = n; compte.hidden = n === 0;
+  ouvrir.setAttribute('aria-label', `Ouvrir le panier, ${n} article${n > 1 ? 's' : ''}`);
+  document.getElementById('lignes').innerHTML = panier.length ? panier.map((l) => `<li class="ligne"><img src="${l.c.img}" alt="" /><div><strong>${l.c.nom}</strong><p>${l.mouture === 'moulu' ? 'Moulu' : 'En grains'} · 250 g · × ${l.qte}</p></div><span>${euros(l.qte * l.c.prix)}</span></li>`).join('') : '<li class="vide">Ton panier est vide pour l’instant.</li>';
+  document.getElementById('total').textContent = euros(panier.reduce((s, l) => s + l.qte * l.c.prix, 0));
+}
+function ajouter(btn) {
+  const c = CAFES.find((x) => x.id === btn.dataset.id);
+  const mouture = btn.closest('.cafe').querySelector('.mouture').dataset.choix;
+  const l = panier.find((x) => x.c.id === c.id && x.mouture === mouture);
+  l ? l.qte++ : panier.push({ c, mouture, qte: 1 });
+  btn.classList.add('ok'); btn.innerHTML = coche;
+  setTimeout(() => { btn.classList.remove('ok'); btn.innerHTML = plus; }, 1400);
+  voler(btn);
+}
+// Un grain de café vole en arc jusqu'au panier.
+function voler(btn) {
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduit) { rendre(); return; }
+  const a = btn.getBoundingClientRect(), b = ouvrir.getBoundingClientRect();
+  const g = document.createElement('span'); g.className = 'vol'; document.body.appendChild(g);
+  const x0 = a.left + a.width / 2 - 11, y0 = a.top + a.height / 2 - 15, x1 = b.left + b.width / 2 - 11, y1 = b.top + b.height / 2 - 15;
+  const o = { t: 0 };
+  gsap.to(o, { t: 1, duration: .8, ease: 'power2.in', onUpdate() {
+    const t = o.t, cx = (x0 + x1) / 2, cy = Math.min(y0, y1) - 140;
+    const x = (1 - t) ** 2 * x0 + 2 * (1 - t) * t * cx + t * t * x1, y = (1 - t) ** 2 * y0 + 2 * (1 - t) * t * cy + t * t * y1;
+    gsap.set(g, { x, y, rotation: t * 540, scale: 1 - t * .45 });
+  }, onComplete() { g.remove(); rendre(); gsap.fromTo(ouvrir, { scale: 1.25 }, { scale: 1, duration: .7, ease: 'elastic.out(1.1,.4)' }); gsap.fromTo(compte, { scale: 1.8 }, { scale: 1, duration: .5, ease: 'back.out(3)' }); } });
+}
+function bascule(ouvert) {
+  tiroir.classList.toggle('ouvert', ouvert); tiroir.setAttribute('aria-hidden', String(!ouvert));
+  if (ouvert) document.getElementById('fermer').focus(); else ouvrir.focus();
+}
+ouvrir.addEventListener('click', () => bascule(true));
+document.getElementById('fermer').addEventListener('click', () => bascule(false));
+document.getElementById('fond').addEventListener('click', () => bascule(false));
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && tiroir.classList.contains('ouvert')) bascule(false); });
+rendre();
+
+// Abonnement : prix recalculé en direct.
+const form = document.getElementById('abo-form');
+const totalAbo = document.getElementById('total-abo');
+let affiche = 14;
+function calcul() {
+  const f = new FormData(form);
+  const base = { 1: 14, 2: 26, 4: 48 }[f.get('qte')];
+  const prix = Math.round(base * (f.get('formule') === 'fidele' ? 0.92 : 1));
+  const o = { v: affiche };
+  gsap.to(o, { v: prix, duration: .5, ease: 'power2.out', onUpdate: () => { totalAbo.textContent = euros(Math.round(o.v)); } });
+  affiche = prix;
+}
+form.addEventListener('change', calcul);
+document.getElementById('abo-btn').addEventListener('click', (e) => { e.currentTarget.textContent = 'Bientôt disponible'; });
+
+// ——— Animations GSAP ———
+gsap.registerPlugin(ScrollTrigger, SplitText);
+const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduit) {
+  const lenis = new Lenis({ lerp: 0.1, anchors: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
+
+  document.fonts.ready.then(() => {
+    const s = SplitText.create('[data-titre]', { type: 'lines,words', mask: 'lines' });
+    gsap.from(s.words, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .06, delay: .15 });
+    gsap.from('[data-entre]', { y: 30, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, delay: .5 });
+    document.querySelectorAll('[data-mots]').forEach((el) => {
+      const m = SplitText.create(el, { type: 'lines,words', mask: 'lines' });
+      gsap.from(m.words, { yPercent: 105, duration: .9, ease: 'expo.out', stagger: .04, scrollTrigger: { trigger: el, start: 'top 85%' } });
+    });
+    ScrollTrigger.refresh();
+  });
+  document.querySelectorAll('[data-compte]').forEach((el) => {
+    const o = { v: 0 };
+    gsap.to(o, { v: +el.dataset.compte, duration: 2, ease: 'power3.out', delay: .9, onUpdate: () => { el.textContent = Math.round(o.v); } });
+  });
+  gsap.to('[data-parallaxe]', { yPercent: 18, scale: 1.08, ease: 'none', scrollTrigger: { trigger: '.heros', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('#piste-origines', { xPercent: -50, ease: 'none', duration: 30, repeat: -1 });
+  ScrollTrigger.batch('[data-carte]', { start: 'top 88%', once: true, onEnter: (els) => gsap.from(els, { y: 50, opacity: 0, scale: .96, duration: .8, ease: 'back.out(1.3)', stagger: .08 }) });
+  ScrollTrigger.create({ trigger: '#grille', start: 'top 75%', once: true, onEnter: () => gsap.from('.jauge b', { scaleX: 0, duration: 1.2, ease: 'power3.out', stagger: .1 }) });
+  gsap.to('[data-glisse]', { yPercent: -12, ease: 'none', scrollTrigger: { trigger: '#abonnement', start: 'top bottom', end: 'bottom top', scrub: true } });
+  // Défilement horizontal des 4 étapes, épinglé sur grand écran.
+  gsap.matchMedia().add('(min-width: 860px)', () => {
+    const piste = document.getElementById('piste');
+    const dist = () => piste.scrollWidth - innerWidth + Math.max(16, (innerWidth - 1240) / 2);
+    gsap.to(piste, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '#histoire-in', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: .6, invalidateOnRefresh: true } });
+  });
+} else {
+  document.querySelectorAll('[data-compte]').forEach((el) => { el.textContent = el.dataset.compte; });
+}
+</script>
+</body>
+</html>
