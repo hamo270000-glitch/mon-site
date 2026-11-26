@@ -12,9 +12,21 @@ export const IconArrow = () => (
 );
 export const IconMinus = () => (<svg {...base} width={18} height={18}><path d="M6 12h12" /></svg>);
 export const IconPlus = () => (<svg {...base} width={18} height={18}><path d="M12 6v12M6 12h12" /></svg>);
-export const IconPress = () => (
-  <svg {...base}><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11" /><path d="M12 10.5V9a1.5 1.5 0 0 1 3 0v2" /><path d="M15 10.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-.6a6 6 0 0 1-4.9-2.5L4 15a1.6 1.6 0 0 1 2.5-2L9 15" /></svg>
+export const IconCheck = () => (<svg {...base} width={18} height={18}><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>);
+/* Mousse : vagues superposées */
+export const IconFoam = () => (
+  <svg {...base}><path d="M3 9c3-2 6 2 9 0s6 2 9 0" /><path d="M3 14c3-2 6 2 9 0s6 2 9 0" /><path d="M3 19h18" /></svg>
 );
-export const IconMenu = () => (
-  <svg {...base}><path d="M4 8h16M4 16h16" /></svg>
+/* Lavable : bassine et goutte */
+export const IconWash = () => (
+  <svg {...base}><path d="M3 8h18l-2 11a1.5 1.5 0 0 1-1.5 1.2h-11A1.5 1.5 0 0 1 5 19L3 8Z" /><path d="M7 12c1.5 1 3.5 1 5 0s3.5-1 5 0" /><path d="M8 4.5c1 .8 2 .8 3 0M13 4.5c1 .8 2 .8 3 0" /></svg>
 );
+/* Imperméable : goutte et bouclier */
+export const IconDrop = () => (
+  <svg {...base}><path d="M12 3s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.2 12 3 12 3Z" /><path d="M9.5 14.5a2.6 2.6 0 0 0 2.5 2" /></svg>
+);
+/* Tailles : règle */
+export const IconRuler = () => (
+  <svg {...base}><rect x="2.5" y="8" width="19" height="8" rx="1.5" /><path d="M6.5 8v3M10 8v4M13.5 8v3M17 8v4" /></svg>
+);
+export const IconChevron = () => (<svg {...base} width={20} height={20}><path d="m6 9 6 6 6-6" /></svg>);
