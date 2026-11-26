@@ -21,6 +21,8 @@
 - **Firecrawl** (25 novembre 2026) : lit et récupère le contenu des sites web (boutiques concurrentes, prix fournisseurs Alibaba, pages produits…). Branché comme **connecteur** sur le compte Claude de l'utilisateur : disponible dans toutes les sessions, sans clé ni installation dans le dépôt.
 - **Crawl4AI** (25 novembre 2026), skill `lire-le-web` : alternative **gratuite** à Firecrawl pour lire des pages web (concurrents, boutiques Shopify, fournisseurs). Installé au démarrage des sessions cloud. À utiliser en premier ; Firecrawl seulement si le site bloque (Alibaba, Amazon…).
 
+- **21st.dev** (26 novembre 2026) : bibliothèque de composants de design (héros, prix, avis, fonds animés…) pour les boutiques. Serveur MCP « 21st » (`https://21st.dev/api/mcp`, en-tête `x-api-key`) ajouté au démarrage des sessions cloud (script de l'environnement « Default ») ; la clé est mise par le proxy (secret réseau pour `21st.dev`). Sur le Mac : `claude mcp add -s user --transport http 21st https://21st.dev/api/mcp -H "x-api-key: SA_CLE"`.
+
 ## Les projets
 - `affute/` : Affûté, l'appli de sèche et de prise de masse (voir `affute/README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/affute/
 - Racine (`index.html`, `js/`, `css/`) : Clair, le scanner alimentaire (voir `README.md`). En ligne sur https://hamo270000-glitch.github.io/mon-site/
