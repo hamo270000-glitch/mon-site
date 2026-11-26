@@ -115,11 +115,11 @@ section { padding: clamp(56px, 8vw, 96px) 0; }
 
 /* Produits */
 .grille { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-@media (min-width: 900px) { .grille { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+@media (min-width: 900px) { .grille { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
 .carte { display: flex; flex-direction: column; border: 1px solid var(--ligne); border-radius: 10px; overflow: hidden; background: #fff; transition: box-shadow .35s, transform .35s var(--ease); }
 .carte:hover { box-shadow: 0 18px 40px -24px rgb(0 0 0 / .35); transform: translateY(-4px); }
-.carte-img { position: relative; aspect-ratio: 1; background: var(--fond-2); display: grid; place-items: center; overflow: hidden; }
-.carte-img img { width: 92%; mix-blend-mode: multiply; filter: brightness(1.04); transition: transform .6s var(--ease); }
+.carte-img { position: relative; aspect-ratio: 4 / 3.4; background: var(--fond-2); display: grid; place-items: center; overflow: hidden; }
+.carte-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
 .carte:hover .carte-img img { transform: scale(1.07); }
 .pastille { position: absolute; top: 10px; left: 10px; padding: .2rem .55rem; border-radius: 4px; background: var(--orange); color: #fff; font-size: .65rem; font-weight: 600; letter-spacing: .04em; }
 .carte-corps { padding: 12px 12px 14px; display: flex; flex-direction: column; gap: .3rem; flex: 1; }
@@ -219,7 +219,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
 .lignes { list-style: none; padding: 0; margin-top: 1rem; flex: 1; overflow-y: auto; display: grid; align-content: start; gap: .8rem; }
 .ligne { display: flex; gap: .8rem; align-items: center; }
 .ligne .mini { width: 64px; height: 64px; border-radius: 8px; background: var(--fond-2); display: grid; place-items: center; overflow: hidden; flex-shrink: 0; }
-.ligne .mini img { width: 92%; mix-blend-mode: multiply; }
+.ligne .mini img { width: 100%; height: 100%; object-fit: cover; }
 .ligne div { flex: 1; } .ligne strong { font-size: .88rem; } .ligne p { font-size: .75rem; color: var(--gris); }
 .ligne .p { font-weight: 700; color: var(--orange); }
 .vide { color: var(--gris); margin-top: 1.4rem; }
@@ -262,9 +262,9 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
   <section class="heros" style="padding-bottom:0" aria-labelledby="titre">
     <div class="wrap">
       <div class="heros-cadre" id="diapo" aria-roledescription="carrousel" aria-label="Photos du panier">
-        <figure class="vue actif"><img src="img/salon.jpg" alt="Le panier orthopédique dans un salon lumineux" fetchpriority="high" /></figure>
-        <figure class="vue detoure"><img src="img/chien-panier.jpg" alt="Un golden retriever allongé sur le panier orthopédique" /></figure>
-        <figure class="vue detoure"><img src="img/original.jpg" alt="Le golden retriever couché sur le panier, rebords sur trois côtés" /></figure>
+        <figure class="vue actif"><img src="img/gamme/brun-classique.jpg" alt="Un golden retriever endormi sur le panier Sieste Classique brun" fetchpriority="high" /></figure>
+        <figure class="vue"><img src="img/gamme/creme-arctique.jpg" alt="Un berger australien sur le panier Sieste Cocon crème" /></figure>
+        <figure class="vue"><img src="img/gamme/bleu-ciel.jpg" alt="Un border collie sur le panier Sieste Fraîcheur bleu ciel" /></figure>
         <div class="heros-texte">
           <p class="avis-ligne" data-entre><span class="etoiles" aria-hidden="true">★★★★★</span> 1 200 avis</p>
           <h1 id="titre" data-entre>Des paniers orthopédiques de qualité</h1>
@@ -293,7 +293,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
     <div class="wrap">
       <div class="titre-section" data-apparait>
         <p class="etiquette"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="7" cy="9" rx="2.2" ry="2.8"/><ellipse cx="12" cy="6.5" rx="2.2" ry="2.8"/><ellipse cx="17" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z"/></svg> Nos produits</p>
-        <h2 id="titre-produits">Découvrez nos paniers</h2>
+        <h2 id="titre-produits">Découvrez nos 9 paniers</h2>
         <p>Des paniers orthopédiques pensés pour le confort, la santé et le sommeil de votre chien.</p>
       </div>
       <div class="grille" id="grille"></div>
@@ -314,7 +314,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
           <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 18V9a4 4 0 0 1 8 0v9M12 18V9a4 4 0 0 1 8 0v9M2 18h20"/></svg><div><strong>Rebords appui-tête</strong><span>Sur trois côtés, pour poser la tête.</span></div></li>
           <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg><div><strong>Matières sûres</strong><span>Tissus doux, sans odeur forte.</span></div></li>
         </ul>
-        <div class="atouts-photo" data-apparait><img src="img/chien-panier.jpg" alt="Un golden retriever sur le panier Sieste" loading="lazy" /></div>
+        <div class="atouts-photo" data-apparait><img src="img/gamme/gris-fonce.jpg" alt="Un golden retriever et un chat sur le panier Sieste Grand Repos" loading="lazy" style="width:100%;height:100%;object-fit:cover;mix-blend-mode:normal" /></div>
         <ul data-apparait>
           <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5L3 7Z"/><path d="M7 12c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0"/></svg><div><strong>Housse lavable</strong><span>Fermeture éclair, machine à 30 °C.</span></div></li>
           <li class="atout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20h16M6 16h12M8 12h8"/></svg><div><strong>Dessous antidérapant</strong><span>Reste en place sur le carrelage.</span></div></li>
@@ -332,9 +332,9 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
         <p>Des paniers sélectionnés pour durer, testés avant l’envoi.</p>
       </div>
       <div class="choisir">
-        <article class="choix-carte" data-apparait><div class="ph"><img src="img/salon.jpg" alt="Le panier dans un salon" loading="lazy" /></div><div class="t"><h3>Produits sélectionnés</h3><p>Chaque modèle est choisi pour son confort et sa solidité.</p></div></article>
-        <article class="choix-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/rebord.jpg" alt="Le rebord matelassé en gros plan" loading="lazy" /></div><div class="t"><h3>Finitions soignées</h3><p>Tissu matelassé, coutures renforcées, fermeture solide.</p></div></article>
-        <article class="choix-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/original.jpg" alt="Un chien sur le panier" loading="lazy" /></div><div class="t"><h3>Adoré par les chiens</h3><p>Du chiot au senior, pour toutes les tailles.</p></div></article>
+        <article class="choix-carte" data-apparait><div class="ph"><img src="img/gamme/brun-naturel.jpg" alt="Un samoyède sur le panier Sieste Tweed" loading="lazy" /></div><div class="t"><h3>Produits sélectionnés</h3><p>Chaque modèle est choisi pour son confort et sa solidité.</p></div></article>
+        <article class="choix-carte" data-apparait><div class="ph"><img src="img/gamme/bleu-marine.jpg" alt="Un beagle sur le panier Sieste Marine matelassé" loading="lazy" /></div><div class="t"><h3>Finitions soignées</h3><p>Tissu matelassé, coutures renforcées, fermeture solide.</p></div></article>
+        <article class="choix-carte" data-apparait><div class="ph"><img src="img/gamme/ovale-camel.jpg" alt="Un berger australien roulé en boule sur le panier Sieste Ovale" loading="lazy" /></div><div class="t"><h3>Adoré par les chiens</h3><p>Du chiot au senior, pour toutes les tailles.</p></div></article>
       </div>
     </div>
   </section>
@@ -363,9 +363,9 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
         <p>Ce que nos clients disent de leur panier.</p>
       </div>
       <div class="avis-grille">
-        <figure class="avis-carte" data-apparait><div class="ph"><img src="img/salon.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="5 sur 5">★★★★★</span><blockquote>« Notre labrador de onze ans se relève bien plus facilement le matin. Il ne quitte plus son panier. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">N</span><span>Nathalie D.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
-        <figure class="avis-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/large.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="5 sur 5">★★★★★</span><blockquote>« La housse est passée trois fois en machine, elle est comme neuve. Très bonne qualité. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">K</span><span>Karim B.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
-        <figure class="avis-carte" data-apparait><div class="ph detoure" style="background:#fff"><img src="img/chien-panier.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="4 sur 5">★★★★☆</span><blockquote>« Très confortable, il pose sa tête sur le rebord. J’aimerais juste plus de couleurs. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">É</span><span>Élodie M.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
+        <figure class="avis-carte" data-apparait><div class="ph"><img src="img/gamme/beige-chaud.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="5 sur 5">★★★★★</span><blockquote>« Notre labrador de onze ans se relève bien plus facilement le matin. Il ne quitte plus son panier. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">N</span><span>Nathalie D.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
+        <figure class="avis-carte" data-apparait><div class="ph"><img src="img/gamme/charbon.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="5 sur 5">★★★★★</span><blockquote>« La housse est passée trois fois en machine, elle est comme neuve. Très bonne qualité. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">K</span><span>Karim B.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
+        <figure class="avis-carte" data-apparait><div class="ph"><img src="img/gamme/brun-classique.jpg" alt="" loading="lazy" /></div><div class="t"><span class="etoiles" aria-label="4 sur 5">★★★★☆</span><blockquote>« Très confortable, il pose sa tête sur le rebord. J’aimerais juste plus de couleurs. »</blockquote><figcaption class="auteur"><span class="avatar" aria-hidden="true">É</span><span>Élodie M.<small>✓ Achat vérifié</small></span></figcaption></div></figure>
       </div>
       <p class="note-demo">Avis inventés pour la démonstration.</p>
     </div>
@@ -379,7 +379,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
           <p>Choisissez sa taille, on s’occupe du reste. Livraison suivie et 14 jours pour changer d’avis.</p>
           <a class="btn" href="#produits">Voir les paniers</a>
         </div>
-        <div class="final-ph"><img src="img/chien-panier.jpg" alt="Un chien sur le panier Sieste" loading="lazy" /></div>
+        <div class="final-ph"><img src="img/gamme/creme-arctique.jpg" alt="Un chien endormi sur le panier Sieste Cocon" loading="lazy" style="width:100%;height:100%;object-fit:cover;mix-blend-mode:normal" /></div>
       </div>
     </div>
   </section>
@@ -393,7 +393,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
       <div><h4>Aide</h4><ul><li><a href="#haut">Livraison</a></li><li><a href="#haut">Retours</a></li><li><a href="#haut">Contact</a></li></ul></div>
       <div><h4>Infos</h4><ul><li><a href="#haut">CGV</a></li><li><a href="#haut">Mentions légales</a></li><li><a href="#haut">Confidentialité</a></li></ul></div>
     </div>
-    <p class="bas">© 2026 Sieste · Site de démonstration, aucune vente possible. Photos : fournisseur du panier.</p>
+    <p class="bas">© 2026 Sieste · Site de démonstration, aucune vente possible. Photos : fournies par la marque.</p>
   </div>
 </footer>
 
@@ -414,10 +414,15 @@ footer a { text-decoration: none; } footer a:hover { color: var(--orange); }
 const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TAILLES = { S: ['60 × 45 cm', 10], M: ['80 × 60 cm', 25], L: ['100 × 75 cm', 40], XL: ['120 × 90 cm', 60] };
 const PANIERS = [
-  { id: 'original', nom: 'Panier Sieste Original', details: 'Rebords 3 côtés · Mémoire de forme', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/original.jpg', note: 312, pastille: 'Meilleure vente' },
-  { id: 'salon', nom: 'Panier Sieste Salon', details: 'Housse matelassée · Déhoussable', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/large.jpg', note: 208 },
-  { id: 'compact', nom: 'Panier Sieste Compact', details: 'Petits chiens · Chiots', prix: { S: 69, M: 79, L: 89, XL: 99 }, img: 'img/compact.jpg', note: 164, pastille: 'Nouveau' },
-  { id: 'grand', nom: 'Panier Grand Repos', details: 'Extra-épais · Chiens âgés', prix: { S: 119, M: 139, L: 159, XL: 189 }, img: 'img/grand.jpg', note: 127 },
+  { id: 'classique', nom: 'Sieste Classique', couleur: 'Brun chocolat', details: 'Rebords 3 côtés · Passepoil orange', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/gamme/brun-classique.jpg', note: 312, pastille: 'Meilleure vente' },
+  { id: 'fraicheur', nom: 'Sieste Fraîcheur', couleur: 'Bleu ciel', details: 'Housse matelassée respirante', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/gamme/bleu-ciel.jpg', note: 186, pastille: 'Nouveau' },
+  { id: 'cocon', nom: 'Sieste Cocon', couleur: 'Crème arctique', details: 'Fausse fourrure ultra-douce', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/gamme/creme-arctique.jpg', note: 241 },
+  { id: 'ovale', nom: 'Sieste Ovale', couleur: 'Camel', details: 'Pour les chiens qui dorment en boule', prix: { S: 79, M: 95, L: 115, XL: 135 }, img: 'img/gamme/ovale-camel.jpg', note: 158 },
+  { id: 'grand', nom: 'Sieste Grand Repos', couleur: 'Gris foncé', details: 'Grand format · Rebords tout autour', prix: { S: 109, M: 129, L: 149, XL: 179 }, img: 'img/gamme/gris-fonce.jpg', note: 204 },
+  { id: 'tweed', nom: 'Sieste Tweed', couleur: 'Brun naturel', details: 'Tissu tweed · Passepoil crème', prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/gamme/brun-naturel.jpg', note: 133 },
+  { id: 'peluche', nom: 'Sieste Peluche', couleur: 'Beige chaud', details: 'Peluche douce · Chiens frileux', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/gamme/beige-chaud.jpg', note: 176 },
+  { id: 'urbain', nom: 'Sieste Urbain', couleur: 'Charbon', details: 'Velours gris · Couchage chiné', prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/gamme/charbon.jpg', note: 121 },
+  { id: 'marine', nom: 'Sieste Marine', couleur: 'Bleu marine', details: 'Matelassé bicolore · Housse lavable', prix: { S: 95, M: 115, L: 135, XL: 155 }, img: 'img/gamme/bleu-marine.jpg', note: 167, pastille: 'Nouveau' },
 ];
 const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 
@@ -429,7 +434,7 @@ grille.innerHTML = PANIERS.map((p) => `
     <div class="carte-corps">
       <p class="note"><span class="etoiles" aria-hidden="true">★★★★★</span>(${p.note})</p>
       <h3>${p.nom}</h3>
-      <p class="details">${p.details}</p>
+      <p class="details">${p.couleur} · ${p.details}</p>
       <div class="tailles" role="group" aria-label="Taille">${Object.keys(TAILLES).map((t) => `<button type="button" aria-pressed="${t === 'M'}" data-t="${t}">${t}</button>`).join('')}</div>
       <p class="prix" aria-live="polite">${euros(p.prix.M)}</p>
       <button class="btn btn-noir ajout" type="button">Acheter</button>
