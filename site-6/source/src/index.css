@@ -1,52 +1,66 @@
 @import 'tailwindcss';
 
-/* Veilleuse : la nuit (la vidéo) puis le matin (le produit). Une seule couleur vive : l'ambre de la lampe. */
+/* Veilleuse : luxe sombre et or. Toutes les couleurs passent par ces variables. */
 @theme {
-  --color-nuit: #0b1317;
-  --color-nuit-2: #142026;
-  --color-lin: #f4efe6;
-  --color-lin-2: #ebe3d6;
-  --color-encre: #1d2326;
-  --color-gris: #5d6468;
-  --color-brume: #b3bcbd;
-  --color-ambre: #f0b35e;
-  --color-ambre-fonce: #9a5d1c;
-  --color-sauge: #6f8b7b;
-  --font-serif: 'Fraunces Variable', ui-serif, Georgia, serif;
-  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --color-primaire: #1c1917;
+  --color-secondaire: #44403c;
+  --color-or: #a16207;          /* boutons (texte blanc dessus : 4,9:1) et texte or sur fond clair */
+  --color-or-fonce: #854d0e;    /* survol des boutons or */
+  --color-or-clair: #d9a441;    /* or lisible sur fond sombre (7,7:1) */
+  --color-fond: #fafaf9;
+  --color-carte: #ffffff;
+  --color-texte: #0c0a09;
+  --color-muted: #e8ecf0;
+  --color-texte-muted: #475569;
+  --color-bordure: #d6d3d1;
+  --color-clair: #fafaf9;       /* texte sur fond sombre */
+  --color-clair-muted: #d6d3d1; /* texte secondaire sur fond sombre */
+  --color-sable: #f1ece4;       /* fond derrière les photos (proche du crème des photos) */
+  --color-taupe: #b8ad9e;       /* couleur de la housse, pour le schéma des couches */
+  --font-serif: 'Cormorant Variable', 'Cormorant', ui-serif, Georgia, serif;
+  --font-sans: 'Montserrat Variable', 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --ease-doux: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
-  html { background: var(--color-nuit); color: var(--color-lin); -webkit-text-size-adjust: 100%; }
-  body { margin: 0; font-family: var(--font-sans); font-size: 1.0625rem; line-height: 1.6; overflow-x: clip; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
-  ::selection { background: var(--color-ambre); color: var(--color-encre); }
-  :focus-visible { outline: 2px solid var(--color-ambre); outline-offset: 3px; border-radius: 4px; }
-  h1, h2, h3 { font-family: var(--font-serif); font-optical-sizing: auto; font-weight: 360; letter-spacing: -0.02em; line-height: 1.02; text-wrap: balance; }
-  h1 em, h2 em { font-style: italic; font-weight: 300; }
+  html { background: var(--color-fond); color: var(--color-texte); -webkit-text-size-adjust: 100%; scroll-padding-top: 4.5rem; }
+  body { margin: 0; font-family: var(--font-sans); font-size: 1rem; line-height: 1.65; overflow-x: clip; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+  ::selection { background: var(--color-or); color: #fff; }
+  :focus-visible { outline: 2px solid var(--color-or); outline-offset: 3px; border-radius: 4px; }
+  .sombre :focus-visible { outline-color: var(--color-or-clair); }
+  h1, h2, h3 { font-family: var(--font-serif); font-weight: 500; letter-spacing: -0.01em; line-height: 1.05; text-wrap: balance; }
+  h1 em, h2 em, h3 em { font-style: italic; font-weight: 500; color: var(--color-or); }
+  .sombre h1 em, .sombre h2 em { color: var(--color-or-clair); }
   p { text-wrap: pretty; }
 }
 
 @layer components {
-  .serif { font-family: var(--font-serif); font-optical-sizing: auto; font-weight: 360; letter-spacing: -0.015em; }
+  .serif { font-family: var(--font-serif); font-weight: 500; }
   .chiffres { font-variant-numeric: tabular-nums lining-nums; }
-  .surtitre { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
+  .surtitre { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; }
+  .conteneur { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1rem; }
+  @media (min-width: 640px) { .conteneur { padding-inline: 2rem; } }
   .bouton {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0 1.75rem;
-    border-radius: 999px; font-weight: 600; cursor: pointer; transition: background-color 250ms var(--ease-doux), transform 250ms var(--ease-doux);
+    border-radius: 999px; font-weight: 600; letter-spacing: 0.01em; cursor: pointer; text-decoration: none;
+    transition: background-color 200ms var(--ease-doux), transform 200ms var(--ease-doux);
   }
   .bouton:active { transform: scale(0.98); }
-  .bouton-ambre { background: var(--color-ambre); color: var(--color-encre); }
-  .bouton-ambre:hover { background: #f6c47c; }
-  .bouton-encre { background: var(--color-encre); color: var(--color-lin); }
-  .bouton-encre:hover { background: #33393c; }
+  .bouton-or { background: var(--color-or); color: #fff; }
+  .bouton-or:hover { background: var(--color-or-fonce); }
+  .bouton-sombre { background: var(--color-primaire); color: var(--color-clair); }
+  .bouton-sombre:hover { background: var(--color-secondaire); }
 }
 
+/* Curseurs du calculateur de taille */
 input[type='range'] { appearance: none; width: 100%; height: 44px; background: transparent; cursor: pointer; }
-input[type='range']::-webkit-slider-runnable-track { height: 2px; background: currentColor; opacity: 0.35; }
-input[type='range']::-moz-range-track { height: 2px; background: currentColor; opacity: 0.35; }
-input[type='range']::-webkit-slider-thumb { appearance: none; width: 26px; height: 26px; margin-top: -12px; border-radius: 50%; background: var(--color-encre); border: 3px solid var(--color-lin); box-shadow: 0 2px 8px rgb(0 0 0 / 0.25); }
-input[type='range']::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--color-encre); border: 3px solid var(--color-lin); }
+input[type='range']::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: var(--color-bordure); }
+input[type='range']::-moz-range-track { height: 4px; border-radius: 4px; background: var(--color-bordure); }
+input[type='range']::-webkit-slider-thumb { appearance: none; width: 28px; height: 28px; margin-top: -12px; border-radius: 50%; background: var(--color-or); border: 3px solid var(--color-carte); box-shadow: 0 1px 4px rgb(0 0 0 / 0.3); }
+input[type='range']::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--color-or); border: 3px solid var(--color-carte); }
+
+/* FAQ : retirer le triangle natif */
+summary::-webkit-details-marker { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
