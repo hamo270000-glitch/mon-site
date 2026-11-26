@@ -1,20 +1,17 @@
-# Site 7 · sieste (démo)
+# Site 7 · Sieste (démo)
 
-Site de démonstration : boutique de **paniers orthopédiques pour chien**, marque inventée (« sieste »).
+Site de démonstration : boutique de **paniers orthopédiques pour chien**, marque inventée « Sieste ».
 Marque, prix et avis sont **inventés** (un bandeau le dit en haut de la page).
 
 En ligne : https://hamo270000-glitch.github.io/mon-site/site-7/
 
-## Direction artistique
-Inspirée des designs « pet store » les plus aimés de Dribbble (tubik : 555 likes, Nixtio : 395 likes), après que l'utilisateur a refusé les versions « noir et or » puis « vert et terracotta » qui faisaient trop dropshipping :
-- photos dans des **arches** (arrondies en haut), contour doré et trait courbe qui se dessine ;
-- titres en **Fraunces** (serif éditoriale, italique), texte en DM Sans (polices dans `fonts/`) ;
-- couleurs : sapin #2d5a54, lavande #cdc6ef, citron #d9f27e, crème #f5f1e8 ;
-- badge rond « Nouvelle collection » qui tourne, pilule « Taille S—XL », beaucoup d'air, peu de badges promo.
-- Le fond blanc/gris des photos fournisseur se fond dans la couleur de l'arche (`mix-blend-mode: multiply` + léger éclaircissement).
-
-## Animations (GSAP + Lenis, dans `vendor/`)
-Grande arche avec 3 photos qui défilent seules, titres mot par mot (SplitText), phrase qui s'allume au défilement, 4 couches en défilement horizontal épinglé, prix qui comptent au changement de taille, patte qui vole jusqu'au panier, menu plein écran qui s'ouvre en cercle, avis un par un.
+## Design
+Reproduit le design Dribbble n°10 **choisi par l'utilisateur** : « PetCare – Pet Store Ecommerce Website for Dog Lovers » (marque Barkzen) de Sohanur Rahman
+(https://dribbble.com/shots/27399564-PetCare-Pet-Store-Ecommerce-Website-for-Dog-Lovers).
+- Fond blanc, **orange #f26a21** comme seule couleur d'accent, police **Poppins** (dans `fonts/`).
+- Héros : grande photo, texte blanc à gauche, étoiles + nombre d'avis, bouton orange « Acheter » ; 3 photos qui défilent toutes seules.
+- Bande de réassurance, « Découvrez nos paniers » (cartes gris clair, étoiles, choix de taille, prix orange, bouton noir « Acheter »), engagements autour d'une photo, « Pourquoi choisir Sieste » (3 cartes photo), tableau « La différence est claire », témoignages, bandeau final orange.
+- Refusé avant : noir et or, vert et terracotta, arches façon tubik.
 
 ## Fichiers
-Une seule page `index.html` (HTML + CSS + JS), sans étape de construction. Photos du fournisseur dans `img/` (copiées depuis le Site 6).
+Une seule page `index.html` (HTML + CSS + JS), sans étape de construction. GSAP, ScrollTrigger et Lenis dans `vendor/`. Photos du fournisseur dans `img/` (copiées depuis le Site 6).
