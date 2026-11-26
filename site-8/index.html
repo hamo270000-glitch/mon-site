@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#113e20" />
+<meta name="description" content="Patou : paniers orthopédiques pour chien. Site de démonstration dans le style d'une boutique premium." />
+<title>Patou · Paniers orthopédiques pour chien (démo)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23113e20'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='17' fill='%23fff'%3EP%3C/text%3E%3C/svg%3E" />
+<link rel="preload" href="fonts/poppins-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+<style>
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-400-normal.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url(fonts/poppins-latin-700-normal.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+
+/* Style inspiré d'une boutique premium d'accessoires pour chien : vert sapin, Poppins, cartes gris clair, boutons arrondis. */
+:root {
+  --sapin: #113e20; --sapin-2: #2f7144; --sauge: #a7bbac; --sauge-clair: #e8efe9;
+  --noir: #111; --texte: #3c3c3c; --gris: #5e5e5e; --gris-2: #8d8d8d;
+  --fond: #fcfcfc; --carte: #f1f1f1; --ligne: #e6e6e6; --rouge: #c8102e;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--fond); color: var(--texte); -webkit-text-size-adjust: 100%; }
+body { font-family: 'Poppins', system-ui, sans-serif; font-size: 14px; line-height: 1.6; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; } button { font: inherit; color: inherit; cursor: pointer; }
+h1, h2, h3 { color: var(--noir); line-height: 1.2; font-weight: 600; }
+.wrap { width: min(1360px, 100% - 32px); margin-inline: auto; }
+:focus-visible { outline: 2px solid var(--sapin-2); outline-offset: 3px; border-radius: 6px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.i { width: 20px; height: 20px; flex-shrink: 0; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 46px; padding: 0 1.6rem; border-radius: 60px; border: 0; font-weight: 600; font-size: .85rem; transition: background-color .25s, color .25s, transform .25s var(--ease); }
+.btn-blanc { background: #fff; color: var(--noir); }
+.btn-blanc:hover { background: var(--sauge-clair); }
+.btn-contour { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px #fff; }
+.btn-contour:hover { background: #fff; color: var(--noir); }
+.btn-vert { background: var(--sapin-2); color: #fff; width: 100%; min-height: 52px; font-size: .9rem; }
+.btn-vert:hover { background: var(--sapin); }
+.btn-vert.ok { background: var(--sapin); }
+
+.annonce { background: var(--noir); color: #fff; text-align: center; font-size: .75rem; padding: .55rem 1rem; }
+.annonce b { background: var(--sapin-2); padding: .05rem .4rem; border-radius: 4px; margin: 0 .2rem; }
+
+/* En-tête */
+.tete { position: sticky; top: 0; z-index: 50; background: var(--sapin); color: #fff; }
+.tete-in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; }
+.logo { font-weight: 700; font-size: 1.25rem; letter-spacing: .32em; text-transform: uppercase; }
+.tete .droite { justify-self: end; display: flex; align-items: center; gap: .3rem; }
+.ic { display: grid; place-items: center; width: 42px; height: 42px; border: 0; background: none; color: #fff; border-radius: 999px; position: relative; }
+.ic:hover { background: rgb(255 255 255 / .1); }
+.compte { position: absolute; top: 3px; right: 1px; min-width: 18px; height: 18px; padding: 0 4px; display: grid; place-items: center; border-radius: 999px; background: #fff; color: var(--sapin); font-size: .65rem; font-weight: 700; }
+.compte[hidden] { display: none; }
+.lang { display: none; font-size: .75rem; font-weight: 500; padding: 0 .5rem; }
+@media (min-width: 760px) { .lang { display: inline; } }
+.nav-bureau { display: none; gap: 1.6rem; font-size: .82rem; font-weight: 500; }
+.nav-bureau a { opacity: .9; } .nav-bureau a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+@media (min-width: 1000px) { .nav-bureau { display: flex; } }
+
+/* Menu latéral (comme le concurrent : Promenade / Dormir / ...) */
+.tiroir-menu, .tiroir-panier { position: fixed; inset: 0; z-index: 90; visibility: hidden; }
+.tiroir-menu.ouvert, .tiroir-panier.ouvert { visibility: visible; }
+.voile { position: absolute; inset: 0; width: 100%; border: 0; background: rgb(0 0 0 / .45); opacity: 0; transition: opacity .3s; }
+.ouvert .voile { opacity: 1; }
+.panneau { position: absolute; top: 0; bottom: 0; width: min(400px, 92%); background: #fff; display: flex; flex-direction: column; transition: transform .45s var(--ease); padding-bottom: env(safe-area-inset-bottom); }
+.tiroir-menu .panneau { left: 0; transform: translateX(-100%); }
+.tiroir-panier .panneau { right: 0; transform: translateX(100%); }
+.ouvert .panneau { transform: none; }
+.panneau-tete { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--ligne); }
+.panneau-tete .ic { color: var(--noir); }
+.panneau-tete .ic:hover { background: var(--carte); }
+.menu-liste { list-style: none; padding: 8px 18px; overflow-y: auto; flex: 1; }
+.menu-liste > li { border-bottom: 1px solid var(--ligne); }
+.menu-liste summary { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 16px 0; font-weight: 600; font-size: 1rem; cursor: pointer; color: var(--noir); }
+.menu-liste summary::-webkit-details-marker { display: none; }
+.menu-liste details[open] summary svg { transform: rotate(180deg); }
+.menu-liste summary svg { transition: transform .3s; }
+.menu-liste .sous { list-style: none; padding: 0 0 14px 0; display: grid; gap: .55rem; }
+.menu-liste .sous a { color: var(--gris); }
+.menu-liste .sous a:hover { color: var(--sapin-2); }
+.menu-liste > li > a { display: block; padding: 16px 0; font-weight: 600; font-size: 1rem; color: var(--noir); }
+
+/* Héros */
+.heros { position: relative; min-height: min(84svh, 720px); display: grid; place-items: center; text-align: center; color: #fff; overflow: hidden; isolation: isolate; }
+.heros img.fond { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.heros::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(0 0 0 / .45), rgb(0 0 0 / .25) 45%, rgb(0 0 0 / .65)); }
+.heros-texte { padding: 60px 16px 150px; max-width: 640px; }
+.surtitre { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 600; }
+.heros h1 { color: #fff; font-size: clamp(2.2rem, 6vw, 3.6rem); margin-top: .5rem; }
+.heros p.chapo { font-size: clamp(.95rem, 2vw, 1.15rem); font-weight: 600; margin-top: .6rem; }
+.puces { list-style: none; padding: 0; margin: 1.2rem auto 0; display: grid; gap: .4rem; justify-content: center; text-align: left; font-size: .88rem; }
+.puces li { display: flex; gap: .5rem; align-items: center; }
+.puces svg { width: 18px; height: 18px; color: #4ec26f; }
+.heros .actions { display: flex; flex-wrap: wrap; gap: .7rem; justify-content: center; margin-top: 1.6rem; }
+.ronds { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; justify-content: safe center; gap: clamp(10px, 2.4vw, 26px); padding: 0 16px; overflow-x: auto; scrollbar-width: none; }
+.rond { display: grid; justify-items: center; gap: .35rem; font-size: .68rem; font-weight: 600; text-align: center; min-width: 64px; }
+.rond span.ph { width: 62px; height: 62px; border-radius: 999px; overflow: hidden; background: #fff; border: 2px solid #fff; display: grid; place-items: center; transition: transform .3s var(--ease); }
+.rond:hover span.ph { transform: translateY(-3px); }
+.rond span.ph img { width: 100%; height: 100%; object-fit: cover; }
+.rond span.ph.blanc img { object-fit: contain; }
+
+/* Sections */
+section { padding: clamp(46px, 7vw, 80px) 0; }
+.titre-ligne { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; gap: 1rem; }
+.titre-ligne h2 { font-size: clamp(1.5rem, 3.2vw, 2.2rem); }
+.tout-voir { display: inline-flex; align-items: center; gap: .5rem; font-size: .8rem; color: var(--gris); }
+.tout-voir span { width: 24px; height: 24px; border-radius: 999px; background: var(--carte); display: grid; place-items: center; }
+.centre-titre { text-align: center; margin-bottom: 26px; }
+.centre-titre .surtitre { color: var(--sapin-2); }
+.centre-titre h2 { font-size: clamp(1.5rem, 3.2vw, 2.2rem); margin-top: .3rem; }
+.filtres { display: flex; gap: .45rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+.filtres button { min-height: 36px; padding: 0 1rem; border-radius: 60px; border: 1px solid #cfcfcf; background: #fff; font-size: .78rem; font-weight: 500; }
+.filtres button[aria-pressed='true'] { background: var(--noir); color: #fff; border-color: var(--noir); }
+
+/* Grille produits */
+.grille { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (min-width: 900px) { .grille { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+.carte[hidden] { display: none !important; }
+.carte { display: flex; flex-direction: column; background: #fff; border-radius: 6px; overflow: hidden; }
+.carte .ph { position: relative; aspect-ratio: 1; background: var(--carte); display: grid; place-items: center; overflow: hidden; }
+.carte .ph img { width: 92%; height: 92%; object-fit: contain; mix-blend-mode: multiply; transition: transform .6s var(--ease), opacity .45s; }
+.carte .ph img.amb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; opacity: 0; }
+@media (hover: hover) { .carte:hover .ph img.amb { opacity: 1; } .carte:hover .ph img:not(.amb) { transform: scale(1.04); } }
+.carte.plein .ph img:not(.amb) { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
+.badge { position: absolute; top: 10px; left: 10px; z-index: 2; display: grid; gap: 4px; justify-items: start; }
+.badge span { background: var(--sapin); color: #fff; font-size: .62rem; font-weight: 600; padding: .18rem .55rem; border-radius: 60px; }
+.carte .sac { position: absolute; right: 10px; bottom: 10px; width: 32px; height: 32px; border-radius: 999px; background: #fff; border: 0; display: grid; place-items: center; z-index: 2; box-shadow: 0 2px 8px rgb(0 0 0 / .08); }
+.carte .sac svg { width: 15px; height: 15px; }
+.carte .t { padding: 12px 12px 16px; display: grid; gap: .2rem; }
+.carte h3 { font-size: .82rem; font-weight: 600; line-height: 1.35; }
+.carte .prix { font-size: .82rem; color: var(--gris); }
+.carte .prix b { color: var(--noir); font-weight: 600; }
+.pastilles { display: flex; gap: 4px; margin-top: .3rem; }
+.pastilles i { width: 14px; height: 14px; border-radius: 3px; border: 1px solid #cfcfcf; }
+.pastilles i.on { outline: 1.5px solid var(--noir); outline-offset: 1px; }
+
+/* Bannière */
+.banniere { position: relative; border-radius: 8px; overflow: hidden; min-height: 300px; display: flex; align-items: center; color: #fff; isolation: isolate; }
+.banniere img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.banniere::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(0 0 0 / .65), rgb(0 0 0 / 0) 70%); }
+.banniere .t { padding: clamp(24px, 5vw, 60px); max-width: 520px; }
+.banniere h2 { color: #fff; font-size: clamp(1.6rem, 4vw, 2.6rem); text-transform: uppercase; font-weight: 700; }
+.banniere p { margin: .6rem 0 1.2rem; }
+
+/* Avantages */
+.avantages { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+@media (min-width: 900px) { .avantages { grid-template-columns: repeat(4, 1fr); } }
+.avantage svg { width: 38px; height: 38px; color: var(--noir); stroke-width: 1.3; }
+.avantage h3 { font-size: .95rem; margin-top: .7rem; }
+.avantage p { color: var(--gris); font-size: .82rem; margin-top: .2rem; }
+
+/* Problèmes / solutions */
+.probs { max-width: 640px; margin: 0 auto; display: grid; gap: 10px; }
+.prob { display: flex; align-items: center; gap: .8rem; background: var(--carte); border-radius: 6px; padding: 12px 14px; font-size: .82rem; }
+.prob .x { width: 22px; height: 22px; border-radius: 999px; background: #e5484d; color: #fff; display: grid; place-items: center; flex-shrink: 0; font-size: .7rem; font-weight: 700; }
+.prob p { flex: 1; }
+.prob button { border: 1px solid #cfcfcf; background: #fff; border-radius: 6px; font-size: .7rem; font-weight: 600; padding: .35rem .6rem; }
+.prob .sol { display: none; color: var(--sapin-2); font-weight: 500; margin-top: .3rem; }
+.prob.ouvert .sol { display: block; }
+
+/* Avis */
+.avis-grille { display: grid; gap: 12px; }
+@media (min-width: 900px) { .avis-grille { grid-template-columns: repeat(3, 1fr); } }
+.avis { background: #fff; border: 1px solid var(--ligne); border-radius: 8px; padding: 18px; }
+.etoiles { color: var(--noir); letter-spacing: 2px; }
+.avis blockquote { margin-top: .5rem; font-size: .88rem; }
+.avis figcaption { margin-top: .7rem; font-size: .75rem; color: var(--gris-2); }
+
+/* Lettre */
+.lettre { background: var(--sapin); color: #fff; text-align: center; }
+.lettre h2 { color: #fff; font-size: clamp(1.4rem, 3vw, 2rem); }
+.lettre form { display: flex; gap: .5rem; max-width: 460px; margin: 1.2rem auto 0; flex-wrap: wrap; justify-content: center; }
+.lettre input { flex: 1; min-width: 220px; min-height: 46px; border-radius: 60px; border: 0; padding: 0 1.2rem; font: inherit; }
+
+/* Pied de page */
+footer { background: #0c2c17; color: #c8d3ca; padding: 50px 0 30px; font-size: .82rem; }
+.pied { display: grid; gap: 28px; }
+@media (min-width: 900px) { .pied { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+footer h4 { color: #fff; font-size: .85rem; margin-bottom: .7rem; }
+footer ul { list-style: none; padding: 0; display: grid; gap: .45rem; }
+footer a:hover { color: #fff; text-decoration: underline; }
+.paiements { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: 1rem; }
+.paiements span { background: #fff; color: var(--noir); font-size: .62rem; font-weight: 700; padding: .3rem .5rem; border-radius: 4px; }
+.bas { margin-top: 28px; padding-top: 18px; border-top: 1px solid rgb(255 255 255 / .12); font-size: .72rem; }
+
+/* Fiche produit */
+.fiche { display: none; padding: 20px 0 60px; }
+.fiche.vue { display: block; }
+.accueil.cache { display: none; }
+.fiche-grille { display: grid; gap: 26px; }
+@media (min-width: 960px) { .fiche-grille { grid-template-columns: 1.25fr 1fr; gap: 50px; align-items: start; } }
+.galerie { display: grid; gap: 10px; }
+@media (min-width: 960px) { .galerie { grid-template-columns: 76px 1fr; position: sticky; top: 84px; } }
+.miniatures { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; order: 2; }
+@media (min-width: 960px) { .miniatures { flex-direction: column; order: 0; } }
+.miniatures button { width: 70px; height: 70px; flex-shrink: 0; border: 1px solid transparent; border-radius: 4px; background: var(--carte); padding: 0; overflow: hidden; }
+.miniatures button[aria-current='true'] { border-color: var(--noir); }
+.miniatures img { width: 100%; height: 100%; object-fit: cover; }
+.grande { background: var(--carte); border-radius: 6px; aspect-ratio: 1; display: grid; place-items: center; overflow: hidden; }
+.grande img { width: 94%; height: 94%; object-fit: contain; mix-blend-mode: multiply; }
+.grande img.plein { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
+.fil { font-size: .75rem; color: var(--gris-2); margin-bottom: 12px; }
+.fil a:hover { text-decoration: underline; }
+.fiche h1 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); }
+.fiche .intro { color: var(--gris); margin-top: .5rem; }
+.prix-ligne { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; }
+.prix-ligne .p { font-size: 1.3rem; font-weight: 600; color: var(--noir); }
+.prix-ligne .note { font-size: .78rem; color: var(--gris); }
+.choix-titre { margin-top: 1.4rem; font-size: .82rem; display: flex; justify-content: space-between; }
+.choix-titre span { color: var(--gris); }
+.choix-titre a { color: var(--gris); text-decoration: underline; font-size: .75rem; }
+.tailles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: .6rem; }
+.tailles button { min-width: 46px; min-height: 40px; padding: 0 .8rem; border-radius: 60px; border: 1px solid #cfcfcf; background: #fff; font-size: .8rem; font-weight: 500; }
+.tailles button[aria-pressed='true'] { border-color: var(--noir); box-shadow: inset 0 0 0 1px var(--noir); font-weight: 600; }
+.dim { font-size: .78rem; color: var(--gris); margin-top: .5rem; }
+.stock { display: flex; align-items: center; gap: .5rem; color: var(--sapin-2); font-size: .8rem; margin: 1.2rem 0 .8rem; }
+.stock i { width: 16px; height: 16px; border-radius: 999px; background: var(--sapin-2); display: grid; place-items: center; color: #fff; font-style: normal; font-size: .6rem; }
+.garanties { list-style: none; padding: 14px 16px; margin-top: 1rem; background: var(--carte); border-radius: 6px; display: grid; gap: .55rem; font-size: .8rem; }
+.garanties li { display: flex; gap: .6rem; align-items: center; }
+.garanties svg { width: 17px; height: 17px; color: var(--gris); }
+.onglets { margin-top: 1.4rem; border-top: 1px solid var(--ligne); }
+.onglets details { border-bottom: 1px solid var(--ligne); }
+.onglets summary { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 15px 0; font-weight: 600; font-size: .85rem; cursor: pointer; color: var(--noir); }
+.onglets summary::-webkit-details-marker { display: none; }
+.onglets summary span { width: 22px; height: 22px; border-radius: 999px; background: var(--carte); display: grid; place-items: center; transition: transform .3s; }
+.onglets details[open] summary span { transform: rotate(180deg); }
+.onglets .c { padding: 0 0 16px; color: var(--gris); font-size: .82rem; }
+.onglets table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.onglets td, .onglets th { padding: .45rem 0; border-bottom: 1px solid var(--ligne); text-align: left; }
+.fiche .avantages { margin-top: 60px; }
+.fiche h2.grand { font-size: clamp(1.5rem, 3.2vw, 2.2rem); margin: 60px 0 26px; }
+
+/* Panier */
+.lignes { list-style: none; padding: 14px 18px; flex: 1; overflow-y: auto; display: grid; align-content: start; gap: 14px; }
+.ligne { display: flex; gap: 12px; align-items: center; }
+.ligne .m { width: 68px; height: 68px; border-radius: 6px; background: var(--carte); display: grid; place-items: center; overflow: hidden; flex-shrink: 0; }
+.ligne .m img { width: 92%; mix-blend-mode: multiply; }
+.ligne div { flex: 1; font-size: .8rem; } .ligne strong { color: var(--noir); } .ligne p { color: var(--gris); }
+.panier-bas { padding: 16px 18px; border-top: 1px solid var(--ligne); }
+.panier-bas .tot { display: flex; justify-content: space-between; font-weight: 600; color: var(--noir); margin-bottom: .8rem; }
+.vide { color: var(--gris); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+<p class="annonce">Livraison offerte dès <b>149 €</b> · Démo : marque, avis et textes inventés</p>
+
+<header class="tete">
+  <div class="wrap tete-in">
+    <div style="display:flex;align-items:center;gap:1.4rem">
+      <button class="ic" type="button" id="ouvrir-menu" aria-label="Ouvrir le menu" aria-expanded="false"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav-bureau" aria-label="Rayons"><a href="#/">Dormir</a><a href="#/" data-filtre="canape">Canapés</a><a href="#/" data-filtre="panier">Paniers</a><a href="#/" data-filtre="lit">Lits géants</a></nav>
+    </div>
+    <a class="logo" href="#/" aria-label="Patou, accueil">Patou</a>
+    <div class="droite">
+      <span class="lang">🇫🇷 EUR € · Français</span>
+      <button class="ic" type="button" aria-label="Rechercher" onclick="location.hash='#/';setTimeout(()=>document.getElementById('nouveautes').scrollIntoView(),50)"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+      <button class="ic" type="button" id="ouvrir-panier" aria-label="Ouvrir le panier, 0 article"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="compte" id="compte" hidden>0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="tiroir-menu" id="menu" aria-hidden="true">
+  <button class="voile" type="button" aria-label="Fermer le menu" data-fermer-menu></button>
+  <div class="panneau" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="panneau-tete"><span class="logo" style="color:var(--sapin)">Patou</span><button class="ic" type="button" data-fermer-menu aria-label="Fermer"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <ul class="menu-liste">
+      <li><details open><summary>Dormir <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <ul class="sous"><li><a href="#/" data-filtre="tout">Tout voir</a></li><li><a href="#/" data-filtre="canape">Canapés orthopédiques</a></li><li><a href="#/" data-filtre="panier">Paniers</a></li><li><a href="#/" data-filtre="lit">Lits géants</a></li></ul></details></li>
+      <li><details><summary>Par besoin <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <ul class="sous"><li><a href="#/produit/n2">Chiens âgés (entrée basse)</a></li><li><a href="#/produit/n13">Chiens qui ont chaud</a></li><li><a href="#/produit/n8">Chiens qui dorment en boule</a></li><li><a href="#/produit/n5">Grands chiens</a></li></ul></details></li>
+      <li><a href="#/" data-ancre="nouveautes">Nouveautés</a></li>
+      <li><a href="#/" data-ancre="guide">Guide des tailles</a></li>
+      <li><a href="#/" data-ancre="pied">Aide & contact</a></li>
+    </ul>
+  </div>
+</div>
+
+<main>
+<div class="accueil" id="accueil">
+  <section class="heros" style="padding:0" aria-labelledby="titre">
+    <img class="fond" src="img/brun-classique.jpg" alt="" fetchpriority="high" />
+    <div class="heros-texte">
+      <p class="surtitre" data-entre>Nouvelle collection</p>
+      <h1 id="titre" data-entre>Le sommeil qu’il mérite</h1>
+      <p class="chapo" data-entre>Des paniers orthopédiques pensés pour ses articulations et votre intérieur.</p>
+      <ul class="puces" data-entre>
+        <li><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.3 14.3-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4-7 7Z"/></svg>Mousse à mémoire de forme</li>
+        <li><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.3 14.3-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4-7 7Z"/></svg>Housse déhoussable et lavable</li>
+        <li><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.3 14.3-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4-7 7Z"/></svg>Du S au XXL</li>
+      </ul>
+      <div class="actions" data-entre><a class="btn btn-blanc" href="#/" data-ancre="nouveautes">Voir les paniers</a><a class="btn btn-contour" href="#/" data-ancre="guide">Trouver sa taille</a></div>
+    </div>
+    <nav class="ronds" aria-label="Catégories">
+      <a class="rond" href="#/" data-filtre="canape"><span class="ph blanc"><img src="img/canape-rebords.jpg" alt="" /></span>Canapés</a>
+      <a class="rond" href="#/" data-filtre="panier"><span class="ph blanc"><img src="img/panier-ovale.jpg" alt="" /></span>Paniers</a>
+      <a class="rond" href="#/" data-filtre="lit"><span class="ph"><img src="img/lit-humain.jpg" alt="" /></span>Lits géants</a>
+      <a class="rond" href="#/produit/n2"><span class="ph blanc"><img src="img/canape-bas.jpg" alt="" /></span>Chiens âgés</a>
+      <a class="rond" href="#/produit/n13"><span class="ph blanc"><img src="img/panier-rafraichissant.jpg" alt="" /></span>Été</a>
+      <a class="rond" href="#/" data-filtre="tout"><span class="ph" style="background:#fff;color:var(--sapin);font-weight:700;font-size:1.3rem">→</span>Tout voir</a>
+    </nav>
+  </section>
+
+  <section id="nouveautes" aria-labelledby="titre-nouv">
+    <div class="wrap">
+      <div class="centre-titre">
+        <p class="surtitre">Pour chaque façon de dormir</p>
+        <h2 id="titre-nouv">Trouve le panier idéal</h2>
+        <div class="filtres" role="group" aria-label="Filtrer">
+          <button type="button" data-f="tout" aria-pressed="true">Tout</button>
+          <button type="button" data-f="canape" aria-pressed="false">Canapés</button>
+          <button type="button" data-f="panier" aria-pressed="false">Paniers</button>
+          <button type="button" data-f="lit" aria-pressed="false">Lits géants</button>
+        </div>
+      </div>
+      <div class="grille" id="grille"></div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="banniere" data-apparait>
+        <img src="img/gris-fonce.jpg" alt="" loading="lazy" />
+        <div class="t"><h2>Assez grand pour deux</h2><p>Le canapé carré accueille les grands chiens… et parfois le chat.</p><a class="btn btn-blanc" href="#/produit/n5">Découvrir</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0" aria-labelledby="titre-best">
+    <div class="wrap">
+      <div class="titre-ligne"><h2 id="titre-best">Nos best-sellers</h2><a class="tout-voir" href="#/" data-ancre="nouveautes">Tout voir <span>›</span></a></div>
+      <div class="grille" id="grille-best"></div>
+    </div>
+  </section>
+
+  <section style="background:#fff" aria-labelledby="titre-av">
+    <div class="wrap">
+      <h2 id="titre-av" style="font-size:clamp(1.5rem,3.2vw,2.2rem);margin-bottom:28px">Ce dont toi et ton chien profitez :</h2>
+      <div class="avantages" id="avantages"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="titre-prob">
+    <div class="wrap">
+      <div class="centre-titre"><p class="surtitre">Pourquoi un panier orthopédique ?</p><h2 id="titre-prob">Les problèmes des paniers classiques</h2></div>
+      <div class="probs" id="probs"></div>
+    </div>
+  </section>
+
+  <section id="guide" style="background:#fff" aria-labelledby="titre-guide">
+    <div class="wrap" style="max-width:760px">
+      <div class="centre-titre"><p class="surtitre">Guide des tailles</p><h2 id="titre-guide">Quelle taille choisir ?</h2><p style="color:var(--gris);margin-top:.5rem">Mesure ton chien couché, du bout du nez à la base de la queue, et ajoute 15 à 20 cm.</p></div>
+      <div class="onglets" style="border-top:0"><table>
+        <thead><tr><th>Taille</th><th>Dimensions (env.)</th><th>Pour quel chien ?</th><th>Prix</th></tr></thead>
+        <tbody><tr><td>S</td><td>61 × 41 cm</td><td>jusqu’à 10 kg</td><td>109,90 €</td></tr><tr><td>M</td><td>76 × 51 cm</td><td>jusqu’à 20 kg</td><td>139,90 €</td></tr><tr><td>L</td><td>91 × 69 cm</td><td>jusqu’à 35 kg</td><td>169,90 €</td></tr><tr><td>XL</td><td>114 × 89 cm</td><td>jusqu’à 50 kg</td><td>199,90 €</td></tr><tr><td>XXL</td><td>135 × 107 cm</td><td>plus de 50 kg</td><td>239,90 €</td></tr></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="titre-avis">
+    <div class="wrap">
+      <div class="titre-ligne"><h2 id="titre-avis">Ils dorment déjà dessus</h2><span class="tout-voir">Avis inventés (démo)</span></div>
+      <div class="avis-grille">
+        <figure class="avis" data-apparait><p class="etoiles" aria-label="5 sur 5">★★★★★</p><blockquote>« Notre berger de 12 ans se relève sans peine depuis qu’il a le canapé bas. »</blockquote><figcaption>Nathalie · Canapé bas, taille XL</figcaption></figure>
+        <figure class="avis" data-apparait><p class="etoiles" aria-label="5 sur 5">★★★★★</p><blockquote>« La housse passe en machine et revient comme neuve. Très belle finition. »</blockquote><figcaption>Karim · Canapé 3 rebords, taille L</figcaption></figure>
+        <figure class="avis" data-apparait><p class="etoiles" aria-label="4 sur 5">★★★★☆</p><blockquote>« Le panier rafraîchissant est parfait l’été, il ne va plus sur le carrelage. »</blockquote><figcaption>Élodie · Panier rafraîchissant, taille M</figcaption></figure>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="fiche wrap" id="fiche"></div>
+</main>
+
+<section class="lettre" aria-labelledby="titre-lettre">
+  <div class="wrap">
+    <h2 id="titre-lettre">Reçois nos conseils et nouveautés</h2>
+    <p style="opacity:.85;margin-top:.4rem">Un e-mail de temps en temps, désinscription en un clic.</p>
+    <form id="form-lettre"><label class="sr" for="email">Adresse e-mail</label><input id="email" type="email" required placeholder="ton@email.fr" autocomplete="email" /><button class="btn btn-blanc" type="submit">Je m’inscris</button></form>
+  </div>
+</section>
+
+<footer id="pied">
+  <div class="wrap">
+    <div class="pied">
+      <div><p class="logo" style="color:#fff">Patou</p><p style="margin-top:.8rem;max-width:22rem">Paniers orthopédiques pour chien. Marque fictive : site de démonstration, aucune vente possible.</p><div class="paiements"><span>VISA</span><span>Mastercard</span><span>PayPal</span><span>Apple Pay</span></div></div>
+      <div><h4>Patou</h4><ul><li><a href="#/">À propos de nous</a></li><li><a href="#/">Contact</a></li><li><a href="#/">Blog</a></li></ul></div>
+      <div><h4>Nos paniers</h4><ul><li><a href="#/" data-filtre="canape">Canapés orthopédiques</a></li><li><a href="#/" data-filtre="panier">Paniers</a></li><li><a href="#/" data-filtre="lit">Lits géants</a></li><li><a href="#/" data-ancre="guide">Guide des tailles</a></li></ul></div>
+      <div><h4>Infos & légal</h4><ul><li><a href="#/">Livraison & retours</a></li><li><a href="#/">Modes de paiement</a></li><li><a href="#/">Conditions générales de vente</a></li><li><a href="#/">Conditions de rétractation</a></li><li><a href="#/">Protection des données</a></li><li><a href="#/">Mentions légales</a></li></ul></div>
+    </div>
+    <p class="bas">© 2026 Patou · Démo de design inspirée d’une boutique premium, photos : fournisseur.</p>
+  </div>
+</footer>
+
+<div class="tiroir-panier" id="panier" aria-hidden="true">
+  <button class="voile" type="button" aria-label="Fermer le panier" data-fermer-panier></button>
+  <div class="panneau" role="dialog" aria-modal="true" aria-labelledby="titre-panier">
+    <div class="panneau-tete"><h2 id="titre-panier" style="font-size:1rem">Panier</h2><button class="ic" type="button" data-fermer-panier aria-label="Fermer"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <ul class="lignes" id="lignes"></ul>
+    <div class="panier-bas"><p class="tot"><span>Sous-total</span><span id="total">0,00 €</span></p><button class="btn btn-vert" type="button" disabled style="opacity:.5;cursor:not-allowed">Paiement désactivé (démo)</button></div>
+  </div>
+</div>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script>
+const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const P = [
+  { id: 'n1', cat: 'canape', nom: 'Panier pour chien orthopédique Canapé à rebords', court: 'Canapé à rebords', coul: 'Beige', img: 'canape-rebords.jpg', amb: 'beige-chaud.jpg', note: 312, best: true, intro: 'Le classique : rebords appui-tête et mousse à mémoire de forme, pour des nuits sans points de pression.', t: { S: ['61 × 46 cm', 109.9], M: ['76 × 56 cm', 139.9], L: ['91 × 69 cm', 169.9], XL: ['114 × 89 cm', 199.9], XXL: ['135 × 107 cm', 239.9] } },
+  { id: 'n2', cat: 'canape', nom: 'Panier pour chien orthopédique Canapé bas', court: 'Canapé bas', coul: 'Beige', img: 'canape-bas.jpg', note: 188, nouveau: true, intro: 'Entrée basse pour monter sans effort : idéal pour les chiens âgés ou qui ont mal aux articulations.', t: { S: ['61 × 41 cm', 109.9], M: ['76 × 51 cm', 139.9], L: ['91 × 69 cm', 169.9], XL: ['102 × 81 cm', 199.9], XXL: ['135 × 107 cm', 239.9] } },
+  { id: 'n3', cat: 'canape', nom: 'Panier pour chien orthopédique Canapé 3 rebords', court: 'Canapé 3 rebords', coul: 'Brun', img: 'canape-3-rebords.jpg', amb: 'brun-classique.jpg', note: 264, best: true, intro: 'Rebords sur trois côtés et passepoil orange : un vrai petit canapé pour lui.', t: { S: ['61 × 41 cm', 109.9], M: ['76 × 51 cm', 139.9], L: ['91 × 69 cm', 169.9], XL: ['114 × 89 cm', 199.9], XXL: ['135 × 107 cm', 239.9] } },
+  { id: 'n5', cat: 'canape', nom: 'Panier pour chien orthopédique Canapé carré', court: 'Canapé carré', coul: 'Gris foncé', img: 'canape-carre.jpg', amb: 'gris-fonce.jpg', note: 141, intro: 'Grand format avec rebords tout autour, pour les grands chiens qui aiment s’étaler.', t: { L: ['91 × 69 cm', 169.9], XL: ['114 × 89 cm', 199.9], XXL: ['135 × 107 cm', 239.9] } },
+  { id: 'n7', cat: 'lit', nom: 'Lit géant taille humaine', court: 'Lit taille humaine', coul: 'Gris clair', img: 'lit-humain.jpg', note: 97, nouveau: true, plein: true, intro: 'Assez grand pour vous et votre chien : fausse fourrure très douce, 183 × 122 cm.', t: { Unique: ['183 × 122 cm', 219.9] } },
+  { id: 'n8', cat: 'panier', nom: 'Panier pour chien orthopédique Ovale', court: 'Panier ovale', coul: 'Camel', img: 'panier-ovale.jpg', amb: 'ovale-camel.jpg', note: 158, intro: 'Rebords rembourrés tout autour, pour les chiens qui aiment dormir roulés en boule.', t: { M: ['89 × 64 cm', 139.9], L: ['109 × 76 cm', 169.9], XL: ['119 × 84 cm', 199.9], XXL: ['132 × 102 cm', 239.9] } },
+  { id: 'n10', cat: 'panier', nom: 'Panier pour chien orthopédique Rectangle', court: 'Panier rectangle', coul: 'Crème', img: 'panier-rectangle.jpg', amb: 'creme-arctique.jpg', note: 203, best: true, intro: 'Fausse fourrure douce et rebords moelleux : un cocon chaud pour l’hiver.', t: { M: ['89 × 64 cm', 139.9], L: ['102 × 71 cm', 169.9], XL: ['109 × 81 cm', 199.9], XXL: ['130 × 102 cm', 239.9] } },
+  { id: 'n13', cat: 'panier', nom: 'Panier pour chien orthopédique Rafraîchissant', court: 'Panier rafraîchissant', coul: 'Bleu ciel', img: 'panier-rafraichissant.jpg', amb: 'bleu-ciel.jpg', note: 186, nouveau: true, intro: 'Housse respirante qui garde le frais : parfait pour les chiens qui ont chaud l’été.', t: { S: ['61 × 41 cm', 109.9], M: ['76 × 51 cm', 139.9], L: ['91 × 69 cm', 169.9], XL: ['114 × 89 cm', 199.9], XXL: ['135 × 107 cm', 239.9] } },
+  { id: 'n14', cat: 'panier', nom: 'Panier pour chien orthopédique Chenille', court: 'Panier chenille', coul: 'Brun chiné', img: 'panier-chenille.jpg', amb: 'brun-naturel.jpg', note: 133, best: true, intro: 'Tissu chenille chiné et passepoil crème : élégant dans le salon, solide au quotidien.', t: { S: ['61 × 41 cm', 109.9], M: ['76 × 51 cm', 139.9], L: ['91 × 69 cm', 169.9], XL: ['114 × 89 cm', 199.9], XXL: ['135 × 107 cm', 239.9] } },
+];
+const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+const minPrix = (p) => Math.min(...Object.values(p.t).map((x) => x[1]));
+const sac = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>';
+const carte = (p) => `<a class="carte${p.plein ? ' plein' : ''}" href="#/produit/${p.id}" data-cat="${p.cat}" data-apparait>
+  <div class="ph"><div class="badge">${p.nouveau ? '<span>Nouveau</span>' : ''}${p.best ? '<span>Best-seller</span>' : ''}</div><img src="img/${p.img}" alt="${p.court} ${p.coul.toLowerCase()}" loading="lazy" />${p.amb ? `<img class="amb" src="img/${p.amb}" alt="" loading="lazy" />` : ''}<span class="sac" aria-hidden="true">${sac}</span></div>
+  <div class="t"><h3>${p.nom} (${p.coul.toLowerCase()})</h3><p class="prix">${Object.keys(p.t).length > 1 ? 'dès ' : ''}<b>${euros(minPrix(p))}</b></p><p class="etoiles" style="font-size:.7rem">★★★★★ <span style="color:var(--gris-2)">(${p.note})</span></p></div></a>`;
+document.getElementById('grille').innerHTML = P.map(carte).join('');
+document.getElementById('grille-best').innerHTML = P.filter((p) => p.best).map(carte).join('');
+
+const AV = [
+  ['M4 17h16M5 17l2-6h10l2 6M8 11V8h8v3', 'Tissu extérieur doux', 'Agréable au toucher, pour lui comme pour vous.'],
+  ['M12 3v18M7 8c0-2 2-3 5-3s5 1 5 3M7 16c0 2 2 3 5 3s5-1 5-3', 'Articulations protégées', 'La mousse à mémoire de forme répartit son poids.'],
+  ['M4 20h16M6 16h12V8H6z', 'Ne s’affaisse pas', 'Une base ferme qui garde sa forme nuit après nuit.'],
+  ['M4 7h16l-2 12H6L4 7ZM8 12c1.3-1.3 2.7-1.3 4 0s2.7 1.3 4 0', 'Lavable en machine', 'Housse déhoussable, fermeture éclair.'],
+  ['M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z', 'Résistant et robuste', 'Coutures renforcées, dessous antidérapant.'],
+  ['M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18', 'Du S au XXL', 'Du teckel au dogue allemand.'],
+  ['M3 6h11v10H3zM14 10h4l3 3v3h-7', 'Livraison suivie', 'Offerte dès 149 € d’achat.'],
+  ['M9 14 4 9l5-5M4 9h11a5 5 0 0 1 0 10h-3', '14 jours pour changer d’avis', 'Retour simple, comme le prévoit la loi.'],
+];
+const avHTML = AV.map(([d, t, p]) => `<div class="avantage" data-apparait><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg><h3>${t}</h3><p>${p}</p></div>`).join('');
+document.getElementById('avantages').innerHTML = avHTML;
+
+const PB = [
+  ['Les coussins ordinaires perdent leur forme et créent des points de pression.', 'La mousse à mémoire de forme posée sur une mousse de soutien garde son épaisseur.'],
+  ['Des bords trop bas ou trop durs n’offrent aucun sentiment de sécurité.', 'Des rebords rembourrés sur 3 ou 4 côtés pour poser la tête et se sentir à l’abri.'],
+  ['Difficile d’y monter, surtout pour les chiens âgés ou petits.', 'Le canapé bas a une entrée surbaissée pour monter sans effort.'],
+];
+document.getElementById('probs').innerHTML = PB.map(([a, b]) => `<div class="prob" data-apparait><span class="x">✕</span><div style="flex:1"><p>${a}</p><p class="sol">✓ ${b}</p></div><button type="button">Notre solution</button></div>`).join('');
+document.getElementById('probs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; const p = b.closest('.prob'); p.classList.toggle('ouvert'); b.textContent = p.classList.contains('ouvert') ? 'Fermer' : 'Notre solution'; });
+
+// Filtres
+function filtrer(f) {
+  document.querySelectorAll('.filtres button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
+  document.querySelectorAll('#grille .carte').forEach((c) => { c.hidden = f !== 'tout' && c.dataset.cat !== f; });
+}
+document.querySelector('.filtres').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) filtrer(b.dataset.f); });
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('[data-filtre],[data-ancre]'); if (!a) return;
+  e.preventDefault(); fermerMenu();
+  if (location.hash !== '#/' && location.hash !== '') location.hash = '#/';
+  setTimeout(() => {
+    if (a.dataset.filtre) { filtrer(a.dataset.filtre); document.getElementById('nouveautes').scrollIntoView({ behavior: reduit ? 'auto' : 'smooth' }); }
+    else document.getElementById(a.dataset.ancre).scrollIntoView({ behavior: reduit ? 'auto' : 'smooth' });
+  }, 60);
+});
+
+// Fiche produit
+const fiche = document.getElementById('fiche'), accueil = document.getElementById('accueil');
+function montrerFiche(p) {
+  const tailles = Object.keys(p.t); let t = tailles.includes('M') ? 'M' : tailles[0];
+  const photos = [p.img, ...(p.amb ? [p.amb] : [])];
+  fiche.innerHTML = `
+  <p class="fil"><a href="#/">Accueil</a> / <a href="#/" data-filtre="${p.cat}">${p.cat === 'canape' ? 'Canapés' : p.cat === 'panier' ? 'Paniers' : 'Lits géants'}</a> / ${p.court}</p>
+  <div class="fiche-grille">
+    <div class="galerie"><div class="miniatures">${photos.map((ph, i) => `<button type="button" data-ph="${ph}" aria-label="Photo ${i + 1}" aria-current="${i === 0}"><img src="img/${ph}" alt="" /></button>`).join('')}</div>
+      <div class="grande"><img id="grande" src="img/${p.img}" alt="${p.nom}, ${p.coul.toLowerCase()}" class="${p.plein ? 'plein' : ''}" /></div></div>
+    <div>
+      <h1>${p.nom}</h1>
+      <p class="intro">${p.intro}</p>
+      <div class="prix-ligne"><span class="p" id="f-prix">${euros(p.t[t][1])}</span><span class="note"><span class="etoiles">★★★★★</span> (${p.note})</span></div>
+      <p class="choix-titre">Couleur : <span>${p.coul}</span></p>
+      <div class="tailles" style="margin-top:.5rem"><button type="button" aria-pressed="true" style="padding:3px;border-radius:6px;min-width:0"><img src="img/${p.img}" alt="${p.coul}" style="width:56px;height:38px;object-fit:contain;mix-blend-mode:multiply" /></button></div>
+      <p class="choix-titre">Taille : <span id="f-t">${t}</span><a href="#/" data-ancre="guide">Afficher les infos de taille</a></p>
+      <div class="tailles" id="f-tailles">${tailles.map((x) => `<button type="button" data-t="${x}" aria-pressed="${x === t}">${x}</button>`).join('')}</div>
+      <p class="dim" id="f-dim">Dimensions : ${p.t[t][0]}</p>
+      <p class="stock"><i>✓</i> En stock, expédié rapidement</p>
+      <button class="btn btn-vert" type="button" id="f-ajout">Ajouter au panier</button>
+      <ul class="garanties">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z"/></svg>Garantie 2 ans</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/></svg>Livraison offerte dès 149 €</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 14 4 9l5-5M4 9h11a5 5 0 0 1 0 10h-3"/></svg>14 jours pour changer d’avis</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Paiement sécurisé : carte, PayPal, Apple Pay</li>
+      </ul>
+      <div class="onglets">
+        <details open><summary>Description du produit <span>⌄</span></summary><div class="c"><p>${p.intro}</p><ul style="margin-top:.5rem;padding-left:1.1rem"><li>Mousse à mémoire de forme</li><li>Housse déhoussable et lavable</li><li>Dessous antidérapant</li></ul></div></details>
+        <details><summary>Matériaux & entretien <span>⌄</span></summary><div class="c">Housse lavable en machine à 30 °C, programme délicat. La mousse ne se lave pas : aérez-la régulièrement.</div></details>
+        <details><summary>Guide des tailles <span>⌄</span></summary><div class="c"><table><thead><tr><th>Taille</th><th>Dimensions</th><th>Prix</th></tr></thead><tbody>${tailles.map((x) => `<tr><td>${x}</td><td>${p.t[x][0]}</td><td>${euros(p.t[x][1])}</td></tr>`).join('')}</tbody></table></div></details>
+        <details><summary>Livraison & retours <span>⌄</span></summary><div class="c">Livraison suivie, offerte dès 149 €. Délai et frais affichés avant le paiement. 14 jours pour changer d’avis.</div></details>
+      </div>
+    </div>
+  </div>
+  <h2 class="grand">Ce dont toi et ton chien profitez :</h2>
+  <div class="avantages">${avHTML}</div>
+  <h2 class="grand">Tu aimeras aussi</h2>
+  <div class="grille">${P.filter((x) => x.id !== p.id).slice(0, 4).map(carte).join('')}</div>`;
+  fiche.querySelector('#f-tailles').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return; t = b.dataset.t;
+    fiche.querySelectorAll('#f-tailles button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    fiche.querySelector('#f-t').textContent = t; fiche.querySelector('#f-dim').textContent = `Dimensions : ${p.t[t][0]}`; fiche.querySelector('#f-prix').textContent = euros(p.t[t][1]);
+  });
+  fiche.querySelector('.miniatures').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return; const g = fiche.querySelector('#grande');
+    g.src = `img/${b.dataset.ph}`; g.className = b.dataset.ph === p.img && !p.plein ? '' : 'plein';
+    fiche.querySelectorAll('.miniatures button').forEach((x) => x.setAttribute('aria-current', String(x === b)));
+  });
+  fiche.querySelector('#f-ajout').addEventListener('click', (e) => { ajouter(p, t); const b = e.currentTarget; b.classList.add('ok'); b.textContent = 'Ajouté ✓'; setTimeout(() => { b.classList.remove('ok'); b.textContent = 'Ajouter au panier'; }, 1400); });
+}
+function route() {
+  const m = location.hash.match(/^#\/produit\/(\w+)/); const p = m && P.find((x) => x.id === m[1]);
+  if (p) { montrerFiche(p); fiche.classList.add('vue'); accueil.classList.add('cache'); scrollTo(0, 0); document.title = `${p.court} · Patou`; }
+  else { fiche.classList.remove('vue'); accueil.classList.remove('cache'); document.title = 'Patou · Paniers orthopédiques pour chien (démo)'; }
+  apparitions();
+}
+addEventListener('hashchange', route);
+
+// Panier
+const panier = [], compte = document.getElementById('compte'), op = document.getElementById('ouvrir-panier'), tp = document.getElementById('panier');
+function ajouter(p, t) { const l = panier.find((x) => x.p.id === p.id && x.t === t); l ? l.q++ : panier.push({ p, t, q: 1 }); rendre(); setTimeout(() => ouvrirPanier(true), 350); }
+function rendre() {
+  const n = panier.reduce((s, l) => s + l.q, 0); compte.textContent = n; compte.hidden = !n; op.setAttribute('aria-label', `Ouvrir le panier, ${n} article${n > 1 ? 's' : ''}`);
+  document.getElementById('lignes').innerHTML = panier.length ? panier.map((l) => `<li class="ligne"><span class="m"><img src="img/${l.p.img}" alt="" /></span><div><strong>${l.p.court}</strong><p>${l.p.coul} · ${l.t} (${l.p.t[l.t][0]}) · × ${l.q}</p></div><span>${euros(l.q * l.p.t[l.t][1])}</span></li>`).join('') : '<li class="vide">Ton panier est vide.</li>';
+  document.getElementById('total').textContent = euros(panier.reduce((s, l) => s + l.q * l.p.t[l.t][1], 0));
+}
+function ouvrirPanier(o) { tp.classList.toggle('ouvert', o); tp.setAttribute('aria-hidden', String(!o)); }
+op.addEventListener('click', () => ouvrirPanier(true));
+document.querySelectorAll('[data-fermer-panier]').forEach((b) => b.addEventListener('click', () => ouvrirPanier(false)));
+const menu = document.getElementById('menu'), om = document.getElementById('ouvrir-menu');
+function fermerMenu() { menu.classList.remove('ouvert'); menu.setAttribute('aria-hidden', 'true'); om.setAttribute('aria-expanded', 'false'); }
+om.addEventListener('click', () => { menu.classList.add('ouvert'); menu.setAttribute('aria-hidden', 'false'); om.setAttribute('aria-expanded', 'true'); });
+document.querySelectorAll('[data-fermer-menu]').forEach((b) => b.addEventListener('click', fermerMenu));
+menu.querySelectorAll('.menu-liste a').forEach((a) => a.addEventListener('click', fermerMenu));
+addEventListener('keydown', (e) => { if (e.key === 'Escape') { fermerMenu(); ouvrirPanier(false); } });
+document.getElementById('form-lettre').addEventListener('submit', (e) => { e.preventDefault(); e.target.innerHTML = '<p>Merci ! (démo : aucune inscription enregistrée)</p>'; });
+rendre();
+
+// Animations douces
+gsap.registerPlugin(ScrollTrigger);
+function apparitions() {
+  if (reduit) return;
+  ScrollTrigger.getAll().forEach((s) => s.kill());
+  ScrollTrigger.batch('[data-apparait]', { start: 'top 92%', once: true, onEnter: (els) => gsap.fromTo(els, { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: .7, ease: 'power3.out', stagger: .06 }) });
+  ScrollTrigger.refresh();
+}
+if (!reduit) gsap.from('[data-entre]', { y: 24, opacity: 0, duration: .9, ease: 'power3.out', stagger: .1, delay: .15 });
+route();
+</script>
+</body>
+</html>
