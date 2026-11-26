@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@fontsource/anton';
+import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource-variable/figtree';
 import 'lenis/dist/lenis.css';
 import './index.css';
