@@ -3,31 +3,30 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#0f0d0b" />
+<meta name="theme-color" content="#f7f2ea" />
 <meta name="description" content="Maison Sieste : site de démonstration d'une boutique de paniers orthopédiques pour chien, design généré avec ui-ux-pro-max." />
 <title>Maison Sieste · Paniers orthopédiques pour chien (démo)</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f0d0b'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='%23c9a35b' transform='rotate(-30 16 16)'/%3E%3Cpath d='M12 9c4 4 4 10 8 14' stroke='%230f0d0b' stroke-width='1.6' fill='none'/%3E%3C/svg%3E" />
-<link rel="preload" href="fonts/cormorant-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e2b24'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='%23e08a5f' transform='rotate(-30 16 16)'/%3E%3Cpath d='M12 9c4 4 4 10 8 14' stroke='%231e2b24' stroke-width='1.6' fill='none'/%3E%3C/svg%3E" />
+<link rel="preload" href="fonts/nunito-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <style>
-@font-face { font-family: 'Cormorant'; src: url(fonts/cormorant-latin-wght-normal.woff2) format('woff2'); font-weight: 300 700; font-display: swap; }
-@font-face { font-family: 'Cormorant'; src: url(fonts/cormorant-latin-wght-italic.woff2) format('woff2'); font-weight: 300 700; font-style: italic; font-display: swap; }
-@font-face { font-family: 'Montserrat'; src: url(fonts/montserrat-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'Nunito'; src: url(fonts/nunito-latin-wght-normal.woff2) format('woff2'); font-weight: 200 1000; font-display: swap; }
+@font-face { font-family: 'DM Sans'; src: url(fonts/dm-sans-latin-wght-normal.woff2) format('woff2'); font-weight: 100 1000; font-display: swap; }
 
-/* Design system ui-ux-pro-max « Maison Sieste » : sombre premium + or, Cormorant / Montserrat, verre liquide. */
+/* Design system ui-ux-pro-max « Maison Sieste » : thème nature (crème, vert sauge profond, terracotta), Nunito + DM Sans, verre liquide. */
 :root {
-  --nuit: #0f0d0b; --nuit-2: #1c1917; --nuit-3: #292524; --pierre: #44403c;
-  --creme: #f6f1e8; --creme-2: #e9e1d3; --doux: #b8afa3; --doux-sombre: #57534e;
-  --or: #c9a35b; --or-fonce: #a16207; --sur-or: #1c1308;
+  --nuit: #1e2b24; --nuit-2: #26362d; --nuit-3: #2f4236; --pierre: #4a5d50;
+  --creme: #f7f2ea; --creme-2: #e8e0d2; --doux: #b9c4bb; --doux-sombre: #55605a;
+  --or: #e08a5f; --or-fonce: #b4532a; --sur-or: #1e1209;
   --verre: rgb(255 255 255 / .07); --verre-bord: rgb(255 255 255 / .14);
   --rayon: 22px; --ease: cubic-bezier(.22,1,.36,1);
 }
 * { box-sizing: border-box; margin: 0; }
 html { background: var(--nuit); color: var(--creme); -webkit-text-size-adjust: 100%; }
-body { font-family: 'Montserrat', system-ui, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+body { font-family: 'DM Sans', system-ui, sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
-.serif { font-family: 'Cormorant', Georgia, serif; font-weight: 500; letter-spacing: -0.01em; line-height: .95; }
+.serif { font-family: 'Nunito', system-ui, sans-serif; font-weight: 500; letter-spacing: -0.01em; line-height: .95; }
 .it { font-style: italic; }
 .or { color: var(--or); }
 .sur-titre { font-size: .75rem; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--or); }
@@ -37,8 +36,8 @@ button { font: inherit; color: inherit; }
 
 /* Boutons */
 .btn { display: inline-flex; align-items: center; gap: .6rem; min-height: 52px; padding: 0 1.6rem; border-radius: 999px; font-weight: 600; font-size: .95rem; letter-spacing: .02em; text-decoration: none; border: 0; cursor: pointer; transition: transform .3s var(--ease), background-color .3s, color .3s, box-shadow .3s; }
-.btn-or { background: var(--or); color: var(--sur-or); box-shadow: 0 10px 30px -12px rgb(201 163 91 / .7); }
-.btn-or:hover { background: #d8b46d; transform: translateY(-2px); }
+.btn-or { background: var(--or); color: var(--sur-or); box-shadow: 0 10px 30px -12px rgb(224 138 95 / .7); }
+.btn-or:hover { background: #e99c74; transform: translateY(-2px); }
 .btn-verre { background: var(--verre); color: var(--creme); box-shadow: inset 0 0 0 1px var(--verre-bord); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
 .btn-verre:hover { background: rgb(255 255 255 / .13); }
 .btn svg { width: 18px; height: 18px; }
@@ -53,8 +52,8 @@ button { font: inherit; color: inherit; }
 .nav { position: sticky; top: 12px; z-index: 50; margin-top: 12px; }
 .nav-in { display: flex; align-items: center; gap: 1rem; height: 64px; padding: 0 .6rem 0 1.2rem; border-radius: 999px; }
 .logo { display: flex; align-items: center; gap: .55rem; text-decoration: none; }
-.logo b { font-family: 'Cormorant', serif; font-size: 1.6rem; font-weight: 600; letter-spacing: .01em; }
-.logo i { font-family: 'Cormorant', serif; font-size: 1.6rem; color: var(--or); }
+.logo b { font-family: 'Nunito', sans-serif; font-size: 1.6rem; font-weight: 600; letter-spacing: .01em; }
+.logo i { font-family: 'Nunito', sans-serif; font-size: 1.6rem; color: var(--or); }
 .liens { display: none; gap: .3rem; margin-left: auto; }
 .liens a { padding: .55rem 1rem; border-radius: 999px; text-decoration: none; font-size: .9rem; font-weight: 500; color: var(--creme-2); transition: background-color .25s, color .25s; }
 .liens a:hover { background: rgb(255 255 255 / .08); color: #fff; }
@@ -67,23 +66,23 @@ button { font: inherit; color: inherit; }
 
 /* Héros */
 .heros { position: relative; min-height: 100svh; margin-top: -88px; display: grid; align-items: end; overflow: hidden; isolation: isolate; }
-.heros-img { position: absolute; inset: -6% 0 0; z-index: -2; background: radial-gradient(120% 80% at 70% 30%, #3a2a1c, var(--nuit) 70%); }
+.heros-img { position: absolute; inset: -6% 0 0; z-index: -2; background: radial-gradient(120% 80% at 70% 30%, #2f4236, var(--nuit) 70%); }
 .heros-img img { width: 100%; height: 100%; object-fit: cover; opacity: .62; }
-.heros::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(15 13 11 / .55) 0%, rgb(15 13 11 / .15) 35%, rgb(15 13 11 / .85) 78%, var(--nuit) 100%); }
+.heros::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(30 43 36 / .55) 0%, rgb(30 43 36 / .15) 35%, rgb(30 43 36 / .85) 78%, var(--nuit) 100%); }
 .heros-in { padding: 140px 0 56px; }
 .heros h1 { font-size: clamp(3.4rem, 11vw, 9.5rem); max-width: 11ch; }
 .heros p.chapo { max-width: 34rem; margin-top: 1.4rem; font-size: 1.08rem; color: var(--creme-2); }
 .heros .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
 .chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: 3rem; max-width: 40rem; }
 .chiffre { border-radius: 18px; padding: 1rem 1.1rem; }
-.chiffre strong { display: block; font-family: 'Cormorant', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 600; line-height: 1; color: var(--or); }
+.chiffre strong { display: block; font-family: 'Nunito', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 600; line-height: 1; color: var(--or); }
 .chiffre span { font-size: .78rem; color: var(--creme-2); }
 .defile-txt { position: absolute; right: 16px; bottom: 56px; writing-mode: vertical-rl; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--doux); display: none; }
 @media (min-width: 860px) { .defile-txt { display: block; } }
 
 /* Bandeau des origines */
 .origines { border-block: 1px solid rgb(255 255 255 / .08); overflow: hidden; padding: 1.4rem 0; }
-.origines-piste { display: flex; gap: 3rem; width: max-content; font-family: 'Cormorant', serif; font-style: italic; font-size: clamp(2rem, 5vw, 3.6rem); color: var(--creme-2); white-space: nowrap; }
+.origines-piste { display: flex; gap: 3rem; width: max-content; font-family: 'Nunito', sans-serif; font-style: italic; font-size: clamp(2rem, 5vw, 3.6rem); color: var(--creme-2); white-space: nowrap; }
 .origines-piste span { display: flex; align-items: center; gap: 3rem; }
 .origines-piste em { font-style: normal; color: var(--or); font-size: .5em; }
 
@@ -98,13 +97,13 @@ section { padding: clamp(80px, 12vw, 150px) 0; }
 @media (min-width: 640px) { .grille { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1080px) { .grille { grid-template-columns: repeat(4, 1fr); } }
 .cafe { position: relative; display: flex; flex-direction: column; border-radius: var(--rayon); background: var(--nuit-2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .07); overflow: hidden; transition: transform .5s var(--ease), box-shadow .5s; }
-.cafe:hover { transform: translateY(-6px); box-shadow: inset 0 0 0 1px rgb(201 163 91 / .45), 0 30px 60px -30px rgb(0 0 0 / .8); }
+.cafe:hover { transform: translateY(-6px); box-shadow: inset 0 0 0 1px rgb(224 138 95 / .45), 0 30px 60px -30px rgb(0 0 0 / .8); }
 .cafe-img { position: relative; aspect-ratio: 1; overflow: hidden; background: radial-gradient(circle at 50% 45%, #f3ede3, #d9cfbf); }
 .cafe-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
 .cafe:hover .cafe-img img { transform: scale(1.07) rotate(-2deg); }
 .etiquette { position: absolute; top: 12px; left: 12px; padding: .3rem .7rem; border-radius: 999px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--creme); }
 .cafe-corps { display: flex; flex-direction: column; gap: .7rem; padding: 1.2rem 1.2rem 1.3rem; flex: 1; }
-.cafe h3 { font-family: 'Cormorant', serif; font-size: 1.9rem; font-weight: 600; line-height: 1; }
+.cafe h3 { font-family: 'Nunito', sans-serif; font-size: 1.9rem; font-weight: 600; line-height: 1; }
 .origine { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--or); }
 .notes { display: flex; flex-wrap: wrap; gap: .35rem; }
 .notes span { padding: .25rem .6rem; border-radius: 999px; font-size: .75rem; background: rgb(255 255 255 / .06); color: var(--creme-2); }
@@ -117,10 +116,10 @@ section { padding: clamp(80px, 12vw, 150px) 0; }
 .mouture .pastille { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px; background: var(--creme); transition: transform .45s var(--ease); }
 .mouture[data-choix='moulu'] .pastille { transform: translateX(100%); }
 .cafe-bas { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: .4rem; }
-.prix { font-family: 'Cormorant', serif; font-size: 1.9rem; font-weight: 600; }
-.prix small { font-family: 'Montserrat', sans-serif; font-size: .75rem; color: var(--doux); font-weight: 500; margin-left: .2rem; }
+.prix { font-family: 'Nunito', sans-serif; font-size: 1.9rem; font-weight: 600; }
+.prix small { font-family: 'DM Sans', sans-serif; font-size: .75rem; color: var(--doux); font-weight: 500; margin-left: .2rem; }
 .ajout { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px; border: 0; cursor: pointer; background: var(--or); color: var(--sur-or); transition: transform .3s var(--ease), background-color .3s; }
-.ajout:hover { transform: rotate(90deg) scale(1.06); background: #d8b46d; }
+.ajout:hover { transform: rotate(90deg) scale(1.06); background: #e99c74; }
 .ajout.ok { background: #6e8b5e; color: #fff; transform: none; }
 .ajout svg { width: 20px; height: 20px; }
 
@@ -130,12 +129,12 @@ section { padding: clamp(80px, 12vw, 150px) 0; }
 .histoire .sur-titre { color: var(--or-fonce); }
 .histoire h2 { font-size: clamp(2.6rem, 6.5vw, 5.2rem); }
 .piste { display: flex; gap: 1.2rem; margin-top: 3rem; padding-left: max(16px, calc((100vw - 1240px) / 2)); width: max-content; }
-.etape { width: min(78vw, 420px); flex-shrink: 0; border-radius: var(--rayon); overflow: hidden; background: #fff; box-shadow: 0 1px 0 rgb(0 0 0 / .05), 0 30px 60px -40px rgb(28 25 23 / .45); }
+.etape { width: min(78vw, 420px); flex-shrink: 0; border-radius: var(--rayon); overflow: hidden; background: #fff; box-shadow: 0 1px 0 rgb(0 0 0 / .05), 0 30px 60px -40px rgb(30 43 36 / .45); }
 .etape-img { aspect-ratio: 4/3; overflow: hidden; background: var(--nuit-2); }
 .etape-img img { width: 100%; height: 100%; object-fit: cover; }
 .etape-corps { padding: 1.4rem; }
-.etape-num { font-family: 'Cormorant', serif; font-style: italic; font-size: 3.4rem; line-height: .8; color: var(--or-fonce); }
-.etape h3 { font-family: 'Cormorant', serif; font-size: 2rem; font-weight: 600; margin-top: .4rem; }
+.etape-num { font-family: 'Nunito', sans-serif; font-style: italic; font-size: 3.4rem; line-height: .8; color: var(--or-fonce); }
+.etape h3 { font-family: 'Nunito', sans-serif; font-size: 2rem; font-weight: 600; margin-top: .4rem; }
 .etape p { color: var(--doux-sombre); margin-top: .4rem; }
 @media (max-width: 859px) { .piste { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-right: 16px; scrollbar-width: none; } .etape { scroll-snap-align: start; } }
 
@@ -145,7 +144,7 @@ section { padding: clamp(80px, 12vw, 150px) 0; }
 .abo-photo { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 4/5; background: var(--nuit-2); }
 .abo-photo img { width: 100%; height: 115%; object-fit: cover; }
 .abo-carte { position: absolute; left: 16px; right: 16px; bottom: 16px; border-radius: 20px; padding: 1.1rem 1.2rem; display: flex; align-items: center; gap: 1rem; }
-.abo-carte strong { font-family: 'Cormorant', serif; font-size: 1.5rem; }
+.abo-carte strong { font-family: 'Nunito', sans-serif; font-size: 1.5rem; }
 .abo h2 { font-size: clamp(2.6rem, 6vw, 4.6rem); margin-top: .8rem; }
 .abo > div > p { color: var(--doux); margin-top: 1rem; max-width: 30rem; }
 .choix { margin-top: 2rem; display: grid; gap: 1.4rem; }
@@ -165,14 +164,14 @@ section { padding: clamp(80px, 12vw, 150px) 0; }
 .avis-grille { display: grid; gap: 1rem; }
 @media (min-width: 860px) { .avis-grille { grid-template-columns: repeat(3, 1fr); } }
 .avis { border-radius: var(--rayon); padding: 1.8rem; background: var(--nuit-2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .07); }
-.avis blockquote { font-family: 'Cormorant', serif; font-style: italic; font-size: 1.7rem; line-height: 1.15; }
+.avis blockquote { font-family: 'Nunito', sans-serif; font-style: italic; font-size: 1.7rem; line-height: 1.15; }
 .avis figcaption { margin-top: 1.2rem; font-size: .85rem; color: var(--doux); }
 .etoiles { color: var(--or); letter-spacing: .15em; margin-bottom: .8rem; font-size: .9rem; }
 
 /* Fin */
 .fin { position: relative; overflow: hidden; border-radius: 32px; padding: clamp(40px, 8vw, 90px); text-align: center; isolation: isolate; }
 .fin img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: .45; }
-.fin::after { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(70% 90% at 50% 50%, rgb(15 13 11 / .35), rgb(15 13 11 / .92)); }
+.fin::after { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(70% 90% at 50% 50%, rgb(30 43 36 / .35), rgb(30 43 36 / .92)); }
 .fin h2 { font-size: clamp(2.8rem, 8vw, 6.4rem); max-width: 14ch; margin: .8rem auto 0; }
 .fin .actions { justify-content: center; display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
 
@@ -191,7 +190,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 .tiroir.ouvert .tiroir-fond { opacity: 1; }
 .tiroir-panneau { position: absolute; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--nuit-2); padding: 1.4rem; display: flex; flex-direction: column; transform: translateX(100%); transition: transform .5s var(--ease); padding-bottom: max(1.4rem, env(safe-area-inset-bottom)); }
 .tiroir.ouvert .tiroir-panneau { transform: none; }
-.tiroir h2 { font-family: 'Cormorant', serif; font-size: 2.2rem; }
+.tiroir h2 { font-family: 'Nunito', sans-serif; font-size: 2.2rem; }
 .tiroir-tete { display: flex; justify-content: space-between; align-items: center; }
 .fermer { width: 44px; height: 44px; border-radius: 999px; border: 0; background: rgb(255 255 255 / .08); cursor: pointer; display: grid; place-items: center; }
 .lignes { list-style: none; padding: 0; margin-top: 1.2rem; flex: 1; overflow-y: auto; display: grid; align-content: start; gap: .8rem; }
@@ -217,16 +216,16 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 .heros.clair .or { color: var(--or-fonce); }
 .heros.clair .sur-titre { color: var(--or-fonce); }
 .heros.clair p.chapo { color: var(--doux-sombre); }
-.heros-photo { position: relative; border-radius: 32px; background: #fff; aspect-ratio: 1.15; display: grid; place-items: center; overflow: hidden; box-shadow: 0 40px 80px -50px rgb(28 25 23 / .45); }
+.heros-photo { position: relative; border-radius: 32px; background: #fff; aspect-ratio: 1.15; display: grid; place-items: center; overflow: hidden; box-shadow: 0 40px 80px -50px rgb(30 43 36 / .45); }
 .heros-photo img { width: 96%; height: auto; }
 .diapo .bulle { z-index: 3; }
-.diapo .bulle, .heros-photo .bulle { position: absolute; border-radius: 16px; padding: .7rem 1rem; font-size: .82rem; font-weight: 600; color: var(--nuit); background: rgb(255 255 255 / .7); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .9), 0 14px 30px -14px rgb(28 25 23 / .4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-.diapo .bulle b, .heros-photo .bulle b { display: block; font-family: 'Cormorant', serif; font-size: 1.5rem; color: var(--or-fonce); line-height: 1; }
+.diapo .bulle, .heros-photo .bulle { position: absolute; border-radius: 16px; padding: .7rem 1rem; font-size: .82rem; font-weight: 600; color: var(--nuit); background: rgb(255 255 255 / .7); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .9), 0 14px 30px -14px rgb(30 43 36 / .4); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.diapo .bulle b, .heros-photo .bulle b { display: block; font-family: 'Nunito', sans-serif; font-size: 1.5rem; color: var(--or-fonce); line-height: 1; }
 .heros.clair .chiffre { background: #fff; box-shadow: 0 1px 0 rgb(0 0 0 / .04), inset 0 0 0 1px var(--creme-2); backdrop-filter: none; }
 .heros.clair .chiffre strong { color: var(--or-fonce); }
 .heros.clair .chiffre span { color: var(--doux-sombre); }
-.heros.clair .btn-verre { color: var(--nuit); background: rgb(28 25 23 / .06); box-shadow: inset 0 0 0 1px rgb(28 25 23 / .15); }
-.nav .verre { background: linear-gradient(135deg, rgb(28 25 23 / .82), rgb(28 25 23 / .7)); }
+.heros.clair .btn-verre { color: var(--nuit); background: rgb(30 43 36 / .06); box-shadow: inset 0 0 0 1px rgb(30 43 36 / .15); }
+.nav .verre { background: linear-gradient(135deg, rgb(30 43 36 / .82), rgb(30 43 36 / .7)); }
 .cafe-img { background: #fff; display: grid; place-items: center; }
 .cafe-img img { width: 92%; height: auto; max-height: 92%; object-fit: contain; }
 .cafe:hover .cafe-img img { transform: scale(1.05); }
@@ -241,26 +240,26 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 .abo-photo { background: #fff; display: grid; place-items: center; }
 .abo-photo img { width: 94%; height: auto; object-fit: contain; }
 .curseur { width: 100%; accent-color: var(--or); height: 44px; cursor: pointer; }
-.valeur { font-family: 'Cormorant', serif; font-size: 2.4rem; color: var(--creme); line-height: 1; }
+.valeur { font-family: 'Nunito', sans-serif; font-size: 2.4rem; color: var(--creme); line-height: 1; }
 .resultat { margin-top: 2rem; border-radius: 22px; padding: 1.4rem; }
 .resultat .serif { font-size: 3.6rem; color: var(--or); }
 .fin { background: var(--creme); color: var(--nuit); }
 .fin::after { display: none; }
 .fin img { position: static; width: min(640px, 100%); height: auto; margin: 2rem auto 0; opacity: 1; border-radius: 24px; }
 .fin .or { color: var(--or-fonce); } .fin .sur-titre { color: var(--or-fonce); }
-.fin .btn-verre { color: var(--nuit); background: rgb(28 25 23 / .06); box-shadow: inset 0 0 0 1px rgb(28 25 23 / .15); }
+.fin .btn-verre { color: var(--nuit); background: rgb(30 43 36 / .06); box-shadow: inset 0 0 0 1px rgb(30 43 36 / .15); }
 .ligne img { object-fit: contain; background: #fff; }
 
 /* Héros : grande image, 3 photos qui défilent toutes seules */
 .heros.clair { min-height: auto; }
 .heros-bloc { padding: 96px 0 40px; }
-.diapo { position: relative; height: min(62svh, 560px); border-radius: 30px; overflow: hidden; background: #fff; box-shadow: 0 40px 80px -50px rgb(28 25 23 / .5); }
+.diapo { position: relative; height: min(62svh, 560px); border-radius: 30px; overflow: hidden; background: #fff; box-shadow: 0 40px 80px -50px rgb(30 43 36 / .5); }
 @media (min-width: 960px) { .diapo { height: min(74svh, 680px); } }
 .vue { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; opacity: 0; visibility: hidden; }
 .vue.actif { opacity: 1; visibility: visible; }
 .vue img { width: 100%; height: 100%; object-fit: contain; padding: 4% 3% 12%; }
 .vue.plein img { object-fit: cover; padding: 0; }
-.points { z-index: 3; position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; gap: 8px; padding: 8px 10px; border-radius: 999px; background: rgb(28 25 23 / .55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.points { z-index: 3; position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; gap: 8px; padding: 8px 10px; border-radius: 999px; background: rgb(30 43 36 / .55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .points button { width: 44px; height: 20px; border: 0; background: none; padding: 0; cursor: pointer; display: grid; align-items: center; }
 .points i { display: block; height: 4px; border-radius: 4px; background: rgb(255 255 255 / .35); overflow: hidden; position: relative; }
 .points i::after { content: ''; position: absolute; inset: 0; background: #fff; transform: scaleX(var(--p, 0)); transform-origin: left; }
@@ -269,6 +268,27 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
 .heros.clair .heros-texte h1 { font-size: clamp(3rem, 8vw, 6.4rem); max-width: 12ch; margin-top: .6rem; }
 .heros.clair .heros-texte p.chapo { margin-top: 0; }
 .heros-bloc .chiffres { max-width: none; }
+
+/* ——— Nouveau thème : Nunito + DM Sans, vert sauge et terracotta ——— */
+.serif { font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; }
+.it { font-style: normal; }
+.sur-titre { letter-spacing: .16em; font-weight: 700; }
+.heros.clair .heros-texte h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); }
+.tete h2, .histoire h2, .abo h2 { font-size: clamp(2.1rem, 5.2vw, 4rem); }
+.fin h2 { font-size: clamp(2.3rem, 6vw, 4.8rem); }
+.logo b { font-family: 'Nunito', sans-serif; font-weight: 800; letter-spacing: -.03em; }
+.logo i { font-family: 'Nunito', sans-serif; font-weight: 800; font-style: normal; letter-spacing: -.03em; }
+.cafe h3, .etape h3 { font-weight: 800; font-size: 1.55rem; letter-spacing: -.02em; }
+.prix, .valeur, .total .serif, .resultat .serif, .chiffre strong { font-weight: 800; letter-spacing: -.03em; }
+.etape-num { font-style: normal; font-weight: 900; font-size: 2.6rem; }
+.avis blockquote { font-style: normal; font-weight: 600; font-size: 1.3rem; line-height: 1.35; letter-spacing: -.01em; }
+.origines-piste { font-style: normal; font-weight: 800; letter-spacing: -.02em; font-size: clamp(1.6rem, 4vw, 2.8rem); }
+.heros-photo .bulle b, .diapo .bulle b { font-weight: 800; font-size: 1.15rem; }
+.btn { border-radius: 16px; font-weight: 700; }
+.diapo { border-radius: 28px; }
+.abo-photo .abo-carte { background: rgb(255 255 255 / .82); box-shadow: inset 0 0 0 1px rgb(30 43 36 / .1), 0 14px 30px -16px rgb(30 43 36 / .4); color: var(--nuit); }
+.abo-photo .abo-carte p { color: var(--doux-sombre) !important; }
+.abo-photo .abo-carte svg { stroke: var(--or-fonce); }
 </style>
 </head>
 <body>
@@ -355,7 +375,7 @@ footer a { text-decoration: none; } footer a:hover { color: var(--creme); }
   <section id="taille" aria-labelledby="titre-taille">
     <div class="wrap abo">
       <div class="abo-photo"><img src="img/original.jpg" alt="Un golden retriever couché sur le panier" loading="lazy" data-glisse />
-        <div class="abo-carte verre"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a35b" stroke-width="1.8" aria-hidden="true"><path d="M3 12h18M3 12l4-4M3 12l4 4M21 12l-4-4M21 12l-4 4"/></svg><div><strong>Mesure-le couché</strong><p style="font-size:.8rem;color:var(--creme-2)">Du nez à la base de la queue</p></div></div>
+        <div class="abo-carte verre"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e08a5f" stroke-width="1.8" aria-hidden="true"><path d="M3 12h18M3 12l4-4M3 12l4 4M21 12l-4-4M21 12l-4 4"/></svg><div><strong>Mesure-le couché</strong><p style="font-size:.8rem;color:var(--creme-2)">Du nez à la base de la queue</p></div></div>
       </div>
       <div>
         <p class="sur-titre">Le guide des tailles</p>
@@ -424,7 +444,7 @@ const PANIERS = [
   { id: 'original', nom: 'L’Original', sous: 'Orthopédique · rebords 3 côtés', notes: ['Mémoire de forme', 'Taupe'], prix: { S: 89, M: 109, L: 129, XL: 149 }, img: 'img/original.jpg', etiquette: ['Meilleure vente', '#a16207'] },
   { id: 'salon', nom: 'Le Salon', sous: 'Orthopédique · housse matelassée', notes: ['Mémoire de forme', 'Lin'], prix: { S: 99, M: 119, L: 139, XL: 159 }, img: 'img/large.jpg', etiquette: ['Nouveau', '#6e8b5e'] },
   { id: 'compact', nom: 'Le Compact', sous: 'Pour petits chiens et chiots', notes: ['Mousse de soutien', 'Taupe'], prix: { S: 69, M: 79, L: 89, XL: 99 }, img: 'img/compact.jpg' },
-  { id: 'grand', nom: 'Le Grand Repos', sous: 'Extra-épais pour grands chiens', notes: ['12 cm de mousse', 'Taupe'], prix: { S: 119, M: 139, L: 159, XL: 189 }, img: 'img/grand.jpg', etiquette: ['Chiens âgés', '#44403c'] },
+  { id: 'grand', nom: 'Le Grand Repos', sous: 'Extra-épais pour grands chiens', notes: ['12 cm de mousse', 'Taupe'], prix: { S: 119, M: 139, L: 159, XL: 189 }, img: 'img/grand.jpg', etiquette: ['Chiens âgés', '#4a5d50'] },
 ];
 const euros = (n) => n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 const grille = document.getElementById('grille');
@@ -486,7 +506,7 @@ function voler(btn) {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { rendre(); return; }
   const a = btn.getBoundingClientRect(), b = ouvrir.getBoundingClientRect();
   const g = document.createElement('span'); g.className = 'vol'; document.body.appendChild(g);
-  g.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="#c9a35b" aria-hidden="true"><ellipse cx="7" cy="9" rx="2.2" ry="2.8"/><ellipse cx="12" cy="6.5" rx="2.2" ry="2.8"/><ellipse cx="17" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z"/></svg>';
+  g.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="#e08a5f" aria-hidden="true"><ellipse cx="7" cy="9" rx="2.2" ry="2.8"/><ellipse cx="12" cy="6.5" rx="2.2" ry="2.8"/><ellipse cx="17" cy="9" rx="2.2" ry="2.8"/><path d="M12 11c3.4 0 6 3.6 6 6.2 0 2-1.8 2.8-3.4 2.3-1-.3-1.7-.5-2.6-.5s-1.6.2-2.6.5C7.8 20 6 19.2 6 17.2 6 14.6 8.6 11 12 11Z"/></svg>';
   const x0 = a.left + a.width / 2 - 13, y0 = a.top + a.height / 2 - 13, x1 = b.left + b.width / 2 - 13, y1 = b.top + b.height / 2 - 13;
   const o = { t: 0 };
   gsap.to(o, { t: 1, duration: .8, ease: 'power2.in', onUpdate() {
