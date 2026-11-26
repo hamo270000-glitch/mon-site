@@ -1,18 +1,20 @@
-# Site 7 · Maison Sieste (démo)
+# Site 7 · sieste (démo)
 
-Site de démonstration pour voir le rendu du skill `ui-ux-pro-max` appliqué au produit de l'utilisateur : **les paniers orthopédiques pour chien**.
+Site de démonstration : boutique de **paniers orthopédiques pour chien**, marque inventée (« sieste »).
 Marque, prix et avis sont **inventés** (un bandeau le dit en haut de la page).
 
 En ligne : https://hamo270000-glitch.github.io/mon-site/site-7/
 
-## Design (généré par ui-ux-pro-max)
-- Style « Liquid Glass » : barre de navigation, bulles et encarts en verre dépoli.
-- Couleurs (thème « nature », choisi après que l’utilisateur a refusé le noir et or) : crème #f7f2ea, vert sauge profond #1e2b24 / #26362d, terracotta #e08a5f / #b4532a.
-- Polices : Nunito (titres, gras et arrondi) + DM Sans (texte), hébergées dans `fonts/` (l’utilisateur n’aimait pas Cormorant + Montserrat).
-- Animations GSAP (dans `vendor/`) : titres mot par mot (SplitText), compteurs, photo qui flotte, bandeau des atouts, cartes en vague, choix de taille avec pastille qui glisse et prix qui compte, défilement horizontal épinglé des 4 couches, patte qui vole jusqu'au panier, guide des tailles en direct. Défilement doux avec Lenis.
+## Direction artistique
+Inspirée des designs « pet store » les plus aimés de Dribbble (tubik : 555 likes, Nixtio : 395 likes), après que l'utilisateur a refusé les versions « noir et or » puis « vert et terracotta » qui faisaient trop dropshipping :
+- photos dans des **arches** (arrondies en haut), contour doré et trait courbe qui se dessine ;
+- titres en **Fraunces** (serif éditoriale, italique), texte en DM Sans (polices dans `fonts/`) ;
+- couleurs : sapin #2d5a54, lavande #cdc6ef, citron #d9f27e, crème #f5f1e8 ;
+- badge rond « Nouvelle collection » qui tourne, pilule « Taille S—XL », beaucoup d'air, peu de badges promo.
+- Le fond blanc/gris des photos fournisseur se fond dans la couleur de l'arche (`mix-blend-mode: multiply` + léger éclaircissement).
+
+## Animations (GSAP + Lenis, dans `vendor/`)
+Grande arche avec 3 photos qui défilent seules, titres mot par mot (SplitText), phrase qui s'allume au défilement, 4 couches en défilement horizontal épinglé, prix qui comptent au changement de taille, patte qui vole jusqu'au panier, menu plein écran qui s'ouvre en cercle, avis un par un.
 
 ## Fichiers
-Une seule page `index.html` (HTML + CSS + JS), sans étape de construction.
-
-## Photos
-Photos du fournisseur du panier (Alibaba), déjà utilisées pour le Site 6 (`site-6/source/public/vues/`), copiées dans `img/`.
+Une seule page `index.html` (HTML + CSS + JS), sans étape de construction. Photos du fournisseur dans `img/` (copiées depuis le Site 6).
