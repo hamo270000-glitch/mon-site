@@ -106,7 +106,7 @@ section{padding:56px 0}
 .cat span{font-size:.8rem}
 
 /* Onglets + grille produits */
-.onglets{display:flex;justify-content:center;gap:28px;margin-bottom:30px;border-bottom:1px solid var(--trait);width:max-content;max-width:100%;margin-inline:auto;overflow-x:auto;scrollbar-width:none}
+.onglets{display:flex;justify-content:flex-start;gap:28px;margin-bottom:30px;border-bottom:1px solid var(--trait);width:max-content;max-width:100%;margin-inline:auto;overflow-x:auto;scrollbar-width:none}
 .onglets button{padding:10px 6px;font-weight:500;font-size:.92rem;color:var(--gris);position:relative;white-space:nowrap}
 .onglets button[aria-selected=true]{color:var(--noir)}
 .onglets button[aria-selected=true]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--noir)}
@@ -252,6 +252,25 @@ details ul{padding-left:18px;display:grid;gap:4px}
 [data-ap]{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
 [data-ap].vu{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}[data-ap]{opacity:1;transform:none}}
+
+/* Version sans photos : emplacements « Photo à venir » */
+.ph{display:grid;place-items:center;align-content:center;gap:8px;width:100%;height:100%;min-height:inherit;background:var(--ph-fond,#ececec);color:var(--ph-txt,#9a9a9a);font-size:.72rem;font-weight:500;letter-spacing:.02em;text-align:center;padding:12px}
+.ph svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.4;opacity:.8}
+.heros-photo{display:none}
+.heros{background:radial-gradient(120% 90% at 85% 40%,#3b31a0 0%,var(--indigo) 55%,var(--indigo-2) 100%)}
+.heros-lettres{color:rgba(255,255,255,.07)}
+.cat{--ph-fond:#2b2470;--ph-txt:rgba(255,255,255,.55)}
+.cat:nth-child(2){--ph-fond:#3f5849}.cat:nth-child(3){--ph-fond:#6b2ee0}.cat:nth-child(4){--ph-fond:#3d3d3d}
+.cat .ph{position:absolute;inset:0;left:0;bottom:0;align-content:start;padding-top:30%}
+.cat::after{background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.25))}
+.carte .img .ph,.grande .ph,.miniatures .ph{--ph-fond:transparent}
+.carte .img .amb-ph{display:none}
+.duo .photo{--ph-fond:#e9e6f6;--ph-txt:#6b62b5}
+.banniere{background:var(--indigo-2)}
+.banniere>.ph{display:none}
+.avis .lien .ph{width:46px;height:46px;min-height:0;border-radius:50%;padding:0;font-size:0}
+.avis .lien .ph svg{width:18px;height:18px}
+.miniatures .ph{font-size:0;padding:0}.miniatures .ph svg{width:20px;height:20px}
 </style>
 </head>
 <body>
@@ -285,7 +304,7 @@ details ul{padding-left:18px;display:grid;gap:4px}
 <main class="accueil">
   <!-- Héros -->
   <section class="heros" style="padding:0" id="heros">
-    <div class="heros-photo"><img id="heros-img" src="img/gamme/brun-naturel.jpg" alt="Chien endormi sur un panier orthopédique" fetchpriority="high" /></div>
+    <div class="heros-photo"><img id="heros-img" data-src="img/gamme/brun-naturel.jpg" alt="Chien endormi sur un panier orthopédique" fetchpriority="high" /></div>
     <div class="heros-lettres" aria-hidden="true">nidou</div>
     <div class="env">
       <div class="heros-texte diapo" id="heros-texte"></div>
@@ -324,7 +343,7 @@ details ul{padding-left:18px;display:grid;gap:4px}
         <p>183 × 122 cm de fausse fourrure moelleuse pour faire la sieste avec ton chien. Assez grand pour vous deux, assez doux pour ne plus en sortir.</p>
         <a class="btn btn-blanc" href="#/produit/n7">Seulement 219,90 €</a>
       </div>
-      <div class="photo" data-ap><img src="img/produits/lit-humain.jpg" alt="Une femme et son golden retriever allongés sur le lit taille humaine" loading="lazy" /></div>
+      <div class="photo" data-ap><img data-src="img/produits/lit-humain.jpg" alt="Une femme et son golden retriever allongés sur le lit taille humaine" loading="lazy" /></div>
     </div>
   </section>
 
@@ -340,7 +359,7 @@ details ul{padding-left:18px;display:grid;gap:4px}
   <section style="padding-top:0" id="contact">
     <div class="env">
       <div class="banniere" data-ap>
-        <img src="img/gamme/ovale-camel.jpg" alt="" loading="lazy" />
+        <img data-src="img/gamme/ovale-camel.jpg" alt="" loading="lazy" />
         <div>
           <svg viewBox="0 0 24 24"><path d="M4 6h16v10H8l-4 4z"/><path d="M8 10h8M8 13h5"/></svg>
           <small>Une question ?</small>
@@ -464,7 +483,7 @@ const DIAPOS=[
 let hi=0; const ht=$('#heros-texte'), himg=$('#heros-img');
 $('#points-heros').innerHTML=DIAPOS.map((_,k)=>`<button type="button" aria-label="Diapo ${k+1}"></button>`).join('');
 function diapo(i){ hi=(i+DIAPOS.length)%DIAPOS.length; const d=DIAPOS[hi]; ht.style.opacity=0; himg.style.opacity=.3;
-  setTimeout(()=>{ ht.innerHTML=`<p class="sur">${d.sur}</p><h1>${d.h}</h1><p>${d.p}</p><a class="btn btn-blanc" href="${d.btn[1]}">${d.btn[0]}</a>`; himg.src=d.img; ht.style.opacity=1; himg.style.opacity=1; },250);
+  setTimeout(()=>{ ht.innerHTML=`<p class="sur">${d.sur}</p><h1>${d.h}</h1><p>${d.p}</p><a class="btn btn-blanc" href="${d.btn[1]}">${d.btn[0]}</a>`; ht.style.opacity=1; himg.style.opacity=1; },250);
   document.querySelectorAll('#points-heros button').forEach((b,k)=>b.classList.toggle('actif',k===hi)); }
 himg.style.transition='opacity .45s'; diapo(0); let hInt=setInterval(()=>diapo(hi+1),6000);
 $('#points-heros').onclick=(e)=>{ const b=e.target.closest('button'); if(!b)return; clearInterval(hInt); diapo([...b.parentNode.children].indexOf(b)); };
@@ -476,13 +495,13 @@ addEventListener('scroll',majEntete,{passive:true});
 
 /* Catégories */
 const CATS=[['Canapés','img/gamme/brun-classique.jpg','top'],['Paniers','img/gamme/ovale-camel.jpg','top'],['Rafraîchissant','img/gamme/bleu-ciel.jpg','nouveau'],['Lit géant','img/produits/lit-humain.jpg','grand']];
-$('#cats').innerHTML=CATS.map(([n,img])=>`<a class="cat" href="#produits" data-cat="${n}"><img src="${img}" alt="" loading="lazy" /><div><h3>${n}</h3><span>${P.filter(p=>p.cat===n).length} produit${P.filter(p=>p.cat===n).length>1?'s':''}</span></div></a>`).join('');
+$('#cats').innerHTML=CATS.map(([n,img])=>`<a class="cat" href="#produits" data-cat="${n}"><img data-src="${img}" alt="" loading="lazy" /><div><h3>${n}</h3><span>${P.filter(p=>p.cat===n).length} produit${P.filter(p=>p.cat===n).length>1?'s':''}</span></div></a>`).join('');
 $('#cats').onclick=(e)=>{ const c=e.target.closest('.cat'); if(c){ e.preventDefault(); grille(null,c.dataset.cat); $('#produits').scrollIntoView({behavior:'smooth'}); } };
 
 /* Grille produits */
 function carte(p){ const ts=Object.keys(p.t); return `
   <article class="carte" data-id="${p.id}" tabindex="0">
-    <div class="img">${p.badge?`<span class="badge ${p.badge[1]}">${p.badge[1]==='vert'?'● ':''}${p.badge[0]}</span>`:''}<img src="${p.img}" alt="${p.nom}" loading="lazy" />${p.amb?`<img class="amb" src="${p.amb}" alt="" loading="lazy" />`:''}<button class="ajout-rapide" type="button" data-rapide>Ajout rapide · ${defaut(p)}</button></div>
+    <div class="img">${p.badge?`<span class="badge ${p.badge[1]}">${p.badge[1]==='vert'?'● ':''}${p.badge[0]}</span>`:''}<img data-src="${p.img}" alt="${p.nom}" loading="lazy" />${p.amb?`<img class="amb" data-src="${p.amb}" alt="" loading="lazy" />`:''}<button class="ajout-rapide" type="button" data-rapide>Ajout rapide · ${defaut(p)}</button></div>
     <h3>${p.nom}</h3>
     <p class="tailles-dispo">${ts.length>1?`${ts[0]} à ${ts[ts.length-1]}`:p.t.Unique[0]}</p>
     <p class="prix">${ts.length>1?'Dès ':''}${euros(mini(p))}</p>
@@ -503,18 +522,18 @@ $('#grille').addEventListener('keydown',(e)=>{ const c=e.target.closest('.carte'
 
 /* Guide des tailles */
 const TT=[['S','61 × 41 cm','n13','jusqu’à 10 kg'],['M','76 × 51 cm','n14','10 à 20 kg'],['L','91 × 69 cm','n3','20 à 32 kg'],['XL','114 × 89 cm','n1','32 à 45 kg'],['XXL','135 × 107 cm','n5','plus de 45 kg']];
-$('#rail-tailles').innerHTML=TT.map(([t,d,id,kg])=>{ const p=P.find(x=>x.id===id); return `<div class="avis"><div class="t"><b>${t}</b><span>${d} · ${kg}</span></div><p>${RACES[t]}</p><a class="lien" href="#/produit/${id}"><img src="${p.img}" alt="" loading="lazy" /><div>${p.nom}<br><span style="color:var(--gris);font-weight:400">${euros(p.t[t][1])} en taille ${t}</span></div></a></div>`; }).join('');
+$('#rail-tailles').innerHTML=TT.map(([t,d,id,kg])=>{ const p=P.find(x=>x.id===id); return `<div class="avis"><div class="t"><b>${t}</b><span>${d} · ${kg}</span></div><p>${RACES[t]}</p><a class="lien" href="#/produit/${id}"><img data-src="${p.img}" alt="" loading="lazy" /><div>${p.nom}<br><span style="color:var(--gris);font-weight:400">${euros(p.t[t][1])} en taille ${t}</span></div></a></div>`; }).join('');
 
 /* Fiche produit */
 let fp, ft, q=1;
 function majFiche(){ $('#f-t').textContent=ft; $('#f-dim').textContent=fp.t[ft][0]; $('#f-prix').textContent=euros(fp.t[ft][1]); $('#f-races').textContent=`Idéal pour : ${RACES[ft]}`;
   $('#f-opts').innerHTML=Object.keys(fp.t).map(t=>`<button type="button" data-t="${t}" aria-pressed="${t===ft}">${t}</button>`).join(''); }
-function photo(src){ const g=$('#grande'); g.style.opacity=0; setTimeout(()=>{g.src=src;g.style.opacity=1;},150);
+function photo(src){ const g=$('#grande'); if(g){ g.style.opacity=0; setTimeout(()=>{g.src=src;g.style.opacity=1;},150); }
   document.querySelectorAll('#mini button').forEach(b=>b.setAttribute('aria-current',b.dataset.src===src)); }
 function fiche(id){ fp=P.find(p=>p.id===id); if(!fp){ location.hash='#/'; return; } ft=defaut(fp); q=1; $('#qte').textContent=1;
   const imgs=[fp.img,fp.amb].filter(Boolean);
-  $('#mini').innerHTML=imgs.map(s=>`<button type="button" data-src="${s}"><img src="${s}" alt="" /></button>`).join('');
-  $('#grande').alt=fp.nom; photo(imgs[0]);
+  $('#mini').innerHTML=imgs.map(s=>`<button type="button" data-data-src="${s}"><img data-src="${s}" alt="" /></button>`).join('');
+  if($('#grande')) $('#grande').alt=fp.nom; photo(imgs[0]);
   $('#ar-nom').textContent=fp.nom; $('#f-nom').textContent=fp.nom; $('#f-desc').textContent=fp.d; $('#f-long').textContent=fp.d;
   $('#f-coul').textContent=fp.couleur; $('#f-cat').textContent=fp.cat; $('#f-coeur').setAttribute('aria-pressed',favs.has(fp.id));
   const i=P.indexOf(fp); $('#p-prec').href='#/produit/'+P[(i-1+P.length)%P.length].id; $('#p-suiv').href='#/produit/'+P[(i+1)%P.length].id;
@@ -539,6 +558,12 @@ addEventListener('hashchange',route); route();
 /* Apparitions */
 const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target);} }),{threshold:.12});
 document.querySelectorAll('[data-ap]').forEach(e=>io.observe(e));
+
+/* Version sans photos : chaque image devient un emplacement « Photo à venir » */
+const ICONE='<svg viewBox="0 0 24 24"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+function sansPhoto(img){ if(!img.isConnected||img.closest('.heros-photo'))return; const d=document.createElement('div'); d.className='ph'+(img.classList.contains('amb')?' amb-ph':''); d.setAttribute('role','img'); d.setAttribute('aria-label',(img.alt||'Photo')+' — photo à venir'); d.innerHTML=ICONE+'<span>Photo à venir</span>'; img.replaceWith(d); }
+document.querySelectorAll('main img,footer img').forEach(sansPhoto);
+new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{ if(n.nodeType!==1)return; if(n.tagName==='IMG')sansPhoto(n); else n.querySelectorAll&&n.querySelectorAll('img').forEach(sansPhoto); }))).observe(document.body,{childList:true,subtree:true});
 </script>
 </body>
 </html>

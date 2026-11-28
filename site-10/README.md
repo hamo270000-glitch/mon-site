@@ -7,3 +7,6 @@ Boutique de démonstration de paniers orthopédiques pour chien, faite à partir
 - Fiche produit `#/produit/<id>` comme Glozin : miniatures, tailles, quantité, Ajouter au panier, favoris, Acheter maintenant, livraison/retours, paiement sécurisé, onglets.
 - Pas de fausse urgence (« 35 personnes regardent », « plus que 10 en stock »), ni faux avis, ni faux prix barrés.
 - Mêmes 9 produits et prix que les Sites 7, 8 et 9. Une seule page `index.html`, sans construction. Vitrine seulement (pas de paiement).
+
+## Version sans photos (28 novembre 2026)
+À la demande de l'utilisateur, le site s'affiche **sans aucune photo** : chaque image est remplacée par un emplacement « Photo à venir » (script en bas de `index.html`, bloc « Version sans photos »). Les chemins des photos restent dans le code (`data-src`, `img:`/`amb:` des produits). Pour remettre les photos : supprimer ce bloc CSS et JS et remplacer `data-src=` par `src=`.
