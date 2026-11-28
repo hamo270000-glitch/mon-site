@@ -12,3 +12,4 @@ Boutique de démonstration de paniers orthopédiques pour chien, faite à partir
 À la demande de l'utilisateur, le site s'affiche **sans aucune photo** : chaque image est remplacée par un emplacement « Photo à venir » (script en bas de `index.html`, bloc « Version sans photos »). Les chemins des photos restent dans le code (`data-src`, `img:`/`amb:` des produits). Pour remettre les photos : supprimer ce bloc CSS et JS et remplacer `data-src=` par `src=`.
 
 Exception : la grande photo du haut (`img/heros-samoyede.jpg`, Samoyède sur le panier rafraîchissant, envoyée par l'utilisateur) est affichée.
+Sur téléphone, la bannière affiche `img/heros-samoyede-mobile.jpg` (chien centré) sous le texte ; sur ordinateur, `img/heros-samoyede.jpg` à droite du texte.
