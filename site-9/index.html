@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Dodo — Paniers orthopédiques pour chien</title>
+<meta name="description" content="Paniers orthopédiques en mousse à mémoire de forme, du S au XXL. Design et confort dans un seul panier." />
+<meta name="theme-color" content="#6f625a" />
+<style>
+@font-face{font-family:Marcellus;src:url(fonts/marcellus-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Lato;src:url(fonts/lato-latin-300-normal.woff2) format('woff2');font-weight:300;font-display:swap}
+@font-face{font-family:Lato;src:url(fonts/lato-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Lato;src:url(fonts/lato-latin-700-normal.woff2) format('woff2');font-weight:700;font-display:swap}
+:root{
+  --blanc:#fff; --creme:#f4f2ee; --creme-2:#ebe7e0; --taupe:#6f625a; --taupe-2:#7a6d65;
+  --sauge:#a8b58b; --sauge-fonce:#7f8c63; --noir:#262422; --texte:#4a4643; --gris:#8b8681; --trait:#e8e5e0;
+  --r:14px; --serif:Marcellus, 'Times New Roman', serif; --sans:Lato, system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--blanc);color:var(--texte);font:400 15px/1.65 var(--sans);overflow-x:hidden}
+img{display:block;max-width:100%}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+.enveloppe{width:min(1240px,100% - 32px);margin-inline:auto}
+section{padding:56px 0}
+@media (min-width:900px){section{padding:88px 0}.enveloppe{width:min(1240px,100% - 80px)}}
+
+/* Titres façon Pospane : 1re ligne foncée, 2e ligne plus claire */
+h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--noir);line-height:1.15;letter-spacing:-.005em}
+h2{font-size:clamp(1.9rem,4.6vw,2.6rem)}
+h2 .clair,h1 .clair{color:var(--gris)}
+h2 .clair{display:block}
+.surtitre{display:flex;align-items:center;gap:8px;font:700 .7rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--sauge);margin-bottom:14px}
+.surtitre svg{width:18px;height:18px;fill:var(--sauge)}
+.chapo{max-width:46ch;color:var(--texte);font-size:.92rem;margin-top:16px}
+
+/* Boutons pilule noirs avec flèche */
+.btn{display:inline-flex;align-items:center;gap:12px;border-radius:999px;padding:12px 14px 12px 22px;font:700 .82rem/1 var(--sans);transition:transform .2s,background .2s}
+.btn:active{transform:scale(.97)}
+.btn-noir{background:var(--noir);color:#fff}
+.btn-noir:hover{background:#000}
+.btn-blanc{background:#fff;color:var(--noir)}
+.btn .rond{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--noir);color:#fff;margin:-6px -6px -6px 0}
+.btn-noir .rond{background:transparent;width:20px}
+.fleche{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6}
+.fleches{display:flex;gap:10px}
+.fleches button{width:62px;height:34px;border-radius:999px;border:1px solid var(--noir);display:grid;place-items:center}
+.fleches button.plein{background:var(--noir);color:#fff}
+
+/* Bandeau + menu */
+.bandeau{background:var(--taupe);color:#f3eee9;font-size:.74rem;padding:8px 16px;display:flex;align-items:center;justify-content:center;gap:16px;text-align:center}
+.bandeau button{color:#f3eee9;font-size:1rem;line-height:1;position:absolute;right:14px}
+.bandeau{position:relative}
+.entete{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+.entete.defile{border-color:var(--trait)}
+.entete .enveloppe{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:62px}
+.liens{display:none;gap:26px;font-size:.8rem}
+.liens a:hover{color:var(--noir)}
+.burger{width:40px;height:40px;display:grid;place-items:center;margin-left:-8px}
+.burger svg,.outils svg{width:20px;height:20px;stroke:var(--noir);fill:none;stroke-width:1.5}
+.logo{display:flex;align-items:center;gap:8px;font:400 1.55rem/1 var(--serif);letter-spacing:.06em;color:var(--noir)}
+.logo svg{width:34px;height:22px;stroke:var(--noir);fill:none;stroke-width:1.4}
+.outils{display:flex;justify-content:flex-end;gap:6px;font-size:.8rem}
+.outils a,.outils button{display:flex;align-items:center;gap:6px;padding:8px}
+.outils .txt{display:none}
+@media (max-width:420px){.outils .cherche{display:none}.logo{font-size:1.35rem}}
+.compteur{min-width:17px;height:17px;border-radius:9px;background:var(--sauge);color:#fff;font:700 .62rem/17px var(--sans);text-align:center;padding:0 4px}
+@media (min-width:900px){.liens{display:flex}.burger{display:none}.outils .txt{display:inline}.outils{gap:14px}}
+.tiroir{position:fixed;inset:0;z-index:40;pointer-events:none}
+.tiroir .fond{position:absolute;inset:0;background:rgba(38,36,34,.35);opacity:0;transition:opacity .3s}
+.tiroir nav{position:absolute;inset:0 22% 0 0;background:#fff;padding:24px;transform:translateX(-100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;gap:6px}
+.tiroir nav a{font:400 1.5rem/1.2 var(--serif);color:var(--noir);padding:10px 0;border-bottom:1px solid var(--trait)}
+.tiroir.ouvert{pointer-events:auto}.tiroir.ouvert .fond{opacity:1}.tiroir.ouvert nav{transform:none}
+
+/* Héros */
+.heros{padding:10px 0 0}
+.heros-boite{position:relative;border-radius:18px;overflow:hidden;min-height:560px;display:flex;align-items:flex-end;background:#cfc9c2}
+.heros-boite>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;transform:scale(1.04);transition:transform 6s ease-out}
+.heros-boite.vu>img{transform:none}
+.heros-boite::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,26,22,0) 35%,rgba(30,26,22,.55) 100%)}
+.vignette{position:absolute;z-index:2;top:16px;left:16px;width:96px;aspect-ratio:1;border-radius:12px;overflow:hidden;border:3px solid #fff;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.vignette img{width:100%;height:100%;object-fit:cover}
+.heros-texte{position:relative;z-index:2;padding:24px 20px 26px;color:#fff;width:100%}
+.heros-texte p{font-size:.85rem;opacity:.92;margin-bottom:6px}
+.heros-texte h1{color:#fff;font-size:clamp(2.3rem,7.4vw,4.4rem);line-height:1.05}
+.heros-texte h1 .clair{color:rgba(255,255,255,.88)}
+.heros-texte .btn{margin-top:20px}
+.carte-stat{position:absolute;z-index:2;right:16px;top:16px;width:200px;background:#fff;border-radius:14px;padding:16px 16px 12px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.carte-stat .gros{font:400 2.2rem/1 var(--serif);color:var(--noir)}
+.carte-stat h3{font-size:1.05rem;margin:10px 0 6px}
+.carte-stat p{font-size:.72rem;line-height:1.5;color:var(--gris);min-height:4.4em}
+.carte-stat .nav{display:flex;align-items:center;gap:8px;margin-top:10px}
+.carte-stat .nav button{font-size:.9rem;color:var(--noir);padding:2px 4px}
+.barres{flex:1;display:flex;gap:4px}
+.barres i{flex:1;height:3px;border-radius:2px;background:var(--trait)}
+.barres i.actif{background:var(--sauge)}
+.stat-corps{transition:opacity .25s}
+@media (max-width:640px){.carte-stat{width:168px;padding:12px}.carte-stat .gros{font-size:1.8rem}.carte-stat p{display:none}.vignette{width:76px}.heros-boite{min-height:600px}}
+@media (min-width:900px){.heros-boite{min-height:620px}.heros-texte{padding:40px;display:flex;align-items:flex-end;gap:28px}.heros-texte .btn{margin:0 0 10px}.carte-stat{top:auto;bottom:32px;right:32px;width:240px;padding:22px}.vignette{top:28px;left:28px;width:130px}}
+
+/* Valeurs */
+.valeurs{display:grid;gap:28px}
+.valeurs-photo{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3}
+.valeurs-photo img{width:100%;height:100%;object-fit:cover}
+.liste-atouts{display:flex;flex-direction:column;gap:12px}
+.atout{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border:1px solid var(--trait);border-radius:12px;font-size:.88rem;color:var(--noir);background:#fff;transition:border-color .2s}
+.atout:hover{border-color:var(--sauge)}
+.atout .ic{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--sauge);display:grid;place-items:center;color:var(--sauge)}
+.atout .ic svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;transform:rotate(-45deg)}
+.liste-atouts .btn{align-self:flex-start;margin-top:8px}
+@media (min-width:900px){.valeurs{grid-template-columns:1fr 1.15fr .9fr;align-items:start;gap:36px}}
+
+/* Grille brune */
+.soin{display:grid;gap:30px}
+.mosaique{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tuile{border-radius:var(--r);aspect-ratio:1/.8;overflow:hidden}
+.tuile.brune{background:var(--taupe-2);color:#efe9e3;padding:18px;display:flex;flex-direction:column;justify-content:space-between}
+.tuile.brune h3{color:#fff;font-size:1.25rem}
+.tuile.brune p{font-size:.72rem;line-height:1.5;opacity:.9}
+.tuile.photo{background:var(--creme)}
+.tuile.photo img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.tuile.photo{display:grid;place-items:center;padding:8px}
+@media (max-width:640px){.tuile{aspect-ratio:auto;min-height:190px}.tuile.brune{padding:14px}.tuile.brune h3{font-size:1.1rem}.tuile.brune p{font-size:.68rem}}
+@media (min-width:900px){.soin{grid-template-columns:1.25fr 1fr;gap:48px}.tuile.brune{padding:24px}.tuile.brune h3{font-size:1.5rem}.tuile.brune p{font-size:.8rem}}
+
+/* Créateur de panier */
+.createur{display:grid;gap:28px}
+.createur h3{font-size:1.15rem;margin:26px 0 14px}
+.createur h3 span{color:var(--gris)}
+.etiq{font-size:.78rem;color:var(--noir);margin:14px 0 10px}
+.pastilles{display:flex;flex-wrap:wrap;gap:10px}
+.pastille-c{width:64px;height:28px;border-radius:999px;border:1px solid var(--trait);display:grid;place-items:center;color:#fff;transition:transform .2s}
+.pastille-c[aria-pressed=true]{outline:2px solid var(--noir);outline-offset:2px}
+.pastille-c svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;opacity:0}
+.pastille-c[aria-pressed=true] svg{opacity:1}
+.tailles{display:flex;flex-wrap:wrap;gap:8px}
+.tailles button{min-width:56px;height:30px;border-radius:999px;border:1px solid var(--trait);font-size:.75rem;padding:0 12px;transition:background .2s,color .2s}
+.tailles button[aria-pressed=true]{background:var(--noir);color:#fff;border-color:var(--noir)}
+.resume{margin:18px 0 20px;font-size:.85rem}
+.resume b{font:400 1.4rem/1 var(--serif);color:var(--noir);display:block;margin-top:6px}
+.createur-photo{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;background:var(--creme)}
+.createur-photo img{width:100%;height:100%;object-fit:cover;transition:opacity .35s}
+@media (min-width:900px){.createur{grid-template-columns:.9fr 1.3fr;gap:56px;align-items:center}}
+
+/* Produits */
+.tete-section{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:28px}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:86%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px}
+.rail::-webkit-scrollbar{display:none}
+.rail>*{scroll-snap-align:start}
+@media (min-width:700px){.rail{grid-auto-columns:calc((100% - 32px)/3)}}
+.produit{cursor:pointer}
+.produit .image{position:relative;border-radius:var(--r);overflow:hidden;background:var(--creme);aspect-ratio:1/1}
+.produit .image img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,opacity .4s}
+.produit .image img.amb{position:absolute;inset:0;opacity:0}
+.produit .image img.det{object-fit:contain;mix-blend-mode:multiply;padding:10px}
+@media (hover:hover){.produit:hover .image img.amb{opacity:1;background:var(--creme)}.produit:hover .image img{transform:scale(1.03)}}
+.badge{position:absolute;z-index:2;top:12px;left:12px;background:var(--sauge);color:#fff;font:700 .62rem/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:999px}
+.points{display:flex;gap:6px;margin:14px 0 10px}
+.points i{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+.produit h3{font-size:1.15rem}
+.produit .desc{font-size:.78rem;color:var(--gris);margin:4px 0 8px}
+.produit .prix{font-size:.85rem;color:var(--noir)}
+
+/* Guide des tailles (à la place des avis) */
+.centre{text-align:center}
+.centre .surtitre{justify-content:center}
+.centre .chapo{margin-inline:auto}
+.rail.tailles-rail{grid-auto-columns:78%;margin-top:34px}
+@media (min-width:700px){.rail.tailles-rail{grid-auto-columns:calc((100% - 48px)/3.3)}}
+.taille-carte{border:1px solid var(--trait);border-radius:var(--r);padding:20px;background:#fff}
+.taille-carte .haut{display:flex;justify-content:space-between;align-items:flex-start}
+.taille-carte .lettre{width:54px;height:54px;border-radius:50%;background:var(--creme);display:grid;place-items:center;font:400 1.2rem/1 var(--serif);color:var(--noir)}
+.taille-carte .dim{font-size:.7rem;color:var(--gris)}
+.taille-carte q{display:block;font:400 1.05rem/1.4 var(--serif);color:var(--noir);margin:18px 0 14px;quotes:none}
+.taille-carte .bas{display:flex;justify-content:space-between;font-size:.72rem;color:var(--gris)}
+.taille-carte .bas span:last-child{color:var(--sauge)}
+.progression{height:2px;background:var(--trait);margin-top:26px;border-radius:2px;overflow:hidden}
+.progression i{display:block;height:100%;width:30%;background:var(--sauge);transition:transform .2s linear;transform-origin:left}
+
+/* Galerie */
+.galerie{display:grid;gap:24px}
+.galerie-grille{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.galerie-grille img{border-radius:var(--r);aspect-ratio:4/3;object-fit:cover;width:100%}
+.encart{background:var(--creme) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%23e4dfd7'%3E%3Ccircle cx='30' cy='34' r='6'/%3E%3Ccircle cx='44' cy='26' r='5'/%3E%3Ccircle cx='58' cy='30' r='5'/%3E%3Cellipse cx='45' cy='46' rx='10' ry='8'/%3E%3C/g%3E%3C/svg%3E");border-radius:var(--r);padding:24px;display:flex;flex-direction:column;overflow:hidden}
+.encart h3{font-size:1.35rem}
+.encart h3 span{color:var(--gris);display:block}
+.encart p{font-size:.8rem;margin:12px 0 18px}
+.encart .btn{align-self:flex-start}
+.encart img{margin:24px auto 0;width:100%;object-fit:contain;mix-blend-mode:multiply}
+@media (min-width:900px){.galerie{grid-template-columns:2.1fr 1fr;gap:28px;align-items:stretch}.encart img{margin-top:auto}}
+
+/* FAQ */
+.faq{display:grid;gap:28px}
+.faq .btn{margin-top:22px}
+.questions{display:flex;flex-direction:column;gap:10px}
+details{border:1px solid var(--trait);border-radius:12px;padding:0 18px;background:#fff}
+summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 0;font-size:.88rem;color:var(--noir);cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary .plus{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid var(--trait);display:grid;place-items:center;color:var(--gris);transition:transform .25s}
+details[open] summary .plus{transform:rotate(45deg);border-color:var(--sauge);color:var(--sauge)}
+details p{font-size:.82rem;color:var(--texte);padding:0 40px 18px 0}
+@media (min-width:900px){.faq{grid-template-columns:.8fr 1.4fr;gap:56px}}
+
+/* À propos */
+.apropos{display:grid;gap:14px}
+.apropos .boite{background:var(--creme);border-radius:var(--r);padding:26px;display:flex;flex-direction:column;overflow:hidden}
+.apropos .boite h2{font-size:1.6rem}
+.apropos .boite p{font-size:.82rem;margin:14px 0 20px}
+.apropos .boite .btn{align-self:flex-start}
+.apropos .boite img{margin:26px auto -26px;width:70%;mix-blend-mode:multiply}
+.apropos .grande{border-radius:var(--r);overflow:hidden;min-height:320px}
+.apropos .grande img{width:100%;height:100%;object-fit:cover}
+@media (min-width:900px){.apropos{grid-template-columns:1fr 2fr;gap:20px}}
+
+/* Conseils */
+.conseils{display:grid;grid-auto-flow:column;grid-auto-columns:84%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.conseils::-webkit-scrollbar{display:none}
+@media (min-width:900px){.conseils{grid-auto-flow:row;grid-template-columns:1.5fr 1fr 1fr}.conseils .article{aspect-ratio:auto;height:380px}}
+.article{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3.6;background:var(--taupe);scroll-snap-align:start;color:#fff}
+.article img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.article:hover img{transform:scale(1.04)}
+.article::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(20,18,16,.75))}
+.article .contenu{position:absolute;z-index:2;left:18px;right:18px;bottom:18px;display:flex;align-items:flex-end;gap:12px}
+.article h3{color:#fff;font-size:1.15rem;flex:1}
+.article small{display:block;font:400 .72rem/1.4 var(--sans);opacity:.85;margin-top:6px}
+.article .go{flex:none;width:56px;height:34px;border-radius:999px;background:#fff;color:var(--noir);display:grid;place-items:center}
+
+/* Pied */
+.pied{background:var(--creme) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='%23ebe6de'%3E%3Ccircle cx='30' cy='34' r='6'/%3E%3Ccircle cx='44' cy='26' r='5'/%3E%3Ccircle cx='58' cy='30' r='5'/%3E%3Cellipse cx='45' cy='46' rx='10' ry='8'/%3E%3Crect x='96' y='108' width='40' height='8' rx='4'/%3E%3Ccircle cx='96' cy='108' r='6'/%3E%3Ccircle cx='96' cy='116' r='6'/%3E%3Ccircle cx='136' cy='108' r='6'/%3E%3Ccircle cx='136' cy='116' r='6'/%3E%3C/g%3E%3C/svg%3E");padding:48px 0 24px;margin-top:40px;font-size:.8rem}
+.pied-grille{display:grid;gap:30px}
+.pied h4{font:400 1rem/1 var(--serif);color:var(--noir);margin-bottom:14px}
+.pied ul{list-style:none;display:flex;flex-direction:column;gap:8px;color:var(--texte)}
+.pied .logo{margin-bottom:14px}
+.sociaux{display:flex;gap:12px;margin-top:16px}
+.sociaux svg{width:18px;height:18px;fill:var(--noir)}
+.news{display:flex;background:#fff;border-radius:999px;padding:4px;margin:14px 0 10px}
+.news input{flex:1;min-width:0;border:0;background:none;padding:0 14px;font-size:.8rem;outline:none}
+.news .btn{padding:10px 18px}
+.mentions{font-size:.68rem;color:var(--gris)}
+.bas-pied{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;border-top:1px solid var(--trait);margin-top:36px;padding-top:18px;font-size:.7rem;color:var(--gris)}
+@media (min-width:900px){.pied-grille{grid-template-columns:1.6fr 1fr 1fr 1.4fr;gap:40px}}
+
+/* Fiche produit (feuille) */
+.feuille{position:fixed;inset:0;z-index:50;pointer-events:none;visibility:hidden;transition:visibility 0s .4s}
+.feuille .fond{position:absolute;inset:0;background:rgba(38,36,34,.4);opacity:0;transition:opacity .3s}
+.feuille .panneau{position:absolute;left:0;right:0;bottom:0;max-height:92vh;overflow:auto;background:#fff;border-radius:20px 20px 0 0;padding:14px 18px calc(22px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.feuille.ouverte{pointer-events:auto;visibility:visible;transition:none}.feuille.ouverte .fond{opacity:1}.feuille.ouverte .panneau{transform:none}
+.poignee{width:42px;height:4px;border-radius:2px;background:var(--trait);margin:0 auto 14px}
+.feuille .photos{display:grid;grid-auto-flow:column;grid-auto-columns:100%;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;border-radius:var(--r);scrollbar-width:none}
+.feuille .photos::-webkit-scrollbar{display:none}
+.feuille .photos img{scroll-snap-align:start;aspect-ratio:4/3;object-fit:cover;mix-blend-mode:multiply;width:100%;border-radius:var(--r);background:var(--creme)}
+.feuille h2{font-size:1.7rem;margin:16px 0 4px}
+.feuille .prixf{font:400 1.25rem/1 var(--serif);color:var(--noir);margin:12px 0}
+.feuille .dimf{font-size:.78rem;color:var(--gris);margin-top:8px}
+.feuille .races{font-size:.78rem;margin-top:4px}
+.feuille .ajout{width:100%;justify-content:center;margin-top:18px;padding:16px}
+.feuille ul{list-style:none;margin-top:16px;font-size:.8rem;display:grid;gap:6px}
+.feuille ul li::before{content:"✓";color:var(--sauge);margin-right:8px}
+.fermer{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:var(--creme);font-size:1.1rem;color:var(--noir)}
+@media (min-width:900px){.feuille .panneau{left:50%;right:auto;bottom:50%;width:min(940px,92vw);border-radius:20px;transform:translate(-50%,60%);opacity:0;transition:transform .35s,opacity .3s;display:grid;grid-template-columns:1.1fr 1fr;gap:30px;padding:28px}.feuille.ouverte .panneau{transform:translate(-50%,50%);opacity:1}.poignee{display:none}}
+.toast{position:fixed;left:50%;bottom:24px;z-index:60;transform:translate(-50%,140%);background:var(--noir);color:#fff;border-radius:999px;padding:12px 20px;font-size:.82rem;transition:transform .35s;white-space:nowrap;visibility:hidden;transition:transform .35s,visibility 0s .35s}
+.toast.vu{transform:translate(-50%,0);visibility:visible;transition:transform .35s}
+
+/* Apparition au défilement */
+[data-apparait]{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+[data-apparait].vu{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}[data-apparait]{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="patte" viewBox="0 0 24 24"><circle cx="5.5" cy="10" r="2.3"/><circle cx="9.5" cy="5.5" r="2.3"/><circle cx="14.5" cy="5.5" r="2.3"/><circle cx="18.5" cy="10" r="2.3"/><path d="M12 11c-3.2 0-6.5 4.6-6.5 7.2 0 1.7 1.3 2.6 3 2.6 1.5 0 2.3-.8 3.5-.8s2 .8 3.5.8c1.7 0 3-.9 3-2.6C18.5 15.6 15.2 11 12 11z"/></symbol>
+  <symbol id="fl" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+</svg>
+
+<div class="bandeau" id="bandeau"><span>Paniers orthopédiques en mousse à mémoire de forme — soutien, confort et style</span><button type="button" aria-label="Fermer le bandeau" onclick="this.parentNode.remove()">×</button></div>
+
+<header class="entete" id="entete">
+  <div class="enveloppe">
+    <div>
+      <button class="burger" type="button" aria-label="Ouvrir le menu" id="burger"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></svg></button>
+      <nav class="liens" aria-label="Menu principal"><a href="#boutique">Boutique</a><a href="#createur">Créer son panier</a><a href="#tailles">Tailles</a><a href="#galerie">Galerie</a><a href="#conseils">Conseils</a><a href="#faq">FAQ</a></nav>
+    </div>
+    <a class="logo" href="#" aria-label="Dodo, accueil"><svg viewBox="0 0 40 26"><path d="M3 20c2-6 7-9 13-9 4 0 6 2 9 2 3 0 4-3 7-3 3 0 5 3 5 6v4H3z"/><path d="M29 10c0-3 1-6 3-7M33 13l2-3"/><path d="M9 20v3M31 20v3"/></svg>DODO</a>
+    <div class="outils">
+      <a class="cherche" href="#faq" aria-label="Aide"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span class="txt">Rechercher</span></a>
+      <a href="#contact" aria-label="Compte"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5c1.2-4 4-5.8 7.5-5.8s6.3 1.8 7.5 5.8"/></svg><span class="txt">Compte</span></a>
+      <button type="button" aria-label="Panier" id="btn-panier"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.5H6.2z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></svg><span class="txt">Panier</span><span class="compteur" id="compteur">0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="tiroir" id="tiroir"><div class="fond" data-fermer></div>
+  <nav aria-label="Menu mobile"><a href="#boutique" data-fermer>Boutique</a><a href="#createur" data-fermer>Créer son panier</a><a href="#tailles" data-fermer>Guide des tailles</a><a href="#galerie" data-fermer>Galerie</a><a href="#conseils" data-fermer>Conseils</a><a href="#faq" data-fermer>Questions</a><a href="#contact" data-fermer>Contact</a></nav>
+</div>
+
+<main>
+<!-- 1. Héros -->
+<div class="heros">
+  <div class="enveloppe">
+    <div class="heros-boite" id="heros">
+      <img src="img/gamme/brun-naturel.jpg" alt="Grand chien blanc endormi sur un panier orthopédique brun chiné dans un salon" fetchpriority="high" />
+      <div class="vignette"><img src="img/gamme/beige-chaud.jpg" alt="Labrador sur un panier beige" /></div>
+      <div class="heros-texte">
+        <div>
+          <p>Pour les chiens petits et grands</p>
+          <h1>Design et confort<br /><span class="clair">dans un seul panier</span></h1>
+        </div>
+        <a class="btn btn-blanc" href="#boutique">Voir la boutique <span class="rond"><svg class="fleche"><use href="#fl"/></svg></span></a>
+      </div>
+      <aside class="carte-stat" aria-live="polite">
+        <div class="stat-corps" id="stat-corps"></div>
+        <div class="nav"><button type="button" id="stat-prec" aria-label="Précédent">‹</button><div class="barres" id="barres"><i></i><i></i><i></i></div><button type="button" id="stat-suiv" aria-label="Suivant">›</button></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Valeurs -->
+<section>
+  <div class="enveloppe valeurs">
+    <div data-apparait>
+      <p class="surtitre"><svg><use href="#patte"/></svg>Ce qui fait la différence</p>
+      <h2>Chaque détail<span class="clair">compte</span></h2>
+      <p class="chapo">Un bon panier, ce n'est pas juste un coussin. C'est un vrai matelas qui soutient le dos et les articulations, des rebords pour poser la tête et une housse qu'on lave sans y passer l'après-midi.</p>
+    </div>
+    <div class="valeurs-photo" data-apparait><img src="img/gamme/creme-arctique.jpg" alt="Berger australien sur un panier crème" loading="lazy" /></div>
+    <div class="liste-atouts" data-apparait>
+      <a class="atout" href="#faq">Mousse à mémoire de forme<span class="ic"><svg><use href="#fl"/></svg></span></a>
+      <a class="atout" href="#faq">Rebords moelleux pour poser la tête<span class="ic"><svg><use href="#fl"/></svg></span></a>
+      <a class="atout" href="#faq">Housse déhoussable, lavable en machine<span class="ic"><svg><use href="#fl"/></svg></span></a>
+      <a class="atout" href="#faq">Dessous antidérapant<span class="ic"><svg><use href="#fl"/></svg></span></a>
+      <a class="btn btn-noir" href="#boutique">Découvrir les paniers <span class="rond"><svg class="fleche"><use href="#fl"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Mosaïque brune -->
+<section style="padding-top:0">
+  <div class="enveloppe soin">
+    <div class="mosaique" data-apparait>
+      <div class="tuile brune"><h3>Livraison<br />suivie</h3><p>Ton colis est suivi de l'entrepôt jusqu'à ta porte. Tu reçois le numéro de suivi par e-mail.</p></div>
+      <div class="tuile photo"><img src="img/produits/canape-3-rebords.jpg" alt="Samoyède sur un panier brun chiné" loading="lazy" /></div>
+      <div class="tuile photo"><img src="img/produits/panier-ovale.jpg" alt="Border collie sur un panier ovale camel" loading="lazy" /></div>
+      <div class="tuile brune"><h3>14 jours pour<br />changer d'avis</h3><p>Le panier ne lui plaît pas ? Tu as 14 jours après réception pour nous le retourner.</p></div>
+      <div class="tuile brune"><h3>Entretien<br />facile</h3><p>La housse s'enlève avec sa fermeture éclair et passe en machine. Les poils partent d'un coup de main.</p></div>
+      <div class="tuile photo"><img src="img/produits/panier-rafraichissant.jpg" alt="Border collie sur un panier bleu rafraîchissant" loading="lazy" /></div>
+    </div>
+    <div data-apparait>
+      <p class="surtitre"><svg><use href="#patte"/></svg>Pour lui et pour toi</p>
+      <h2>Pensé pour les chiens<span class="clair">et pour leurs maîtres</span></h2>
+      <p class="chapo">Ton chien dort entre 12 et 14 heures par jour. Nos paniers sont choisis pour qu'il le fasse bien : un couchage ferme qui ne s'aplatit pas, des rebords pour se sentir à l'abri, et un look canapé qui a sa place dans ton salon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Créateur -->
+<section id="createur" style="padding-top:0">
+  <div class="enveloppe createur">
+    <div data-apparait>
+      <p class="surtitre"><svg><use href="#patte"/></svg>Fais ton choix</p>
+      <h2>Crée le panier idéal<span class="clair">pour ton chien et ton salon</span></h2>
+      <p class="chapo">Choisis une couleur, puis la taille de ton chien. Le prix s'affiche tout de suite.</p>
+      <h3>Créateur <span>de panier</span></h3>
+      <p class="etiq">Choisis la couleur</p>
+      <div class="pastilles" id="couleurs" role="group" aria-label="Couleur"></div>
+      <p class="etiq">Choisis la taille</p>
+      <div class="tailles" id="createur-tailles" role="group" aria-label="Taille"></div>
+      <p class="resume" id="resume"></p>
+      <button class="btn btn-noir" type="button" id="createur-voir">Voir le produit <span class="rond"><svg class="fleche"><use href="#fl"/></svg></span></button>
+    </div>
+    <div class="createur-photo" data-apparait><img id="createur-img" src="img/gamme/beige-chaud.jpg" alt="" /></div>
+  </div>
+</section>
+
+<!-- 5. Produits -->
+<section id="boutique" style="padding-top:0">
+  <div class="enveloppe">
+    <div class="tete-section" data-apparait>
+      <div>
+        <p class="surtitre"><svg><use href="#patte"/></svg>Toute la collection</p>
+        <h2>Choisis le panier<span class="clair">qui lui ressemble</span></h2>
+        <p class="chapo">Canapé, ovale, rafraîchissant ou géant : 9 modèles, du S au XXL, pour chaque chien et chaque façon de dormir.</p>
+      </div>
+      <div class="fleches"><button type="button" data-rail="rail-produits" data-sens="-1" aria-label="Précédent"><svg class="fleche" style="transform:scaleX(-1)"><use href="#fl"/></svg></button><button type="button" class="plein" data-rail="rail-produits" data-sens="1" aria-label="Suivant"><svg class="fleche"><use href="#fl"/></svg></button></div>
+    </div>
+    <div class="rail" id="rail-produits"></div>
+  </div>
+</section>
+
+<!-- 6. Guide des tailles -->
+<section id="tailles" style="padding-top:0">
+  <div class="enveloppe">
+    <div class="centre" data-apparait>
+      <p class="surtitre"><svg><use href="#patte"/></svg>Guide des tailles</p>
+      <h2>Quelle taille<span class="clair">pour mon chien ?</span></h2>
+      <p class="chapo">Mesure ton chien allongé, du bout du nez à la base de la queue, puis ajoute 15 à 20 cm. Tu hésites entre deux tailles ? Prends la plus grande.</p>
+    </div>
+    <div class="rail tailles-rail" id="rail-tailles"></div>
+    <div class="progression"><i id="prog"></i></div>
+  </div>
+</section>
+
+<!-- 7. Galerie -->
+<section id="galerie" style="padding-top:0">
+  <div class="enveloppe galerie">
+    <div data-apparait>
+      <p class="surtitre"><svg><use href="#patte"/></svg>Dans la vraie vie</p>
+      <h2>Des chiens bien installés<span class="clair">dans de beaux intérieurs</span></h2>
+      <p class="chapo">Brun, crème, gris ou bleu : il y a une couleur pour chaque salon. Touche une photo pour voir le panier.</p>
+      <div class="galerie-grille" id="galerie-grille"></div>
+    </div>
+    <aside class="encart" data-apparait>
+      <h3>Chez toi<span>bientôt ?</span></h3>
+      <p>Envoie-nous la photo de ton chien sur son nouveau panier : on la publiera ici, avec ton accord.</p>
+      <a class="btn btn-noir" href="#contact">Envoyer ma photo <span class="rond"><svg class="fleche"><use href="#fl"/></svg></span></a>
+      <img src="img/produits/canape-bas.jpg" alt="Golden retriever couché sur un panier canapé bas" loading="lazy" />
+    </aside>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section id="faq" style="padding-top:0">
+  <div class="enveloppe faq">
+    <div data-apparait>
+      <p class="surtitre"><svg><use href="#patte"/></svg>Questions fréquentes</p>
+      <h2>Les questions<span class="clair">qu'on nous pose</span></h2>
+      <p class="chapo">Tu ne trouves pas ta réponse ? Écris-nous, on te répond sous 24 h ouvrées.</p>
+      <a class="btn btn-noir" href="#contact">Nous écrire <span class="rond"><svg class="fleche"><use href="#fl"/></svg></span></a>
+    </div>
+    <div class="questions" data-apparait>
+      <details open><summary>Quelle taille choisir ?<span class="plus">+</span></summary><p>Mesure ton chien allongé de tout son long, du bout du nez à la base de la queue, puis ajoute 15 à 20 cm. En cas de doute entre deux tailles, prends la plus grande : il pourra s'étirer.</p></details>
+      <details><summary>Mon chien va-t-il l'aimer tout de suite ?<span class="plus">+</span></summary><p>La mousse est plus ferme qu'un coussin, c'est voulu : elle soutient au lieu de s'enfoncer. Pose dessus sa couverture habituelle et laisse-lui quelques jours pour l'adopter.</p></details>
+      <details><summary>Est-ce vraiment orthopédique ?<span class="plus">+</span></summary><p>Le couchage est en mousse à mémoire de forme : elle épouse le corps et répartit le poids, ce qui soulage les points d'appui (hanches, épaules, coudes). Ce n'est pas un rembourrage en fibres qui s'aplatit.</p></details>
+      <details><summary>Peut-on laver la housse ?<span class="plus">+</span></summary><p>Oui, elle s'enlève grâce à sa fermeture éclair et passe en machine. La mousse, elle, ne se lave pas : aère-la de temps en temps.</p></details>
+      <details><summary>Et si ça ne va pas ?<span class="plus">+</span></summary><p>Tu as 14 jours après réception pour changer d'avis et nous retourner le panier.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 9. À propos -->
+<section style="padding-top:0">
+  <div class="enveloppe apropos">
+    <div class="boite" data-apparait>
+      <h2>Notre histoire<span class="clair">en quelques mots</span></h2>
+      <p>Un chien passe la moitié de sa vie à dormir. Il mérite mieux qu'un coussin qui s'aplatit en un mois. Chaque panier Dodo est choisi pour son confort et sa solidité. Une question ? On te répond personnellement.</p>
+      <a class="btn btn-noir" href="#contact">Nous contacter <span class="rond"><svg class="fleche"><use href="#fl"/></svg></span></a>
+      <img src="img/produits/panier-rectangle.jpg" alt="Husky couché sur un panier crème" loading="lazy" />
+    </div>
+    <div class="grande" data-apparait><img src="img/produits/lit-humain.jpg" alt="Une femme et son golden retriever allongés ensemble sur le lit taille humaine" loading="lazy" /></div>
+  </div>
+</section>
+
+<!-- 10. Conseils -->
+<section id="conseils" style="padding-top:0">
+  <div class="enveloppe">
+    <div class="tete-section" data-apparait>
+      <div>
+        <p class="surtitre"><svg><use href="#patte"/></svg>Conseils de maître à maître</p>
+        <h2>Bien dormir<span class="clair">au quotidien avec son chien</span></h2>
+        <p class="chapo">Nos petits guides pour choisir, installer et entretenir son panier.</p>
+      </div>
+    </div>
+    <div class="conseils">
+      <a class="article" href="#tailles" data-apparait><img src="img/gamme/ovale-camel.jpg" alt="" loading="lazy" /><div class="contenu"><h3>Bien mesurer son chien pour choisir la taille<small>2 minutes et un mètre ruban suffisent.</small></h3><span class="go"><svg class="fleche"><use href="#fl"/></svg></span></div></a>
+      <a class="article" href="#faq" data-apparait><img src="img/gamme/gris-fonce.jpg" alt="" loading="lazy" /><div class="contenu"><h3>Habituer son chien à un nouveau panier</h3><span class="go"><svg class="fleche"><use href="#fl"/></svg></span></div></a>
+      <a class="article" href="#faq" data-apparait><img src="img/gamme/bleu-ciel.jpg" alt="" loading="lazy" /><div class="contenu"><h3>Laver la housse sans l'abîmer</h3><span class="go"><svg class="fleche"><use href="#fl"/></svg></span></div></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="pied" id="contact">
+  <div class="enveloppe">
+    <div class="pied-grille">
+      <div>
+        <a class="logo" href="#"><svg viewBox="0 0 40 26"><path d="M3 20c2-6 7-9 13-9 4 0 6 2 9 2 3 0 4-3 7-3 3 0 5 3 5 6v4H3z"/><path d="M29 10c0-3 1-6 3-7M33 13l2-3"/><path d="M9 20v3M31 20v3"/></svg>DODO</a>
+        <p>Des paniers orthopédiques pensés pour le sommeil de ton chien et beaux dans ton intérieur. Du Chihuahua au Dogue allemand.</p>
+        <div class="sociaux" aria-label="Réseaux sociaux">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1012 16.7 4.7 4.7 0 0012 7.3zm0 7.7a3 3 0 110-6 3 3 0 010 6zm4.9-8.9a1.1 1.1 0 100 2.2 1.1 1.1 0 000-2.2zM21 7.5c-.1-1.5-.4-2.8-1.5-3.9S17 2.1 15.5 2C14 2 10 2 8.5 2 7 2.1 5.7 2.4 4.6 3.5S3.1 6 3 7.5C3 9 3 15 3 16.5c.1 1.5.4 2.8 1.5 3.9s2.4 1.4 3.9 1.5h7.1c1.5-.1 2.8-.4 3.9-1.5s1.4-2.4 1.5-3.9V7.5zM19.2 18a3 3 0 01-1.7 1.7c-1.2.5-4 .4-5.5.4s-4.3.1-5.5-.4A3 3 0 014.8 18c-.5-1.2-.4-4-.4-6s-.1-4.3.4-5.5a3 3 0 011.7-1.7C7.7 4.3 10.5 4.4 12 4.4s4.3-.1 5.5.4a3 3 0 011.7 1.7c.5 1.2.4 4 .4 5.5s.1 4.3-.4 5.5z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 3c.4 2.2 1.7 3.6 3.9 3.8v3a7 7 0 01-3.9-1.2v6.2a5.7 5.7 0 11-5.7-5.7l.9.1v3.1a2.7 2.7 0 102 2.6V3z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8.5V6.8c0-.8.5-1 .9-1H17V2.1h-3c-3.3 0-4 2.4-4 4v2.4H8v3.7h2V22h4v-9.8h2.8l.4-3.7z"/></svg></a>
+        </div>
+      </div>
+      <div><h4>La boutique</h4><ul><li><a href="#boutique">Tous les paniers</a></li><li><a href="#createur">Créer son panier</a></li><li><a href="#tailles">Guide des tailles</a></li><li><a href="#galerie">Galerie</a></li></ul></div>
+      <div><h4>Commandes</h4><ul><li><a href="#faq">Livraison</a></li><li><a href="#faq">Retours sous 14 jours</a></li><li><a href="#faq">Questions fréquentes</a></li><li><a href="#">Conditions de vente</a></li></ul></div>
+      <div><h4>Newsletter</h4><p>Conseils, nouveautés et offres réservées aux abonnés, une à deux fois par mois.</p>
+        <form class="news" onsubmit="event.preventDefault();toast('Merci ! Tu es inscrit.');this.reset()"><input type="email" required placeholder="Ton adresse e-mail" aria-label="Adresse e-mail" /><button class="btn btn-noir" type="submit">S'inscrire</button></form>
+        <p class="mentions">En t'inscrivant, tu acceptes de recevoir nos e-mails. Désinscription en un clic.</p></div>
+    </div>
+    <div class="bas-pied"><span>© 2026 Dodo — Boutique de démonstration</span><span>Mentions légales · Confidentialité</span></div>
+  </div>
+</footer>
+
+<div class="feuille" id="feuille" role="dialog" aria-modal="true" aria-labelledby="f-nom">
+  <div class="fond" data-fermer-f></div>
+  <div class="panneau">
+    <div class="poignee"></div>
+    <button class="fermer" type="button" data-fermer-f aria-label="Fermer">×</button>
+    <div class="photos" id="f-photos"></div>
+    <div>
+      <h2 id="f-nom"></h2>
+      <p class="desc" id="f-desc" style="font-size:.85rem;color:var(--gris)"></p>
+      <p class="prixf" id="f-prix"></p>
+      <p class="etiq">Taille</p>
+      <div class="tailles" id="f-tailles" role="group" aria-label="Taille"></div>
+      <p class="dimf" id="f-dim"></p>
+      <p class="races" id="f-races"></p>
+      <button class="btn btn-noir ajout" type="button" id="f-ajout">Ajouter au panier</button>
+      <ul><li>Mousse à mémoire de forme</li><li>Housse déhoussable et lavable en machine</li><li>Livraison suivie</li><li>14 jours pour changer d'avis</li></ul>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const P = [
+  { id:'n1', nom:'Canapé à rebords', couleur:'Beige', hex:'#d9c7ad', d:'Rebords appui-tête, idéal pour les grands dormeurs.', img:'img/produits/canape-rebords.jpg', amb:'img/gamme/beige-chaud.jpg', badge:'Meilleure vente',
+    t:{ S:['61 × 46 cm',109.9], M:['76 × 56 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n2', nom:'Canapé bas', couleur:'Crème', hex:'#ece5d8', d:'Entrée basse, facile d’accès pour les chiens âgés.', img:'img/produits/canape-bas.jpg',
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['102 × 81 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n3', nom:'Canapé 3 rebords', couleur:'Brun', hex:'#6b4632', d:'Rebords sur 3 côtés, passepoil orange.', img:'img/produits/canape-3-rebords.jpg', amb:'img/gamme/brun-classique.jpg',
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n5', nom:'Canapé carré', couleur:'Gris foncé', hex:'#5d6168', d:'Grand format, rebords tout autour.', img:'img/produits/canape-carre.jpg', amb:'img/gamme/gris-fonce.jpg',
+    t:{ L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n7', nom:'Lit taille humaine', couleur:'Gris clair', hex:'#d6d6d8', d:'Pour toi et ton chien, en fausse fourrure.', img:'img/produits/lit-humain.jpg', badge:'Nouveau',
+    t:{ Unique:['183 × 122 cm',219.9] } },
+  { id:'n8', nom:'Panier ovale', couleur:'Camel', hex:'#c08a4b', d:'Pour les chiens qui dorment en boule.', img:'img/produits/panier-ovale.jpg', amb:'img/gamme/ovale-camel.jpg',
+    t:{ M:['89 × 64 cm',139.9], L:['109 × 76 cm',169.9], XL:['119 × 84 cm',199.9], XXL:['132 × 102 cm',239.9] } },
+  { id:'n10', nom:'Panier rectangle', couleur:'Crème', hex:'#efe8dc', d:'Fausse fourrure douce, rebords moelleux.', img:'img/produits/panier-rectangle.jpg', amb:'img/gamme/creme-arctique.jpg',
+    t:{ M:['89 × 64 cm',139.9], L:['102 × 71 cm',169.9], XL:['109 × 81 cm',199.9], XXL:['130 × 102 cm',239.9] } },
+  { id:'n13', nom:'Panier rafraîchissant', couleur:'Bleu ciel', hex:'#a9cbe8', d:'Housse respirante, idéal pour l’été.', img:'img/produits/panier-rafraichissant.jpg', amb:'img/gamme/bleu-ciel.jpg', badge:'Nouveau',
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n14', nom:'Panier chenille', couleur:'Brun chiné', hex:'#7d6d5e', d:'Tissu chenille, passepoil crème.', img:'img/produits/panier-chenille.jpg', amb:'img/gamme/brun-naturel.jpg',
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+];
+const RACES = { S:'Chihuahua, Yorkshire, Bichon, Teckel', M:'Beagle, Carlin, Shih Tzu, Jack Russell', L:'Border Collie, Cocker, Berger australien, Bouledogue', XL:'Labrador, Golden Retriever, Husky, Boxer', XXL:'Berger allemand, Bouvier bernois, Dogue allemand, Malinois', Unique:'Toi et ton chien, côte à côte' };
+const POIDS = { S:'jusqu’à 10 kg', M:'10 à 20 kg', L:'20 à 32 kg', XL:'32 à 45 kg', XXL:'plus de 45 kg' };
+const euros = (n) => n.toLocaleString('fr-FR', { style:'currency', currency:'EUR' });
+const defaut = (p) => ('M' in p.t ? 'M' : Object.keys(p.t)[0]);
+const min = (p) => Math.min(...Object.values(p.t).map((v) => v[1]));
+const $ = (s) => document.querySelector(s);
+const fl = '<svg class="fleche"><use href="#fl"/></svg>';
+
+/* Toast + panier */
+let nb = 0;
+function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('vu'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('vu'),2200); }
+function ajouter(p,taille){ nb++; $('#compteur').textContent=nb; toast(`${p.nom} (${taille}) ajouté au panier`); }
+$('#btn-panier').onclick = () => toast(nb ? `${nb} article${nb>1?'s':''} dans ton panier` : 'Ton panier est vide');
+
+/* En-tête + tiroir */
+addEventListener('scroll', () => $('#entete').classList.toggle('defile', scrollY > 10), { passive:true });
+$('#burger').onclick = () => $('#tiroir').classList.add('ouvert');
+document.querySelectorAll('[data-fermer]').forEach((e) => e.addEventListener('click', () => $('#tiroir').classList.remove('ouvert')));
+
+/* Carte du héros (3 infos vraies, pas de chiffres inventés) */
+const STATS = [
+  ['5 tailles','Du S au XXL','Du Chihuahua au Dogue allemand : chaque modèle existe en plusieurs tailles, avec les races indiquées.'],
+  ['9 modèles','Pour chaque dormeur','Canapé à rebords, panier ovale pour dormir en boule, rafraîchissant pour l’été ou lit géant.'],
+  ['14 jours','Pour changer d’avis','Le panier ne lui plaît pas ? Tu as 14 jours après réception pour nous le retourner.'],
+];
+let si = 0;
+function stat(i){ si=(i+STATS.length)%STATS.length; const c=$('#stat-corps'); c.style.opacity=0;
+  setTimeout(()=>{ const [g,h,p]=STATS[si]; c.innerHTML=`<div class="gros">${g}</div><h3>${h}</h3><p>${p}</p>`; c.style.opacity=1; },180);
+  document.querySelectorAll('#barres i').forEach((b,k)=>b.classList.toggle('actif',k===si)); }
+stat(0); let st=setInterval(()=>stat(si+1),4500);
+$('#stat-prec').onclick=()=>{clearInterval(st);stat(si-1)}; $('#stat-suiv').onclick=()=>{clearInterval(st);stat(si+1)};
+requestAnimationFrame(()=>$('#heros').classList.add('vu'));
+
+/* Produits */
+$('#rail-produits').innerHTML = P.map((p) => `
+  <article class="produit" data-id="${p.id}" tabindex="0" role="button" aria-label="${p.nom}, voir le produit">
+    <div class="image">${p.badge?`<span class="badge">${p.badge}</span>`:''}${p.amb?`<img src="${p.amb}" alt="${p.nom}, ${p.couleur.toLowerCase()}" loading="lazy" /><img class="amb det" src="${p.img}" alt="" loading="lazy" />`:`<img class="det" src="${p.img}" alt="${p.nom}, ${p.couleur.toLowerCase()}" loading="lazy" />`}</div>
+    <div class="points"><i style="background:${p.hex}"></i></div>
+    <h3>${p.nom}</h3>
+    <p class="desc">${p.couleur} · ${p.d}</p>
+    <p class="prix">${Object.keys(p.t).length>1?'À partir de ':''}${euros(min(p))}</p>
+  </article>`).join('');
+$('#rail-produits').addEventListener('click',(e)=>{ const c=e.target.closest('.produit'); if(c) ouvrir(c.dataset.id); });
+$('#rail-produits').addEventListener('keydown',(e)=>{ const c=e.target.closest('.produit'); if(c&&(e.key==='Enter'||e.key===' ')){e.preventDefault();ouvrir(c.dataset.id);} });
+document.querySelectorAll('[data-rail]').forEach((b)=>b.onclick=()=>{ const r=document.getElementById(b.dataset.rail); r.scrollBy({left:(r.firstElementChild.offsetWidth+16)*b.dataset.sens,behavior:'smooth'}); });
+
+/* Créateur */
+const COUL = ['n1','n3','n5','n10','n8','n13'].map((id)=>P.find((p)=>p.id===id));
+let cp = COUL[0], ct = defaut(cp);
+$('#couleurs').innerHTML = COUL.map((p,k)=>`<button type="button" class="pastille-c" data-id="${p.id}" aria-pressed="${k===0}" aria-label="${p.couleur}" style="background:${p.hex}"><svg viewBox="0 0 24 24" style="${['#ece5d8','#efe8dc','#d9c7ad','#a9cbe8'].includes(p.hex)?'stroke:#262422':''}"><path d="M5 12l5 5 9-10"/></svg></button>`).join('');
+function majCreateur(){
+  document.querySelectorAll('#couleurs button').forEach((b)=>b.setAttribute('aria-pressed',b.dataset.id===cp.id));
+  $('#createur-tailles').innerHTML = Object.keys(cp.t).map((t)=>`<button type="button" data-t="${t}" aria-pressed="${t===ct}">${t}</button>`).join('');
+  $('#resume').innerHTML = `${cp.nom} · ${cp.couleur} · ${cp.t[ct][0]}<b>${euros(cp.t[ct][1])}</b>`;
+  const img=$('#createur-img'), src=cp.amb||cp.img; if(!img.src.endsWith(src)){ img.style.opacity=0; setTimeout(()=>{img.src=src;img.alt=`${cp.nom} ${cp.couleur.toLowerCase()}`;img.style.opacity=1;},200); }
+}
+$('#couleurs').onclick=(e)=>{ const b=e.target.closest('button'); if(!b)return; cp=P.find((p)=>p.id===b.dataset.id); if(!(ct in cp.t)) ct=defaut(cp); majCreateur(); };
+$('#createur-tailles').onclick=(e)=>{ const b=e.target.closest('button'); if(!b)return; ct=b.dataset.t; majCreateur(); };
+$('#createur-voir').onclick=()=>ouvrir(cp.id,ct);
+majCreateur();
+
+/* Guide des tailles */
+const TT = [['S','61 × 41 cm'],['M','76 × 51 cm'],['L','91 × 69 cm'],['XL','114 × 89 cm'],['XXL','135 × 107 cm']];
+$('#rail-tailles').innerHTML = TT.map(([t,d])=>`<div class="taille-carte"><div class="haut"><span class="lettre">${t}</span><span class="dim">${d}</span></div><q>${RACES[t]}</q><div class="bas"><span>${POIDS[t]}</span><span>Taille ${t}</span></div></div>`).join('');
+const rt=$('#rail-tailles'); rt.addEventListener('scroll',()=>{ const max=rt.scrollWidth-rt.clientWidth; const r=max>0?rt.scrollLeft/max:1; $('#prog').style.transform=`translateX(${r*233}%)`; },{passive:true});
+
+/* Galerie */
+const GAL = [['img/gamme/brun-classique.jpg','n3'],['img/gamme/creme-arctique.jpg','n10'],['img/gamme/gris-fonce.jpg','n5'],['img/gamme/beige-chaud.jpg','n1']];
+$('#galerie-grille').innerHTML = GAL.map(([s,id])=>`<button type="button" data-id="${id}" aria-label="Voir ${P.find(p=>p.id===id).nom}"><img src="${s}" alt="" loading="lazy" /></button>`).join('');
+$('#galerie-grille').onclick=(e)=>{ const b=e.target.closest('button'); if(b) ouvrir(b.dataset.id); };
+
+/* Fiche produit */
+let fp, ft;
+function majFiche(){
+  $('#f-prix').textContent = euros(fp.t[ft][1]);
+  $('#f-dim').textContent = `Dimensions : ${fp.t[ft][0]}`;
+  $('#f-races').textContent = `Idéal pour : ${RACES[ft]}`;
+  $('#f-tailles').innerHTML = Object.keys(fp.t).map((t)=>`<button type="button" data-t="${t}" aria-pressed="${t===ft}">${t}</button>`).join('');
+}
+function ouvrir(id,taille){
+  fp=P.find((p)=>p.id===id); ft=taille&&taille in fp.t?taille:defaut(fp);
+  $('#f-photos').innerHTML=[fp.amb,fp.img].filter(Boolean).map((s)=>`<img src="${s}" alt="${fp.nom}" />`).join('');
+  $('#f-nom').textContent=fp.nom; $('#f-desc').textContent=`${fp.couleur} · ${fp.d}`;
+  majFiche(); $('#feuille').classList.add('ouverte'); document.body.style.overflow='hidden';
+}
+function fermer(){ $('#feuille').classList.remove('ouverte'); document.body.style.overflow=''; }
+document.querySelectorAll('[data-fermer-f]').forEach((e)=>e.addEventListener('click',fermer));
+addEventListener('keydown',(e)=>{ if(e.key==='Escape'){fermer();$('#tiroir').classList.remove('ouvert');} });
+$('#f-tailles').onclick=(e)=>{ const b=e.target.closest('button'); if(!b)return; ft=b.dataset.t; majFiche(); };
+$('#f-ajout').onclick=()=>{ ajouter(fp,ft); fermer(); };
+
+/* Apparitions */
+const io=new IntersectionObserver((es)=>es.forEach((e)=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target);} }),{threshold:.12});
+document.querySelectorAll('[data-apparait]').forEach((e)=>io.observe(e));
+</script>
+</body>
+</html>
