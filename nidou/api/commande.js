@@ -1,5 +1,5 @@
-// Reçoit les pré-commandes et les messages de contact, les vérifie et les range
-// dans le stockage Vercel Blob (dossier precommandes/ ou messages/).
+// Reçoit les commandes et les messages de contact, les vérifie et les range
+// dans le stockage Vercel Blob (dossier commandes/ ou messages/).
 import { randomUUID } from 'node:crypto';
 import { PRODUITS } from '../src/donnees.mjs';
 
@@ -18,7 +18,7 @@ function lireCorps(req) {
 }
 
 export function valider(c) {
-  const type = c.type === 'contact' ? 'contact' : 'precommande';
+  const type = c.type === 'contact' ? 'contact' : 'commande';
   const d = {
     type,
     nom: texte(c.nom, 120),
@@ -94,13 +94,13 @@ export default async function handler(req, res) {
   const id = randomUUID().slice(0, 8);
   const quand = new Date().toISOString();
   const enreg = { id, recu_le: quand, ...d, page: req.headers['referer'] || '', navigateur: String(req.headers['user-agent'] || '').slice(0, 200) };
-  const dossier = d.type === 'contact' ? 'messages' : 'precommandes';
+  const dossier = d.type === 'contact' ? 'messages' : 'commandes';
   const nom = `${dossier}/${quand.slice(0, 10)}_${quand.slice(11, 19).replace(':', 'h').replace(':', 'm')}_${id}.json`;
   try {
     await enregistrer(nom, JSON.stringify(enreg, null, 2));
   } catch (e) {
     console.error('Enregistrement impossible', e);
-    return repondre(503, { ok: false, erreur: e.code === 'NO_STORE' ? 'Les pré-commandes ne sont pas encore activées sur ce site.' : 'Le service est momentanément indisponible.' });
+    return repondre(503, { ok: false, erreur: e.code === 'NO_STORE' ? 'Les commandes ne sont pas encore activées sur ce site.' : 'Le service est momentanément indisponible.' });
   }
   const redirection = d.type === 'contact' ? '/merci-message' : '/merci';
   return repondre(200, { ok: true, id, redirection }, redirection);

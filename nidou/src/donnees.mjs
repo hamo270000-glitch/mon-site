@@ -2,7 +2,7 @@
 export const MARQUE = {
   nom: 'Nidou',
   slogan: 'Couchage pour chiens',
-  description: 'Paniers orthopédiques pour chien en mousse à mémoire de forme, du S au XXL. Pré-commande sans paiement immédiat.',
+  description: 'Paniers orthopédiques pour chien en mousse à mémoire de forme, du S au XXL, en stock et livrés en suivi.',
 };
 
 export const RACES = {

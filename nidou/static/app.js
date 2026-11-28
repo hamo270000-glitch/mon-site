@@ -24,7 +24,7 @@
     });
   }
 
-  /* Fiche produit : taille, prix, lien de pré-commande, photos */
+  /* Fiche produit : taille, prix, lien de commande, photos */
   const fiche = $('#fiche-produit');
   if (fiche) {
     const tailles = JSON.parse(fiche.dataset.tailles);
@@ -35,7 +35,7 @@
       $('#f-taille').textContent = t; $('#f-dim').textContent = tailles[t][0];
       $('#f-prix').textContent = euros(tailles[t][1]);
       $('#f-races').textContent = `Idéal pour : ${races[t]}`;
-      $('#f-precommande').href = `/precommande?produit=${slug}&taille=${encodeURIComponent(t)}`;
+      $('#f-commande').href = `/commande?produit=${slug}&taille=${encodeURIComponent(t)}`;
     };
     $('.opts', fiche)?.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) maj(b.dataset.t); });
     $('.vignettes', fiche)?.addEventListener('click', (e) => {
@@ -45,7 +45,7 @@
     });
   }
 
-  /* Formulaires (pré-commande et contact) */
+  /* Formulaires (commande et contact) */
   const form = $('form[data-envoi]');
   if (form) {
     const cat = $('#catalogue') ? JSON.parse($('#catalogue').textContent) : null;
@@ -60,7 +60,7 @@
     const majRecap = () => {
       if (!cat || !recap) return;
       const p = cat[selP.value]; const prix = p.t[selT.value][1]; const q = Number(selQ.value || 1);
-      recap.innerHTML = `${p.nom} · ${selT.value === 'Unique' ? 'taille unique' : 'taille ' + selT.value} · ${q} × ${euros(prix)}<br><b>Total estimé : ${euros(prix * q)}</b> <span style="font-size:.85rem">— rien à payer aujourd’hui</span>`;
+      recap.innerHTML = `${p.nom} · ${selT.value === 'Unique' ? 'taille unique' : 'taille ' + selT.value} · ${q} × ${euros(prix)}<br><b>Total : ${euros(prix * q)}</b> <span style="font-size:.85rem">— paiement par lien sécurisé</span>`;
     };
     if (selP) {
       const q = new URLSearchParams(location.search);
