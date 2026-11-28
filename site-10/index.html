@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>nidou — Paniers orthopédiques pour chien</title>
+<meta name="description" content="Paniers orthopédiques en mousse à mémoire de forme pour chien, du S au XXL." />
+<meta name="theme-color" content="#6b2ee0" />
+<style>
+@font-face{font-family:Instrument;src:url(fonts/instrument-sans-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Instrument;src:url(fonts/instrument-sans-latin-500-normal.woff2) format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:Instrument;src:url(fonts/instrument-sans-latin-600-normal.woff2) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:Instrument;src:url(fonts/instrument-sans-latin-700-normal.woff2) format('woff2');font-weight:700;font-display:swap}
+:root{
+  --violet:#6b2ee0; --indigo:#2b2470; --indigo-2:#231d5e; --noir:#111; --texte:#3d3d3d; --gris:#777; --fond:#f3f3f3; --trait:#ececec;
+  --vert:#3f5849; --vert-badge:#1f7a4d; --rouge:#d9443a; --corail:#e8938c; --etoile:#1f8a70;
+  --r:10px; --f:Instrument, system-ui, -apple-system, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#fff;color:var(--texte);font:400 15px/1.6 var(--f);overflow-x:hidden}
+img{display:block;max-width:100%}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{color:var(--noir);font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.env{width:min(1300px,100% - 32px);margin-inline:auto}
+@media (min-width:900px){.env{width:min(1300px,100% - 80px)}}
+section{padding:56px 0}
+@media (min-width:900px){section{padding:80px 0}}
+.titre{text-align:center;margin-bottom:28px}
+.titre h2{font-size:clamp(1.7rem,3.6vw,2.2rem)}
+.titre p{font-size:.88rem;color:var(--gris);margin-top:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 34px;border-radius:999px;font-weight:600;font-size:.9rem;transition:transform .15s,background .2s,color .2s}
+.btn:active{transform:scale(.97)}
+.btn-blanc{background:#fff;color:var(--noir)}
+.btn-blanc:hover{background:var(--noir);color:#fff}
+.btn-noir{background:var(--noir);color:#fff}
+.btn-noir:hover{background:#333}
+
+/* Bandeau violet */
+.bandeau{background:var(--violet);color:#fff;font-size:.74rem;min-height:36px;padding:4px 8px;display:flex;align-items:center;justify-content:center;gap:28px}
+.bandeau button{color:#fff;opacity:.8;font-size:1rem;padding:0 6px}
+.bandeau b{font-weight:700}
+#bandeau-txt{transition:opacity .25s;text-align:center}
+
+/* En-tête */
+.entete{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--trait);transition:background .25s,color .25s,border-color .25s}
+.entete.sur-heros{background:var(--indigo);color:#fff;border-color:transparent}
+.entete .env{display:grid;grid-template-columns:auto 1fr auto;align-items:center;height:62px;gap:12px}
+.logo{font:700 1.7rem/1 var(--f);letter-spacing:-.05em}
+.menu{display:none;justify-content:center;gap:30px;font-weight:500;font-size:.9rem}
+.menu a{position:relative;padding:6px 0}
+.menu a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:currentColor;transform:scaleX(0);transition:transform .2s}
+.menu a:hover::after{transform:scaleX(1)}
+.menu .chaud{position:relative}
+.menu .chaud i{position:absolute;top:-12px;right:-14px;background:var(--rouge);color:#fff;font:700 .55rem/1 var(--f);padding:3px 5px;border-radius:3px;font-style:normal}
+.icones{display:flex;align-items:center;justify-content:flex-end;gap:4px}
+.icones button,.icones a{position:relative;width:38px;height:38px;display:grid;place-items:center}
+.icones svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.6}
+.pastille{position:absolute;top:3px;right:2px;min-width:16px;height:16px;border-radius:8px;background:var(--rouge);color:#fff;font:700 .6rem/16px var(--f);text-align:center;padding:0 3px}
+.burger{display:grid}
+.cache-mob{display:none!important}
+@media (min-width:1000px){.menu{display:flex}.burger{display:none!important}.cache-mob{display:grid!important}}
+.tiroir{position:fixed;inset:0;z-index:60;visibility:hidden;transition:visibility 0s .35s}
+.tiroir.ouvert{visibility:visible;transition:none}
+.tiroir .voile{position:absolute;inset:0;background:rgba(0,0,0,.4);opacity:0;transition:opacity .3s}
+.tiroir nav{position:absolute;top:0;bottom:0;left:0;width:min(84vw,360px);background:#fff;padding:20px;transform:translateX(-100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
+.tiroir.ouvert .voile{opacity:1}.tiroir.ouvert nav{transform:none}
+.tiroir nav a{font-weight:600;font-size:1.05rem;color:var(--noir);padding:14px 0;border-bottom:1px solid var(--trait);display:flex;justify-content:space-between}
+.tiroir .ferme{align-self:flex-end;font-size:1.4rem;width:36px;height:36px}
+
+/* Héros indigo */
+.heros{background:var(--indigo);color:#fff;position:relative;overflow:hidden}
+.heros .env{position:relative;display:grid;min-height:560px}
+.heros-photo{position:absolute;inset:0}
+.heros-photo img{width:100%;height:100%;object-fit:cover;object-position:62% 50%}
+.heros-photo::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,36,112,.92) 0%,rgba(43,36,112,.55) 42%,rgba(43,36,112,.05) 70%)}
+.heros-lettres{position:absolute;right:-2%;bottom:-6%;font:700 clamp(8rem,22vw,20rem)/.8 var(--f);color:rgba(255,255,255,.04);letter-spacing:-.06em;pointer-events:none}
+.heros-texte{position:relative;z-index:2;align-self:start;padding:44px 0 40px;max-width:520px}
+.heros-texte .sur{font-weight:700;font-size:.74rem;letter-spacing:.02em;text-transform:uppercase}
+.heros-texte h1{color:#fff;font-size:clamp(3rem,11vw,5.6rem);font-weight:700;letter-spacing:-.05em;line-height:.98;margin:16px 0 18px}
+.heros-texte p{font-size:.95rem;opacity:.9;max-width:34ch}
+.heros-texte .btn{margin-top:26px;height:44px;padding:0 40px}
+.points-heros{position:absolute;z-index:2;left:0;bottom:20px;display:flex;gap:8px}
+.points-heros button{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);transition:width .3s,background .3s}
+.points-heros button.actif{width:26px;border-radius:5px;background:#fff}
+.diapo{transition:opacity .45s}
+@media (min-width:900px){
+  .heros .env{min-height:600px}
+  .heros-photo{inset:0 -40px 0 30%;width:auto}
+  .heros-photo::before{background:linear-gradient(90deg,var(--indigo) 0%,rgba(43,36,112,.6) 18%,rgba(43,36,112,0) 45%)}
+  .heros-texte{align-self:center;padding:0}
+}
+
+/* Catégories */
+.cats{display:grid;grid-auto-flow:column;grid-auto-columns:70%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.cats::-webkit-scrollbar{display:none}
+@media (min-width:800px){.cats{grid-auto-flow:row;grid-template-columns:repeat(4,1fr)}}
+.cat{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/4;scroll-snap-align:start;color:#fff}
+.cat img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.cat:hover img{transform:scale(1.06)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.6))}
+.cat div{position:absolute;z-index:2;left:20px;bottom:18px}
+.cat h3{color:#fff;font-size:1.3rem}
+.cat span{font-size:.8rem}
+
+/* Onglets + grille produits */
+.onglets{display:flex;justify-content:center;gap:28px;margin-bottom:30px;border-bottom:1px solid var(--trait);width:max-content;max-width:100%;margin-inline:auto;overflow-x:auto;scrollbar-width:none}
+.onglets button{padding:10px 6px;font-weight:500;font-size:.92rem;color:var(--gris);position:relative;white-space:nowrap}
+.onglets button[aria-selected=true]{color:var(--noir)}
+.onglets button[aria-selected=true]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--noir)}
+.grille{display:grid;grid-template-columns:1fr 1fr;gap:28px 12px}
+@media (min-width:900px){.grille{grid-template-columns:repeat(4,1fr);gap:36px 18px}}
+.carte{cursor:pointer;animation:entre .5s both}
+@keyframes entre{from{opacity:0;transform:translateY(14px)}}
+.carte .img{position:relative;background:var(--fond);border-radius:var(--r);aspect-ratio:1/1;overflow:hidden}
+.carte .img img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;padding:8%;transition:opacity .4s,transform .5s}
+.carte .img img.amb{position:absolute;inset:0;object-fit:cover;padding:0;mix-blend-mode:normal;opacity:0}
+@media (hover:hover){.carte:hover .img img.amb{opacity:1}.carte:hover .img img{transform:scale(1.04)}}
+.badge{position:absolute;z-index:2;top:12px;left:12px;color:#fff;font-weight:600;font-size:.7rem;padding:4px 10px;border-radius:999px;display:flex;align-items:center;gap:5px}
+.badge.vert{background:var(--vert-badge)}
+.badge.violet{background:var(--violet)}
+.carte .ajout-rapide{position:absolute;z-index:3;left:10px;right:10px;bottom:10px;height:40px;border-radius:999px;background:#fff;color:var(--noir);font-weight:600;font-size:.82rem;box-shadow:0 4px 16px rgba(0,0,0,.08);opacity:0;transform:translateY(10px);transition:opacity .25s,transform .25s}
+.carte:hover .ajout-rapide{opacity:1;transform:none}
+@media (hover:none){.carte .ajout-rapide{display:none}}
+.carte h3{font-size:.92rem;font-weight:500;letter-spacing:0;margin-top:14px;line-height:1.35}
+.carte .tailles-dispo{font-size:.74rem;color:var(--gris);margin-top:4px}
+.carte .prix{font-weight:600;color:var(--noir);margin-top:6px;font-size:.95rem}
+.centre-btn{text-align:center;margin-top:40px}
+
+/* Bloc vert + photo */
+.duo{display:grid;gap:14px}
+@media (min-width:900px){.duo{grid-template-columns:1fr 1fr;gap:16px}}
+.duo .vert{background:var(--vert);color:#fff;border-radius:var(--r);padding:48px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:320px}
+.duo .vert small{font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.02em}
+.duo .vert h2{color:#fff;font-size:clamp(1.8rem,4vw,2.3rem);margin:12px 0 14px}
+.duo .vert p{font-size:.9rem;max-width:44ch;opacity:.92}
+.duo .vert .btn{margin-top:26px}
+.duo .photo{border-radius:var(--r);overflow:hidden;min-height:320px}
+.duo .photo img{width:100%;height:100%;object-fit:cover}
+
+/* Guide des tailles en cartes (à la place des avis) */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:84%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+@media (min-width:800px){.rail{grid-auto-columns:calc((100% - 28px)/3.2)}}
+.avis{border:1px solid var(--trait);border-radius:var(--r);padding:22px;scroll-snap-align:start;background:#fff}
+.avis .t{display:flex;align-items:baseline;gap:10px}
+.avis .t b{font-size:1.5rem;color:var(--noir)}
+.avis .t span{font-size:.78rem;color:var(--gris)}
+.avis p{font-size:.88rem;margin:12px 0 16px;color:var(--texte);min-height:3.2em}
+.avis .lien{display:flex;align-items:center;gap:12px;border-top:1px solid var(--trait);padding-top:14px}
+.avis .lien img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:var(--fond)}
+.avis .lien div{font-size:.82rem;color:var(--noir);font-weight:500;line-height:1.3}
+
+/* Bannière photo */
+.banniere{position:relative;border-radius:var(--r);overflow:hidden;min-height:340px;display:grid;place-items:center;text-align:center;color:#fff;padding:40px 20px}
+.banniere img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.banniere::before{content:"";position:absolute;inset:0;background:rgba(15,15,20,.45);z-index:1}
+.banniere div{position:relative;z-index:2}
+.banniere svg{width:40px;height:40px;stroke:#fff;fill:none;stroke-width:1.3;margin:0 auto 14px}
+.banniere small{font-weight:700;font-size:.72rem;text-transform:uppercase}
+.banniere h2{color:#fff;font-size:clamp(1.8rem,4.4vw,2.6rem);margin:10px 0 24px}
+.atouts{display:grid;gap:30px;margin-top:56px;text-align:center}
+@media (min-width:800px){.atouts{grid-template-columns:repeat(3,1fr)}}
+.atouts svg{width:38px;height:38px;stroke:var(--noir);fill:none;stroke-width:1.3;margin:0 auto 12px}
+.atouts h3{font-size:1rem;font-weight:600;letter-spacing:0}
+.atouts p{font-size:.86rem;color:var(--gris);margin-top:8px;max-width:36ch;margin-inline:auto}
+
+/* Pied */
+.pied{border-top:1px solid var(--trait);padding:48px 0 24px;font-size:.86rem}
+.pied-g{display:grid;gap:34px}
+@media (min-width:900px){.pied-g{grid-template-columns:1.6fr 1fr 1fr 1.6fr;gap:40px}}
+.pied h4{font-size:.95rem;font-weight:600;color:var(--noir);margin-bottom:16px}
+.pied ul{list-style:none;display:grid;gap:10px}
+.pied ul a:hover{color:var(--noir);text-decoration:underline}
+.reseaux{display:flex;gap:10px;margin-top:18px}
+.reseaux a{width:38px;height:38px;border:1px solid #cfcfcf;border-radius:50%;display:grid;place-items:center}
+.reseaux svg{width:15px;height:15px;fill:var(--noir)}
+.news{display:flex;gap:8px;margin:14px 0 12px}
+.news input{flex:1;min-width:0;height:46px;border:1px solid #ddd;border-radius:999px;padding:0 18px;font-size:.85rem}
+.news .btn{padding:0 24px}
+.pied-bas{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;border-top:1px solid var(--trait);margin-top:40px;padding-top:20px;font-size:.8rem;color:var(--gris)}
+.paiements{display:flex;flex-wrap:wrap;gap:6px}
+.paiements span{font:700 .58rem/1 var(--f);padding:6px 7px;border-radius:3px;color:#fff;letter-spacing:.02em}
+
+/* Fiche produit */
+.fiche{padding:20px 0 60px;display:none}
+body.page-produit .fiche{display:block}
+body.page-produit .accueil{display:none}
+.ariane{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--gris);margin-bottom:20px}
+.ariane b{font-weight:400;color:var(--noir)}
+.ariane .nav-p{display:flex;gap:4px}
+.ariane .nav-p a{width:30px;height:30px;display:grid;place-items:center;color:var(--noir);font-size:1rem}
+.fiche-g{display:grid;gap:28px}
+@media (min-width:900px){.fiche-g{grid-template-columns:1.05fr 1fr;gap:48px;align-items:start}.galerie{position:sticky;top:84px}}
+.galerie{display:grid;gap:10px}
+@media (min-width:900px){.galerie{grid-template-columns:64px 1fr}}
+.miniatures{display:flex;gap:8px;order:2}
+@media (min-width:900px){.miniatures{flex-direction:column;order:0}}
+.miniatures button{width:64px;height:64px;border-radius:8px;overflow:hidden;background:var(--fond);border:1.5px solid transparent;padding:0}
+.miniatures button[aria-current=true]{border-color:var(--noir)}
+.miniatures img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.grande{background:var(--fond);border-radius:var(--r);aspect-ratio:1/1;overflow:hidden}
+.grande img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:opacity .3s}
+.infos .marque{font-size:.82rem;color:var(--gris)}
+.infos h1{font-size:clamp(1.6rem,3.4vw,2rem);margin:4px 0 10px}
+.infos .prix-f{font-size:1.5rem;font-weight:600;color:var(--noir);margin:12px 0}
+.infos .desc{font-size:.92rem;color:var(--texte)}
+.lignes{display:flex;gap:22px;font-size:.85rem;color:var(--noir);margin:16px 0;flex-wrap:wrap}
+.lignes a{display:flex;gap:6px;align-items:center}
+.lignes svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6}
+.choix-t{border-top:1px solid var(--trait);padding-top:18px;margin-top:6px}
+.choix-t p{font-size:.85rem;margin-bottom:10px}
+.choix-t p b{color:var(--noir)}
+.choix-t .opts{display:flex;flex-wrap:wrap;gap:8px}
+.choix-t .opts button{min-width:54px;height:40px;padding:0 14px;border-radius:999px;border:1px solid #d8d8d8;font-weight:500;font-size:.85rem}
+.choix-t .opts button[aria-pressed=true]{border-color:var(--noir);background:var(--noir);color:#fff}
+.races{font-size:.8rem;color:var(--gris);margin-top:10px}
+.achat{display:flex;gap:10px;margin-top:20px}
+.qte{display:flex;align-items:center;border:1px solid #d8d8d8;border-radius:999px;height:48px}
+.qte button{width:40px;height:100%;font-size:1.1rem}
+.qte span{width:24px;text-align:center;font-weight:500}
+.achat .btn-noir{flex:1;height:48px}
+.coeur{width:48px;height:48px;border:1px solid #d8d8d8;border-radius:50%;display:grid;place-items:center;flex:none}
+.coeur svg{width:18px;height:18px;stroke:var(--noir);fill:none;stroke-width:1.6;transition:fill .2s}
+.coeur[aria-pressed=true] svg{fill:var(--rouge);stroke:var(--rouge)}
+.acheter{width:100%;height:48px;margin-top:12px;background:var(--corail);color:#fff}
+.acheter:hover{background:#dd7d75}
+.meta{font-size:.85rem;margin-top:20px;display:grid;grid-template-columns:110px 1fr;gap:6px}
+.meta dt{color:var(--gris)}
+.meta dd{color:var(--noir)}
+.livr{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--trait);border-radius:var(--r);margin-top:20px;text-align:center;font-size:.82rem}
+.livr div{padding:16px 12px}
+.livr div+div{border-left:1px solid var(--trait)}
+.livr svg{width:22px;height:22px;stroke:var(--noir);fill:none;stroke-width:1.4;margin:0 auto 8px}
+.livr b{color:var(--noir)}
+.securise{background:var(--fond);border-radius:var(--r);padding:16px;margin-top:12px;text-align:center;font-weight:600;font-size:.88rem;color:var(--noir)}
+.securise .paiements{justify-content:center;margin-top:10px}
+details{border-bottom:1px solid var(--trait)}
+details:first-of-type{border-top:1px solid var(--trait);margin-top:24px}
+summary{list-style:none;display:flex;justify-content:space-between;padding:16px 0;font-weight:600;color:var(--noir);font-size:.92rem;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;font-size:1.2rem;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details>div{font-size:.88rem;padding-bottom:16px}
+details ul{padding-left:18px;display:grid;gap:4px}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:24px;z-index:80;transform:translate(-50%,150%);visibility:hidden;background:var(--noir);color:#fff;border-radius:999px;padding:12px 22px;font-size:.85rem;white-space:nowrap;transition:transform .35s,visibility 0s .35s}
+.toast.vu{transform:translate(-50%,0);visibility:visible;transition:transform .35s}
+[data-ap]{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
+[data-ap].vu{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}[data-ap]{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="bandeau"><button type="button" id="b-prec" aria-label="Message précédent">‹</button><span id="bandeau-txt"></span><button type="button" id="b-suiv" aria-label="Message suivant">›</button></div>
+
+<header class="entete" id="entete">
+  <div class="env">
+    <div style="display:flex;align-items:center;gap:4px">
+      <span class="icones"><button type="button" class="burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button></span>
+      <a class="logo" href="#/">nidou</a>
+    </div>
+    <nav class="menu" aria-label="Menu principal">
+      <a href="#/">Accueil</a><a href="#categories">Catégories</a><a href="#produits">Paniers</a><a href="#tailles">Guide des tailles</a><a href="#contact">Contact</a><a href="#produits" class="chaud" data-onglet="nouveau">Nouveautés<i>NEW</i></a>
+    </nav>
+    <div class="icones">
+      <a href="#produits" class="cache-mob" aria-label="Rechercher"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></a>
+      <a href="#contact" class="cache-mob" aria-label="Compte"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4.2 4.3-6 8-6s6.7 1.8 8 6"/></svg></a>
+      <button type="button" aria-label="Favoris" id="btn-fav"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0112 7.3 4.3 4.3 0 0119.5 10c0 5.4-7.5 10-7.5 10z"/></svg><span class="pastille" id="nb-fav">0</span></button>
+      <button type="button" aria-label="Panier" id="btn-panier"><svg viewBox="0 0 24 24"><path d="M4 7h16l-1.3 13H5.3z"/><path d="M9 10V6a3 3 0 016 0v4"/></svg><span class="pastille" id="nb-panier">0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="tiroir" id="tiroir"><div class="voile" data-ferme></div>
+  <nav aria-label="Menu mobile"><button class="ferme" type="button" data-ferme aria-label="Fermer">×</button>
+    <a href="#/" data-ferme>Accueil <span>›</span></a><a href="#categories" data-ferme>Catégories <span>›</span></a><a href="#produits" data-ferme>Tous les paniers <span>›</span></a><a href="#tailles" data-ferme>Guide des tailles <span>›</span></a><a href="#contact" data-ferme>Contact <span>›</span></a>
+  </nav>
+</div>
+
+<main class="accueil">
+  <!-- Héros -->
+  <section class="heros" style="padding:0" id="heros">
+    <div class="heros-photo"><img id="heros-img" src="img/gamme/brun-naturel.jpg" alt="Chien endormi sur un panier orthopédique" fetchpriority="high" /></div>
+    <div class="heros-lettres" aria-hidden="true">nidou</div>
+    <div class="env">
+      <div class="heros-texte diapo" id="heros-texte"></div>
+      <div class="points-heros" id="points-heros"></div>
+    </div>
+  </section>
+
+  <!-- Catégories -->
+  <section id="categories">
+    <div class="env">
+      <div class="titre" data-ap><h2>Acheter par catégorie</h2><p>Un panier pour chaque chien et chaque façon de dormir.</p></div>
+      <div class="cats" id="cats"></div>
+    </div>
+  </section>
+
+  <!-- Produits -->
+  <section id="produits" style="padding-top:0">
+    <div class="env">
+      <div class="titre" data-ap><h2>Nos préférés</h2></div>
+      <div class="onglets" role="tablist" id="onglets">
+        <button role="tab" aria-selected="true" data-f="top">Meilleures ventes</button>
+        <button role="tab" aria-selected="false" data-f="nouveau">Nouveautés</button>
+        <button role="tab" aria-selected="false" data-f="grand">Grands chiens</button>
+      </div>
+      <div class="grille" id="grille"></div>
+      <div class="centre-btn"><button class="btn btn-noir" type="button" id="tout-voir">Voir tous les paniers</button></div>
+    </div>
+  </section>
+
+  <!-- Bloc vert -->
+  <section style="padding-top:0">
+    <div class="env duo">
+      <div class="vert" data-ap>
+        <small>Nouveau chez nidou</small>
+        <h2>Le lit taille humaine</h2>
+        <p>183 × 122 cm de fausse fourrure moelleuse pour faire la sieste avec ton chien. Assez grand pour vous deux, assez doux pour ne plus en sortir.</p>
+        <a class="btn btn-blanc" href="#/produit/n7">Seulement 219,90 €</a>
+      </div>
+      <div class="photo" data-ap><img src="img/produits/lit-humain.jpg" alt="Une femme et son golden retriever allongés sur le lit taille humaine" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- Guide des tailles -->
+  <section id="tailles" style="padding-top:0">
+    <div class="env">
+      <div class="titre" data-ap><h2>Quelle taille choisir ?</h2><p>Mesure ton chien allongé, du nez à la base de la queue, puis ajoute 15 à 20 cm.</p></div>
+      <div class="rail" id="rail-tailles"></div>
+    </div>
+  </section>
+
+  <!-- Bannière + atouts -->
+  <section style="padding-top:0" id="contact">
+    <div class="env">
+      <div class="banniere" data-ap>
+        <img src="img/gamme/ovale-camel.jpg" alt="" loading="lazy" />
+        <div>
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v10H8l-4 4z"/><path d="M8 10h8M8 13h5"/></svg>
+          <small>Une question ?</small>
+          <h2>On te répond<br />sous 24 h ouvrées.</h2>
+          <a class="btn btn-blanc" href="#/produit/n1">Nous écrire</a>
+        </div>
+      </div>
+      <div class="atouts">
+        <div data-ap><svg viewBox="0 0 24 24"><path d="M3 15c3-3 6-3 9 0s6 3 9 0"/><path d="M3 11c3-3 6-3 9 0s6 3 9 0"/><path d="M3 19h18"/></svg><h3>Mousse à mémoire de forme</h3><p>Elle épouse le corps de ton chien et soulage les hanches, les épaules et les coudes.</p></div>
+        <div data-ap><svg viewBox="0 0 24 24"><path d="M4 8h16v11H4z"/><path d="M9 8V5h6v3"/><path d="M8 13h8"/></svg><h3>Housse lavable</h3><p>Déhoussable avec une fermeture éclair et lavable en machine. Les poils partent d'un coup de main.</p></div>
+        <div data-ap><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1014-5.3"/><path d="M18 3v4h-4"/></svg><h3>14 jours pour changer d'avis</h3><p>Le panier ne lui plaît pas ? Tu as 14 jours après réception pour nous le retourner.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Fiche produit -->
+<main class="fiche" id="fiche">
+  <div class="env">
+    <div class="ariane"><span><a href="#/">Accueil</a> · <b id="ar-nom"></b></span><span class="nav-p"><a id="p-prec" aria-label="Produit précédent">‹</a><a href="#produits" aria-label="Tous les produits">▦</a><a id="p-suiv" aria-label="Produit suivant">›</a></span></div>
+    <div class="fiche-g">
+      <div class="galerie"><div class="miniatures" id="mini"></div><div class="grande"><img id="grande" alt="" /></div></div>
+      <div class="infos">
+        <p class="marque">Boutique nidou</p>
+        <h1 id="f-nom"></h1>
+        <p class="desc" id="f-desc"></p>
+        <p class="prix-f" id="f-prix"></p>
+        <div class="lignes"><a href="#contact"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-.9.6-1.5 1.1-1.5 2.2M12 17h.01"/></svg>Poser une question</a><a href="#" id="partager"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 11l7.6-3.8M8.2 13l7.6 3.8"/></svg>Partager</a></div>
+        <div class="choix-t"><p>Taille : <b id="f-t"></b> · <span id="f-dim"></span></p><div class="opts" id="f-opts"></div><p class="races" id="f-races"></p></div>
+        <div class="achat">
+          <div class="qte"><button type="button" id="moins" aria-label="Moins">−</button><span id="qte">1</span><button type="button" id="plus" aria-label="Plus">+</button></div>
+          <button class="btn btn-noir" type="button" id="f-ajout">Ajouter au panier</button>
+          <button class="coeur" type="button" id="f-coeur" aria-pressed="false" aria-label="Ajouter aux favoris"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0112 7.3 4.3 4.3 0 0119.5 10c0 5.4-7.5 10-7.5 10z"/></svg></button>
+        </div>
+        <button class="btn acheter" type="button" id="f-acheter">Acheter maintenant</button>
+        <dl class="meta"><dt>Couleur :</dt><dd id="f-coul"></dd><dt>Disponible :</dt><dd>En stock</dd><dt>Catégorie :</dt><dd id="f-cat"></dd></dl>
+        <div class="livr">
+          <div><svg viewBox="0 0 24 24"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7z"/><circle cx="7" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg>Livraison <b>suivie</b><br />numéro envoyé par e-mail</div>
+          <div><svg viewBox="0 0 24 24"><path d="M12 3l8 4v10l-8 4-8-4V7z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>Retours : <b>14 jours</b><br />pour changer d'avis</div>
+        </div>
+        <div class="securise">Paiement sécurisé<div class="paiements" data-paiements></div></div>
+        <details open><summary>Description</summary><div><p id="f-long"></p><ul style="margin-top:10px"><li>Mousse à mémoire de forme qui soulage les articulations</li><li>Rebords moelleux pour poser la tête</li><li>Housse déhoussable, lavable en machine</li><li>Dessous antidérapant</li></ul></div></details>
+        <details><summary>Livraison et retours</summary><div>Livraison suivie avec numéro de suivi envoyé par e-mail. Tu as 14 jours après réception pour changer d'avis et nous retourner le panier dans son état d'origine.</div></details>
+        <details><summary>Entretien</summary><div>Enlève la housse grâce à sa fermeture éclair et lave-la en machine. La mousse ne se lave pas : aère-la de temps en temps.</div></details>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="pied">
+  <div class="env">
+    <div class="pied-g">
+      <div><h4>Aide clients</h4><p>Une question sur une taille, une couleur ou ta commande ? Écris-nous, on te répond sous 24 h ouvrées.</p><p style="margin-top:12px;color:var(--noir)">bonjour@nidou.fr</p>
+        <div class="reseaux"><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8.5V6.8c0-.8.5-1 .9-1H17V2.1h-3c-3.3 0-4 2.4-4 4v2.4H8v3.7h2V22h4v-9.8h2.8l.4-3.7z"/></svg></a><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1012 16.7 4.7 4.7 0 0012 7.3zm0 7.7a3 3 0 110-6 3 3 0 010 6zm4.9-8.9a1.1 1.1 0 100 2.2 1.1 1.1 0 000-2.2zM8.5 2h7C19 2 22 5 22 8.5v7c0 3.5-3 6.5-6.5 6.5h-7C5 22 2 19 2 15.5v-7C2 5 5 2 8.5 2zm0 2C6 4 4 6 4 8.5v7C4 18 6 20 8.5 20h7c2.5 0 4.5-2 4.5-4.5v-7C20 6 18 4 15.5 4z"/></svg></a><a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 3c.4 2.2 1.7 3.6 3.9 3.8v3a7 7 0 01-3.9-1.2v6.2a5.7 5.7 0 11-5.7-5.7l.9.1v3.1a2.7 2.7 0 102 2.6V3z"/></svg></a><a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24"><path d="M12.3 2C6.8 2 4 5.9 4 9.2c0 2 .8 3.7 2.4 4.4.3.1.5 0 .6-.3l.2-1c.1-.3 0-.4-.2-.7-.5-.6-.8-1.3-.8-2.4 0-3.1 2.3-5.8 6-5.8 3.3 0 5.1 2 5.1 4.7 0 3.5-1.6 6.5-3.9 6.5-1.3 0-2.2-1-1.9-2.3.4-1.5 1.1-3.2 1.1-4.3 0-1-.5-1.8-1.6-1.8-1.3 0-2.3 1.3-2.3 3.1 0 1.1.4 1.9.4 1.9l-1.5 6.4c-.4 1.9-.1 4.2 0 4.4 0 .1.2.2.3.1.1-.2 1.6-2 2.1-3.8l.8-3.2c.4.8 1.6 1.4 2.9 1.4 3.8 0 6.4-3.5 6.4-8.1C20.2 5.3 17 2 12.3 2z"/></svg></a></div></div>
+      <div><h4>La boutique</h4><ul><li><a href="#categories">Catégories</a></li><li><a href="#produits">Tous les paniers</a></li><li><a href="#tailles">Guide des tailles</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Catégories</h4><ul><li><a href="#produits">Canapés orthopédiques</a></li><li><a href="#produits">Paniers</a></li><li><a href="#produits">Rafraîchissant</a></li><li><a href="#/produit/n7">Lit géant</a></li></ul></div>
+      <div><h4>Newsletter</h4><p>Conseils, nouveautés et offres réservées aux abonnés.</p>
+        <form class="news" id="news"><input type="email" required placeholder="Ton adresse e-mail" aria-label="Adresse e-mail" /><button class="btn btn-noir" type="submit">S'inscrire</button></form>
+        <p style="font-size:.78rem">En t'inscrivant, tu acceptes nos <b>conditions</b> et notre <b>politique de confidentialité</b>.</p></div>
+    </div>
+    <div class="pied-bas"><span>© 2026 nidou · Boutique de démonstration</span><div class="paiements" data-paiements></div></div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const P = [
+  { id:'n1', nom:'Canapé orthopédique à rebords', couleur:'Beige', cat:'Canapés', d:'Rebords appui-tête et mousse à mémoire de forme, pour les grands dormeurs.', img:'img/produits/canape-rebords.jpg', amb:'img/gamme/beige-chaud.jpg', f:['top'], badge:['Meilleure vente','vert'],
+    t:{ S:['61 × 46 cm',109.9], M:['76 × 56 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n2', nom:'Canapé bas, entrée facile', couleur:'Crème', cat:'Canapés', d:'Une entrée surbaissée pour monter sans effort : idéal pour les chiens âgés.', img:'img/produits/canape-bas.jpg', f:['top','nouveau'],
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['102 × 81 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n3', nom:'Canapé 3 rebords — Brun', couleur:'Brun', cat:'Canapés', d:'Rebords sur 3 côtés et passepoil orange, un vrai petit canapé.', img:'img/produits/canape-3-rebords.jpg', amb:'img/gamme/brun-classique.jpg', f:['top','grand'],
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n5', nom:'Canapé carré — Gris foncé', couleur:'Gris foncé', cat:'Canapés', d:'Grand format avec rebords tout autour, pour les chiens qui s\'étalent.', img:'img/produits/canape-carre.jpg', amb:'img/gamme/gris-fonce.jpg', f:['grand'],
+    t:{ L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n7', nom:'Lit taille humaine', couleur:'Gris clair', cat:'Lit géant', d:'Fausse fourrure moelleuse, assez grand pour toi et ton chien.', img:'img/produits/lit-humain.jpg', f:['nouveau','grand'], badge:['Nouveau','violet'], plein:true,
+    t:{ Unique:['183 × 122 cm',219.9] } },
+  { id:'n8', nom:'Panier ovale — Camel', couleur:'Camel', cat:'Paniers', d:'Pour les chiens qui aiment dormir en boule, bords tout autour.', img:'img/produits/panier-ovale.jpg', amb:'img/gamme/ovale-camel.jpg', f:['top'],
+    t:{ M:['89 × 64 cm',139.9], L:['109 × 76 cm',169.9], XL:['119 × 84 cm',199.9], XXL:['132 × 102 cm',239.9] } },
+  { id:'n10', nom:'Panier rectangle fourrure', couleur:'Crème', cat:'Paniers', d:'Fausse fourrure douce et rebords moelleux, couleur crème.', img:'img/produits/panier-rectangle.jpg', amb:'img/gamme/creme-arctique.jpg', f:['grand'],
+    t:{ M:['89 × 64 cm',139.9], L:['102 × 71 cm',169.9], XL:['109 × 81 cm',199.9], XXL:['130 × 102 cm',239.9] } },
+  { id:'n13', nom:'Panier rafraîchissant — Bleu', couleur:'Bleu ciel', cat:'Rafraîchissant', d:'Housse respirante qui garde ton chien au frais pendant l\'été.', img:'img/produits/panier-rafraichissant.jpg', amb:'img/gamme/bleu-ciel.jpg', f:['nouveau'], badge:['Nouveau','violet'],
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+  { id:'n14', nom:'Panier chenille — Brun chiné', couleur:'Brun chiné', cat:'Paniers', d:'Tissu chenille tout doux et passepoil crème.', img:'img/produits/panier-chenille.jpg', amb:'img/gamme/brun-naturel.jpg', f:['nouveau'],
+    t:{ S:['61 × 41 cm',109.9], M:['76 × 51 cm',139.9], L:['91 × 69 cm',169.9], XL:['114 × 89 cm',199.9], XXL:['135 × 107 cm',239.9] } },
+];
+const RACES = { S:'Chihuahua, Yorkshire, Bichon, Teckel', M:'Beagle, Carlin, Shih Tzu, Jack Russell', L:'Border Collie, Cocker, Berger australien, Bouledogue', XL:'Labrador, Golden Retriever, Husky, Boxer', XXL:'Berger allemand, Bouvier bernois, Dogue allemand, Malinois', Unique:'toi et ton chien, côte à côte' };
+const euros = (n) => n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
+const defaut = (p) => ('M' in p.t ? 'M' : Object.keys(p.t)[0]);
+const mini = (p) => Math.min(...Object.values(p.t).map((v)=>v[1]));
+const $ = (s) => document.querySelector(s);
+
+/* Paiements (pastilles texte) */
+const PAY = [['VISA','#1a1f71'],['MASTERCARD','#222'],['CB','#1b4f9c'],['PAYPAL','#003087'],['KLARNA','#f4a6c0'],['APPLE PAY','#000']];
+document.querySelectorAll('[data-paiements]').forEach((e)=>e.innerHTML=PAY.map(([n,c])=>`<span style="background:${c};${n==='KLARNA'?'color:#111':''}">${n}</span>`).join(''));
+
+/* Toast, panier, favoris */
+let nbP=0; const favs=new Set();
+function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('vu'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('vu'),2200); }
+function ajouter(p,t,q=1){ nbP+=q; $('#nb-panier').textContent=nbP; toast(`${p.nom} (${t}) ajouté au panier`); }
+$('#btn-panier').onclick=()=>toast(nbP?`${nbP} article${nbP>1?'s':''} dans ton panier`:'Ton panier est vide');
+$('#btn-fav').onclick=()=>toast(favs.size?`${favs.size} panier${favs.size>1?'s':''} en favori`:'Aucun favori pour l’instant');
+$('#news').onsubmit=(e)=>{e.preventDefault();toast('Merci, tu es inscrit !');e.target.reset();};
+
+/* Bandeau qui défile */
+const MSG=['Livraison suivie sur toutes les commandes','Du S au XXL : <b>guide des tailles avec races</b>','<b>14 jours</b> pour changer d’avis'];
+let bi=0; const bt=$('#bandeau-txt');
+function bandeau(i){ bi=(i+MSG.length)%MSG.length; bt.style.opacity=0; setTimeout(()=>{bt.innerHTML=MSG[bi];bt.style.opacity=1;},200); }
+bandeau(0); setInterval(()=>bandeau(bi+1),5000); $('#b-prec').onclick=()=>bandeau(bi-1); $('#b-suiv').onclick=()=>bandeau(bi+1);
+
+/* Menu */
+$('#burger').onclick=()=>$('#tiroir').classList.add('ouvert');
+document.querySelectorAll('[data-ferme]').forEach((e)=>e.addEventListener('click',()=>$('#tiroir').classList.remove('ouvert')));
+
+/* Héros en diaporama */
+const DIAPOS=[
+  {sur:'Nouveau — panier orthopédique', h:'Dors<br>mieux.', p:'Mousse à mémoire de forme, du S au XXL. À partir de 109,90 €.', img:'img/gamme/brun-naturel.jpg', btn:['Voir les paniers','#produits']},
+  {sur:'Pour les grands dormeurs', h:'Son coin<br>à lui.', p:'Des rebords pour poser la tête et se sentir à l’abri.', img:'img/gamme/brun-classique.jpg', btn:['Voir le canapé','#/produit/n3']},
+  {sur:'Pour l’été', h:'Garde<br>la fraîcheur.', p:'Le panier rafraîchissant à housse respirante.', img:'img/gamme/bleu-ciel.jpg', btn:['Découvrir','#/produit/n13']},
+];
+let hi=0; const ht=$('#heros-texte'), himg=$('#heros-img');
+$('#points-heros').innerHTML=DIAPOS.map((_,k)=>`<button type="button" aria-label="Diapo ${k+1}"></button>`).join('');
+function diapo(i){ hi=(i+DIAPOS.length)%DIAPOS.length; const d=DIAPOS[hi]; ht.style.opacity=0; himg.style.opacity=.3;
+  setTimeout(()=>{ ht.innerHTML=`<p class="sur">${d.sur}</p><h1>${d.h}</h1><p>${d.p}</p><a class="btn btn-blanc" href="${d.btn[1]}">${d.btn[0]}</a>`; himg.src=d.img; ht.style.opacity=1; himg.style.opacity=1; },250);
+  document.querySelectorAll('#points-heros button').forEach((b,k)=>b.classList.toggle('actif',k===hi)); }
+himg.style.transition='opacity .45s'; diapo(0); let hInt=setInterval(()=>diapo(hi+1),6000);
+$('#points-heros').onclick=(e)=>{ const b=e.target.closest('button'); if(!b)return; clearInterval(hInt); diapo([...b.parentNode.children].indexOf(b)); };
+
+/* En-tête indigo au-dessus du héros */
+const ent=$('#entete');
+function majEntete(){ const h=$('#heros'); ent.classList.toggle('sur-heros', !document.body.classList.contains('page-produit') && h.getBoundingClientRect().bottom > 70); }
+addEventListener('scroll',majEntete,{passive:true});
+
+/* Catégories */
+const CATS=[['Canapés','img/gamme/brun-classique.jpg','top'],['Paniers','img/gamme/ovale-camel.jpg','top'],['Rafraîchissant','img/gamme/bleu-ciel.jpg','nouveau'],['Lit géant','img/produits/lit-humain.jpg','grand']];
+$('#cats').innerHTML=CATS.map(([n,img])=>`<a class="cat" href="#produits" data-cat="${n}"><img src="${img}" alt="" loading="lazy" /><div><h3>${n}</h3><span>${P.filter(p=>p.cat===n).length} produit${P.filter(p=>p.cat===n).length>1?'s':''}</span></div></a>`).join('');
+$('#cats').onclick=(e)=>{ const c=e.target.closest('.cat'); if(c){ e.preventDefault(); grille(null,c.dataset.cat); $('#produits').scrollIntoView({behavior:'smooth'}); } };
+
+/* Grille produits */
+function carte(p){ const ts=Object.keys(p.t); return `
+  <article class="carte" data-id="${p.id}" tabindex="0">
+    <div class="img">${p.badge?`<span class="badge ${p.badge[1]}">${p.badge[1]==='vert'?'● ':''}${p.badge[0]}</span>`:''}<img src="${p.img}" alt="${p.nom}" loading="lazy" />${p.amb?`<img class="amb" src="${p.amb}" alt="" loading="lazy" />`:''}<button class="ajout-rapide" type="button" data-rapide>Ajout rapide · ${defaut(p)}</button></div>
+    <h3>${p.nom}</h3>
+    <p class="tailles-dispo">${ts.length>1?`${ts[0]} à ${ts[ts.length-1]}`:p.t.Unique[0]}</p>
+    <p class="prix">${ts.length>1?'Dès ':''}${euros(mini(p))}</p>
+  </article>`; }
+let filtre='top';
+function grille(f,cat){ let liste;
+  if(cat){ liste=P.filter(p=>p.cat===cat); document.querySelectorAll('#onglets button').forEach(b=>b.setAttribute('aria-selected','false')); }
+  else if(f==='tout'){ liste=P; }
+  else { filtre=f; liste=P.filter(p=>p.f.includes(f)); document.querySelectorAll('#onglets button').forEach(b=>b.setAttribute('aria-selected',b.dataset.f===f)); }
+  $('#grille').innerHTML=liste.map(carte).join(''); }
+grille('top');
+$('#onglets').onclick=(e)=>{ const b=e.target.closest('button'); if(b) grille(b.dataset.f); };
+document.querySelectorAll('[data-onglet]').forEach(a=>a.addEventListener('click',()=>grille(a.dataset.onglet)));
+$('#tout-voir').onclick=()=>{ grille('tout'); document.querySelectorAll('#onglets button').forEach(b=>b.setAttribute('aria-selected','false')); };
+$('#grille').addEventListener('click',(e)=>{ const c=e.target.closest('.carte'); if(!c)return; const p=P.find(x=>x.id===c.dataset.id);
+  if(e.target.closest('[data-rapide]')){ ajouter(p,defaut(p)); return; } location.hash='#/produit/'+p.id; });
+$('#grille').addEventListener('keydown',(e)=>{ const c=e.target.closest('.carte'); if(c&&e.key==='Enter') location.hash='#/produit/'+c.dataset.id; });
+
+/* Guide des tailles */
+const TT=[['S','61 × 41 cm','n13','jusqu’à 10 kg'],['M','76 × 51 cm','n14','10 à 20 kg'],['L','91 × 69 cm','n3','20 à 32 kg'],['XL','114 × 89 cm','n1','32 à 45 kg'],['XXL','135 × 107 cm','n5','plus de 45 kg']];
+$('#rail-tailles').innerHTML=TT.map(([t,d,id,kg])=>{ const p=P.find(x=>x.id===id); return `<div class="avis"><div class="t"><b>${t}</b><span>${d} · ${kg}</span></div><p>${RACES[t]}</p><a class="lien" href="#/produit/${id}"><img src="${p.img}" alt="" loading="lazy" /><div>${p.nom}<br><span style="color:var(--gris);font-weight:400">${euros(p.t[t][1])} en taille ${t}</span></div></a></div>`; }).join('');
+
+/* Fiche produit */
+let fp, ft, q=1;
+function majFiche(){ $('#f-t').textContent=ft; $('#f-dim').textContent=fp.t[ft][0]; $('#f-prix').textContent=euros(fp.t[ft][1]); $('#f-races').textContent=`Idéal pour : ${RACES[ft]}`;
+  $('#f-opts').innerHTML=Object.keys(fp.t).map(t=>`<button type="button" data-t="${t}" aria-pressed="${t===ft}">${t}</button>`).join(''); }
+function photo(src){ const g=$('#grande'); g.style.opacity=0; setTimeout(()=>{g.src=src;g.style.opacity=1;},150);
+  document.querySelectorAll('#mini button').forEach(b=>b.setAttribute('aria-current',b.dataset.src===src)); }
+function fiche(id){ fp=P.find(p=>p.id===id); if(!fp){ location.hash='#/'; return; } ft=defaut(fp); q=1; $('#qte').textContent=1;
+  const imgs=[fp.img,fp.amb].filter(Boolean);
+  $('#mini').innerHTML=imgs.map(s=>`<button type="button" data-src="${s}"><img src="${s}" alt="" /></button>`).join('');
+  $('#grande').alt=fp.nom; photo(imgs[0]);
+  $('#ar-nom').textContent=fp.nom; $('#f-nom').textContent=fp.nom; $('#f-desc').textContent=fp.d; $('#f-long').textContent=fp.d;
+  $('#f-coul').textContent=fp.couleur; $('#f-cat').textContent=fp.cat; $('#f-coeur').setAttribute('aria-pressed',favs.has(fp.id));
+  const i=P.indexOf(fp); $('#p-prec').href='#/produit/'+P[(i-1+P.length)%P.length].id; $('#p-suiv').href='#/produit/'+P[(i+1)%P.length].id;
+  document.title=`${fp.nom} — nidou`; majFiche(); }
+$('#mini').onclick=(e)=>{ const b=e.target.closest('button'); if(b) photo(b.dataset.src); };
+$('#f-opts').onclick=(e)=>{ const b=e.target.closest('button'); if(b){ ft=b.dataset.t; majFiche(); } };
+$('#moins').onclick=()=>{ q=Math.max(1,q-1); $('#qte').textContent=q; };
+$('#plus').onclick=()=>{ q=Math.min(9,q+1); $('#qte').textContent=q; };
+$('#f-ajout').onclick=()=>ajouter(fp,ft,q);
+$('#f-acheter').onclick=()=>{ ajouter(fp,ft,q); toast('Démo : le paiement se fera sur Shopify'); };
+$('#f-coeur').onclick=(e)=>{ const b=e.currentTarget; favs.has(fp.id)?favs.delete(fp.id):favs.add(fp.id); b.setAttribute('aria-pressed',favs.has(fp.id)); $('#nb-fav').textContent=favs.size; };
+$('#partager').onclick=async(e)=>{ e.preventDefault(); try{ if(navigator.share) await navigator.share({title:fp.nom,url:location.href}); else { await navigator.clipboard.writeText(location.href); toast('Lien copié'); } }catch(_){} };
+
+/* Routeur */
+function route(){ const m=location.hash.match(/^#\/produit\/(\w+)/);
+  if(m){ document.body.classList.add('page-produit'); fiche(m[1]); scrollTo(0,0); }
+  else if(location.hash==='#/'||location.hash===''){ const etait=document.body.classList.contains('page-produit'); document.body.classList.remove('page-produit'); document.title='nidou — Paniers orthopédiques pour chien'; if(etait||location.hash==='#/') scrollTo(0,0); }
+  else if(document.body.classList.contains('page-produit')){ const cible=location.hash; document.body.classList.remove('page-produit'); requestAnimationFrame(()=>document.querySelector(cible)?.scrollIntoView()); }
+  majEntete(); }
+addEventListener('hashchange',route); route();
+
+/* Apparitions */
+const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vu'); io.unobserve(e.target);} }),{threshold:.12});
+document.querySelectorAll('[data-ap]').forEach(e=>io.observe(e));
+</script>
+</body>
+</html>
