@@ -48,17 +48,17 @@ ${ld}
 </head>
 <body>
 <a class="saut" href="#contenu">Aller au contenu</a>
-<div class="bandeau">Pré-commande ouverte : rien à payer aujourd’hui, on te recontacte pour confirmer.</div>
+<div class="bandeau">En stock · livraison suivie · 14 jours pour changer d’avis</div>
 <header class="entete">
   <div class="env">
     <button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="tiroir"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
     <a class="logo" href="/" aria-label="NIDOU, couchage pour chiens, accueil">${LOGO}</a>
     <nav class="menu" aria-label="Menu principal">${menu}</nav>
-    <a class="btn btn-caramel cta" href="/precommande">Pré-commander<span class="long">&nbsp;un panier</span></a>
+    <a class="btn btn-caramel cta" href="/commande">Commander<span class="long">&nbsp;un panier</span></a>
   </div>
 </header>
 <div class="tiroir" id="tiroir"><div class="voile" data-ferme></div>
-  <nav aria-label="Menu mobile"><button class="ferme" type="button" data-ferme aria-label="Fermer le menu">×</button>${menu}<a class="btn btn-caramel" href="/precommande">Pré-commander un panier</a></nav>
+  <nav aria-label="Menu mobile"><button class="ferme" type="button" data-ferme aria-label="Fermer le menu">×</button>${menu}<a class="btn btn-caramel" href="/commande">Commander un panier</a></nav>
 </div>
 <main id="contenu">
 ${contenu}
@@ -67,11 +67,11 @@ ${contenu}
   <div class="env">
     <div class="pied-g">
       <div><a class="logo" href="/" aria-label="NIDOU, couchage pour chiens, accueil">${LOGO}</a><p>Des paniers orthopédiques pensés pour le sommeil de ton chien et beaux dans ton intérieur, du Chihuahua au Dogue allemand.</p></div>
-      <div><h2>La boutique</h2><ul><li><a href="/paniers">Tous les paniers</a></li><li><a href="/guide-des-tailles">Guide des tailles</a></li><li><a href="/precommande">Pré-commander</a></li></ul></div>
+      <div><h2>La boutique</h2><ul><li><a href="/paniers">Tous les paniers</a></li><li><a href="/guide-des-tailles">Guide des tailles</a></li><li><a href="/commande">Commander</a></li></ul></div>
       <div><h2>Aide</h2><ul><li><a href="/faq">Questions fréquentes</a></li><li><a href="/contact">Nous écrire</a></li></ul></div>
       <div><h2>Informations</h2><ul><li><a href="/mentions-legales">Mentions légales</a></li><li><a href="/confidentialite">Confidentialité</a></li></ul></div>
     </div>
-    <div class="pied-bas"><span>© ${new Date().getFullYear()} Nidou</span><span>Pré-commande sans paiement en ligne</span></div>
+    <div class="pied-bas"><span>© ${new Date().getFullYear()} Nidou</span><span>Paniers en stock, livraison suivie</span></div>
   </div>
 </footer>
 <script src="/app.js" defer></script>
@@ -106,7 +106,7 @@ const siteWeb = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'N
 const fil = (items) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items.map(([n, u], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE + u })) });
 
 const FAQ = [
-  ['Comment fonctionne la pré-commande ?', 'Tu choisis ton panier et sa taille, puis tu remplis le formulaire. Aucun paiement n’est demandé sur le site. Nous te recontactons par e-mail pour confirmer le prix, le délai de livraison et le moyen de paiement. Tu peux annuler à tout moment avant de payer.'],
+  ['Comment se passe la commande ?', 'Tu choisis ton panier et sa taille, puis tu remplis le formulaire de commande. Sous 24 h ouvrées, on t’envoie par e-mail la confirmation et un lien de paiement sécurisé. Ton panier est expédié dès le paiement reçu, en livraison suivie.'],
   ['Quelle taille choisir ?', 'Mesure ton chien allongé de tout son long, du bout du nez à la base de la queue, puis ajoute 15 à 20 cm. En cas de doute entre deux tailles, prends la plus grande : il pourra s’étirer.'],
   ['Mon chien va-t-il l’aimer tout de suite ?', 'La mousse est plus ferme qu’un coussin, c’est voulu : elle soutient au lieu de s’enfoncer. Pose dessus sa couverture habituelle et laisse-lui quelques jours pour l’adopter.'],
   ['Est-ce vraiment orthopédique ?', 'Le couchage est en mousse à mémoire de forme : elle épouse le corps et répartit le poids, ce qui soulage les points d’appui (hanches, épaules, coudes). Ce n’est pas un rembourrage en fibres qui s’aplatit.'],
@@ -142,14 +142,14 @@ ecrire('/', page({
   <div class="env"><div class="heros-texte">
     <p class="sur">Panier orthopédique pour chien</p>
     <h1 id="titre-heros">Dors<br />mieux.</h1>
-    <p>Mousse à mémoire de forme, du S au XXL. À partir de ${euros(109.9)}. Pré-commande sans paiement immédiat.</p>
-    <div class="actions"><a class="btn btn-blanc" href="/paniers">Voir les paniers</a><a class="btn btn-caramel" href="/precommande">Pré-commander</a></div>
+    <p>Mousse à mémoire de forme, du S au XXL. En stock, à partir de ${euros(109.9)}.</p>
+    <div class="actions"><a class="btn btn-blanc" href="/paniers">Voir les paniers</a><a class="btn btn-caramel" href="/commande">Commander</a></div>
   </div></div>
 </section>
 <div class="atouts-bande"><div class="env"><ul>
   <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15c3-3 6-3 9 0s6 3 9 0"/><path d="M3 19h18"/></svg>Mousse à mémoire de forme</li>
   <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v11H4z"/><path d="M9 8V5h6v3"/></svg>Housse lavable en machine</li>
-  <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Rien à payer aujourd’hui</li>
+  <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7z"/></svg>Livraison suivie</li>
   <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1014-5.3"/><path d="M18 3v4h-4"/></svg>14 jours pour changer d’avis</li>
 </ul></div></div>
 <section id="produits">
@@ -191,7 +191,7 @@ ecrire('/paniers', page({
   titre: 'Tous les paniers orthopédiques pour chien',
   description: 'Canapés à rebords, paniers ovales, rafraîchissants ou lit taille humaine : les 9 paniers orthopédiques Nidou, du S au XXL, dès 109,90 €.',
   jsonld: [fil([['Accueil', '/'], ['Paniers', '/paniers']]), { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: PRODUITS.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/paniers/${p.slug}`, name: p.nom })) }],
-  contenu: `<div class="env"><div class="page-titre"><h1>Tous nos paniers</h1><p>Mousse à mémoire de forme, housse lavable, du S au XXL. Choisis un panier pour voir les tailles et le pré-commander.</p></div>
+  contenu: `<div class="env"><div class="page-titre"><h1>Tous nos paniers</h1><p>Mousse à mémoire de forme, housse lavable, du S au XXL. Choisis un panier pour voir les tailles et le commander.</p></div>
   <section style="padding-top:24px"><div class="grille">${PRODUITS.map(carteSimple).join('')}</div></section></div>`,
 }));
 
@@ -202,12 +202,12 @@ for (const p of PRODUITS) {
   const ld = {
     '@context': 'https://schema.org', '@type': 'Product', name: p.nom, description: p.long, brand: { '@type': 'Brand', name: 'Nidou' }, color: p.couleur, category: 'Panier pour chien',
     ...(photos.length ? { image: photos.map((x) => SITE + x) } : { image: [SITE + '/img/og.jpg'] }),
-    offers: { '@type': 'AggregateOffer', priceCurrency: 'EUR', lowPrice: prixMin(p).toFixed(2), highPrice: Math.max(...Object.values(p.t).map((v) => v[1])).toFixed(2), offerCount: ts.length, availability: 'https://schema.org/PreOrder', url: `${SITE}/paniers/${p.slug}` },
+    offers: { '@type': 'AggregateOffer', priceCurrency: 'EUR', lowPrice: prixMin(p).toFixed(2), highPrice: Math.max(...Object.values(p.t).map((v) => v[1])).toFixed(2), offerCount: ts.length, availability: 'https://schema.org/InStock', url: `${SITE}/paniers/${p.slug}` },
   };
   ecrire(`/paniers/${p.slug}`, page({
     chemin: `/paniers/${p.slug}`,
     titre: `${p.nom} — panier orthopédique pour chien (${p.couleur})`,
-    description: `${p.court} ${ts.length > 1 ? `Tailles ${ts[0]} à ${ts[ts.length - 1]}` : `Format ${p.t.Unique[0]}`}, dès ${euros(prixMin(p))}. Pré-commande sans paiement immédiat.`,
+    description: `${p.court} ${ts.length > 1 ? `Tailles ${ts[0]} à ${ts[ts.length - 1]}` : `Format ${p.t.Unique[0]}`}, dès ${euros(prixMin(p))}. En stock, livraison suivie.`,
     image: photos[0] ? photos[0].replace('.webp', '.webp') : '/img/og.jpg',
     jsonld: [ld, fil([['Accueil', '/'], ['Paniers', '/paniers'], [p.nom, `/paniers/${p.slug}`]])],
     contenu: `<div class="env">
@@ -222,20 +222,20 @@ for (const p of PRODUITS) {
       <h1>${esc(p.nom)}</h1>
       <p class="couleur">Couleur : <b>${esc(p.couleur)}</b></p>
       <p class="prix-f" id="f-prix">${euros(p.t[t0][1])}</p>
-      <p class="pre">Pré-commande ouverte · rien à payer aujourd’hui</p>
+      <p class="pre">● En stock · livraison suivie</p>
       <p class="desc">${esc(p.long)}</p>
       <div class="choix">
         <p>Taille : <b id="f-taille">${t0}</b> · <span id="f-dim">${p.t[t0][0]}</span></p>
         ${ts.length > 1 ? `<div class="opts" role="group" aria-label="Choisir la taille">${ts.map((t) => `<button type="button" data-t="${t}" aria-pressed="${t === t0}">${t}</button>`).join('')}</div>` : ''}
         <p class="races" id="f-races">Idéal pour : ${RACES[t0]}</p>
       </div>
-      <a class="btn btn-caramel" id="f-precommande" href="/precommande?produit=${p.slug}&amp;taille=${t0}">Pré-commander ce panier</a>
-      <div class="rassure"><div>Paiement <b>plus tard</b><br />après confirmation</div><div>Retours : <b>14 jours</b><br />après réception</div></div>
+      <a class="btn btn-caramel" id="f-commande" href="/commande?produit=${p.slug}&amp;taille=${t0}">Commander ce panier</a>
+      <div class="rassure"><div>Paiement <b>sécurisé</b><br />par lien e-mail</div><div>Retours : <b>14 jours</b><br />après réception</div></div>
       <ul class="points"><li>Mousse à mémoire de forme qui soulage les articulations</li><li>Housse déhoussable, lavable en machine</li><li>Dessous antidérapant</li></ul>
       <div style="margin-top:24px">
         <details><summary>Dimensions par taille</summary><div><ul>${ts.map((t) => `<li><b>${t === 'Unique' ? 'Taille unique' : t}</b> : ${p.t[t][0]} — ${euros(p.t[t][1])}</li>`).join('')}</ul></div></details>
         <details><summary>Entretien</summary><div><p>Enlève la housse grâce à sa fermeture éclair et lave-la en machine. La mousse ne se lave pas : aère-la de temps en temps.</p></div></details>
-        <details><summary>Comment marche la pré-commande ?</summary><div><p>${esc(FAQ[0][1])}</p></div></details>
+        <details><summary>Comment se passe la commande ?</summary><div><p>${esc(FAQ[0][1])}</p></div></details>
       </div>
     </div>
   </div>
@@ -262,7 +262,7 @@ ecrire('/guide-des-tailles', page({
 ecrire('/faq', page({
   chemin: '/faq',
   titre: 'Questions fréquentes',
-  description: 'Pré-commande, choix de la taille, entretien de la housse, retours : les réponses à tes questions sur les paniers orthopédiques Nidou.',
+  description: 'Commande, choix de la taille, entretien de la housse, retours : les réponses à tes questions sur les paniers orthopédiques Nidou.',
   jsonld: [faqLd, fil([['Accueil', '/'], ['Questions fréquentes', '/faq']])],
   contenu: `<div class="env"><div class="page-titre"><h1>Questions fréquentes</h1><p>Tu ne trouves pas ta réponse ? <a href="/contact" style="text-decoration:underline">Écris-nous</a>.</p></div><section style="padding-top:24px"><div class="faq">${faqHtml}</div></section></div>`,
 }));
@@ -272,16 +272,16 @@ const catalogue = Object.fromEntries(PRODUITS.map((p) => [p.slug, { nom: p.nom, 
 const champ = (id, lab, type = 'text', extra = '', aide = '', err = 'Ce champ est obligatoire.') =>
   `<div class="bloc"><label for="${id}">${lab}</label><input id="${id}" name="${id}" type="${type}" ${extra} aria-describedby="${id}-err" />${aide ? `<p class="aide">${aide}</p>` : ''}<p class="erreur-champ" id="${id}-err">${err}</p></div>`;
 
-ecrire('/precommande', page({
-  chemin: '/precommande',
-  titre: 'Pré-commander un panier',
-  description: 'Réserve ton panier orthopédique Nidou : choisis le modèle et la taille, laisse tes coordonnées. Aucun paiement en ligne, on te recontacte pour confirmer.',
-  jsonld: [fil([['Accueil', '/'], ['Pré-commande', '/precommande']])],
+ecrire('/commande', page({
+  chemin: '/commande',
+  titre: 'Commander un panier',
+  description: 'Commande ton panier orthopédique Nidou en stock : choisis le modèle et la taille, laisse ton adresse. Paiement sécurisé par lien e-mail, livraison suivie.',
+  jsonld: [fil([['Accueil', '/'], ['Commande', '/commande']])],
   contenu: `<div class="env">
-  <div class="page-titre"><h1>Pré-commander</h1><p>Aucun paiement aujourd’hui. On te recontacte par e-mail sous 48 h ouvrées pour confirmer le prix, le délai et le paiement. Tu peux annuler à tout moment avant de payer.</p></div>
-  <form class="formulaire" action="/api/precommande" method="post" data-envoi novalidate>
+  <div class="page-titre"><h1>Commander</h1><p>Après ta commande, on t’envoie sous 24 h ouvrées un lien de paiement sécurisé par e-mail. Ton panier part dès le paiement reçu, en livraison suivie.</p></div>
+  <form class="formulaire" action="/api/commande" method="post" data-envoi novalidate>
     <p class="message-form" role="alert" tabindex="-1"></p>
-    <input type="hidden" name="type" value="precommande" />
+    <input type="hidden" name="type" value="commande" />
     <div class="pot" aria-hidden="true"><label for="site">Ne pas remplir</label><input id="site" name="site" type="text" tabindex="-1" autocomplete="off" /></div>
     <fieldset><legend>1. Ton panier</legend><div class="champs">
       <div class="bloc"><label for="produit">Modèle</label><select id="produit" name="produit" required aria-describedby="produit-err">${PRODUITS.map((p) => `<option value="${p.slug}">${esc(p.nom)} — ${esc(p.couleur)}</option>`).join('')}</select><p class="erreur-champ" id="produit-err">Choisis un modèle.</p></div>
@@ -294,7 +294,7 @@ ecrire('/precommande', page({
     <fieldset><legend>2. Tes coordonnées</legend><div class="champs">
       <div class="champs deux">
         ${champ('nom', 'Nom et prénom', 'text', 'required autocomplete="name" maxlength="120"', '', 'Indique ton nom et prénom.')}
-        ${champ('email', 'E-mail', 'email', 'required autocomplete="email" maxlength="160" inputmode="email"', 'Pour confirmer ta pré-commande.', 'Indique une adresse e-mail valide.')}
+        ${champ('email', 'E-mail', 'email', 'required autocomplete="email" maxlength="160" inputmode="email"', 'Pour t’envoyer la confirmation et le lien de paiement.', 'Indique une adresse e-mail valide.')}
       </div>
       ${champ('telephone', 'Téléphone <span class="opt">(facultatif)</span>', 'tel', 'autocomplete="tel" maxlength="30" inputmode="tel"')}
     </div></fieldset>
@@ -307,9 +307,9 @@ ecrire('/precommande', page({
       </div>
     </div></fieldset>
     <fieldset><legend>4. Un message ?</legend><div class="bloc"><label for="message">Message <span class="opt">(facultatif)</span></label><textarea id="message" name="message" maxlength="2000" placeholder="La race, le poids ou l’âge de ton chien, une question…"></textarea></div></fieldset>
-    <div class="bloc case"><input id="accord" name="accord" type="checkbox" value="oui" required aria-describedby="accord-err" /><div><label for="accord">J’accepte que Nidou utilise ces informations pour traiter ma pré-commande (voir la <a href="/confidentialite" style="text-decoration:underline">politique de confidentialité</a>).</label><p class="erreur-champ" id="accord-err">Merci de cocher cette case pour continuer.</p></div></div>
-    <button class="btn btn-caramel" type="submit" style="margin-top:22px">Envoyer ma pré-commande</button>
-    <p class="note-paiement">Rien à payer maintenant.</p>
+    <div class="bloc case"><input id="accord" name="accord" type="checkbox" value="oui" required aria-describedby="accord-err" /><div><label for="accord">J’accepte que Nidou utilise ces informations pour traiter ma commande (voir la <a href="/confidentialite" style="text-decoration:underline">politique de confidentialité</a>).</label><p class="erreur-champ" id="accord-err">Merci de cocher cette case pour continuer.</p></div></div>
+    <button class="btn btn-caramel" type="submit" style="margin-top:22px">Valider ma commande</button>
+    <p class="note-paiement">Paiement sécurisé par lien envoyé par e-mail sous 24 h ouvrées.</p>
   </form>
   <script type="application/json" id="catalogue">${JSON.stringify(catalogue).replace(/</g, '\\u003c')}</script>
 </div>`,
@@ -318,11 +318,11 @@ ecrire('/precommande', page({
 ecrire('/contact', page({
   chemin: '/contact',
   titre: 'Nous écrire',
-  description: 'Une question sur un panier, une taille ou une pré-commande ? Écris à Nidou, on te répond sous 24 h ouvrées.',
+  description: 'Une question sur un panier, une taille ou une commande ? Écris à Nidou, on te répond sous 24 h ouvrées.',
   jsonld: [fil([['Accueil', '/'], ['Contact', '/contact']])],
   contenu: `<div class="env">
-  <div class="page-titre"><h1>Nous écrire</h1><p>Une question sur un panier, une taille ou ta pré-commande ? On te répond par e-mail sous 24 h ouvrées.</p></div>
-  <form class="formulaire" action="/api/precommande" method="post" data-envoi novalidate>
+  <div class="page-titre"><h1>Nous écrire</h1><p>Une question sur un panier, une taille ou ta commande ? On te répond par e-mail sous 24 h ouvrées.</p></div>
+  <form class="formulaire" action="/api/commande" method="post" data-envoi novalidate>
     <p class="message-form" role="alert" tabindex="-1"></p>
     <input type="hidden" name="type" value="contact" />
     <div class="pot" aria-hidden="true"><label for="site">Ne pas remplir</label><input id="site" name="site" type="text" tabindex="-1" autocomplete="off" /></div>
@@ -341,7 +341,7 @@ ecrire('/contact', page({
 
 /* ---------- Merci ---------- */
 for (const [chemin, titre, texte] of [
-  ['/merci', 'Merci, ta pré-commande est bien reçue !', 'On te recontacte par e-mail sous 48 h ouvrées pour confirmer le prix, le délai de livraison et le paiement. Rien n’a été débité.'],
+  ['/merci', 'Merci, ta commande est bien reçue !', 'On t’envoie par e-mail sous 24 h ouvrées la confirmation et un lien de paiement sécurisé. Ton panier part dès le paiement reçu.'],
   ['/merci-message', 'Merci, ton message est bien envoyé !', 'On te répond par e-mail sous 24 h ouvrées.'],
 ]) {
   ecrire(chemin, page({ chemin, titre, description: texte, noindex: true,
@@ -354,15 +354,15 @@ ecrire('/mentions-legales', page({
   contenu: `<div class="env"><div class="page-titre"><h1>Mentions légales</h1></div><div class="texte">
   <h2>Éditeur du site</h2><p>Nidou, boutique en cours de création. Pour toute demande, utilise le <a href="/contact" style="text-decoration:underline">formulaire de contact</a>.</p>
   <h2>Hébergeur</h2><p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.</p>
-  <h2>Pré-commandes</h2><p>Le site permet de réserver un produit sans paiement en ligne. Une pré-commande n’est pas un achat : elle devient une commande seulement après confirmation par e-mail et paiement. Tu peux l’annuler à tout moment avant de payer. Après réception, tu disposes d’un délai de 14 jours pour exercer ton droit de rétractation.</p>
+  <h2>Commandes</h2><p>Les commandes passées sur le site sont confirmées par e-mail avec un lien de paiement sécurisé ; elles sont expédiées après réception du paiement. Après réception du colis, tu disposes d’un délai de 14 jours pour exercer ton droit de rétractation.</p>
   <h2>Propriété intellectuelle</h2><p>Les textes, le logo et la mise en page de ce site appartiennent à Nidou. Toute reproduction sans accord est interdite.</p>
   </div></div>`,
 }));
 ecrire('/confidentialite', page({
-  chemin: '/confidentialite', titre: 'Politique de confidentialité', description: 'Comment Nidou utilise et protège les informations envoyées par les formulaires de pré-commande et de contact.',
+  chemin: '/confidentialite', titre: 'Politique de confidentialité', description: 'Comment Nidou utilise et protège les informations envoyées par les formulaires de commande et de contact.',
   contenu: `<div class="env"><div class="page-titre"><h1>Politique de confidentialité</h1></div><div class="texte">
-  <h2>Quelles informations ?</h2><p>Quand tu pré-commandes ou nous écris, nous recevons ton nom, ton e-mail, ton téléphone (si tu le donnes), ton adresse de livraison et ton message.</p>
-  <h2>Pourquoi ?</h2><p>Uniquement pour traiter ta pré-commande ou répondre à ta question. Nous ne vendons ni ne partageons tes informations, et nous ne t’envoyons pas de publicité sans ton accord.</p>
+  <h2>Quelles informations ?</h2><p>Quand tu commandes ou nous écris, nous recevons ton nom, ton e-mail, ton téléphone (si tu le donnes), ton adresse de livraison et ton message.</p>
+  <h2>Pourquoi ?</h2><p>Uniquement pour traiter ta commande ou répondre à ta question. Nous ne vendons ni ne partageons tes informations, et nous ne t’envoyons pas de publicité sans ton accord.</p>
   <h2>Où sont-elles stockées ?</h2><p>Dans un espace de stockage privé chez notre hébergeur Vercel, accessible seulement par l’équipe Nidou.</p>
   <h2>Combien de temps ?</h2><p>3 ans maximum après notre dernier échange, puis elles sont supprimées.</p>
   <h2>Tes droits</h2><p>Tu peux demander à consulter, corriger ou supprimer tes informations à tout moment via le <a href="/contact" style="text-decoration:underline">formulaire de contact</a>. Tu peux aussi saisir la CNIL (cnil.fr).</p>
@@ -375,7 +375,7 @@ writeFileSync(join(DIST, '404.html'), page({ chemin: '/404', titre: 'Page introu
   contenu: `<div class="env"><div class="merci"><div class="rond" aria-hidden="true">?</div><h1>Page introuvable</h1><p>Cette page n’existe pas ou a été déplacée.</p><a class="btn btn-brun" href="/">Revenir à l’accueil</a></div></div>` }));
 
 /* ---------- Plan du site + robots ---------- */
-const urls = ['/', '/paniers', ...PRODUITS.map((p) => `/paniers/${p.slug}`), '/guide-des-tailles', '/faq', '/precommande', '/contact', '/mentions-legales', '/confidentialite'];
+const urls = ['/', '/paniers', ...PRODUITS.map((p) => `/paniers/${p.slug}`), '/guide-des-tailles', '/faq', '/commande', '/contact', '/mentions-legales', '/confidentialite'];
 writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${SITE}${u === '/' ? '/' : u}</loc><lastmod>${AUJ}</lastmod><changefreq>${u.startsWith('/paniers') || u === '/' ? 'weekly' : 'monthly'}</changefreq><priority>${u === '/' ? '1.0' : u.startsWith('/paniers') ? '0.8' : '0.5'}</priority></url>`).join('\n')}
