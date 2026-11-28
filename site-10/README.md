@@ -13,3 +13,6 @@ Boutique de démonstration de paniers orthopédiques pour chien, faite à partir
 
 Exception : la grande photo du haut (`img/heros-samoyede.jpg`, Samoyède sur le panier rafraîchissant, envoyée par l'utilisateur) est affichée.
 Sur téléphone, la bannière affiche `img/heros-samoyede-mobile.jpg` (chien centré) sous le texte ; sur ordinateur, `img/heros-samoyede.jpg` à droite du texte.
+
+## Couleurs beige et caramel + héros plein écran (28 novembre 2026)
+L'utilisateur a choisi la palette n°3 « Beige et caramel » : bandeau et accents caramel `#b8743d`, brun foncé `#2e2420` (en-tête, héros, boutons), brun moyen `#6e4a33` (bloc lit géant, badges), beige `#f5efe7` (fonds produits), fond de page `#fffcf8`. La bannière du haut occupe tout l'écran (photo du Samoyède ; sur téléphone, photo en haut et texte en dessous sur fond brun).
