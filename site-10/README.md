@@ -17,3 +17,4 @@ Sur téléphone, la bannière affiche `img/heros-samoyede-mobile.jpg` (chien cen
 ## Couleurs beige et caramel + héros plein écran (28 novembre 2026)
 L'utilisateur a choisi la palette n°3 « Beige et caramel » : bandeau et accents caramel `#b8743d`, brun foncé `#2e2420` (en-tête, héros, boutons), brun moyen `#6e4a33` (bloc lit géant, badges), beige `#f5efe7` (fonds produits), fond de page `#fffcf8`. La bannière du haut occupe tout l'écran (photo du Samoyède ; sur téléphone, photo en haut et texte en dessous sur fond brun).
 - 28 novembre 2026 : section « Acheter par catégorie » supprimée à la demande de l'utilisateur.
+- 28 novembre 2026 : logo n°7 choisi par l'utilisateur — « NIDOU » en Marcellus, lettres espacées, fin trait caramel et « COUCHAGE POUR CHIENS » dessous (en-tête et pied de page). Icône d'onglet `favicon.svg` / `favicon.png` (N sur fond brun). Logos refusés : dessins de chien (« trop dropshipping »).
