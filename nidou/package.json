@@ -1,0 +1,17 @@
+{
+  "name": "nidou",
+  "version": "1.0.0",
+  "description": "Boutique Nidou : paniers orthopédiques pour chien, pré-commandes",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node test/api.test.mjs"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.9.0"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}
