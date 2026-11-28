@@ -256,9 +256,9 @@ details ul{padding-left:18px;display:grid;gap:4px}
 /* Version sans photos : emplacements « Photo à venir » */
 .ph{display:grid;place-items:center;align-content:center;gap:8px;width:100%;height:100%;min-height:inherit;background:var(--ph-fond,#ececec);color:var(--ph-txt,#9a9a9a);font-size:.72rem;font-weight:500;letter-spacing:.02em;text-align:center;padding:12px}
 .ph svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.4;opacity:.8}
-.heros-photo{display:none}
-.heros{background:radial-gradient(120% 90% at 85% 40%,#3b31a0 0%,var(--indigo) 55%,var(--indigo-2) 100%)}
-.heros-lettres{color:rgba(255,255,255,.07)}
+.heros-photo img{object-position:78% 60%}
+.heros{background:var(--indigo)}
+.heros-lettres{display:none}
 .cat{--ph-fond:#2b2470;--ph-txt:rgba(255,255,255,.55)}
 .cat:nth-child(2){--ph-fond:#3f5849}.cat:nth-child(3){--ph-fond:#6b2ee0}.cat:nth-child(4){--ph-fond:#3d3d3d}
 .cat .ph{position:absolute;inset:0;left:0;bottom:0;align-content:start;padding-top:30%}
@@ -304,7 +304,7 @@ details ul{padding-left:18px;display:grid;gap:4px}
 <main class="accueil">
   <!-- Héros -->
   <section class="heros" style="padding:0" id="heros">
-    <div class="heros-photo"><img id="heros-img" data-src="img/gamme/brun-naturel.jpg" alt="Chien endormi sur un panier orthopédique" fetchpriority="high" /></div>
+    <div class="heros-photo"><img id="heros-img" src="img/heros-samoyede.jpg" alt="Samoyède endormi sur un panier orthopédique gris et bleu dans un salon lumineux" fetchpriority="high" /></div>
     <div class="heros-lettres" aria-hidden="true">nidou</div>
     <div class="env">
       <div class="heros-texte diapo" id="heros-texte"></div>
